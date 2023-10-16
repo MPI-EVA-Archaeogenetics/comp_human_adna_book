@@ -1,0 +1,11 @@
+# Genotype and context data management with Poseidon
+
+Poseidon is an open computational framework to enable standardised and FAIR (@Wilkinson2016) handling of genotypes with their highly relevant context information. It includes a well-specified data format, advanced software tools, and public, community-maintained archives to support the entire archaeogenetic research cycle, from data acquisition to management, analysis and publication.
+
+Poseidon and all its components is well documented at <https://www.poseidon-adna.org>. In this tutorial we will give a brief overview and describe two specific workflows in the context of Poseidon.
+
+## The components of Poseidon
+
+## Forging a dataset with `trident`
+
+## Contributing to the community archive
