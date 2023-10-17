@@ -9,6 +9,7 @@ book:
   chapters:
     - index.qmd
     - intro.qmd
+    - Quarto_intro.qmd
     - summary.qmd
     - references.qmd
 
