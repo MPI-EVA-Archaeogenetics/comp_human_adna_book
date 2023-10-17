@@ -12,11 +12,13 @@ Poseidon is an entire ecosystem build on top of the data format specification of
 
 ### The Poseidon package
 
-A [**Poseidon package**](https://www.poseidon-adna.org/#/standard) bundles genotype data in EIGENSTRAT/PLINK format with human- and machine-readable meta-data.
+A [**Poseidon package**](https://www.poseidon-adna.org/#/standard) bundles [genotype data in EIGENSTRAT/PLINK format](https://www.poseidon-adna.org/#/genotype_data) with human- and machine-readable meta-data.
 
 ![The files in a Poseidon package](img/poseidon/popgen_toolbox_package_schema.png){width=60%}
 
-This includes sample-wise context like spatio-temporal origin and genetic data quality in the `.janno`, literature in the `.bib`, and pointers to sequencing data in the `.ssf` file. `.janno` and `.ssf` have predefined variables, but can store arbitrary additional information.
+This includes sample-wise context like spatio-temporal origin and genetic data quality in [the `.janno`-file](https://www.poseidon-adna.org/#/janno_details), literature in the `.bib`, and pointers to sequencing data in [the `.ssf` file](https://www.poseidon-adna.org/#/ssf_details).
+
+`.janno` and `.ssf` have predefined variables, but can store arbitrary additional information.
 
 ### The software tools
 
