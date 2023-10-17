@@ -13,7 +13,7 @@ In this introduction to quarto, you will be shown the basics in how to set up a 
 
 Quarto is the "next generation" of R Markdown and is usable on different tools.
 
-![](images/Picture%201.png){width="300"}
+![](img/quarto_intro/Picture%201.png){width="300"}
 
 Here, I will only focus on **RStudio** though. For this, you have to [download](https://posit.co/download/rstudio-desktop/) RStudio first. If you have done this already, we can get started.
 
@@ -29,11 +29,11 @@ Now we are ready to set up a quarto document.
 
 For this we open a new project and select the quarto document we want to create. You can choose to set up a git repository as well. For practicality, I usually also tick the box visual markdown editor.
 
-![](images/Screenshot%202023-10-11%20at%2011.34.16.png){width="300"}
+![](img/quarto_intro/Screenshot%202023-10-11%20at%2011.34.16.png){width="300"}
 
 The new project will look like this:
 
-![](images/Screenshot%202023-10-11%20at%2011.39.43.png)
+![](img/quarto_intro/Screenshot%202023-10-11%20at%2011.39.43.png)
 
 ## Universal instructions
 
@@ -45,7 +45,7 @@ If we now click on render, we will be provided with the preview of our final ver
 
 **Important: Do not mistake "save" with "render".** Just by saving, your document did not get rendered automatically, **unless** you tick the box "**Render on Save**". You have to tick that box on each .qmd file individually though.
 
-![](images/Screenshot%202023-10-11%20at%2014.12.45.png){width="300"}
+![](img/quarto_intro/Screenshot%202023-10-11%20at%2014.12.45.png){width="300"}
 
 ### Visual and Source
 
@@ -53,7 +53,7 @@ If you have chosen the **Visual** option on your toolbar, the preview will mostl
 
 In the **Source** version, you can write up your document in LaTeX.
 
-![](images/Screenshot_3.png){width="400"}
+![](img/quarto_intro/Screenshot_3.png){width="400"}
 
 ### .qmd files
 
@@ -97,17 +97,17 @@ To add R code to your file, you select `Insert`, select `Code Cell` and choose t
 
 Depending on how you have set up your .qmd file (or your .yml), your code will be visible or not on your website. To check your output, you can click the green arrow for the latest bit of code or the grey arrow above a bar to run the previous code.
 
-![](images/Screenshot%202023-10-11%20at%2015.04.31.png){width="400"}
+![](img/quarto_intro/Screenshot%202023-10-11%20at%2015.04.31.png){width="400"}
 
 But in case there are some chunks of code, you do not want to show all the time, there are some nice sets.
 
 So if we just load the library `tidyverse`, for example, the additional information regardless and it will be also visible on our website.
 
-![](images/Screenshot%202023-10-11%20at%2014.49.43.png)
+![](img/quarto_intro/Screenshot%202023-10-11%20at%2014.49.43.png)
 
 To avoid this, we can set up a code chunk, looking like this:
 
-![](images/Screenshot%202023-10-11%20at%2014.55.13.png)
+![](img/quarto_intro/Screenshot%202023-10-11%20at%2014.55.13.png)
 
 This will prevent the output of this code chunk to be depicted on your website, while the package is otherwise active and can be used in the following R code. This is, by the way, true for all R code and data sets you will use: they will be active in your document and can be used in different code chunks, once provided.
 
@@ -115,7 +115,7 @@ A code block included in your document could look like the following. Here I use
 
 `code-fold: true` so the code can be extended. This option is only available in html though.
 
-![](images/Screenshot%202023-10-17%20at%2013.48.10.png)
+![](img/quarto_intro/Screenshot%202023-10-17%20at%2017.05.28.png){width="400"}
 
 #### References
 
@@ -123,11 +123,11 @@ Depending on which citation program you are using, quarto is able to connect to 
 
 Alternatively, you are provided with some options to choose from:
 
-![](images/Screenshot%202023-10-11%20at%2015.09.41.png){width="200"}
+![](img/quarto_intro/Screenshot%202023-10-11%20at%2015.09.41.png){width="200"}
 
 In your source code and your website, a citation will be depicted as follows:
 
-![](images/Screenshot%202023-10-11%20at%2015.12.57.png)
+![](img/quarto_intro/Screenshot%202023-10-11%20at%2015.12.57.png)
 
 The citation will also automatically be added to a `references.bib` as well as to a `references.qmd` and is therefore available on your website on the page "References", which also will be created automatically.
 
@@ -146,13 +146,13 @@ In case you are only interested in one format to be rendered, you can specify yo
 
 Your rendered document should now look like this:
 
-![](images/Screenshot%202023-10-17%20at%2014.15.05.png)
+![](img/quarto_intro/Screenshot%202023-10-17%20at%2014.15.05.png)
 
 ## Quarto website
 
 In the provided .qmd files, the index is also the first page of your website. As you might have noticed, quarto already sets up a navbar as well as a search function on your website.
 
-![](images/Screenshot%202023-10-11%20at%2014.09.08.png){width="200"}
+![](img/quarto_intro/Screenshot%202023-10-11%20at%2014.09.08.png){width="200"}
 
 ### .yml files
 
@@ -160,7 +160,7 @@ While your .qmd files contain information about one page, the .yml file defines 
 
 Here, you can define the type of your project (in this case a website), you can change the name of the website (`Title`), define your navbar (which shall be your landing page and in what order your pages shall be set up) or the overall appearance of your website in general (`theme`, `css`, `toc`, `backgroundcolor`, etc.). For different styles and layouts, check out the quarto [website](https://quarto.org/docs/reference/formats/html.html) again.
 
-![](images/Screenshot%202023-10-12%20at%2011.25.37.png){width="200"}
+![](img/quarto_intro/Screenshot%202023-10-12%20at%2011.25.37.png){width="200"}
 
 ## Quarto book
 
@@ -172,7 +172,7 @@ We see, for example, that instead of a navbar, we find `chapters`. Those will ap
 
 We also already get provided with a `bibliography` and the responding .bib file. If you have other .bib files, those can be included in your references, by just adding them to `bibliography`.
 
-![](images/Screenshot%202023-10-12%20at%2011.41.30.png){width="200"}
+![](img/quarto_intro/Screenshot%202023-10-12%20at%2011.41.30.png){width="200"}
 
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
