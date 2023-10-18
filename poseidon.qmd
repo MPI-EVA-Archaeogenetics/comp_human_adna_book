@@ -54,15 +54,15 @@ The generated genotypes, together with descriptive statistics of the sequencing 
 
 ## Forging a dataset with `trident`
 
-`forge` creates new Poseidon packages by extracting and merging packages, populations and individuals/samples from your Poseidon repositories. It can also work directly with your genotype data. In addition, `forge` allows merging of multiple data sets (packages), in contrast to `mergeit` which merges only two data sets at a time.
+`forge` creates new Poseidon packages by extracting and merging packages, populations and individuals/samples from your Poseidon repositories. It can also work directly with your genotype data. In addition, `forge` allows merging of multiple data sets (packages), in contrast to [`mergeit`](https://github.com/DReichLab/EIG) which merges only two data sets at a time.
 
-```{bash}
-trident forge -p  pileupcaller.double.geno -d  2021_Saag_EastEuropean-3.2.0 -d  2016_FuNature-2.1.1 -o testpackage --outFormat EIGENSTRAT
+```bash
+trident forge -p pileupcaller.double.geno -d 2021_Saag_EastEuropean-3.2.0 -d 2016_FuNature-2.1.1 -o testpackage --outFormat EIGENSTRAT
 ```
 
 `forge` has a an optional flag `--intersect,` that defines, if the genotype data from different packages should be merged with an **intersect** instead of the default **union** operation. The default is to output the union of all SNPs, by setting the additional SNPs from the other merged package as missing in the samples that did not have them originally. This option is useful for making a data set based on Human Origins (HO) SNPs for analysis like PCA and ADMIXTURE. 
 
-```{bash}
+```bash
 trident forge -p  pileupcaller.double.geno -d  2012_PattersonGenetics-2.1.3 -o testpackage_HO --outFormat EIGENSTRAT
 ```
 
