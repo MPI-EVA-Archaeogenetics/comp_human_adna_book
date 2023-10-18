@@ -34,6 +34,10 @@ This includes sample-wise context like spatio-temporal origin and genetic data q
 
 The Poseidon community maintains [**public archives**](https://www.poseidon-adna.org/#/archive_overview) for Poseidon packages to establish a central, open access point for published data in Poseidon format.
 
+- The **Community Archive**: Per-paper packages with the genotype data published in the respective papers, partially pre-populated from the AADR. The community archive focusses on author submissions.
+- The **AADR Archive**: Complete and structurally unified AADR releases repackaged in the Poseidon package format.
+- The **Minotaur Archive**: Per-paper packages with genotype data reprocessed by the Minotaur workflow (see below).
+
 The data is versioned with Git and hosted on GitHub for easy co-editing and automatic structural validation. It can be accessed through a [**Web-API**](https://www.poseidon-adna.org/#/web_api) with various endpoints at *server.poseidon-adna.org*.
 
 This API enables an [**Archive explorer**](https://www.poseidon-adna.org/#/archive_explorer) on the Poseidon website.
@@ -51,3 +55,30 @@ The generated genotypes, together with descriptive statistics of the sequencing 
 ## Forging a dataset with `trident`
 
 ## Contributing to the community archive
+
+![Poseidon needs you for public data maintenance](img/poseidon/recruiting.jpg){width=40%}
+
+To maintain the public data archives, specifically the community archive and the minotaur archive, Poseidon depends on work donations by an interested community. Many practitioners of archaeogenetics both produce genotype data from archaological contexts and require the reference data from other publications, provided in public archives, to contextualize it.
+
+If authors themselves provide high-quality, easily accessible versions of their data they gain at least three important advantages:
+
+- Their work will be easily findable and potentially cited more often.
+- They have primacy over how exactly their data is communicated. That is, which genotypes, dates or group names they consider correct.
+- Their results for derived, genotype based analyses (PCA, F-Statistics, etc.) can be reproduced exactly.
+
+And the whole community wins, because sharing the tedious data preparation tasks empowers all researchers to achieve more in shorter time.
+
+***
+
+This tutorial explains the main cornerstones of a workflow to add a new Poseidon package to the community archive after publishing the corresponding dataset. The process is documented in detail in a [**Submission guide**](https://www.poseidon-adna.org/#/archive_submission_guide) on the website.
+
+1. Make yourself familiar with a number of core technologies. This is less challenging than it sounds, because: Many of you already know a lot about them, superficial knowledge is sufficient and knowing them is useful for anybody who works with archaeogenetic data.
+
+    - Editing text files.
+    - 
+    - Creating and validating Poseidon packages with the `trident` tool.
+    - Free and open source distributed version control with [Git](https://git-scm.com).
+    - Collaborative working on Git projects with [GitHub](https://github.com).
+    - Handling large files in Git using [Git LFS](https://git-lfs.com).
+
+2. ...
