@@ -145,14 +145,13 @@ This tutorial explains the main cornerstones of a workflow to add a new Poseidon
       - Git LFS has to be installed (see [here](https://git-lfs.com)) and and configured for your user with `git lfs install`.
     
     ```bash
-    GIT_LFS_SKIP_SMUDGE=1
-    git clone git@github.com:<yourGitHubUserName>/community-archive.git
+    GIT_LFS_SKIP_SMUDGE=1 git clone git@github.com:<yourGitHubUserName>/community-archive.git
     ```
   
   - With the cloned repository on our system we can copy the files into the repositories directory and commit the changes.
   
     ```bash{filename="in the community-archive directory"}
-    cp ../myPackage myPackage
+    cp -r ../myPackage myPackage
     git add myPackage
     git commit -m "added a first draft of myPackage"
     git push
@@ -160,5 +159,5 @@ This tutorial explains the main cornerstones of a workflow to add a new Poseidon
   
   - In a last step we can open a Pull Request on GitHub from our fork to the original archive repository. It will be reviewed and eventually merged.
   
-![When you pushed to your fork, GitHub will automatically offer to open a PR to the source repository](img/poseidon/pull_request.png)
+![When you pushed to your fork, GitHub will automatically offer to "contribute" to the source repository](img/poseidon/pull_request.png)
 
