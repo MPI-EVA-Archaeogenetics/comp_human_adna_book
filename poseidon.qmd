@@ -56,7 +56,7 @@ The generated genotypes, together with descriptive statistics of the sequencing 
 
 ## Contributing to the community archive
 
-![Poseidon needs you for public data maintenance](img/poseidon/recruiting.jpg){width=40%}
+![Poseidon needs your data as soon as it is published](img/poseidon/recruiting.jpg){width=40%}
 
 To maintain the public data archives, specifically the community archive and the minotaur archive, Poseidon depends on work donations by an interested community. Many practitioners of archaeogenetics both produce genotype data from archaological contexts and require the reference data from other publications, provided in public archives, to contextualize it.
 
@@ -72,71 +72,86 @@ And the whole community wins, because sharing the tedious data preparation tasks
 
 This tutorial explains the main cornerstones of a workflow to add a new Poseidon package to the community archive after publishing the corresponding dataset. The process is documented in detail in a [**Submission guide**](https://www.poseidon-adna.org/#/archive_submission_guide) on the website.
 
-1. Make yourself familiar with a number of core technologies. This is less daunting than it sounds, because: Superficial knowledge is sufficient, knowing them is useful beyond this particular task.
+1. **Make yourself familiar** with a number of core technologies. This is less daunting than it sounds, because: Superficial knowledge is sufficient, knowing them is useful beyond this particular task.
 
-    - Creating and validating Poseidon packages with the `trident` tool.
-    - Free and open source distributed version control with [Git](https://git-scm.com).
-    - Collaborative working on Git projects with [GitHub](https://github.com).
-    - Handling large files in Git using [Git LFS](https://git-lfs.com).
+  - Creating and validating Poseidon packages with the `trident` tool.
+  - Free and open source distributed version control with [Git](https://git-scm.com).
+  - Collaborative working on Git projects with [GitHub](https://github.com).
+  - Handling large files in Git using [Git LFS](https://git-lfs.com).
 
-2. Create a package from your genotype data and fill it with a suitable set of meta and context information.
+2. **Create a package** from your genotype data and fill it with a suitable set of meta and context information.
 
-    - `trident init` allows to wrap genotype data in a dummy Poseidon package. Imagine we had genotype data for a number of individuals in EIGENSTRAT format:
+  - `trident init` allows to wrap genotype data in a dummy Poseidon package. Imagine we had genotype data for a number of individuals in EIGENSTRAT format:
+  
+    ```{filename="myData.ind"}
+    Sample1  M       ExamplePop1
+    Sample2  F       ExamplePop1
+    Sample3  M       ExamplePop2
+    ```
     
-      ```{filename="myData.ind"}
-      Sample1  M       ExamplePop1
-      Sample2  F       ExamplePop1
-      Sample3  M       ExamplePop2
-      ```
-      
-      ```{filename="myData.snp"}
-                 rs3094315     1        0.020130          752566 G A
-                rs12124819     1        0.020242          776546 A G
-                rs28765502     1        0.022137          832918 T C
-      ```
-      
-      ```{filename="myData.geno"}
-      099
-      922
-      999
-      ```
-      
-      With `trident init -p myData.geno -o myPackage` we can create a basic package around this data.
-      
-      ```
-      $ ls myPackage
-      myData.geno  myData.snp     myPackage.janno
-      myData.ind   myPackage.bib  POSEIDON.yml
-      ```
-      
-    - In a next step we modify `POSEIDON.yml`, `.janno` and `myPackage.bib` to include the context information we consider relevant. All of these files are well specified and documented, so we will only perform a minimal change for this example.
+    ```{filename="myData.snp"}
+               rs3094315     1        0.020130          752566 G A
+              rs12124819     1        0.020242          776546 A G
+              rs28765502     1        0.022137          832918 T C
+    ```
     
-      ```{filename="myPackage/POSEIDON.yml"}
-      poseidonVersion: 2.7.1
-      title: myPackage
-      description: Empty package template. Please add a description
-      contributor:
-      - name: Clemens Schmid               #- name: Josiah Carberry
-        email: clemens_schmid@eva.mpg.de   #  email: carberry@brown.edu
-        orcid: 0000-0003-3448-5715         #  orcid: 0000-0002-1825-0097
-      packageVersion: 0.1.0
-      lastModified: 2023-10-18
-      genotypeData:
-        format: EIGENSTRAT
-        genoFile: myData.geno
-        snpFile: myData.snp
-        indFile: myData.ind
-        snpSet: Other
-      jannoFile: myPackage.janno
-      bibFile: myPackage.bib
-      ```
-      
-    - When we applied all necessary modifications we can confirm that the package is still valid with `trident validate -d myPackage`.
+    ```{filename="myData.geno"}
+    099
+    922
+    999
+    ```
     
-3. Submit the package to the community archive.
+    With `trident init -p myData.geno -o myPackage` we can create a basic package around this data.
+    
+    ```
+    $ ls myPackage
+    myData.geno  myData.snp     myPackage.janno
+    myData.ind   myPackage.bib  POSEIDON.yml
+    ```
+    
+  - In a next step we modify `POSEIDON.yml`, `.janno` and `myPackage.bib` to include the context information we consider relevant. All of these files are well specified and documented, so we will only perform a minimal change for this example.
+  
+    ```{filename="myPackage/POSEIDON.yml"}
+    poseidonVersion: 2.7.1
+    title: myPackage
+    description: Empty package template. Please add a description
+    contributor:
+    - name: Clemens Schmid               #- name: Josiah Carberry
+      email: clemens_schmid@eva.mpg.de   #  email: carberry@brown.edu
+      orcid: 0000-0003-3448-5715         #  orcid: 0000-0002-1825-0097
+    packageVersion: 0.1.0
+    lastModified: 2023-10-18
+    genotypeData:
+      format: EIGENSTRAT
+      genoFile: myData.geno
+      snpFile: myData.snp
+      indFile: myData.ind
+      snpSet: Other
+    jannoFile: myPackage.janno
+    bibFile: myPackage.bib
+    ```
+    
+  - When we applied all necessary modifications we can confirm that the package is still valid with `trident validate -d myPackage`.
+    
+3. **Submit the package** to the community archive.
 
-    - 
+  - To submit the package we have to create a fork of the [community archive repository on GitHub](https://github.com/poseidon-framework/community-archive). This requires a GitHub account.
+
+![Press the fork button in the top right corner to fork a repository on GitHub](img/poseidon/fork.png)
     
+  - And then clone the fork to our computer, while omitting the large genotype data files. Note that this requires several setup steps to work correctly:
+      - Git has be installed for your computer (see [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git))
+      - You must have created an ssh key pair to connect to GitHub via ssh. (see [here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh))
+      - Git LFS has to be installed (see [here](https://git-lfs.com)) and and configured for your user with `git lfs install`.
+    
+    ```bash
+    GIT_LFS_SKIP_SMUDGE=1
+    git clone git@github.com:<yourGitHubUserName>/<archiveName>.git
+    ```
+  
+  - With the cloned repository on our system we can create a branch for our new package and copy the files into the repositories directory.
+  
+  
     
     
       
