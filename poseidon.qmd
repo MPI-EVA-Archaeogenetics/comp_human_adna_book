@@ -102,7 +102,7 @@ Many practitioners of archaeogenetics both produce genotype data from archaologi
 If authors themselves provide high-quality, easily accessible versions of their data beyond the raw data available at the INSDC databases, they gain at least three important advantages:
 
 -   Their work will be easily findable and **potentially cited more often**.
--   They have **primacy** over how their data is communicated. That is, which genotypes, dates or group names they consider correct.
+-   They have primacy over how their **data is communicated**. That is, which genotypes, dates or group names they consider correct.
 -   Their results for derived, genotype based analyses (PCA, F-Statistics, etc.) can be **reproduced exactly**.
 
 And the whole community wins, because sharing the tedious data preparation tasks empowers all researchers to achieve more in shorter time.
@@ -113,9 +113,9 @@ And the whole community wins, because sharing the tedious data preparation tasks
 
 ------------------------------------------------------------------------
 
-This tutorial explains the main cornerstones of a workflow to add a new Poseidon package to the community archive after publishing the corresponding dataset. The process is documented in detail in a [**Submission guide**](https://www.poseidon-adna.org/#/archive_submission_guide) on the website.
+This tutorial explains the main cornerstones of a workflow to add a new Poseidon package to the community archive after publishing the corresponding dataset. The process is documented in more detail in a [**Submission guide**](https://www.poseidon-adna.org/#/archive_submission_guide) on the website.
 
-1.  **Make yourself familiar** with a number of core technologies. This is less daunting than it sounds, because: Superficial knowledge is sufficient, knowing them is useful beyond this particular task.
+1.  **Make yourself familiar** with a number of core technologies. This is less daunting than it sounds, because: Superficial knowledge is sufficient and knowing them is useful beyond this particular task.
 
 -   Creating and validating Poseidon packages with the `trident` tool.
 -   Free and open source distributed version control with [Git](https://git-scm.com).
@@ -152,7 +152,9 @@ This tutorial explains the main cornerstones of a workflow to add a new Poseidon
     myData.ind   myPackage.bib  POSEIDON.yml
     ```
 
--   In a next step we modify `POSEIDON.yml`, `.janno` and `myPackage.bib` to include the context information we consider relevant. All of these files are well specified and documented, so we will only perform a minimal change for this example.
+-   In a next step we modify `POSEIDON.yml`, `.janno` and `.bib` to include the context information we consider relevant. All of these files are well specified and documented, so we only demonstrate a minimal change for this example:
+
+    We replace the main contributor for the package.
 
     ``` {filename="myPackage/POSEIDON.yml"}
     poseidonVersion: 2.7.1
@@ -201,6 +203,6 @@ This tutorial explains the main cornerstones of a workflow to add a new Poseidon
     git push
     ```
 
--   In a last step we can open a Pull Request on GitHub from our fork to the original archive repository. It will be reviewed and eventually merged.
+-   In a last step we can open a Pull Request on GitHub from our fork to the original archive repository. Poseidon core members will take it from here.
 
 ![When you pushed to your fork, GitHub will automatically offer to "contribute" to the source repository](img/poseidon/pull_request.png)
