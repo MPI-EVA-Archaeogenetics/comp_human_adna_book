@@ -1,3 +1,8 @@
+---
+reference-location: margin
+citation-location: margin
+---
+
 # Genotype and context data management with Poseidon
 
 Poseidon is an open computational framework to enable standardised and FAIR (@Wilkinson2016) handling of genotypes with their highly relevant context information.
@@ -90,15 +95,21 @@ In addition, `--selectSnps` allows to provide `forge` with a SNP file in EIGENST
 
 ![Poseidon needs your data as soon as it is published](img/poseidon/recruiting.jpg){width="40%"}
 
-To maintain the public data archives, specifically the community archive and the minotaur archive, Poseidon depends on work donations by an interested community. Many practitioners of archaeogenetics both produce genotype data from archaological contexts and require the reference data from other publications, provided in public archives, to contextualize it.
+To maintain the public data archives, specifically the community archive and the minotaur archive, Poseidon depends on work donations by an interested community.
+
+Many practitioners of archaeogenetics both produce genotype data from archaological contexts and require the reference data from other publications, provided in public archives, to contextualize it.
 
 If authors themselves provide high-quality, easily accessible versions of their data beyond the raw data available at the INSDC databases, they gain at least three important advantages:
 
--   Their work will be easily findable and potentially cited more often.
--   They have primacy over how exactly their data is communicated. That is, which genotypes, dates or group names they consider correct.
--   Their results for derived, genotype based analyses (PCA, F-Statistics, etc.) can be reproduced exactly.
+-   Their work will be easily findable and **potentially cited more often**.
+-   They have **primacy** over how their data is communicated. That is, which genotypes, dates or group names they consider correct.
+-   Their results for derived, genotype based analyses (PCA, F-Statistics, etc.) can be **reproduced exactly**.
 
 And the whole community wins, because sharing the tedious data preparation tasks empowers all researchers to achieve more in shorter time.
+
+::: {.column-margin}
+![](img/poseidon/our_data.jpg){width=50%}
+:::
 
 ------------------------------------------------------------------------
 
