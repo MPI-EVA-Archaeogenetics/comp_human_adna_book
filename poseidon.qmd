@@ -1,8 +1,10 @@
 # Genotype and context data management with Poseidon
 
-Poseidon is an open computational framework to enable standardised and FAIR (@Wilkinson2016) handling of genotypes with their highly relevant context information. It includes a well-specified data format, advanced software tools, and public, community-maintained archives to support the entire archaeogenetic research cycle, from data acquisition to management, analysis and publication.
+Poseidon is an open computational framework to enable standardised and FAIR (@Wilkinson2016) handling of genotypes with their highly relevant context information.
 
-Poseidon and all its components is well documented at <https://www.poseidon-adna.org>. In this tutorial we will give a brief overview and describe two specific workflows in the context of Poseidon.
+It includes a well-specified **data format**, advanced **software tools**, and **public, community-maintained archives** to support the entire archaeogenetic research cycle, from data acquisition to management, analysis and publication.
+
+Poseidon and all its components is well documented at <https://www.poseidon-adna.org>. In this tutorial we will give a brief overview and highlight two workflows in the context of Poseidon.
 
 ## The components of Poseidon
 
@@ -16,9 +18,9 @@ A [**Poseidon package**](https://www.poseidon-adna.org/#/standard) bundles [geno
 
 ![The files in a Poseidon package](img/poseidon/popgen_toolbox_package_schema.png){width="60%"}
 
-This includes sample-wise context like spatio-temporal origin and genetic data quality in [the `.janno`-file](https://www.poseidon-adna.org/#/janno_details), literature in the `.bib`, and pointers to sequencing data in [the `.ssf` file](https://www.poseidon-adna.org/#/ssf_details).
+It includes sample-wise context information like spatio-temporal origin and genetic data quality in [the `.janno`-file](https://www.poseidon-adna.org/#/janno_details), literature in the `.bib`, and pointers to sequencing data in [the `.ssf` file](https://www.poseidon-adna.org/#/ssf_details).
 
-`.janno` and `.ssf` have predefined variables, but can store arbitrary additional information.
+`.janno` and `.ssf` have many predefined and specified columns, but can store arbitrary additional variables.
 
 ### The software tools
 
@@ -28,29 +30,31 @@ This includes sample-wise context like spatio-temporal origin and genetic data q
 
 [**janno**](https://www.poseidon-adna.org/#/janno_r_package) is an R package to simplify reading .janno files into R and the popular tidyverse ecosystem (@Wickham2019). It provides an S3 class `janno` that inherits from `tibble`.
 
-[**qjanno**](https://www.poseidon-adna.org/#/qjanno) is another command line tool to perform SQL queries on `.janno` files. On startup it creates a database in memory and reads .janno files into it. It then sends any user-provided SQL query to the database server and forwards its output.
+[**qjanno**](https://www.poseidon-adna.org/#/qjanno) is another command line tool to perform SQL queries on `.janno` files. On start-up it creates an [SQLite](https://www.sqlite.org/index.html) database in memory and reads `.janno` files into it. It then sends any user-provided SQL query to the database server and forwards its output.
 
 ### The public archives
 
-The Poseidon community maintains [**public archives**](https://www.poseidon-adna.org/#/archive_overview) for Poseidon packages to establish a central, open access point for published data in Poseidon format.
+The Poseidon community maintains [**public archives**](https://www.poseidon-adna.org/#/archive_overview) for Poseidon packages to establish a central, open point of access for published, archaeogenetic genotype data.
 
--   The **Community Archive**: Per-paper packages with the genotype data published in the respective papers, partially pre-populated from the AADR. The community archive focusses on author submissions.
--   The **AADR Archive**: Complete and structurally unified AADR releases repackaged in the Poseidon package format.
--   The **Minotaur Archive**: Per-paper packages with genotype data reprocessed by the Minotaur workflow (see below).
+- The **Community Archive**: Author supplied, per-paper packages with the genotype data published in the respective papers. Partially pre-populated from various versionf of the AADR.
+- The **AADR Archive**: Complete and structurally unified releases of the Allen Ancient DNA Resource (@Mallick2023) repackaged in the Poseidon package format.
+- The **Minotaur Archive**: Per-paper packages with genotype data reprocessed by the Minotaur workflow (see below).
 
-The data is versioned with Git and hosted on GitHub for easy co-editing and automatic structural validation. It can be accessed through a [**Web-API**](https://www.poseidon-adna.org/#/web_api) with various endpoints at *server.poseidon-adna.org*.
+The data is versioned with Git and hosted on GitHub for easy co-editing and automatic structural validation.
 
-This API enables an [**Archive explorer**](https://www.poseidon-adna.org/#/archive_explorer) on the Poseidon website.
+It can be accessed through a [**Web-API**](https://www.poseidon-adna.org/#/web_api) with various endpoints at *server.poseidon-adna.org*, e.g. [`/packages`](server.poseidon-adna.org/packages) for a list of packages in the community archive.
+
+This API enables a little [**Archive explorer**](https://www.poseidon-adna.org/#/archive_explorer) web app on the Poseidon website.
 
 ### The Minotaur workflow
 
-The [**Minotaur workflow**](https://www.poseidon-adna.org/#/minotaur) is a semi-automatic workflow to reproducibly process published sequencing data from the [International Nucleotide Sequence Database Collaboration (INSDC)](Ihttps://www.insdc.org) archives into Poseidon packages.
+The [**Minotaur workflow**](https://www.poseidon-adna.org/#/minotaur) is a semi-automatic workflow to reproducibly process published sequencing data from the International Nucleotide Sequence Database Collaboration ([INSDC](Ihttps://www.insdc.org)) archives into Poseidon packages.
 
-Community members can request new packages by submitting a build recipe as a Pull Request against a dedicated GitHub repository. This recipe is created from a Sequencing Source File (`.ssf`), describing the sequencing data for the package and where it can be downloaded.
+Community members can request new packages by submitting a build recipe as a Pull Request against a dedicated submission GitHub repository. This recipe is derived from a Sequencing Source File (`.ssf`), describing the sequencing data for the package and where it can be downloaded.
 
 Using the recipe, the sequencing data gets processed through nf-core/eager (@FellowsYates2021) on computational infrastructure of MPI-EVA, using a standardised, yet flexible, set of parameters.
 
-The generated genotypes, together with descriptive statistics of the sequencing data (Endogenous, Damage, Nr_SNPs, Contamination), are compiled into a Poseidon package, and made available to users in the Minotaur Archive.
+The generated genotypes, together with descriptive statistics of the sequencing data (Endogenous, Damage, Nr_SNPs, Contamination), are compiled into a Poseidon package, and made available to users in the Minotaur archive.
 
 ## Forging a dataset with `trident`
 
