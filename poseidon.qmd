@@ -146,17 +146,19 @@ This tutorial explains the main cornerstones of a workflow to add a new Poseidon
     
     ```bash
     GIT_LFS_SKIP_SMUDGE=1
-    git clone git@github.com:<yourGitHubUserName>/<archiveName>.git
+    git clone git@github.com:<yourGitHubUserName>/community-archive.git
     ```
   
-  - With the cloned repository on our system we can create a branch for our new package and copy the files into the repositories directory.
+  - With the cloned repository on our system we can copy the files into the repositories directory and commit the changes.
   
+    ```bash{filename="in the community-archive directory"}
+    cp ../myPackage myPackage
+    git add myPackage
+    git commit -m "added a first draft of myPackage"
+    git push
+    ```
   
-    
-    
-      
+  - In a last step we can open a Pull Request on GitHub from our fork to the original archive repository. It will be reviewed and eventually merged.
   
-  
-
-  
+![When you pushed to your fork, GitHub will automatically offer to open a PR to the source repository](img/poseidon/pull_request.png)
 
