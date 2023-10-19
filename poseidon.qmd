@@ -41,13 +41,13 @@ It includes sample-wise context information like spatio-temporal origin and gene
 
 The Poseidon community maintains [**public archives**](https://www.poseidon-adna.org/#/archive_overview) for Poseidon packages to establish a central, open point of access for published, archaeogenetic genotype data.
 
--   The **Community Archive**: Author supplied, per-paper packages with the genotype data published in the respective papers. Partially pre-populated from various versionf of the AADR.
+-   The **Community Archive**: Author supplied, per-paper packages with the genotype data published in the respective papers. Partially pre-populated from various versions of the AADR.
 -   The **AADR Archive**: Complete and structurally unified releases of the Allen Ancient DNA Resource (@Mallick2023) repackaged in the Poseidon package format.
 -   The **Minotaur Archive**: Per-paper packages with genotype data reprocessed by the Minotaur workflow (see below).
 
 The data is versioned with Git and hosted on GitHub for easy co-editing and automatic structural validation.
 
-It can be accessed through a [**Web-API**](https://www.poseidon-adna.org/#/web_api) with various endpoints at *server.poseidon-adna.org*, e.g. [`/packages`](server.poseidon-adna.org/packages) for a list of packages in the community archive.
+It can be accessed through a [**Web-API**](https://www.poseidon-adna.org/#/web_api) with various endpoints at *server.poseidon-adna.org*, e.g. [`/packages`](https://server.poseidon-adna.org/packages) for a JSON list of packages in the community archive.
 
 This API enables a little [**Archive explorer**](https://www.poseidon-adna.org/#/archive_explorer) web app on the Poseidon website.
 
@@ -73,22 +73,39 @@ The generated genotypes, together with descriptive statistics of the sequencing 
 
 -   To extract individuals only, surround them by `<` and `>`. `<ALA026>` . To exclude individuals add package name `*package*` and `<individual>` with a dash sign. `"*2021_Saag_EastEuropean-3.2.0*,-<NIK003>"`\
 
-``` bash
-trident forge -p pileupcaller.double.geno -d 2021_Saag_EastEuropean-3.2.0 -d 2016_FuNature-2.1.1 -f "*pileupcaller.double*,Russia_AfontovaGora3,<NIK003>" -o testpackage --outFormat EIGENSTRAT
+```bash
+trident forge \
+  -p pileupcaller.double.geno \
+  -d 2021_Saag_EastEuropean-3.2.0 \
+  -d 2016_FuNature-2.1.1 \
+  -f "*pileupcaller.double*,Russia_AfontovaGora3,<NIK003>" \
+  -o testpackage \
+  --outFormat EIGENSTRAT \
+  /
 ```
 
 [Forge selection language](https://www.poseidon-adna.org/#/trident?id=the-forge-selection-language)
 
 `forge` has a an optional flag `--intersect,` that defines, if the genotype data from different packages should be merged with an **intersect** instead of the default **union** operation. The default is to output the union of all SNPs, by setting the additional SNPs from the other merged package as missing in the samples that did not have them originally. This option is useful for making a data set based on Human Origins (HO) SNPs for analysis like PCA and ADMIXTURE.
 
-``` bash
-trident forge --intersect -p pileupcaller.double.geno -d 2012_PattersonGenetics-2.1.3 -o testpackage_HO --outFormat EIGENSTRAT
+```bash
+trident forge \
+  --intersect \
+  -p pileupcaller.double.geno \
+  -d 2012_PattersonGenetics-2.1.3 \
+  -o testpackage_HO \
+  --outFormat EIGENSTRAT \
+  /
 ```
 
 In case of PCA, `--forgeFile` can be used to merge necessary populations/groups from the available packages in the community archive to create specific PCA configurations.
 
-```         
-trident forge -d /path/to/community/archive --forgeFile WestEurasia_poplist.txt -o WE_PCA
+```bash
+trident forge \
+  -d /path/to/community/archive \
+  --forgeFile WestEurasia_poplist.txt \
+  -o WE_PCA \
+  /
 ```
 
 In addition, `--selectSnps` allows to provide `forge` with a SNP file in EIGENSTRAT (.snp) or PLINK (.bim) format to create a package with a specific selection. This option generates a package with exactly the SNPs listed in this file.
@@ -189,8 +206,8 @@ This tutorial explains the main cornerstones of a workflow to add a new Poseidon
 -   And then clone the fork to our computer, while omitting the large genotype data files. Note that this requires several setup steps to work correctly:
 
     -   Git has be installed for your computer (see [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git))
-    -   You must have created an ssh key pair to connect to GitHub via ssh. (see [here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh))
-    -   Git LFS has to be installed (see [here](https://git-lfs.com)) and and configured for your user with `git lfs install`.
+    -   You must have created an ssh key pair to connect to GitHub via ssh (see [here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh))
+    -   Git LFS has to be installed (see [here](https://git-lfs.com)) and and configured for your user with `git lfs install`
 
     ``` bash
     GIT_LFS_SKIP_SMUDGE=1 git clone git@github.com:<yourGitHubUserName>/community-archive.git
