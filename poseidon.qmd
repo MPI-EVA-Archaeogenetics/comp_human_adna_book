@@ -41,9 +41,9 @@ It includes sample-wise context information like spatio-temporal origin and gene
 
 The Poseidon community maintains [**public archives**](https://www.poseidon-adna.org/#/archive_overview) for Poseidon packages to establish a central, open point of access for published, archaeogenetic genotype data.
 
-- The **Community Archive**: Author supplied, per-paper packages with the genotype data published in the respective papers. Partially pre-populated from various versionf of the AADR.
-- The **AADR Archive**: Complete and structurally unified releases of the Allen Ancient DNA Resource (@Mallick2023) repackaged in the Poseidon package format.
-- The **Minotaur Archive**: Per-paper packages with genotype data reprocessed by the Minotaur workflow (see below).
+-   The **Community Archive**: Author supplied, per-paper packages with the genotype data published in the respective papers. Partially pre-populated from various versionf of the AADR.
+-   The **AADR Archive**: Complete and structurally unified releases of the Allen Ancient DNA Resource (@Mallick2023) repackaged in the Poseidon package format.
+-   The **Minotaur Archive**: Per-paper packages with genotype data reprocessed by the Minotaur workflow (see below).
 
 The data is versioned with Git and hosted on GitHub for easy co-editing and automatic structural validation.
 
@@ -71,11 +71,13 @@ The generated genotypes, together with descriptive statistics of the sequencing 
 
 -   To include certain group(s) from a Poseidon package, simply add them to the `-f` query. No specific markers are required. `Russia_HG_Karelia`
 
--   To extract individuals only, surround them by `<` and `>`. `<ALA026>` . To exclude individuals add package name `*package*` and `<individual>` with a dash sign. `"*2021_Saag_EastEuropean-3.2.0*,-<NIK003>"` . \
+-   To extract individuals only, surround them by `<` and `>`. `<ALA026>` . To exclude individuals add package name `*package*` and `<individual>` with a dash sign. `"*2021_Saag_EastEuropean-3.2.0*,-<NIK003>"` \
 
 ``` bash
 trident forge -p pileupcaller.double.geno -d 2021_Saag_EastEuropean-3.2.0 -d 2016_FuNature-2.1.1 -f "*pileupcaller.double*,Russia_AfontovaGora3,<NIK003>" -o testpackage --outFormat EIGENSTRAT
 ```
+
+[Forge selection language](https://www.poseidon-adna.org/#/trident?id=the-forge-selection-language)
 
 `forge` has a an optional flag `--intersect,` that defines, if the genotype data from different packages should be merged with an **intersect** instead of the default **union** operation. The default is to output the union of all SNPs, by setting the additional SNPs from the other merged package as missing in the samples that did not have them originally. This option is useful for making a data set based on Human Origins (HO) SNPs for analysis like PCA and ADMIXTURE.
 
@@ -107,8 +109,8 @@ If authors themselves provide high-quality, easily accessible versions of their 
 
 And the whole community wins, because sharing the tedious data preparation tasks empowers all researchers to achieve more in shorter time.
 
-::: {.column-margin}
-![](img/poseidon/our_data.jpg){width=50%}
+::: column-margin
+![](img/poseidon/our_data.jpg){width="50%"}
 :::
 
 ------------------------------------------------------------------------
