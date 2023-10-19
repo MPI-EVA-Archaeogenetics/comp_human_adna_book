@@ -8,9 +8,7 @@ book:
   date: "9/21/2023"
   chapters:
     - index.qmd
-    - intro.qmd
     - Quarto_intro.qmd
-    - summary.qmd
     - references.qmd
 
 bibliography: references.bib
