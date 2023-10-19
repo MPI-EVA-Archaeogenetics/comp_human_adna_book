@@ -1,6 +1,6 @@
 ---
 title: "Introduction to Quarto"
-author: "Laura Lacher & James Fellows Yates"
+author: "Laura Lacher"
 date: "10/23/2023"
 editor: visual
 bibliography: references.bib
@@ -15,15 +15,11 @@ Quarto is the "next generation" of R Markdown and is usable on different tools.
 
 ![](img/quarto_intro/Picture%201.png){width="300"}
 
-Here, we will describe how to set up your environment to use Quarto in **RStudio**, and VSCode.
+Here, I will only focus on **RStudio** though. For this, you have to [download](https://posit.co/download/rstudio-desktop/) RStudio first. If you have done this already, we can get started.
 
-Quarto in general is set up to be very intuitive and user friendly. And while it is possible to set up different documents simultaneously, those can also easily be set up to in just the way you need for whatever occasion. So, for either communicating your results to collaborators, discuss code with your supervisor, setting up a website or writing your paper, to just name some scenarios, quarto comes in quite handy. So, let's begin:
+Quarto in general is set up to be very intuitive and user friendly. And while it is possible to set up different documents simultaneously, those can also easily be set up to in just the way you need for whatever occasion. So, for either communicating your results to collaborators, discuss code with your supervisor, setting up a website or writing your paper, to just name some szenarios, quarto comes in quite handy. So, let's begin:
 
-## RStudio
-
-For this, you have to [download](https://posit.co/download/rstudio-desktop/) RStudio first. If you have done this already, we can get started.
-
-### Getting started
+## Getting started
 
 First, we have to install the quarto package using the following command in our console:
 
@@ -39,11 +35,11 @@ The new project will look like this:
 
 ![](img/quarto_intro/Screenshot%202023-10-11%20at%2011.39.43.png)
 
-### Universal instructions
+## Universal instructions
 
 When setting up your document, quarto will always provide you with some presets. So first, we will have a look into the .qmd files, for they are handled the same way, regardless the format you are setting up (website, book, presentation, etc.).
 
-#### Render & save
+### Render & save
 
 If we now click on render, we will be provided with the preview of our final version if the project in the viewer.
 
@@ -51,7 +47,7 @@ If we now click on render, we will be provided with the preview of our final ver
 
 ![](img/quarto_intro/Screenshot%202023-10-11%20at%2014.12.45.png){width="300"}
 
-#### Visual and Source
+### Visual and Source
 
 If you have chosen the **Visual** option on your toolbar, the preview will mostly resemble your .qmd files. If you are more comfortable with the R markdown optics, you can switch to **Source.**
 
@@ -59,7 +55,7 @@ In the **Source** version, you can write up your document in LaTeX.
 
 ![](img/quarto_intro/Screenshot_3.png){width="400"}
 
-#### .qmd files
+### .qmd files
 
 Quarto will automatically provide you with two **.qmd files**, as well as a **.yml file**.
 
@@ -91,11 +87,11 @@ Within these, you can define the outline of .qmd file **individually**, starting
 
 It is crucial to stick to the spacing. Otherwise, an error will occur.
 
-##### Insert
+#### Insert
 
 If you click `Insert`, you will realize, quarto provides you with a lot of options and shortcuts as well. So by just selecting on your chosen item to insert, it will be added to the document, while you are also provided with options on the appearance (in the case of figure/images or tables, etc). We will here have a brief look into how to work with **R code** and how to use the **reference** option.
 
-##### R code
+#### R code
 
 To add R code to your file, you select `Insert`, select `Code Cell` and choose the kind of code you want to insert. In this case, `R`. There are some things to keep in mind though.
 
@@ -121,7 +117,7 @@ A code block included in your document could look like the following. Here I use
 
 ![](img/quarto_intro/Screenshot%202023-10-17%20at%2017.05.28.png){width="400"}
 
-##### References
+#### References
 
 Depending on which citation program you are using, quarto is able to connect to it ([Zotero](https://www.zotero.org) works, for example). So, when selecting to insert a `Citation`, you can choose to simply add a reference from your program.
 
@@ -135,7 +131,7 @@ In your source code and your website, a citation will be depicted as follows:
 
 The citation will also automatically be added to a `references.bib` as well as to a `references.qmd` and is therefore available on your website on the page "References", which also will be created automatically.
 
-### Render your document
+## Render your document
 
 When done with setting up your documents, you would like to have the actual output. Depending on the `format` you set in your .yml file, your output can be a `html`, `pdf`, `MS Word`, `OpenOffice`, or `ePUB` file. To create those, the terminal in your RStudio Project is used.
 
@@ -152,13 +148,13 @@ Your rendered document should now look like this:
 
 ![](img/quarto_intro/Screenshot%202023-10-17%20at%2014.15.05.png)
 
-### Quarto website
+## Quarto website
 
 In the provided .qmd files, the index is also the first page of your website. As you might have noticed, quarto already sets up a navbar as well as a search function on your website.
 
 ![](img/quarto_intro/Screenshot%202023-10-11%20at%2014.09.08.png){width="200"}
 
-#### .yml files
+### .yml files
 
 While your .qmd files contain information about one page, the .yml file defines the overall looks of the website.
 
@@ -166,11 +162,11 @@ Here, you can define the type of your project (in this case a website), you can 
 
 ![](img/quarto_intro/Screenshot%202023-10-12%20at%2011.25.37.png){width="200"}
 
-### Quarto book
+## Quarto book
 
 The setup of the .yml file in a quarto book is slightly different than that of the website. So here are some general remarks about them.
 
-#### .yml files
+### .yml files
 
 We see, for example, that instead of a navbar, we find `chapters`. Those will appear in the listed order in your book.
 
@@ -181,28 +177,3 @@ We also already get provided with a `bibliography` and the responding .bib file.
 \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
 
 With this, you should at least have some ideas on how you can use quarto in your daily work routine. Happy coding and please feel free to contact me for any remarks or questions. I am happy to try and help.
-
-## VSCode
-
-Much of the concepts as described in the RStudio tutorial above apply equally well to using Quarto in VSCode, just with a different interface to execute them.
-
-Here we will describe how to set up VSCode and Quarto, and how to preview and render Quarto objects within the VSCode interface.
-
-To understand about more about the details of which files to edit etc., please see the RStudio description above.
-
-### Getting Started
-
-1. Install the Quarto CLI tool for your operating system from the [Quarto Website](https://quarto.org/docs/get-started/)
-2. Install the [VSCode Quarto extension](https://marketplace.visualstudio.com/items?itemName=quarto.quarto)
-
-### Using Quarto
-
-The basic workflow is as follows:
-
-1. Create or modify `.qmd` objects etc as described above in the Rstudio section about [Quarto markdown files](#qmd-files)
-2. Within VSCode, make sure you've opened it in the repository containing all the files
-3. Press <kdb>ctrl</kbd> + <kbd>shift</kbd> + <kbd>p</kbd> to bring up your command palette
-   1. To preview a local 'live' version of HTML or website versions, you can type `Quarto: preview`. To close the live preview, press <kbd>ctrl</kbd>+<kbd>c</kbd> in the VSCode terminal.
-   2. To render all the files e.g. final HTML and/or PDF versions, you can type `Quarto: Render Project`, where you will be given different options depending on the formats defined in the `_quarto.yml` file.
-
-For further VSCode integrations, just type `Quarto:` into your command palette and explore all the options.
