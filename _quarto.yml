@@ -8,8 +8,7 @@ book:
   date: "9/21/2023"
   chapters:
     - index.qmd
-    - intro.qmd
-    - summary.qmd
+    - Quarto_intro.qmd
     - poseidon.qmd
     - references.qmd
 

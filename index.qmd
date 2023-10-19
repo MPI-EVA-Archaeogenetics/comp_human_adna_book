@@ -2,5 +2,5 @@
 
 This book summarises prepared mini-courses for various computational tools and methods in the field of human archaeogenetic data analysis, with a particular emphasis on population genetics.
 
-The chapters are contributed by different authors, as indicated.
+The chapters are contributed by different authors, as indicated in the Yaml-frontmatter of each chapter's `.qmd` source file.
 
