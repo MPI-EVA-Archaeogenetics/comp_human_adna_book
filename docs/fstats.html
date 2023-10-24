@@ -9,7 +9,7 @@
 <meta name="author" content="Stephan Schiffels">
 <meta name="dcterms.date" content="2023-10-24">
 
-<title>Computational Methods for human population genetics and ancient DNA - 2&nbsp; Introduction to F-Statistics</title>
+<title>Computational Methods for human population genetics and ancient DNA - 3&nbsp; Introduction to F-Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -52,7 +52,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./references.html" rel="next">
-<link href="./Quarto_intro.html" rel="prev">
+<link href="./poseidon.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -97,7 +97,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fstats.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to F-Statistics</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fstats.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to F-Statistics</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -136,8 +136,14 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./poseidon.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Genotype and context data management with Poseidon</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./fstats.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to F-Statistics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to F-Statistics</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -156,11 +162,11 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">3</span> Introduction</a></li>
-  <li><a href="#outgroup-f3-statistics" id="toc-outgroup-f3-statistics" class="nav-link" data-scroll-target="#outgroup-f3-statistics"><span class="header-section-number">4</span> Outgroup-F3-Statistics</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">4</span> Introduction</a></li>
+  <li><a href="#outgroup-f3-statistics" id="toc-outgroup-f3-statistics" class="nav-link" data-scroll-target="#outgroup-f3-statistics"><span class="header-section-number">5</span> Outgroup-F3-Statistics</a>
   <ul class="collapse">
-  <li><a href="#linearity-in-a-and-b-but-not-c" id="toc-linearity-in-a-and-b-but-not-c" class="nav-link" data-scroll-target="#linearity-in-a-and-b-but-not-c"><span class="header-section-number">4.1</span> Linearity in A and B (but not C)</a></li>
-  <li><a href="#how-to-use-outgroup-f3" id="toc-how-to-use-outgroup-f3" class="nav-link" data-scroll-target="#how-to-use-outgroup-f3"><span class="header-section-number">4.2</span> How to use Outgroup-F3</a></li>
+  <li><a href="#linearity-in-a-and-b-but-not-c" id="toc-linearity-in-a-and-b-but-not-c" class="nav-link" data-scroll-target="#linearity-in-a-and-b-but-not-c"><span class="header-section-number">5.1</span> Linearity in A and B (but not C)</a></li>
+  <li><a href="#how-to-use-outgroup-f3" id="toc-how-to-use-outgroup-f3" class="nav-link" data-scroll-target="#how-to-use-outgroup-f3"><span class="header-section-number">5.2</span> How to use Outgroup-F3</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -170,7 +176,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to F-Statistics</span></h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to F-Statistics</span></h1>
 </div>
 
 
@@ -197,8 +203,8 @@ div.csl-indent {
 
 </header>
 
-<section id="introduction" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Introduction</h1>
+<section id="introduction" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Introduction</h1>
 <p>F-Statistics are one of the simplest summary-statistics of genotype data that help us gain insights into the relationships of individuals and groups.</p>
 <p>Some key references up front:</p>
 <ol type="1">
@@ -206,8 +212,8 @@ div.csl-indent {
 <li>Peter, Benjamin M. 2016. “Admixture, Population Structure, and F-Statistics.” Genetics 202 (4): 1485–1501. <span class="citation" data-cites="Peter2016">(<a href="references.html#ref-Peter2016" role="doc-biblioref">Peter 2016</a>)</span></li>
 </ol>
 </section>
-<section id="outgroup-f3-statistics" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Outgroup-F3-Statistics</h1>
+<section id="outgroup-f3-statistics" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Outgroup-F3-Statistics</h1>
 <p>Outgroup-F3-Statistics are perhaps one of the easiest to understand, so we’ll start with them. F3-Statistics in general are defined as:</p>
 <p><span class="math display">\[F_3(A, B;C) = \langle(c-a)(c-b)\rangle\]</span></p>
 <p>which looks a bit unintuitive. Here, <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are populations or individuals to be compared, and <span class="math inline">\(C\)</span> denotes an outgroup, and <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are the non-reference allele frequencies of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, respectively. The expression <span class="math inline">\(\langle\cdot\rangle\)</span> denotes an average over all SNPs in the dataset.</p>
@@ -275,15 +281,15 @@ div.csl-indent {
 </tbody>
 </table>
 <p>Every SNP where A and B have the same allele, which in turn is different from the outgroup C contributes 1 to the statistic, all other positions contribute 0. So the higher this number, the more similar A and B are, and the more distant is the outgroup C from both A and B.</p>
-<section id="linearity-in-a-and-b-but-not-c" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="linearity-in-a-and-b-but-not-c"><span class="header-section-number">4.1</span> Linearity in A and B (but not C)</h2>
+<section id="linearity-in-a-and-b-but-not-c" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="linearity-in-a-and-b-but-not-c"><span class="header-section-number">5.1</span> Linearity in A and B (but not C)</h2>
 <p>What happens if <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are populations, instead of single samples? Conveniently, this statistic is linear in A and B, which means that the resulting statistic will just be an average over all combinations of individuals in A and B. The same is true for diploid samples A and B, in which case the result will just be the average similarity between all haplotypes between A and B. In mathematical terms:</p>
 <p><span class="math display">\[F_3(\{A_1,A_2\},B;C) = \frac{1}{2}(F_3(A_1,B;C)+F_3(A_2,B;C))\]</span></p>
 <p>(and similarly for $B={B_1,B_2}).</p>
 <p>Note that F_3 statistics are <em>not</em> linear in <span class="math inline">\(C\)</span>. This has rarely any consequences, because we typically use some fixed group for <span class="math inline">\(C\)</span> (see below0), and only vary <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> in our analyses. But it is useful for the interpration to know that at least for A and B, group-based statistics are simply averages over individual-based ones.</p>
 </section>
-<section id="how-to-use-outgroup-f3" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="how-to-use-outgroup-f3"><span class="header-section-number">4.2</span> How to use Outgroup-F3</h2>
+<section id="how-to-use-outgroup-f3" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="how-to-use-outgroup-f3"><span class="header-section-number">5.2</span> How to use Outgroup-F3</h2>
 <p>Outgroup-F3 are most commonly used to characterize an individual or population of interest by its relationship to a set of <em>reference</em> populations, for example to reveal geographic or cultural patterns of similarity.</p>
 <p>An example is this Figure from <span class="citation" data-cites="Raghavan2014">(<a href="references.html#ref-Raghavan2014" role="doc-biblioref">Raghavan et al. 2014</a>)</span>:</p>
 
@@ -538,8 +544,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./Quarto_intro.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></span>
+      <a href="./poseidon.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Genotype and context data management with Poseidon</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
