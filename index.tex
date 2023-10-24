@@ -179,7 +179,7 @@ DNA}
 
 \begin{document}
 \maketitle
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[sharp corners, enhanced, boxrule=0pt, interior hidden, borderline west={3pt}{0pt}{shadecolor}, frame hidden, breakable]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, sharp corners, breakable, borderline west={3pt}{0pt}{shadecolor}, frame hidden, enhanced, interior hidden]}{\end{tcolorbox}}\fi
 
 \renewcommand*\contentsname{Table of contents}
 {
@@ -220,20 +220,26 @@ different tools.
 
 \includegraphics[width=3.125in,height=\textheight]{img/quarto_intro/Picture 1.png}
 
-Here, I will only focus on \textbf{RStudio} though. For this, you have
-to \href{https://posit.co/download/rstudio-desktop/}{download} RStudio
-first. If you have done this already, we can get started.
+Here, we will describe how to set up your environment to use Quarto in
+\textbf{RStudio}, and VSCode.
 
 Quarto in general is set up to be very intuitive and user friendly. And
 while it is possible to set up different documents simultaneously, those
 can also easily be set up to in just the way you need for whatever
 occasion. So, for either communicating your results to collaborators,
 discuss code with your supervisor, setting up a website or writing your
-paper, to just name some szenarios, quarto comes in quite handy. So,
+paper, to just name some scenarios, quarto comes in quite handy. So,
 let's begin:
 
+\hypertarget{rstudio}{%
+\section{RStudio}\label{rstudio}}
+
+For this, you have to
+\href{https://posit.co/download/rstudio-desktop/}{download} RStudio
+first. If you have done this already, we can get started.
+
 \hypertarget{getting-started}{%
-\section{Getting started}\label{getting-started}}
+\subsection{Getting started}\label{getting-started}}
 
 First, we have to install the quarto package using the following command
 in our console:
@@ -253,7 +259,7 @@ The new project will look like this:
 \includegraphics{img/quarto_intro/Screenshot 2023-10-11 at 11.39.43.png}
 
 \hypertarget{universal-instructions}{%
-\section{Universal instructions}\label{universal-instructions}}
+\subsection{Universal instructions}\label{universal-instructions}}
 
 When setting up your document, quarto will always provide you with some
 presets. So first, we will have a look into the .qmd files, for they are
@@ -261,7 +267,7 @@ handled the same way, regardless the format you are setting up (website,
 book, presentation, etc.).
 
 \hypertarget{render-save}{%
-\subsection{Render \& save}\label{render-save}}
+\subsubsection{Render \& save}\label{render-save}}
 
 If we now click on render, we will be provided with the preview of our
 final version if the project in the viewer.
@@ -274,7 +280,7 @@ to tick that box on each .qmd file individually though.
 \includegraphics[width=3.125in,height=\textheight]{img/quarto_intro/Screenshot 2023-10-11 at 14.12.45.png}
 
 \hypertarget{visual-and-source}{%
-\subsection{Visual and Source}\label{visual-and-source}}
+\subsubsection{Visual and Source}\label{visual-and-source}}
 
 If you have chosen the \textbf{Visual} option on your toolbar, the
 preview will mostly resemble your .qmd files. If you are more
@@ -286,7 +292,7 @@ In the \textbf{Source} version, you can write up your document in LaTeX.
 \includegraphics[width=4.16667in,height=\textheight]{img/quarto_intro/Screenshot_3.png}
 
 \hypertarget{qmd-files}{%
-\subsection{.qmd files}\label{qmd-files}}
+\subsubsection{.qmd files}\label{qmd-files}}
 
 Quarto will automatically provide you with two \textbf{.qmd files}, as
 well as a \textbf{.yml file}.
@@ -327,7 +333,7 @@ be automatically added
 It is crucial to stick to the spacing. Otherwise, an error will occur.
 
 \hypertarget{insert}{%
-\subsubsection{Insert}\label{insert}}
+\paragraph{Insert}\label{insert}}
 
 If you click \texttt{Insert}, you will realize, quarto provides you with
 a lot of options and shortcuts as well. So by just selecting on your
@@ -338,7 +344,7 @@ to work with \textbf{R code} and how to use the \textbf{reference}
 option.
 
 \hypertarget{r-code}{%
-\subsubsection{R code}\label{r-code}}
+\paragraph{R code}\label{r-code}}
 
 To add R code to your file, you select \texttt{Insert}, select
 \texttt{Code\ Cell} and choose the kind of code you want to insert. In
@@ -379,7 +385,7 @@ only available in html though.
 \includegraphics[width=4.16667in,height=\textheight]{img/quarto_intro/Screenshot 2023-10-17 at 17.05.28.png}
 
 \hypertarget{references}{%
-\subsubsection{References}\label{references}}
+\paragraph{References}\label{references}}
 
 Depending on which citation program you are using, quarto is able to
 connect to it (\href{https://www.zotero.org}{Zotero} works, for
@@ -401,7 +407,7 @@ therefore available on your website on the page ``References'', which
 also will be created automatically.
 
 \hypertarget{render-your-document}{%
-\section{Render your document}\label{render-your-document}}
+\subsection{Render your document}\label{render-your-document}}
 
 When done with setting up your documents, you would like to have the
 actual output. Depending on the \texttt{format} you set in your .yml
@@ -424,7 +430,7 @@ Your rendered document should now look like this:
 \includegraphics{img/quarto_intro/Screenshot 2023-10-17 at 14.15.05.png}
 
 \hypertarget{quarto-website}{%
-\section{Quarto website}\label{quarto-website}}
+\subsection{Quarto website}\label{quarto-website}}
 
 In the provided .qmd files, the index is also the first page of your
 website. As you might have noticed, quarto already sets up a navbar as
@@ -433,7 +439,7 @@ well as a search function on your website.
 \includegraphics[width=2.08333in,height=\textheight]{img/quarto_intro/Screenshot 2023-10-11 at 14.09.08.png}
 
 \hypertarget{yml-files}{%
-\subsection{.yml files}\label{yml-files}}
+\subsubsection{.yml files}\label{yml-files}}
 
 While your .qmd files contain information about one page, the .yml file
 defines the overall looks of the website.
@@ -450,13 +456,13 @@ again.
 \includegraphics[width=2.08333in,height=\textheight]{img/quarto_intro/Screenshot 2023-10-12 at 11.25.37.png}
 
 \hypertarget{quarto-book}{%
-\section{Quarto book}\label{quarto-book}}
+\subsection{Quarto book}\label{quarto-book}}
 
 The setup of the .yml file in a quarto book is slightly different than
 that of the website. So here are some general remarks about them.
 
 \hypertarget{yml-files-1}{%
-\subsection{.yml files}\label{yml-files-1}}
+\subsubsection{.yml files}\label{yml-files-1}}
 
 We see, for example, that instead of a navbar, we find
 \texttt{chapters}. Those will appear in the listed order in your book.
@@ -473,6 +479,70 @@ included in your references, by just adding them to
 With this, you should at least have some ideas on how you can use quarto
 in your daily work routine. Happy coding and please feel free to contact
 me for any remarks or questions. I am happy to try and help.
+
+\hypertarget{vscode}{%
+\section{VSCode}\label{vscode}}
+
+Much of the concepts as described in the RStudio tutorial above apply
+equally well to using Quarto in VSCode, just with a different interface
+to execute them.
+
+Here we will describe how to set up VSCode and Quarto, and how to
+preview and render Quarto objects within the VSCode interface.
+
+To understand about more about the details of which files to edit etc.,
+please see the RStudio description above.
+
+\hypertarget{getting-started-1}{%
+\subsection{Getting Started}\label{getting-started-1}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Install the Quarto CLI tool for your operating system from the
+  \href{https://quarto.org/docs/get-started/}{Quarto Website}
+\item
+  Install the
+  \href{https://marketplace.visualstudio.com/items?itemName=quarto.quarto}{VSCode
+  Quarto extension}
+\end{enumerate}
+
+\hypertarget{using-quarto}{%
+\subsection{Using Quarto}\label{using-quarto}}
+
+The basic workflow is as follows:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Create or modify \texttt{.qmd} objects etc as described above in the
+  Rstudio section about \protect\hyperlink{qmd-files}{Quarto markdown
+  files}
+\item
+  Within VSCode, make sure you've opened it in the repository containing
+  all the files
+\item
+  Press ctrl + shift + p to bring up your command palette
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    To preview a local `live' version of HTML or website versions, you
+    can type \texttt{Quarto:\ preview}. To close the live preview, press
+    ctrl+c in the VSCode terminal.
+  \item
+    To render all the files e.g.~final HTML and/or PDF versions, you can
+    type \texttt{Quarto:\ Render\ Project}, where you will be given
+    different options depending on the formats defined in the
+    \texttt{\_quarto.yml} file.
+  \end{enumerate}
+\end{enumerate}
+
+For further VSCode integrations, just type \texttt{Quarto:} into your
+command palette and explore all the options.
 
 \bookmarksetup{startatroot}
 
