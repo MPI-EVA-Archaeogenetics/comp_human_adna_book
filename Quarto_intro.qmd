@@ -1,10 +1,12 @@
 ---
 title: "Introduction to Quarto"
 author: "Laura Lacher & James Fellows Yates"
-date: "10/23/2023"
+date: "10/12/2023"
 editor: visual
 bibliography: references.bib
 toc: true
+reference-location: margin
+citation-location: margin
 ---
 
 In this introduction to quarto, you will be shown the basics in how to set up a website and a book. For more detailed information, I highly recommend checking out the [website](https://quarto.org) and also watch the [introduction tutorial](https://youtu.be/_f3latmOhew).
