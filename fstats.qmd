@@ -6,7 +6,7 @@ bibliography: references.bib
 toc: true
 ---
 
-# Introduction
+## Introduction
 
 F-Statistics are one of the simplest summary-statistics of genotype data that help us gain insights into the relationships of individuals and groups.
 
@@ -15,7 +15,7 @@ Some key references up front:
 1. Patterson, Nick, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin Rohland, Yiping Zhan, Teri Genschoreck, Teresa Webster, and David Reich. 2012. “Ancient Admixture in Human History.” Genetics 192 (3): 1065–93. [@Patterson2012]
 2. Peter, Benjamin M. 2016. “Admixture, Population Structure, and F-Statistics.” Genetics 202 (4): 1485–1501. [@Peter2016] 
 
-# Outgroup-F3-Statistics
+## Outgroup-F3-Statistics
 
 Outgroup-F3-Statistics are perhaps one of the easiest to understand, so we'll start with them. F3-Statistics in general are defined as:
 
@@ -46,8 +46,15 @@ $$F_3(\{A_1,A_2\},B;C) = \frac{1}{2}(F_3(A_1,B;C)+F_3(A_2,B;C))$$
 
 Note that F_3 statistics are _not_ linear in $C$. This has rarely any consequences, because we typically use some fixed group for $C$ (see below0), and only vary $A$ and $B$ in our analyses. But it is useful for the interpration to know that at least for A and B, group-based statistics are simply averages over individual-based ones.
 
-## How to use Outgroup-F3
+### How to use Outgroup-F3 - An example from [@Raghavan2014]
 
 Outgroup-F3 are most commonly used to characterize an individual or population of interest by its relationship to a set of _reference_ populations, for example to reveal geographic or cultural patterns of similarity.
 
 An example is this Figure from [@Raghavan2014]:
+
+![Figure 1c from [@Raghavan2014]](img/fstats/Raghavan2014_f3.jpg),
+
+which report $F_3(MA\_1,X; Yoruba)$, where "MA_1" is an Upper Paleolithic individual from Siberia, approximately 24,000 years old, and Yoruba is a present-day group from Nigeria, which is here used as an outgroup.
+
+We can reproduce this statistic using `xerxes trident`.
+
