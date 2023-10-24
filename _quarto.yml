@@ -9,6 +9,7 @@ book:
   chapters:
     - index.qmd
     - Quarto_intro.qmd
+    - poseidon.qmd
     - fstats.qmd
     - references.qmd
 
