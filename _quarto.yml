@@ -9,6 +9,7 @@ book:
   chapters:
     - index.qmd
     - Quarto_intro.qmd
+    - poseidon.qmd
     - references.qmd
 
 bibliography: references.bib
@@ -16,6 +17,4 @@ bibliography: references.bib
 format:
   html:
     theme: cosmo
-  pdf:
-    documentclass: scrreprt
 
