@@ -1,0 +1,53 @@
+---
+title: "Introduction to F-Statistics"
+author: "Stephan Schiffels"
+date: "10/24/2023"
+bibliography: references.bib
+toc: true
+---
+
+# Introduction
+
+F-Statistics are one of the simplest summary-statistics of genotype data that help us gain insights into the relationships of individuals and groups.
+
+Some key references up front:
+
+1. Patterson, Nick, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin Rohland, Yiping Zhan, Teri Genschoreck, Teresa Webster, and David Reich. 2012. “Ancient Admixture in Human History.” Genetics 192 (3): 1065–93. [@Patterson2012]
+2. Peter, Benjamin M. 2016. “Admixture, Population Structure, and F-Statistics.” Genetics 202 (4): 1485–1501. [@Peter2016] 
+
+# Outgroup-F3-Statistics
+
+Outgroup-F3-Statistics are perhaps one of the easiest to understand, so we'll start with them. F3-Statistics in general are defined as:
+
+$$F_3(A, B;C) = \langle(c-a)(c-b)\rangle$$
+
+which looks a bit unintuitive. Here, $A$ and $B$ are populations or individuals to be compared, and $C$ denotes an outgroup, and $a$ and $b$ are the non-reference allele frequencies of $A$ and $B$, respectively. The expression $\langle\cdot\rangle$ denotes an average over all SNPs in the dataset.
+
+We can understand it best as a measure of genetic similarity between groups A and B, evaluated on SNPs where A and B carry a different allele than the outgroup C. Here is an example based on A, B and C all consisting of just a single haploid sample each:
+
+| SNP           | A | B | C | $(c-a)(c-b)$ |
+|---------------|---|---|---|--------------|
+| 1             | 1 | 1 | 0 | 1            |
+| 2             | 1 | 0 | 0 | 0            |
+| 3             | 0 | 1 | 0 | 0            |
+| 4             | 0 | 1 | 1 | 0            |
+| 5             | 0 | 0 | 1 | 1            |
+| 6             | 1 | 0 | 1 | 0            |
+| $F_3(A, B;C)$ |   |   |   | **0.33**     |
+
+Every SNP where A and B have the same allele, which in turn is different from the outgroup C contributes 1 to the statistic, all other positions contribute 0. So the higher this number, the more similar A and B are, and the more distant is the outgroup C from both A and B.
+
+## Linearity in A and B (but not C)
+What happens if $A$ and $B$ are populations, instead of single samples? Conveniently, this statistic is linear in A and B, which means that the resulting statistic will just be an average over all combinations of individuals in A and B. The same is true for diploid samples A and B, in which case the result will just be the average similarity between all haplotypes between A and B. In mathematical terms:
+
+$$F_3(\{A_1,A_2\},B;C) = \frac{1}{2}(F_3(A_1,B;C)+F_3(A_2,B;C))$$
+
+(and similarly for $B=\{B_1,B_2\}).
+
+Note that F_3 statistics are _not_ linear in $C$. This has rarely any consequences, because we typically use some fixed group for $C$ (see below0), and only vary $A$ and $B$ in our analyses. But it is useful for the interpration to know that at least for A and B, group-based statistics are simply averages over individual-based ones.
+
+## How to use Outgroup-F3
+
+Outgroup-F3 are most commonly used to characterize an individual or population of interest by its relationship to a set of _reference_ populations, for example to reveal geographic or cultural patterns of similarity.
+
+An example is this Figure from [@Raghavan2014]:

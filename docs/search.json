@@ -1,0 +1,44 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Computational Methods for human population genetics and ancient DNA",
+    "section": "",
+    "text": "Preface\nThis book summarises prepared mini-courses for various computational tools and methods in the field of human archaeogenetic data analysis, with a particular emphasis on population genetics.\nThe chapters are contributed by different authors, as indicated in the Yaml-frontmatter of each chapter’s .qmd source file."
+  },
+  {
+    "objectID": "fstats.html",
+    "href": "fstats.html",
+    "title": "2  Introduction to F-Statistics",
+    "section": "",
+    "text": "3 Introduction\nF-Statistics are one of the simplest summary-statistics of genotype data that help us gain insights into the relationships of individuals and groups.\nSome key references up front:\nOutgroup-F3-Statistics are perhaps one of the easiest to understand, so we’ll start with them. F3-Statistics in general are defined as:\n\\[F_3(A, B;C) = \\langle(c-a)(c-b)\\rangle\\]\nwhich looks a bit unintuitive. Here, \\(A\\) and \\(B\\) are populations or individuals to be compared, and \\(C\\) denotes an outgroup, and \\(a\\) and \\(b\\) are the non-reference allele frequencies of \\(A\\) and \\(B\\), respectively. The expression \\(\\langle\\cdot\\rangle\\) denotes an average over all SNPs in the dataset.\nWe can understand it best as a measure of genetic similarity between groups A and B, evaluated on SNPs where A and B carry a different allele than the outgroup C. Here is an example based on A, B and C all consisting of just a single haploid sample each:\nEvery SNP where A and B have the same allele, which in turn is different from the outgroup C contributes 1 to the statistic, all other positions contribute 0. So the higher this number, the more similar A and B are, and the more distant is the outgroup C from both A and B."
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "Patterson, Nick, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin\nRohland, Yiping Zhan, Teri Genschoreck, Teresa Webster, and David Reich.\n2012. “Ancient Admixture in Human History.”\nGenetics 192 (3): 1065–93. https://doi.org/10.1534/genetics.112.145037.\n\n\nPeter, Benjamin M. 2016. “Admixture, Population Structure, and\nF-Statistics.” Genetics 202 (4): 1485–1501.\nhttps://doi.org/10.1534/genetics.115.183913."
+  },
+  {
+    "objectID": "fstats.html#linearity-in-a-and-b-but-not-c",
+    "href": "fstats.html#linearity-in-a-and-b-but-not-c",
+    "title": "2  Introduction to F-Statistics",
+    "section": "4.1 Linearity in A and B (but not C)",
+    "text": "4.1 Linearity in A and B (but not C)\nWhat happens if \\(A\\) and \\(B\\) are populations, instead of single samples? Conveniently, this statistic is linear in A and B, which means that the resulting statistic will just be an average over all combinations of individuals in A and B. The same is true for diploid samples A and B, in which case the result will just be the average similarity between all haplotypes between A and B. In mathematical terms:\n\\[F_3(\\{A_1,A_2\\},B;C) = \\frac{1}{2}(F_3(A_1,B;C)+F_3(A_2,B;C))\\]\n(and similarly for $B={B_1,B_2}).\nNote that F_3 statistics are not linear in \\(C\\). This has rarely any consequences, because we typically use some fixed group for \\(C\\) (see below0), and only vary \\(A\\) and \\(B\\) in our analyses. But it is useful for the interpration to know that at least for A and B, group-based statistics are simply averages over individual-based ones."
+  },
+  {
+    "objectID": "fstats.html#choosing-an-outgroup",
+    "href": "fstats.html#choosing-an-outgroup",
+    "title": "2  Introduction to F-Statistics",
+    "section": "4.2 Choosing an outgroup",
+    "text": "4.2 Choosing an outgroup\n\n\n\n\nPatterson, Nick, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin Rohland, Yiping Zhan, Teri Genschoreck, Teresa Webster, and David Reich. 2012. “Ancient Admixture in Human History.” Genetics 192 (3): 1065–93. https://doi.org/10.1534/genetics.112.145037.\n\n\nPeter, Benjamin M. 2016. “Admixture, Population Structure, and F-Statistics.” Genetics 202 (4): 1485–1501. https://doi.org/10.1534/genetics.115.183913."
+  },
+  {
+    "objectID": "fstats.html#how-to-use-outgroup-f3",
+    "href": "fstats.html#how-to-use-outgroup-f3",
+    "title": "2  Introduction to F-Statistics",
+    "section": "4.2 How to use Outgroup-F3",
+    "text": "4.2 How to use Outgroup-F3\nOutgroup-F3 are most commonly used to characterize an individual or population of interest by its relationship to a set of reference populations, for example to reveal geographic or cultural patterns of similarity.\nAn example is this Figure from (Raghavan et al. 2014):\n\n\n\n\nPatterson, Nick, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin Rohland, Yiping Zhan, Teri Genschoreck, Teresa Webster, and David Reich. 2012. “Ancient Admixture in Human History.” Genetics 192 (3): 1065–93. https://doi.org/10.1534/genetics.112.145037.\n\n\nPeter, Benjamin M. 2016. “Admixture, Population Structure, and F-Statistics.” Genetics 202 (4): 1485–1501. https://doi.org/10.1534/genetics.115.183913.\n\n\nRaghavan, Maanasa, Pontus Skoglund, Kelly E Graf, Mait Metspalu, Anders Albrechtsen, Ida Moltke, Simon Rasmussen, et al. 2014. “Upper Palaeolithic Siberian Genome Reveals Dual Ancestry of Native Americans.” Nature 505 (7481): 87–91. https://doi.org/10.1038/nature12736."
+  }
+]
