@@ -88,7 +88,7 @@ div.csl-indent {
 
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -172,7 +172,7 @@ div.csl-indent {
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -203,7 +203,7 @@ div.csl-indent {
 
 </header>
 
-<section id="introduction" class="level2" data-number="3.1">
+<section id="introduction" class="level2 page-columns page-full" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">3.1</span> Introduction</h2>
 <p>F-Statistics are one of the simplest summary-statistics of genotype data that help us gain insights into the relationships of individuals and groups.</p>
 <p>Some key references up front:</p>
@@ -211,7 +211,11 @@ div.csl-indent {
 <li>Patterson, Nick, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin Rohland, Yiping Zhan, Teri Genschoreck, Teresa Webster, and David Reich. 2012. “Ancient Admixture in Human History.” Genetics 192 (3): 1065–93. <span class="citation" data-cites="Patterson2012">(<a href="references.html#ref-Patterson2012" role="doc-biblioref">Patterson et al. 2012</a>)</span></li>
 <li>Peter, Benjamin M. 2016. “Admixture, Population Structure, and F-Statistics.” Genetics 202 (4): 1485–1501. <span class="citation" data-cites="Peter2016">(<a href="references.html#ref-Peter2016" role="doc-biblioref">Peter 2016</a>)</span></li>
 </ol>
-</section>
+<div class="no-row-height column-margin column-container"><div id="ref-Patterson2012" class="csl-entry" role="listitem">
+Patterson, Nick, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin Rohland, Yiping Zhan, Teri Genschoreck, Teresa Webster, and David Reich. 2012. <span>“Ancient Admixture in Human History.”</span> <em>Genetics</em> 192 (3): 1065–93. <a href="https://doi.org/10.1534/genetics.112.145037">https://doi.org/10.1534/genetics.112.145037</a>.
+</div><div id="ref-Peter2016" class="csl-entry" role="listitem">
+Peter, Benjamin M. 2016. <span>“Admixture, Population Structure, and <span>F-Statistics</span>.”</span> <em>Genetics</em> 202 (4): 1485–1501. <a href="https://doi.org/10.1534/genetics.115.183913">https://doi.org/10.1534/genetics.115.183913</a>.
+</div></div></section>
 <section id="outgroup-f3-statistics" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="outgroup-f3-statistics"><span class="header-section-number">3.2</span> Outgroup-F3-Statistics</h2>
 <p>Outgroup-F3-Statistics are perhaps one of the easiest to understand, so we’ll start with them. F3-Statistics in general are defined as:</p>
@@ -282,32 +286,29 @@ div.csl-indent {
 </table>
 <p>Every SNP where A and B have the same allele, which in turn is different from the outgroup C contributes 1 to the statistic, all other positions contribute 0. So the higher this number, the more similar A and B are, and the more distant is the outgroup C from both A and B.</p>
 </section>
-<section id="linearity-in-a-and-b-but-not-c" class="level2" data-number="3.3">
+<section id="linearity-in-a-and-b-but-not-c" class="level2 page-columns page-full" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="linearity-in-a-and-b-but-not-c"><span class="header-section-number">3.3</span> Linearity in A and B (but not C)</h2>
 <p>What happens if <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are populations, instead of single samples? Conveniently, this statistic is linear in A and B, which means that the resulting statistic will just be an average over all combinations of individuals in A and B. The same is true for diploid samples A and B, in which case the result will just be the average similarity between all haplotypes between A and B. In mathematical terms:</p>
 <p><span class="math display">\[F_3(\{A_1,A_2\},B;C) = \frac{1}{2}(F_3(A_1,B;C)+F_3(A_2,B;C))\]</span></p>
 <p>(and similarly for $B={B_1,B_2}).</p>
 <p>Note that F_3 statistics are <em>not</em> linear in <span class="math inline">\(C\)</span>. This has rarely any consequences, because we typically use some fixed group for <span class="math inline">\(C\)</span> (see below0), and only vary <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> in our analyses. But it is useful for the interpration to know that at least for A and B, group-based statistics are simply averages over individual-based ones.</p>
-<section id="how-to-use-outgroup-f3---an-example-from-raghavan2014" class="level3" data-number="3.3.1">
+<section id="how-to-use-outgroup-f3---an-example-from-raghavan2014" class="level3 page-columns page-full" data-number="3.3.1">
 <h3 data-number="3.3.1" class="anchored" data-anchor-id="how-to-use-outgroup-f3---an-example-from-raghavan2014"><span class="header-section-number">3.3.1</span> How to use Outgroup-F3 - An example from <span class="citation" data-cites="Raghavan2014">(<a href="references.html#ref-Raghavan2014" role="doc-biblioref">Raghavan et al. 2014</a>)</span></h3>
-<p>Outgroup-F3 are most commonly used to characterize an individual or population of interest by its relationship to a set of <em>reference</em> populations, for example to reveal geographic or cultural patterns of similarity.</p>
+<div class="no-row-height column-margin column-container"></div><p>Outgroup-F3 are most commonly used to characterize an individual or population of interest by its relationship to a set of <em>reference</em> populations, for example to reveal geographic or cultural patterns of similarity.</p>
 <p>An example is this Figure from <span class="citation" data-cites="Raghavan2014">(<a href="references.html#ref-Raghavan2014" role="doc-biblioref">Raghavan et al. 2014</a>)</span>:</p>
-<p><img src="img/fstats/Raghavan2014_f3.jpg" class="img-fluid" alt="Figure 1c from (Raghavan et al. 2014)">,</p>
-<p>which report <span class="math inline">\(F_3(MA\_1,X; Yoruba)\)</span>, where “MA_1” is an Upper Paleolithic individual from Siberia, approximately 24,000 years old, and Yoruba is a present-day group from Nigeria, which is here used as an outgroup.</p>
+<div class="no-row-height column-margin column-container"></div><div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="img/fstats/Raghavan2014_f3.jpg" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure 1c from <span class="citation" data-cites="Raghavan2014">(<a href="references.html#ref-Raghavan2014" role="doc-biblioref">Raghavan et al. 2014</a>)</span></figcaption>
+<div class="no-row-height column-margin column-container"><div id="ref-Raghavan2014" class="csl-entry" role="listitem">
+Raghavan, Maanasa, Pontus Skoglund, Kelly E Graf, Mait Metspalu, Anders Albrechtsen, Ida Moltke, Simon Rasmussen, et al. 2014. <span>“Upper Palaeolithic Siberian Genome Reveals Dual Ancestry of Native Americans.”</span> <em>Nature</em> 505 (7481): 87–91. <a href="https://doi.org/10.1038/nature12736">https://doi.org/10.1038/nature12736</a>.
+</div></div></figure>
+</div>
+<p>which report <span class="math inline">\(F_3(MA\_1,X; \text{Yoruba})\)</span>, where “MA_1” is an Upper Paleolithic individual from Siberia, approximately 24,000 years old, and Yoruba is a present-day group from Nigeria, which is here used as an outgroup.</p>
 <p>We can reproduce this statistic using <code>xerxes trident</code>.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
-<div id="ref-Patterson2012" class="csl-entry" role="listitem">
-Patterson, Nick, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin Rohland, Yiping Zhan, Teri Genschoreck, Teresa Webster, and David Reich. 2012. <span>“Ancient Admixture in Human History.”</span> <em>Genetics</em> 192 (3): 1065–93. <a href="https://doi.org/10.1534/genetics.112.145037">https://doi.org/10.1534/genetics.112.145037</a>.
-</div>
-<div id="ref-Peter2016" class="csl-entry" role="listitem">
-Peter, Benjamin M. 2016. <span>“Admixture, Population Structure, and <span>F-Statistics</span>.”</span> <em>Genetics</em> 202 (4): 1485–1501. <a href="https://doi.org/10.1534/genetics.115.183913">https://doi.org/10.1534/genetics.115.183913</a>.
-</div>
-<div id="ref-Raghavan2014" class="csl-entry" role="listitem">
-Raghavan, Maanasa, Pontus Skoglund, Kelly E Graf, Mait Metspalu, Anders Albrechtsen, Ida Moltke, Simon Rasmussen, et al. 2014. <span>“Upper Palaeolithic Siberian Genome Reveals Dual Ancestry of Native Americans.”</span> <em>Nature</em> 505 (7481): 87–91. <a href="https://doi.org/10.1038/nature12736">https://doi.org/10.1038/nature12736</a>.
-</div>
-</div>
+
 </section>
 </section>
 

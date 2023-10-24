@@ -4,6 +4,9 @@ author: "Stephan Schiffels"
 date: "10/24/2023"
 bibliography: references.bib
 toc: true
+reference-location: margin
+citation-location: margin
+
 ---
 
 ## Introduction
@@ -52,9 +55,9 @@ Outgroup-F3 are most commonly used to characterize an individual or population o
 
 An example is this Figure from [@Raghavan2014]:
 
-![Figure 1c from [@Raghavan2014]](img/fstats/Raghavan2014_f3.jpg),
+![Figure 1c from [@Raghavan2014]](img/fstats/Raghavan2014_f3.jpg)
 
-which report $F_3(MA\_1,X; Yoruba)$, where "MA_1" is an Upper Paleolithic individual from Siberia, approximately 24,000 years old, and Yoruba is a present-day group from Nigeria, which is here used as an outgroup.
+which report $F_3(MA\_1,X; \text{Yoruba})$, where "MA_1" is an Upper Paleolithic individual from Siberia, approximately 24,000 years old, and Yoruba is a present-day group from Nigeria, which is here used as an outgroup.
 
 We can reproduce this statistic using `xerxes trident`.
 
