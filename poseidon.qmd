@@ -1,9 +1,13 @@
 ---
+title: "Genotype and context data management with Poseidon"
+author: "Ayshin Ghalichi & CLemens Schmid"
+date: "10/19/2023"
+bibliography: references.bib
+toc: true
 reference-location: margin
 citation-location: margin
----
 
-# Genotype and context data management with Poseidon
+---
 
 Poseidon is an open computational framework to enable standardised and FAIR (@Wilkinson2016) handling of genotypes with their highly relevant context information.
 
