@@ -1,13 +1,11 @@
 ---
 title: "Introduction to F-Statistics"
 author: "Stephan Schiffels"
-date: "10/24/2023"
+date: "10/26/2023"
 bibliography: references.bib
 toc: true
 reference-location: margin
 citation-location: margin
-execute:
-  eval: false
 ---
 
 ## Admixture - F3 Statistics
@@ -54,20 +52,20 @@ We will use this statistics to test if Finnish are admixed between East and West
 :::{.callout-tip}
 If you happen to have downloaded a copy of the [Poseidon Community Archive](https://www.poseidon-adna.org/#/archive_overview?id=public-poseidon-archives) already, then just use the path to that archive in the following commands. Otherwise you download the entire archive via 
 
-```{bash}
+```{bash eval=FALSE}
 trident fetch -d /somewhere/to/store/the/archive --downloadAll 
 ```
 
 or just the relevant packages for the examples in this chapter:
 
-```{bash}
+```{bash eval=FALSE}
 trident fetch -d /somewhere/to/store/the/archive -f "*2012_PattersonGenetics*,*2014_RaghavanNature*,*2014_LazaridisNature*,*2018_Lamnidis_Fennoscandia*"
 ```
 :::
 
 We use the software `xerxes fstats` from the [Poseidon Framework](https://www.poseidon-adna.org/#/xerxes?id=xerxes-cli-software). Here is a command line that computes 8 statistics for us:
 
-```
+```{bash eval=FALSE}
 xerxes fstats -d ~/dev/poseidon-framework/community-archive \
     --stat "F3(Nganasan,French,Finnish)" \
     --stat "F3(Nganasan, Icelandic, Finnish)" \
@@ -117,7 +115,7 @@ You can see that in all cases this statistic is negative (`Estimate_Total`). The
 
 ### Running xerxes via a configuration file
 
-As you will have noticed, the command line above is getting quite long, since a separate `--stat` option has to be entered for every statistic to be computed. There is a more powerful and elegant interface to xerxes, which uses a configuration file. To illustrate it, let us consider the configuration file needed to compute the same statistic as above:
+As you will have noticed, the command line above is getting quite long, since a separate `--stat` option has to be entered for every statistic to be computed. There is a more powerful and elegant interface to xerxes, which uses a configuration file. To illustrate it, let us consider the configuration file (which can be found in `fstats_working/F3_finnish.config` in the git-repository of this book) needed to compute the same statistic as above:
 
 ```Yaml
 fstats:
@@ -127,16 +125,25 @@ fstats:
   c: ["Finnish"]
 ```
 
-You can store this in a file, for example named `F3_finnish.config` and then run xerxes as
+You can then run xerxes as
 
-```
-xerxes fstats -d ~/dev/poseidon-framework/community-archive --statConfig F3_finnish.config
+```{basheval=FALSE}
+xerxes fstats -d ~/dev/poseidon-framework/community-archive --statConfig fstats_working/F3_finnish.config
 ```
 
 So `xerxes` then automatically creates all combinations of populations listed in slotes `a`, `b` and `c`. 
 
+:::{.callout-note}
+Note that there are actually three types of F3-statistics supported by xerxes:
+* `F3vanilla`: The purest form, defined literally as $\langle(c−a)(c−b)\rangle$
+* `F3`: A bias-corrected version, which is only valid for groups in C that have non-zero heterozygosity
+* `F3star`: This is the one that is normalised by the heterozgygosity of the third population, C.
+
+The [white-paper]((https://github.com/poseidon-framework/poseidon-analysis-hs/blob/main/docs/xerxes_whitepaper.pdf)) explains this in detail.
+:::
+
 :::{.callout-tip}
-This format has a lot more options. Here is a bit more complex example, but see also [the documentation](https://www.poseidon-adna.org/#/xerxes?id=input-via-a-configuraton-file):
+The configuration file format has a lot more options. Here is a bit more complex example, but see also [the documentation](https://www.poseidon-adna.org/#/xerxes?id=input-via-a-configuraton-file):
 
 ```Yaml
 groupDefs:
@@ -179,6 +186,7 @@ In this tree, without any additional admixture, the allele frequency difference 
 
 It is helpful to again consider an example using a SNP list, this time assuming that every population is just a single (haploid) individual, so each allele frequency can just be 0 or 1. For example:
 
+
 | SNP              | A | B | C | D | $(a-b)(c-d)$ |
 |------------------|---|---|---|---|--------------|
 | 1                | 1 | 0 | 0 | 0 | 0            |
@@ -187,7 +195,7 @@ It is helpful to again consider an example using a SNP list, this time assuming 
 | 4                | 0 | 1 | 0 | 1 | 1            |
 | 5                | 1 | 0 | 0 | 1 | -1           |
 | 6                | 1 | 0 | 0 | 0 | 0            |
-| $F_4(A, B;C, D)$ |   |   |   | 0 | **-0.0167**  |
+| $F_4(A, B;C, D)$ |   |   |   |   | **-0.0167**  |
 
 You can see that the only SNPs that contribute positivel to this statistics are SNPs where the alleles are distributed as `1010` and `0101`, and the only SNPs that contribute negatively are `1001` and `0110`. In the literature, the two patterns have been dubbed "ABBA" and "BABA", which is why the statistical test behind this statistic (see below) was sometimes called the ABBA-BABA test (see for example [@Martin2015]).
 
@@ -196,7 +204,7 @@ The intuition here is straight-forward: In positions that are polymorphic in bot
 :::{.callout-note}
 F4-statistics have been famously used to show that Neanderthals are more closely related to Non-African populations than to Africans, suggesting gene-flow between Neanderthals and Non-Africans (shown in [@Green2010]). You can reproduce this famous result with 
 
-```
+```{bash eval=FALSE}
 xerxes fstats -d ~/poseidon_repo --stat 'F4(<Chimp.REF>,<Altai_published.DG>,Yoruba,French)' \
   --stat 'F4(<Chimp.REF>,<Altai_published.DG>,Sardinian,French)'
 ```
@@ -206,7 +214,7 @@ which shows that the first statistic is significantly positive with a Z-score of
 
 The way this statistic is often used, is to put a divergent outgroup as population A, for which we know for sure that there was no admixture into either C or D. With this setup, we can then test for gene flow between B and D (if the statistic is positive), or B and C (if it is negative).
 
-Here, we can use this statistic to test for East Asian admixture in Finns, similarly to the test using Admixture F3 statistics above. We will again use `xerxes fstats`. We again prepare a configuration file, this time with four populations (A, B, C, D):
+Here, we can use this statistic to test for East Asian admixture in Finns, similarly to the test using Admixture F3 statistics above. We will again use `xerxes fstats`. We again prepare a configuration file (in `fstats_working/F4_finish.config` in the git-repository of this book), this time with four populations (A, B, C, D):
 
 ```Yaml
 fstats:
@@ -217,10 +225,10 @@ fstats:
   d: ["Finnish"]
 ```
 
-You can again safe this into a configuration file, for example named `F4_finnish.config` and run it via
+You can again run via
 
-```
-xerxes fstats -d ~/dev/poseidon-framework/community-archive --statConfig F4_finnish.config
+```{bash eval=FALSE}
+xerxes fstats -d ~/dev/poseidon-framework/community-archive --statConfig fstats_working/F4_finnish.config
 ```
 
 The result is:
@@ -240,8 +248,6 @@ The result is:
 '-----------'-------'----------------'------------'---------'---------'----------------'--------------------'------------------'--------------------'
 ```
 
-Here, the key columns are columns 2, 3, 4 and 5, denoting A, B, C and D, and column 6 and 7, which denote the F4 statistic and the Z score, measuring significance in difference from zero.
-
 As you can see, in all cases, the Z score is positive and larger than 3, indicating a significant deviation from zero, and implying gene flow between Nganasan and Finnish, and BolshoyOleniOstrov and Finnish, when compared to French, Icelandic, Lithuanian or Norwegian.
 
 ## Outgroup-F3-Statistics
@@ -254,254 +260,119 @@ To get an intuition for this statistics, consider the following tree:
 
 In this scenario, the statistic F3(A, B; C) measures the branch length from C to the common ancestor of A and B, coloured red. So this statistic is simply a measure of how closely two population A and B are related with each other, as measured from a distant outgroup. It is thus a similarity measure: The higher the statistic, the more genetically similar A and B are to one another.
 
+Here is again a SNP table to illustrate, using haploid individuals:
+
+| SNP           | A | B | C | $(c-a)(c-b)$ |
+|---------------|---|---|---|--------------|
+| 1             | 1 | 0 | 0 | 0            |
+| 2             | 1 | 0 | 0 | 0            |
+| 3             | 0 | 0 | 1 | 1            |
+| 4             | 1 | 0 | 1 | 0            |
+| 5             | 1 | 1 | 0 | 1            |
+| 6             | 0 | 0 | 1 | 1            |
+| $F_3(A, B;C)$ |   |   |   | **0.5**      |
+
+You can see that each position which is similar between A and B, but different to C contributes 1, all other SNPs 0. So it directly measures similarity between A and B on alleles that differ from the outgroup C. 
+
 We can use this statistic to measure for example the the genetic affinity to East Asia, by performing the statistic F3(Han, X; Mbuti), where Mbuti is a distant African population and acts as outgroup here, Han denote Han Chinese, and X denotes various European populations that we want to test.
 
-You need to start, again, by preparing a list of population triples to be measured. I suggest the following list:
+You can again define a configuration file that performs looping over various populations X for you:
 
-```
-Han Chuvash Mbuti
-Han Albanian Mbuti
-Han Armenian Mbuti
-Han Bulgarian Mbuti
-Han Czech Mbuti
-Han Druze Mbuti
-Han English Mbuti
-Han Estonian Mbuti
-Han Finnish Mbuti
-Han French Mbuti
-Han Georgian Mbuti
-Han Greek Mbuti
-Han Hungarian Mbuti
-Han Icelandic Mbuti
-Han Italian_North Mbuti
-Han Italian_South Mbuti
-Han Lithuanian Mbuti
-Han Maltese Mbuti
-Han Mordovian Mbuti
-Han Norwegian Mbuti
-Han Orcadian Mbuti
-Han Russian Mbuti
-Han Sardinian Mbuti
-Han Scottish Mbuti
-Han Sicilian Mbuti
-Han Spanish_North Mbuti
-Han Spanish Mbuti
-Han Ukrainian Mbuti
-Han Levanluhta Mbuti
-Han BolshoyOleniOstrov Mbuti
-Han ChalmnyVarre Mbuti
-Han Saami.DG Mbuti
+```Yaml
+fstats:
+- type: F3
+  a: ["Han"]
+  b: ["Chuvash", "Albanian", "Armenian", "Bulgarian", "Czech", "Druze", "English",
+      "Estonian", "Finnish", "French", "Georgian", "Greek", "Hungarian", "Icelandic",
+      "Italian_North", "Italian_South", "Lithuanian", "Maltese", "Mordovian", "Norwegian",
+      "Orcadian", "Russian", "Sardinian", "Scottish", "Sicilian", "Spanish_North",
+      "Spanish", "Ukrainian", "Finland_Levanluhta", "Russia_Bolshoy", "Russia_Chalmny_Varre", "Saami.DG"]
+  c: ["Mbuti"]
 ```	
 
-which cycles through many populations from Europe, including the ancient individuals from Chalmny Varre, Bolshoy Oleni Ostrov and Levänluhta.
+which cycles through many populations from Europe, including the ancient individuals from Chalmny Varre, Bolshoy Oleni Ostrov and Levänluhta. We store this file in a file called `fstats_working/OutgroupF3_europe.config` and run via:
 
-**Exercise:** Copy this list into a file, and prepare a parameter file for running `qp3Pop`, similar to the parameter file for admixture F3 statistics above, and run `qp3Pop` with that parameter file as above. Note that here you don't need the line beginning with `inbreed`. This will take up to 10 minutes.
 
-You should find this (skipping header lines from the output):
-
-```
-           Source 1             Source 2   Target        f_3       std. err           Z    SNPs
-result:        Han              Chuvash    Mbuti   0.233652       0.002072     112.782  502678
-result:        Han             Albanian    Mbuti   0.215629       0.002029     106.291  501734
-result:        Han             Armenian    Mbuti   0.213724       0.001963     108.882  504370
-result:        Han            Bulgarian    Mbuti   0.216193       0.001979     109.266  504310
-result:        Han                Czech    Mbuti   0.218060       0.002002     108.939  504089
-result:        Han                Druze    Mbuti   0.209551       0.001919     109.205  510853
-result:        Han              English    Mbuti   0.216959       0.001973     109.954  504161
-result:        Han             Estonian    Mbuti   0.220730       0.002019     109.332  503503
-result:        Han              Finnish    Mbuti   0.223447       0.002044     109.345  502217
-result:        Han               French    Mbuti   0.216623       0.001969     110.012  509613
-result:        Han             Georgian    Mbuti   0.214295       0.001935     110.721  503598
-result:        Han                Greek    Mbuti   0.215203       0.001984     108.465  507475
-result:        Han            Hungarian    Mbuti   0.217894       0.001999     109.004  507409
-result:        Han            Icelandic    Mbuti   0.218683       0.002015     108.553  504655
-result:        Han        Italian_North    Mbuti   0.215332       0.001978     108.854  507589
-result:        Han        Italian_South    Mbuti   0.211787       0.002271      93.265  492400
-result:        Han           Lithuanian    Mbuti   0.219615       0.002032     108.098  503681
-result:        Han              Maltese    Mbuti   0.210359       0.001956     107.542  503985
-result:        Han            Mordovian    Mbuti   0.223469       0.002008     111.296  503441
-result:        Han            Norwegian    Mbuti   0.218873       0.002023     108.197  504621
-result:        Han             Orcadian    Mbuti   0.217773       0.002014     108.115  504993
-result:        Han              Russian    Mbuti   0.223993       0.001995     112.274  506525
-result:        Han            Sardinian    Mbuti   0.213230       0.001980     107.711  508413
-result:        Han             Scottish    Mbuti   0.218489       0.002039     107.145  499784
-result:        Han             Sicilian    Mbuti   0.212272       0.001975     107.486  505477
-result:        Han        Spanish_North    Mbuti   0.215885       0.002029     106.383  500853
-result:        Han              Spanish    Mbuti   0.213869       0.001975     108.297  513648
-result:        Han            Ukrainian    Mbuti   0.218716       0.002007     108.950  503981
-result:        Han           Levanluhta    Mbuti   0.236252       0.002383      99.123  263049
-result:        Han   BolshoyOleniOstrov    Mbuti   0.247814       0.002177     113.849  457102
-result:        Han         ChalmnyVarre    Mbuti   0.233499       0.002304     101.345  366220
-result:        Han             Saami.DG    Mbuti   0.236198       0.002274     103.852  489038
+```{bash, eval=FALSE}
+xerxes fstats --statConfig fstats_working/OutgroupF3_europe.config -d ~/dev/poseidon-framework/community-archive -f fstats_working/outgroupf3_europe.tsv
 ```
 
-Now it’s time to plot these results using R. Copy the results (all lines from the output beginning with “results:”) into a text file named "f3_outgroup_stats_Han.txt", and load it into an R tibble using:
+:::{.callout-warning}
+Often in Outgroup-F3-statistics you use single genomes for population C, sometimes even single haploid genomes. In this case, `F3` and `F3star` will get undefined results, because ordinary `F3` and `F3star` statistics require population C to have non-zero average heterozygosity, so you will need at least one diploid sample, or multiple haploid or diploid samples. 
+
+Use `F3vanilla` if your third population C is a single pseudo-haploid sample.
+:::
+
+Here is the output of this run (but note that a tab-separated version was also stored in `fstats_working/outgroupf3_europe.tsv` using the option `-f`):
+
+```
+.-----------.-----.----------------------.-------.---.---------.----------------.--------------------.------------------.--------------------.
+| Statistic |  a  |          b           |   c   | d | NrSites | Estimate_Total | Estimate_Jackknife | StdErr_Jackknife | Z_score_Jackknife  |
+:===========:=====:======================:=======:===:=========:================:====================:==================:====================:
+| F3        | Han | Chuvash              | Mbuti |   | 593124  | 5.3967e-2      | 5.3967e-2          | 5.0668e-4        | 106.51180329550319 |
+| F3        | Han | Albanian             | Mbuti |   | 593124  | 4.9972e-2      | 4.9973e-2          | 4.9520e-4        | 100.91326321202445 |
+| F3        | Han | Armenian             | Mbuti |   | 593124  | 4.9531e-2      | 4.9531e-2          | 4.7771e-4        | 103.68366652942314 |
+| F3        | Han | Bulgarian            | Mbuti |   | 593124  | 5.0103e-2      | 5.0103e-2          | 4.8624e-4        | 103.04188532686614 |
+| F3        | Han | Czech                | Mbuti |   | 593124  | 5.0536e-2      | 5.0536e-2          | 4.9261e-4        | 102.58792370749681 |
+| F3        | Han | Druze                | Mbuti |   | 593124  | 4.8564e-2      | 4.8564e-2          | 4.6788e-4        | 103.79674299622445 |
+| F3        | Han | English              | Mbuti |   | 593124  | 5.0280e-2      | 5.0281e-2          | 4.9183e-4        | 102.23198323949656 |
+| F3        | Han | Estonian             | Mbuti |   | 593124  | 5.1154e-2      | 5.1155e-2          | 5.0350e-4        | 101.59882496016485 |
+| F3        | Han | Finnish              | Mbuti |   | 593124  | 5.1784e-2      | 5.1784e-2          | 5.0603e-4        | 102.33488758899031 |
+| F3        | Han | French               | Mbuti |   | 593124  | 5.0207e-2      | 5.0208e-2          | 4.8552e-4        | 103.40976592749682 |
+| F3        | Han | Georgian             | Mbuti |   | 593124  | 4.9711e-2      | 4.9711e-2          | 4.8100e-4        | 103.34881140790415 |
+| F3        | Han | Greek                | Mbuti |   | 593124  | 4.9874e-2      | 4.9874e-2          | 4.8994e-4        | 101.79554640756365 |
+| F3        | Han | Hungarian            | Mbuti |   | 593124  | 5.0497e-2      | 5.0498e-2          | 4.9878e-4        | 101.24215699276706 |
+| F3        | Han | Icelandic            | Mbuti |   | 593124  | 5.0680e-2      | 5.0680e-2          | 4.9729e-4        | 101.91303336514295 |
+| F3        | Han | Italian_North        | Mbuti |   | 593124  | 4.9903e-2      | 4.9904e-2          | 4.8436e-4        | 103.03094306099203 |
+| F3        | Han | Italian_South        | Mbuti |   | 592980  | 4.9201e-2      | 4.9201e-2          | 5.1170e-4        | 96.15239597674244  |
+| F3        | Han | Lithuanian           | Mbuti |   | 593124  | 5.0896e-2      | 5.0896e-2          | 5.0638e-4        | 100.50984037418753 |
+| F3        | Han | Maltese              | Mbuti |   | 593124  | 4.8751e-2      | 4.8751e-2          | 4.7500e-4        | 102.63442479673623 |
+| F3        | Han | Mordovian            | Mbuti |   | 593124  | 5.1820e-2      | 5.1820e-2          | 4.8853e-4        | 106.07409963190884 |
+| F3        | Han | Norwegian            | Mbuti |   | 593124  | 5.0724e-2      | 5.0724e-2          | 4.9514e-4        | 102.4454387098217  |
+| F3        | Han | Orcadian             | Mbuti |   | 593124  | 5.0469e-2      | 5.0469e-2          | 4.9485e-4        | 101.98814656611475 |
+| F3        | Han | Russian              | Mbuti |   | 593124  | 5.1277e-2      | 5.1277e-2          | 4.8613e-4        | 105.48070801791317 |
+| F3        | Han | Sardinian            | Mbuti |   | 593124  | 4.9416e-2      | 4.9417e-2          | 4.8908e-4        | 101.04049389691913 |
+| F3        | Han | Scottish             | Mbuti |   | 593124  | 5.0635e-2      | 5.0635e-2          | 5.0565e-4        | 100.13962104744425 |
+| F3        | Han | Sicilian             | Mbuti |   | 593124  | 4.9194e-2      | 4.9194e-2          | 4.8157e-4        | 102.15353663091187 |
+| F3        | Han | Spanish_North        | Mbuti |   | 593124  | 5.0032e-2      | 5.0032e-2          | 4.9377e-4        | 101.32594226555439 |
+| F3        | Han | Spanish              | Mbuti |   | 593124  | 4.9693e-2      | 4.9693e-2          | 4.8551e-4        | 102.35200847948641 |
+| F3        | Han | Ukrainian            | Mbuti |   | 593124  | 5.0731e-2      | 5.0731e-2          | 4.9506e-4        | 102.47529111692852 |
+| F3        | Han | Finland_Levanluhta   | Mbuti |   | 303033  | 5.4488e-2      | 5.4488e-2          | 5.7681e-4        | 94.46487653920919  |
+| F3        | Han | Russia_Bolshoy       | Mbuti |   | 542789  | 5.7273e-2      | 5.7273e-2          | 5.2875e-4        | 108.31739594898687 |
+| F3        | Han | Russia_Chalmny_Varre | Mbuti |   | 428215  | 5.4000e-2      | 5.4000e-2          | 5.6936e-4        | 94.84371082564112  |
+| F3        | Han | Saami.DG             | Mbuti |   | 585193  | 5.4727e-2      | 5.4728e-2          | 5.5546e-4        | 98.5265149143263   |
+'-----------'-----'----------------------'-------'---'---------'----------------'--------------------'------------------'--------------------'
+```
+
+Now it’s time to plot these results using R:
 
 ```{r}
-d <- readr::read_delim(
-  "f3_outgroup_stats_Han.txt", 
-  delim = " ",
-  trim_ws = T,
-  col_names = c("dummy", "A", "B", "C", "F3", "StdErr", "Z", "SNPS")
-)
+d <- read.csv("fstats_working/outgroupf3_europe.tsv", sep = "\t")
 ```
 
 We can check that it worked:
 
 ```{r}
-d
+head(d)
 ```
 
-```{r}
-library(ggplot2)
+Nice, now on to plotting (here I'm using Base R for zero-dependency pain, you're welcome):
 
-d %>%
-  ggplot() +
-  geom_errorbarh(
-    aes(
-      xmin = F3 - StdErr,
-      xmax = F3 + StdErr,
-      y = forcats::fct_reorder(B, F3)
-    )
-  ) +
-  geom_point(
-    aes(x = F3, y = forcats::fct_reorder(B, F3))
-  ) +
-  xlab("F3(Han, Test; Mbuti)")
+```{r}
+#| fig-height: 8
+#| fig-width: 8
+#| out-width: "100%"
+#| fig-align: "center"
+order <- order(d$Estimate_Total)
+plot(d$Estimate_Jackknife[order], seq_along(d$b),
+     xlab="Z Score", ylab=NA, yaxt = "n",
+     xlim = c(min(d$Estimate_Jackknife) - 0.001, max(d$Estimate_Jackknife) + 0.003),
+     main = "F3(Han, X; Mbuti)")
+text(d$Estimate_Jackknife[order]+0.001, seq_along(d$b), labels = d$b, adj=0)
+arrows(d$Estimate_Jackknife[order] - d$StdErr_Jackknife[order], seq_along(d$b),
+       d$Estimate_Jackknife[order] + d$StdErr_Jackknife[order], seq_along(d$b),
+       length=0.05, angle=90, code=3)
 ```
 
 As expected, the ancient samples and modern Saami are the ones with the highest allele sharing with present-day East Asians (as represented by Han) compared to many other Europeans.
-
-## Advanced use of Outgroup F3 Statistics
-
-The above plot shows an intriguing cline of differential relatedness to Han in many Europeans. For example, would you have guessed that Icelandics are closer to Han than Armenians are to Han? This is very surprising, and it shows that European ancestry has a complex relationship to East Asians. To understand this better, you can read [Patterson 2012](http://www.genetics.org/content/early/2012/09/06/genetics.112.145037), who makes some intriguing observations. Patterson and colleagues use Admixture F3 statistics and apply it to many populations world-wide. They summarise some population triples with the most negative F3 statistics in the following table:
-
-<img src="img/fstats/Patterson_2012_table.png" alt="Patterson 2012 table" style="width: 450px;"/>
-
-There are many interesting results here, but one of the most striking one is the finding of F3(Sardinian, Karitiana; French), which is highly significantly negative. This statistics implies that French are admixed between Sardinians and Karitiana, a Native American population from Brazil. How is that possible? We can of course rule out any recent Native American backflow into Europe.
-
-Patterson and colleagues explained this finding with hypothesising an ancient admixture event, from a Siberian population that contributed to both Europeans and to Native Americans. They termed that population the “Ancient North Eurasians (ANE)”. The following admixture graph was suggested:
-
-<img src="img/fstats/Patterson_2012_ANEfig.png" alt="Patterson 2012 ANE graph" style="width: 600px;"/>
-
-As you can see, the idea is that modern Central Europeans, such as French, are admixed between Southern Europeans (Sardinians) and ANE. The Ancient North Eurasians are a classic example for a “Ghost” population, a population which does not exist anymore in unmixed form, and from which we have no direct individual representative.
-
-Amazingly, two years after the publication of [Patterson 2012](http://www.genetics.org/content/early/2012/09/06/genetics.112.145037), the ANE ghost population was actually found: [Raghavan et al.](https://www.nature.com/articles/nature12736) and colleagues, in 2014, published a paper called “Upper Palaeolithic Siberian genome reveals dual ancestry of Native Americans”. A 24,000 year old boy (called MA1) from the site of “Mal’ta” in Siberia was shown to have close genetic affinity with both Europeans and in particular Native Americans, just as proposed in [Patterson 2012](http://www.genetics.org/content/early/2012/09/06/genetics.112.145037).
-
-The affinities are summarised nicely in this figure from [Raghavan et al.](https://www.nature.com/articles/nature12736):
-
-<img src="img/fstats/MA1_affinities.png" alt="MA1 Affinities" style="width: 600px;"/>
-
-OK, so we now know that ancestry related to Native Americans contributed to European countries. Could that possibly explain the affinity of our ancient samples and Saami to Han Chinese in some way? To test this, we will run the same Outgroup F3 statistics as above, but this time not with Han but with MA1 as test population. Specifically, we run the following population triples in `qp3Pop`:
-
-```
-MA1_HG.SG Chuvash Mbuti
-MA1_HG.SG Albanian Mbuti
-MA1_HG.SG Armenian Mbuti
-MA1_HG.SG Bulgarian Mbuti
-MA1_HG.SG Czech Mbuti
-MA1_HG.SG Druze Mbuti
-MA1_HG.SG English Mbuti
-MA1_HG.SG Estonian Mbuti
-MA1_HG.SG Finnish Mbuti
-MA1_HG.SG French Mbuti
-MA1_HG.SG Georgian Mbuti
-MA1_HG.SG Greek Mbuti
-MA1_HG.SG Hungarian Mbuti
-MA1_HG.SG Icelandic Mbuti
-MA1_HG.SG Italian_North Mbuti
-MA1_HG.SG Italian_South Mbuti
-MA1_HG.SG Lithuanian Mbuti
-MA1_HG.SG Maltese Mbuti
-MA1_HG.SG Mordovian Mbuti
-MA1_HG.SG Norwegian Mbuti
-MA1_HG.SG Orcadian Mbuti
-MA1_HG.SG Russian Mbuti
-MA1_HG.SG Sardinian Mbuti
-MA1_HG.SG Scottish Mbuti
-MA1_HG.SG Sicilian Mbuti
-MA1_HG.SG Spanish_North Mbuti
-MA1_HG.SG Spanish Mbuti
-MA1_HG.SG Ukrainian Mbuti
-MA1_HG.SG Levanluhta Mbuti
-MA1_HG.SG BolshoyOleniOstrov Mbuti
-MA1_HG.SG ChalmnyVarre Mbuti
-MA1_HG.SG Saami.DG Mbuti
-```
-
-here, `MA1_HG.SG` is the somewhat cryptic population name for the MA1-individual.
-
-**Exercise:** Follow the same protocol as above: Copy the list into a file, prepare a parameter file for `qp3Pop` with that population triple list, and run `qp3Pop`. Copy the results (all lines beginning with “results:”) into a file, named "f3_outgroup_stats_MA1.txt"
-
-To test in what way the relationship to Han Chinese is correlated with the relationship with MA1, we will now plot the two statistics against each other in a scatter plot. We first have to merge the two outgroup-F3 datasets together. Here is the code including loading (assuming that the two F3 dataframes are called `outgroupf3dat_Han` and `outgroupf3dat_MA1`):
-
-```{r}
-outgroupf3dat_Han <- readr::read_delim(
-  "f3_outgroup_stats_Han.txt", 
-  delim = " ",
-  trim_ws = T,
-  col_names = c("dummy", "A", "B", "C", "F3", "stderr", "Z", "nSNPs")
-)
-
-outgroupf3dat_MA1 <- readr::read_delim(
-  "f3_outgroup_stats_MA1.txt", 
-  delim = " ",
-  trim_ws = T,
-  col_names = c("dummy", "A", "B", "C", "F3", "stderr", "Z", "nSNPs")
-)
-
-outgroupf3dat_merged <- dplyr::full_join(
-  outgroupf3dat_Han,
-  outgroupf3dat_MA1,
-  by = "B",
-  suffix = c("_Han", "_MA1")
-)
-```
-
-Again, we check that everything worked:
-
-```{r}
-outgroupf3dat_merged
-```
-
-Now we can make a scatter plot:
-
-```{r}
-outgroupf3dat_merged %>%
-  ggplot() +
-  geom_point(
-    aes(
-      x = F3_Han, 
-      y = F3_MA1
-    )
-  ) +
-  xlab("F3(Test, Han; Mbuti)") +
-  ylab("F3(Test, MA1; Mbuti)")
-```
-
-This isn’t very useful, however, as we cannot see which point is which population. We use the `geom_label_repel` function from ggrepel to add text labels to each point:
-
-```{r}
-outgroupf3dat_merged %>%
-  ggplot() +
-  geom_point(
-    aes(
-      x = F3_Han, 
-      y = F3_MA1
-    )
-  ) +
-  xlab("F3(Test, Han; Mbuti)") +
-  ylab("F3(Test, MA1; Mbuti)") +
-  ggrepel::geom_label_repel(
-    aes(
-      x = F3_Han, 
-      y = F3_MA1,
-      label = B
-    )
-  )
-```
-
-The result shows that indeed the affinity to East Asians in the bulk of European contries can be explained by MA1-related ancestry. Most European countries have a linear relationship between their affinity to Han and their affinity to MA1. However, this is not true for our ancient samples from Fennoscandia and for modern Saami and Chuvash, who have extra affinity to Han not explained by MA1 ([Lazaridis et al. 2014](https://www.nature.com/articles/nature13673)).
-
-Now, why there is a connection between MA1 and Han is not trivial to explain. The most probable explanation involves "Basal Eurasian" ancestry, which happens to be anti-correlated to MA1-ancestry in Europe, and which drives those populations with high "Basal Eurasian" ancestry further away from Han. See [Lazaridis et al. 2014](https://www.nature.com/articles/nature13673) for more details.
 

@@ -6,7 +6,8 @@ bibliography: references.bib
 toc: true
 reference-location: margin
 citation-location: margin
-
+execute:
+  eval: false
 ---
 
 Poseidon is an open computational framework to enable standardised and FAIR (@Wilkinson2016) handling of genotypes with their highly relevant context information.
