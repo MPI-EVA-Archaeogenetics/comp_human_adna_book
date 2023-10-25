@@ -43,7 +43,7 @@ One way to understand this is by looking what happens to a list of SNPs and alle
 Every SNP where C has an allele frequency _intermediate_ between A and B contributes negatively. Here, the average is also negative, providing evidence for admixture. For statistical certainty, an error bar for this estimate is needed, which is typically computed via Jackknife (see for example the [xerxes whitepaper](https://github.com/poseidon-framework/poseidon-analysis-hs/blob/main/docs/xerxes_whitepaper.pdf)).
 
 
-:::{.callout-note}
+:::{.callout-caution}
 If an F3 statistics is *not* negative, it does *not* proof that there is no admixture!
 :::
 
@@ -51,7 +51,7 @@ If an F3 statistics is *not* negative, it does *not* proof that there is no admi
 
 We will use this statistics to test if Finnish are admixed between East and West, using different Eastern and Western sources. In the West, we use French, Icelandic, Lithuanian and Norwegian as source, and in the East we use Nganasan and one of the ancient individuals analysed in [@Lamnidis2018], from the site of *Bolshoy Oleni Ostrov* from the Northern Russian Kola-peninsula, and dating to 3500 years before present. 
 
-:::{.callout-note}
+:::{.callout-tip}
 If you happen to have downloaded a copy of the [Poseidon Community Archive](https://www.poseidon-adna.org/#/archive_overview?id=public-poseidon-archives) already, then just use the path to that archive in the following commands. Otherwise you download the entire archive via 
 
 ```{bash}
@@ -109,7 +109,7 @@ Here is the result that you should get, nicely layouted in a Text-table:
 '-----------'----------------'------------'---------'---'---------'----------------'--------------------'------------------'---------------------'
 ```
 
-:::{.callout-note}
+:::{.callout-tip}
 Use the option `--raw` if you prefer tab-separated output to read into Spreadsheet-software or into R or pythin scripts
 :::
 
@@ -135,7 +135,7 @@ xerxes fstats -d ~/dev/poseidon-framework/community-archive --statConfig F3_finn
 
 So `xerxes` then automatically creates all combinations of populations listed in slotes `a`, `b` and `c`. 
 
-:::{.callout-note}
+:::{.callout-tip}
 This format has a lot more options. Here is a bit more complex example, but see also [the documentation](https://www.poseidon-adna.org/#/xerxes?id=input-via-a-configuraton-file):
 
 ```Yaml
@@ -191,7 +191,18 @@ It is helpful to again consider an example using a SNP list, this time assuming 
 
 You can see that the only SNPs that contribute positivel to this statistics are SNPs where the alleles are distributed as `1010` and `0101`, and the only SNPs that contribute negatively are `1001` and `0110`. In the literature, the two patterns have been dubbed "ABBA" and "BABA", which is why the statistical test behind this statistic (see below) was sometimes called the ABBA-BABA test (see for example [@Martin2015]).
 
-The intuition is here is clear: 
+The intuition here is straight-forward: In positions that are polymorphic in both $(A,B)$ and $(C,D)$, this statistic asks whether B is genetically more similar to C than it is to D. This is most useful as a test for "treeness": If A, B, C, D are related to each other as indicated in the above tree, then C should be equally closely related to C as to D. But if we actually find evidence that B is closer to C than to D, or vice versa, then this means that the tree above cannot be correct, but that there must be a closer connection between B and C or B and D, depending on the sign of the statistic.
+
+:::{.callout-note}
+F4-statistics have been famously used to show that Neanderthals are more closely related to Non-African populations than to Africans, suggesting gene-flow between Neanderthals and Non-Africans (shown in [@Green2010]). You can reproduce this famous result with 
+
+```
+xerxes fstats -d ~/poseidon_repo --stat 'F4(<Chimp.REF>,<Altai_published.DG>,Yoruba,French)' \
+  --stat 'F4(<Chimp.REF>,<Altai_published.DG>,Sardinian,French)'
+```
+
+which shows that the first statistic is significantly positive with a Z-score of 7.99, while the second one is insignificantly different from zero (Z=1.01)
+:::
 
 The way this statistic is often used, is to put a divergent outgroup as population A, for which we know for sure that there was no admixture into either C or D. With this setup, we can then test for gene flow between B and D (if the statistic is positive), or B and C (if it is negative).
 
