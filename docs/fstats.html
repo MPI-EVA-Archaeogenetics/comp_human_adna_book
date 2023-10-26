@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.1.163">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Stephan Schiffels">
 <meta name="dcterms.date" content="2023-10-26">
 
-<title>Computational Methods for human population genetics and ancient DNA - 3&nbsp; Introduction to F-Statistics</title>
+<title>Computational Methods for human population genetics and ancient DNA - 3&nbsp; Introduction to F3- and F4-Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,10 +19,9 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -49,19 +48,48 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
+    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-/* CSS for citations */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging-indent div.csl-entry {
+.hanging div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -75,7 +103,8 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}</style>
+}
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -112,30 +141,23 @@ div.csl-indent {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-submit-button-title": "Submit"
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
-<body class="nav-sidebar floating slimcontent">
+<body class="nav-sidebar floating">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fstats.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to F-Statistics</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to F3- and F4-Statistics</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
       </button>
     </div>
   </nav>
@@ -143,75 +165,74 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Computational Methods for human population genetics and ancient DNA</a> 
     </div>
       </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
+      <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-        </div>
+      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Preface</span></a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Quarto_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></span></a>
+  <a href="./Quarto_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./poseidon.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Genotype and context data management with Poseidon</span></span></a>
+  <a href="./poseidon.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Genotype and context data management with Poseidon</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fstats.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to F-Statistics</span></span></a>
+  <a href="./fstats.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to F3- and F4-Statistics</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References</span></a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#admixture---f3-statistics" id="toc-admixture---f3-statistics" class="nav-link active" data-scroll-target="#admixture---f3-statistics"><span class="header-section-number">3.1</span> Admixture - F3 Statistics</a>
+  <li><a href="#admixture---f3-statistics" id="toc-admixture---f3-statistics" class="nav-link active" data-scroll-target="#admixture---f3-statistics"><span class="toc-section-number">3.1</span>  Admixture - F3 Statistics</a>
   <ul class="collapse">
-  <li><a href="#computing-admixture-f3-with-xerxes" id="toc-computing-admixture-f3-with-xerxes" class="nav-link" data-scroll-target="#computing-admixture-f3-with-xerxes"><span class="header-section-number">3.1.1</span> Computing Admixture-F3 with xerxes</a></li>
-  <li><a href="#running-xerxes-via-a-configuration-file" id="toc-running-xerxes-via-a-configuration-file" class="nav-link" data-scroll-target="#running-xerxes-via-a-configuration-file"><span class="header-section-number">3.1.2</span> Running xerxes via a configuration file</a></li>
+  <li><a href="#computing-admixture-f3-with-xerxes" id="toc-computing-admixture-f3-with-xerxes" class="nav-link" data-scroll-target="#computing-admixture-f3-with-xerxes"><span class="toc-section-number">3.1.1</span>  Computing Admixture-F3 with xerxes</a></li>
+  <li><a href="#running-xerxes-via-a-configuration-file" id="toc-running-xerxes-via-a-configuration-file" class="nav-link" data-scroll-target="#running-xerxes-via-a-configuration-file"><span class="toc-section-number">3.1.2</span>  Running xerxes via a configuration file</a></li>
   </ul></li>
-  <li><a href="#f4-statistics" id="toc-f4-statistics" class="nav-link" data-scroll-target="#f4-statistics"><span class="header-section-number">3.2</span> F4 Statistics</a></li>
-  <li><a href="#outgroup-f3-statistics" id="toc-outgroup-f3-statistics" class="nav-link" data-scroll-target="#outgroup-f3-statistics"><span class="header-section-number">3.3</span> Outgroup-F3-Statistics</a></li>
+  <li><a href="#f4-statistics" id="toc-f4-statistics" class="nav-link" data-scroll-target="#f4-statistics"><span class="toc-section-number">3.2</span>  F4 Statistics</a>
+  <ul class="collapse">
+  <li><a href="#shaping-intuition---the-abba--and-baba-sites" id="toc-shaping-intuition---the-abba--and-baba-sites" class="nav-link" data-scroll-target="#shaping-intuition---the-abba--and-baba-sites"><span class="toc-section-number">3.2.1</span>  Shaping intuition - the ABBA- and BABA-sites</a></li>
+  <li><a href="#from-single-samples-to-allele-frequencies" id="toc-from-single-samples-to-allele-frequencies" class="nav-link" data-scroll-target="#from-single-samples-to-allele-frequencies"><span class="toc-section-number">3.2.2</span>  From single samples to allele frequencies</a></li>
+  <li><a href="#running-f4-statistics-with-xerxes" id="toc-running-f4-statistics-with-xerxes" class="nav-link" data-scroll-target="#running-f4-statistics-with-xerxes"><span class="toc-section-number">3.2.3</span>  Running F4-Statistics with xerxes</a></li>
+  </ul></li>
+  <li><a href="#outgroup-f3-statistics" id="toc-outgroup-f3-statistics" class="nav-link" data-scroll-target="#outgroup-f3-statistics"><span class="toc-section-number">3.3</span>  Outgroup-F3-Statistics</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content page-columns page-full" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to F-Statistics</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to F3- and F4-Statistics</span></h1>
 </div>
 
 
@@ -231,24 +252,21 @@ div.csl-indent {
       <p class="date">October 26, 2023</p>
     </div>
   </div>
-  
     
   </div>
   
 
 </header>
 
-<section id="admixture---f3-statistics" class="level2 page-columns page-full" data-number="3.1">
+<section id="admixture---f3-statistics" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="admixture---f3-statistics"><span class="header-section-number">3.1</span> Admixture - F3 Statistics</h2>
 <p>F3 statistics are a useful analytical tool to understand population relationships. F3 statistics, just as F4 and F2 statistics measure allele frequency correlations between populations and were introduced by Nick Patterson <span class="citation" data-cites="Patterson2012">(<a href="references.html#ref-Patterson2012" role="doc-biblioref">Patterson et al. 2012</a>)</span>, but see also <span class="citation" data-cites="Peter2016">(<a href="references.html#ref-Peter2016" role="doc-biblioref">Peter 2016</a>)</span> for another introduction.</p>
-<div class="no-row-height column-margin column-container"><div id="ref-Peter2016" class="csl-entry" role="listitem">
-Peter, Benjamin M. 2016. <span>“Admixture, Population Structure, and <span>F-Statistics</span>.”</span> <em>Genetics</em> 202 (4): 1485–1501. <a href="https://doi.org/10.1534/genetics.115.183913">https://doi.org/10.1534/genetics.115.183913</a>.
-</div></div><p>F3 statistics are used for two purposes: i) as a test whether a target population (C) is admixed between two source populations (A and B), and ii) to measure shared drift between two test populations (A and B) from an outgroup (C).</p>
+<p>F3 statistics are used for two purposes: i) as a test whether a target population (C) is admixed between two source populations (A and B), and ii) to measure shared drift between two test populations (A and B) from an outgroup (C).</p>
 <p>F3 statistics are in both cases defined as the product of allele frequency differences between population C to A and B, respectively:</p>
 <p><span class="math display">\[F3(A,B;C)=\langle(c−a)(c−b)\rangle\]</span></p>
 <p>Here, <span class="math inline">\(\langle\cdot\rangle\)</span> denotes the average over all genotyped sites, and a, b and c denote the allele frequency for a given site in the three populations A, B and C.</p>
 <p>It can be shown that if <span class="math inline">\(F3(A, B; C)\)</span> is negative, it provides unambiguous proof that population C is admixed between populations A and B, as in the following phylogeny (taken from Figure 1 from <span class="citation" data-cites="Patterson2012">(<a href="references.html#ref-Patterson2012" role="doc-biblioref">Patterson et al. 2012</a>)</span>:</p>
-<div class="no-row-height column-margin column-container"></div><p><img src="img/fstats/f3_phylogeny.png" alt="F3-phylogeny" style="width: 300px;"></p>
+<p><img src="img/fstats/f3_phylogeny.png" alt="F3-phylogeny" style="width: 300px;"></p>
 <p>Intuitively, an F3 statistics becomes negative if the allele frequency of the target population C is on average intermediate between the allele frequencies of A and B. Consider as an extreme example a genomic site where <span class="math inline">\(a=0\)</span>, <span class="math inline">\(b=1\)</span> and <span class="math inline">\(c=0.5\)</span>. Then we have <span class="math inline">\((c−a)(c−b)=−0.25\)</span>, which is negative. So if the entire statistics is negative, it suggests that in many positions, the allele frequency c is indeed intermediate, suggesting admixture between the two sources.</p>
 <p>One way to understand this is by looking what happens to a list of SNPs and allele frequencies for groups A, B and C:</p>
 <table class="table">
@@ -314,30 +332,28 @@ Peter, Benjamin M. 2016. <span>“Admixture, Population Structure, and <span>F-S
 </tbody>
 </table>
 <p>Every SNP where C has an allele frequency <em>intermediate</em> between A and B contributes negatively. Here, the average is also negative, providing evidence for admixture. For statistical certainty, an error bar for this estimate is needed, which is typically computed via Jackknife (see for example the <a href="https://github.com/poseidon-framework/poseidon-analysis-hs/blob/main/docs/xerxes_whitepaper.pdf">xerxes whitepaper</a>).</p>
-<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-caution callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
-Caution
+<div class="callout-caption-container flex-fill">
+Danger
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>If an F3 statistics is <em>not</em> negative, it does <em>not</em> proof that there is no admixture!</p>
 </div>
 </div>
-<section id="computing-admixture-f3-with-xerxes" class="level3 page-columns page-full" data-number="3.1.1">
+<section id="computing-admixture-f3-with-xerxes" class="level3" data-number="3.1.1">
 <h3 data-number="3.1.1" class="anchored" data-anchor-id="computing-admixture-f3-with-xerxes"><span class="header-section-number">3.1.1</span> Computing Admixture-F3 with xerxes</h3>
 <p>We will use this statistics to test if Finnish are admixed between East and West, using different Eastern and Western sources. In the West, we use French, Icelandic, Lithuanian and Norwegian as source, and in the East we use Nganasan and one of the ancient individuals analysed in <span class="citation" data-cites="Lamnidis2018">(<a href="references.html#ref-Lamnidis2018" role="doc-biblioref">Lamnidis et al. 2018</a>)</span>, from the site of <em>Bolshoy Oleni Ostrov</em> from the Northern Russian Kola-peninsula, and dating to 3500 years before present.</p>
-<div class="no-row-height column-margin column-container"><div id="ref-Lamnidis2018" class="csl-entry" role="listitem">
-Lamnidis, Thiseas C, Kerttu Majander, Choongwon Jeong, Elina Salmela, Anna Wessman, Vyacheslav Moiseyev, Valery Khartanovich, et al. 2018. <span>“Ancient Fennoscandian Genomes Reveal Origin and Spread of Siberian Ancestry in Europe.”</span> <em>Nature Communications</em> 9 (1): 5018. <a href="https://doi.org/10.1038/s41467-018-07483-5">https://doi.org/10.1038/s41467-018-07483-5</a>.
-</div></div><div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Tip
 </div>
 </div>
@@ -364,12 +380,12 @@ Tip
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">--stat</span> <span class="st">"F3(Russia_Bolshoy, Lithuanian, Finnish)"</span> <span class="dt">\</span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">--stat</span> <span class="st">"F3(Russia_Bolshoy, Norwegian, Finnish)"</span> <span class="dt">\</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Note
 </div>
 </div>
@@ -397,24 +413,24 @@ Note
 | F3        | Russia_Bolshoy | Lithuanian | Finnish |   | 542789  | -3.7310e-4     | -3.7310e-4         | 1.2973e-4        | -2.8760029685791637 |
 | F3        | Russia_Bolshoy | Norwegian  | Finnish |   | 542789  | -3.7646e-4     | -3.7653e-4         | 1.1630e-4        | -3.2375830440434323 |
 '-----------'----------------'------------'---------'---'---------'----------------'--------------------'------------------'---------------------'</code></pre>
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Use the option <code>--raw</code> if you prefer tab-separated output to read into Spreadsheet-software or into R or pythin scripts</p>
+<p>Use the option <code>-f &lt;FILE&gt;</code> to output the results additionally to a tab-separated file, or <code>--raw</code> if you prefer the standard output to be tab-separated</p>
 </div>
 </div>
 <p>You can see that in all cases this statistic is negative (<code>Estimate_Total</code>). The next two columns ( <code>Estimate_Jackknife</code> and <code>StdErr_Jackknife</code>) are computed using Jackknifing (see <a href="https://github.com/poseidon-framework/poseidon-analysis-hs/blob/main/docs/xerxes_whitepaper.pdf">the xerxes whitepaper</a> for details). The last column is the Z score, and it is important here: It gives the deviation of the f3 statistic from zero in units of the standard error. As general rule, a Z score of -3 or more suggests a significant rejection of the Null hypothesis that the statistic is not negative. In this case, all of the statistics are significantly negative (with one borderline exception), proving that Finnish have ancestral admixture of East and West Eurasian ancestry. Here, Eastern ancestry is represented by Nganasan or Russia_Bolshoy, respectively, while Western ancestry by French, Icelandic, Lithuanian and Norwegian, respectively. Note that the statistics does not suggest when this admixture happened!</p>
 </section>
 <section id="running-xerxes-via-a-configuration-file" class="level3" data-number="3.1.2">
 <h3 data-number="3.1.2" class="anchored" data-anchor-id="running-xerxes-via-a-configuration-file"><span class="header-section-number">3.1.2</span> Running xerxes via a configuration file</h3>
-<p>As you will have noticed, the command line above is getting quite long, since a separate <code>--stat</code> option has to be entered for every statistic to be computed. There is a more powerful and elegant interface to xerxes, which uses a configuration file. To illustrate it, let us consider the configuration file (which can be found in <code>fstats_working/F3_finnish.config</code> in the git-repository of this book) needed to compute the same statistic as above:</p>
+<p>As you will have noticed, the command line above is getting quite long, since a separate <code>--stat</code> option has to be entered for every statistic to be computed. There is a more powerful and elegant interface to xerxes, which uses a configuration file in <a href="https://de.wikipedia.org/wiki/YAML">YAML format</a>. To illustrate it, let us consider the configuration file (which can be found in <code>fstats_working/F3_finnish.config</code> in the git-repository of this book) needed to compute the same statistic as above:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fstats</span><span class="kw">:</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> F3</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">a</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"Nganasan"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Russia_Bolshoy"</span><span class="kw">]</span></span>
@@ -422,62 +438,71 @@ Tip
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">c</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"Finnish"</span><span class="kw">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You can then run xerxes as</p>
 <pre data-basheval="FALSE"><code>xerxes fstats -d ~/dev/poseidon-framework/community-archive --statConfig fstats_working/F3_finnish.config</code></pre>
-<p>So <code>xerxes</code> then automatically creates all combinations of populations listed in slotes <code>a</code>, <code>b</code> and <code>c</code>.</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<p>So <code>xerxes</code> then automatically creates all combinations of populations listed in slots <code>a</code>, <code>b</code> and <code>c</code>.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Note that there are actually three types of F3-statistics supported by xerxes: * <code>F3vanilla</code>: The purest form, defined literally as <span class="math inline">\(\langle(c−a)(c−b)\rangle\)</span> * <code>F3</code>: A bias-corrected version, which is only valid for groups in C that have non-zero heterozygosity * <code>F3star</code>: This is the one that is normalised by the heterozgygosity of the third population, C.</p>
+<p>Note that there are actually three types of F3-statistics supported by xerxes:</p>
+<ul>
+<li><code>F3vanilla</code>: The purest form, defined literally as <span class="math inline">\(\langle(c−a)(c−b)\rangle\)</span></li>
+<li><code>F3</code>: A bias-corrected version, which is only valid for groups in C that have non-zero heterozygosity</li>
+<li><code>F3star</code>: This one is normalised by the heterozgygosity of the third population, C, as suggested in <span class="citation" data-cites="Patterson2012">(<a href="references.html#ref-Patterson2012" role="doc-biblioref">Patterson et al. 2012</a>)</span> and implemented in the <a href="https://github.com/DReichLab/AdmixTools">Admixtools package</a>.</li>
+</ul>
 <p>The <a href="(https://github.com/poseidon-framework/poseidon-analysis-hs/blob/main/docs/xerxes_whitepaper.pdf)">white-paper</a> explains this in detail.</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>The configuration file format has a lot more options. Here is a bit more complex example, but see also <a href="https://www.poseidon-adna.org/#/xerxes?id=input-via-a-configuraton-file">the documentation</a>:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">groupDefs</span><span class="kw">:</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">CEU2</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"CEU.SG"</span><span class="kw">,</span><span class="at"> </span><span class="st">"-&lt;NA12889.SG&gt;"</span><span class="kw">,</span><span class="at"> </span><span class="st">"-&lt;NA12890.SG&gt;"</span><span class="kw">]</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">FIN2</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"FIN.SG"</span><span class="kw">,</span><span class="at"> </span><span class="st">"-&lt;HG00383.SG&gt;"</span><span class="kw">,</span><span class="at"> </span><span class="st">"-&lt;HG00384.SG&gt;"</span><span class="kw">]</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">GBR2</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"GBR.SG"</span><span class="kw">,</span><span class="at"> </span><span class="st">"-&lt;HG01791.SG&gt;"</span><span class="kw">,</span><span class="at"> </span><span class="st">"-&lt;HG02215.SG&gt;"</span><span class="kw">]</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">IBS2</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"IBS.SG"</span><span class="kw">,</span><span class="at"> </span><span class="st">"-&lt;HG02238.SG&gt;"</span><span class="kw">,</span><span class="at"> </span><span class="st">"-&lt;HG02239.SG&gt;"</span><span class="kw">]</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">fstats</span><span class="kw">:</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> F2</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">a</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"French"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Spanish"</span><span class="kw">]</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">b</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"Han"</span><span class="kw">,</span><span class="at"> </span><span class="st">"CEU2"</span><span class="kw">]</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> F3</span><span class="co"> # This will create 3x2x1 = 6 Statistics</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">a</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"French"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Spanish"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Mbuti"</span><span class="kw">]</span></span>
+<div class="sourceCode" id="cb8"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># You can define groups right within the configuration file.</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># here we use negative selection to remove individuals from the</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># newly defined groups</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">groupDefs</span><span class="kw">:</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">CEU2</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"CEU.SG"</span><span class="kw">,</span><span class="at"> </span><span class="st">"-&lt;NA12889.SG&gt;"</span><span class="kw">,</span><span class="at"> </span><span class="st">"-&lt;NA12890.SG&gt;"</span><span class="kw">]</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">FIN2</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"FIN.SG"</span><span class="kw">,</span><span class="at"> </span><span class="st">"-&lt;HG00383.SG&gt;"</span><span class="kw">,</span><span class="at"> </span><span class="st">"-&lt;HG00384.SG&gt;"</span><span class="kw">]</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">GBR2</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"GBR.SG"</span><span class="kw">,</span><span class="at"> </span><span class="st">"-&lt;HG01791.SG&gt;"</span><span class="kw">,</span><span class="at"> </span><span class="st">"-&lt;HG02215.SG&gt;"</span><span class="kw">]</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">IBS2</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"IBS.SG"</span><span class="kw">,</span><span class="at"> </span><span class="st">"-&lt;HG02238.SG&gt;"</span><span class="kw">,</span><span class="at"> </span><span class="st">"-&lt;HG02239.SG&gt;"</span><span class="kw">]</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">fstats</span><span class="kw">:</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> F2</span><span class="co"> # this will create 2x2 = 4 F2-Statistics</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">a</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"French"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Spanish"</span><span class="kw">]</span></span>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">b</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"Han"</span><span class="kw">,</span><span class="at"> </span><span class="st">"CEU2"</span><span class="kw">]</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">c</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"&lt;Chimp.REF&gt;"</span><span class="kw">]</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> F4</span><span class="co"> # This will create 5x5x4x1 = 100 Statistics</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">a</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"&lt;I0156.SG&gt;"</span><span class="kw">,</span><span class="at"> </span><span class="st">"&lt;I0157.SG&gt;"</span><span class="kw">,</span><span class="at"> </span><span class="st">"&lt;I0159.SG&gt;"</span><span class="kw">,</span><span class="at"> </span><span class="st">"&lt;I0160.SG&gt;"</span><span class="kw">,</span><span class="at"> </span><span class="st">"&lt;I0161.SG&gt;"</span><span class="kw">]</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">b</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"&lt;I0156.SG&gt;"</span><span class="kw">,</span><span class="at"> </span><span class="st">"&lt;I0157.SG&gt;"</span><span class="kw">,</span><span class="at"> </span><span class="st">"&lt;I0159.SG&gt;"</span><span class="kw">,</span><span class="at"> </span><span class="st">"&lt;I0160.SG&gt;"</span><span class="kw">,</span><span class="at"> </span><span class="st">"&lt;I0161.SG&gt;"</span><span class="kw">]</span></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">c</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"CEU2"</span><span class="kw">,</span><span class="at"> </span><span class="st">"FIN2"</span><span class="kw">,</span><span class="at"> </span><span class="st">"GBR2"</span><span class="kw">,</span><span class="at"> </span><span class="st">"IBS2"</span><span class="kw">]</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">d</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"&lt;Chimp.REF&gt;"</span><span class="kw">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> F3vanilla</span><span class="co"> # This will create 3x2x1 = 6 Statistics</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">a</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"French"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Spanish"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Mbuti"</span><span class="kw">]</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">b</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"Han"</span><span class="kw">,</span><span class="at"> </span><span class="st">"CEU2"</span><span class="kw">]</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">c</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"&lt;Chimp.REF&gt;"</span><span class="kw">]</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> F4</span><span class="co"> # This will create 5x5x4x1 = 100 Statistics</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">a</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"&lt;I0156.SG&gt;"</span><span class="kw">,</span><span class="at"> </span><span class="st">"&lt;I0157.SG&gt;"</span><span class="kw">,</span><span class="at"> </span><span class="st">"&lt;I0159.SG&gt;"</span><span class="kw">,</span><span class="at"> </span><span class="st">"&lt;I0160.SG&gt;"</span><span class="kw">,</span><span class="at"> </span><span class="st">"&lt;I0161.SG&gt;"</span><span class="kw">]</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">b</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"&lt;I0156.SG&gt;"</span><span class="kw">,</span><span class="at"> </span><span class="st">"&lt;I0157.SG&gt;"</span><span class="kw">,</span><span class="at"> </span><span class="st">"&lt;I0159.SG&gt;"</span><span class="kw">,</span><span class="at"> </span><span class="st">"&lt;I0160.SG&gt;"</span><span class="kw">,</span><span class="at"> </span><span class="st">"&lt;I0161.SG&gt;"</span><span class="kw">]</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">c</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"CEU2"</span><span class="kw">,</span><span class="at"> </span><span class="st">"FIN2"</span><span class="kw">,</span><span class="at"> </span><span class="st">"GBR2"</span><span class="kw">,</span><span class="at"> </span><span class="st">"IBS2"</span><span class="kw">]</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">d</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"&lt;Chimp.REF&gt;"</span><span class="kw">]</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Altogether: 110 statistics of different types</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>which will not just create multiple statistic using row-combinations, as described, but also uses newly defined groups and combines multiple statistic types (F2, F3 and F4) in one run.</p>
 </div>
 </div>
 </section>
 </section>
-<section id="f4-statistics" class="level2 page-columns page-full" data-number="3.2">
+<section id="f4-statistics" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="f4-statistics"><span class="header-section-number">3.2</span> F4 Statistics</h2>
 <p>A different way to test for admixture is by “F4 statistics” (or “D statistics” which is very similar), also introduced in <span class="citation" data-cites="Patterson2012">(<a href="references.html#ref-Patterson2012" role="doc-biblioref">Patterson et al. 2012</a>)</span>.</p>
-<div class="no-row-height column-margin column-container"><div id="ref-Patterson2012" class="csl-entry" role="listitem">
-Patterson, Nick, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin Rohland, Yiping Zhan, Teri Genschoreck, Teresa Webster, and David Reich. 2012. <span>“Ancient Admixture in Human History.”</span> <em>Genetics</em> 192 (3): 1065–93. <a href="https://doi.org/10.1534/genetics.112.145037">https://doi.org/10.1534/genetics.112.145037</a>.
-</div></div><p>F4 statistics are also defined in terms of correlations of allele frequency differences, similarly to F3 statistics, but involving four different populations, not just three. Specifically we define</p>
+<p>F4 statistics are also defined in terms of correlations of allele frequency differences, similarly to F3 statistics, but involving four different populations, not just three. Specifically we define</p>
 <p><span class="math display">\[F4(A,B;C,D)=\langle(a−b)(c−d)\rangle.\]</span></p>
+<section id="shaping-intuition---the-abba--and-baba-sites" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="shaping-intuition---the-abba--and-baba-sites"><span class="header-section-number">3.2.1</span> Shaping intuition - the ABBA- and BABA-sites</h3>
 <p>To understand the statistics, consider the following tree:</p>
 <p><img src="img/fstats/f4_phylogeny.png" alt="F4-phylogeny" style="width: 300px;"></p>
 <p>In this tree, without any additional admixture, the allele frequency difference between A and B should be completely independent from the allele frequency difference between C and D. In that case, F4(A, B; C, D) should be zero, or at least not statistically different from zero. However, if there was gene flow from C or D into A or B, the statistic should be different from zero. Specifically, if the statistic is significantly negative, it implies gene flow between either C and B, or D and A. If it is significantly positive, it implies gene flow between A and C, or B and D.</p>
@@ -552,16 +577,21 @@ Patterson, Nick, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin Rohland, Yipi
 </tr>
 </tbody>
 </table>
-<p>You can see that the only SNPs that contribute positivel to this statistics are SNPs where the alleles are distributed as <code>1010</code> and <code>0101</code>, and the only SNPs that contribute negatively are <code>1001</code> and <code>0110</code>. In the literature, the two patterns have been dubbed “ABBA” and “BABA”, which is why the statistical test behind this statistic (see below) was sometimes called the ABBA-BABA test (see for example <span class="citation" data-cites="Martin2015">(<a href="references.html#ref-Martin2015" role="doc-biblioref">Martin, Davey, and Jiggins 2015</a>)</span>).</p>
-<div class="no-row-height column-margin column-container"><div id="ref-Martin2015" class="csl-entry" role="listitem">
-Martin, Simon H, John W Davey, and Chris D Jiggins. 2015. <span>“Evaluating the Use of <span>ABBA-BABA</span> Statistics to Locate Introgressed Loci.”</span> <em>Molecular Biology and Evolution</em> 32 (1): 244–57. <a href="https://doi.org/10.1093/molbev/msu269">https://doi.org/10.1093/molbev/msu269</a>.
-</div></div><p>The intuition here is straight-forward: In positions that are polymorphic in both <span class="math inline">\((A,B)\)</span> and <span class="math inline">\((C,D)\)</span>, this statistic asks whether B is genetically more similar to C than it is to D. This is most useful as a test for “treeness”: If A, B, C, D are related to each other as indicated in the above tree, then C should be equally closely related to C as to D. But if we actually find evidence that B is closer to C than to D, or vice versa, then this means that the tree above cannot be correct, but that there must be a closer connection between B and C or B and D, depending on the sign of the statistic.</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<p>You can see that the only SNPs that contribute positively to this statistics are SNPs where the alleles are distributed as <code>1010</code> and <code>0101</code>, and the only SNPs that contribute negatively are <code>1001</code> and <code>0110</code>. In the literature, the two patterns have been dubbed “ABBA” and “BABA”, which is why the statistical test behind this statistic (see below) was sometimes called the ABBA-BABA test (see for example <span class="citation" data-cites="Martin2015">(<a href="references.html#ref-Martin2015" role="doc-biblioref">Martin, Davey, and Jiggins 2015</a>)</span>).</p>
+<p>The intuition here is straight-forward: In positions that are polymorphic in both <span class="math inline">\((A,B)\)</span> and <span class="math inline">\((C,D)\)</span>, this statistic asks whether B is genetically more similar to C than it is to D. This is most useful as a test for “treeness”: If A, B, C, D are related to each other as indicated in the above tree, then C should be equally closely related to C as to D. But if we actually find evidence that B is closer to C than to D, or vice versa, then this means that the tree above cannot be correct, but that there must be a closer connection between B and C or B and D, depending on the sign of the statistic.</p>
+</section>
+<section id="from-single-samples-to-allele-frequencies" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="from-single-samples-to-allele-frequencies"><span class="header-section-number">3.2.2</span> From single samples to allele frequencies</h3>
+<p>So the ABBA- and BABA-categories of SNPs help shape intuition for how this statistic behaves for single haploid genomes. But what about population allele frequencies? Looking back at the formula <span class="math inline">\(\langle(a−b)(c−d)\rangle\)</span> this doesn’t help very much with intuition how this behaves with frequencies. Well, a nice feature of F4-Statistics is that averages factor out. This means, that if you have multiple samples in one or multiple slots A, B, C or D, the total F4-statistic of the <em>groups</em> is exactly equal to the <em>average</em> of F4-Statistics of the <em>individuals</em>. Here is a more mathematical definition.</p>
+<p>Let’s say we have 2 individuals in each of A and B, so we may perhaps write <span class="math inline">\(A=\{A_1,A_2\}\)</span> and <span class="math inline">\(B=\{B_1,B_2\}\)</span>. Then one can show to have</p>
+<p><span class="math display">\[F4(A, B; C, D) = \text{Average of}[F4(A_1, B_1; C, D), F4(A_1, B_2; C, D), F4(A_2, B_1; C, D), F4(A_2, B_2; C, D)]\]</span></p>
+<p>so just thte average over all individual-based F4-statistics. And this can be shown to be true for arbitrary numbers of samples. So in other words: An F4-Statistic <em>always</em> measures the <em>average</em> excess of pairwise BABA SNPs over ABBA SNPs. To me, this is a useful insight, as I find thinking in terms of ABBA-BABA somehow more helpful than thinking in terms of correlations of allele-frequency differences (which is really what the original formula is).</p>
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Note
 </div>
 </div>
@@ -574,9 +604,10 @@ Note
 <p>which shows that the first statistic is significantly positive with a Z-score of 7.99, while the second one is insignificantly different from zero (Z=1.01)</p>
 </div>
 </div>
-<div class="no-row-height column-margin column-container"><div id="ref-Green2010" class="csl-entry" role="listitem">
-Green, Richard E, Johannes Krause, Adrian W Briggs, Tomislav Maricic, Udo Stenzel, Martin Kircher, Nick Patterson, et al. 2010. <span>“A Draft Sequence of the Neandertal Genome.”</span> <em>Science</em> 328 (5979): 710–22. <a href="http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed&amp;id=20448178&amp;retmode=ref&amp;cmd=prlinks">http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed&amp;id=20448178&amp;retmode=ref&amp;cmd=prlinks</a>.
-</div></div><p>The way this statistic is often used, is to put a divergent outgroup as population A, for which we know for sure that there was no admixture into either C or D. With this setup, we can then test for gene flow between B and D (if the statistic is positive), or B and C (if it is negative).</p>
+<p>The way this statistic is often used, is to put a divergent outgroup as population A, for which we know for sure that there was no admixture into either C or D. With this setup, we can then test for gene flow between B and D (if the statistic is positive), or B and C (if it is negative).</p>
+</section>
+<section id="running-f4-statistics-with-xerxes" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="running-f4-statistics-with-xerxes"><span class="header-section-number">3.2.3</span> Running F4-Statistics with xerxes</h3>
 <p>Here, we can use this statistic to test for East Asian admixture in Finns, similarly to the test using Admixture F3 statistics above. We will again use <code>xerxes fstats</code>. We again prepare a configuration file (in <code>fstats_working/F4_finish.config</code> in the git-repository of this book), this time with four populations (A, B, C, D):</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fstats</span><span class="kw">:</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> F4</span></span>
@@ -602,6 +633,7 @@ Green, Richard E, Johannes Krause, Adrian W Briggs, Tomislav Maricic, Udo Stenze
 | F4        | Mbuti | Russia_Bolshoy | Norwegian  | Finnish | 542789  | 9.3473e-4      | 9.3475e-4          | 1.5302e-4        | 6.108881868125652  |
 '-----------'-------'----------------'------------'---------'---------'----------------'--------------------'------------------'--------------------'</code></pre>
 <p>As you can see, in all cases, the Z score is positive and larger than 3, indicating a significant deviation from zero, and implying gene flow between Nganasan and Finnish, and BolshoyOleniOstrov and Finnish, when compared to French, Icelandic, Lithuanian or Norwegian.</p>
+</section>
 </section>
 <section id="outgroup-f3-statistics" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="outgroup-f3-statistics"><span class="header-section-number">3.3</span> Outgroup-F3-Statistics</h2>
@@ -673,7 +705,20 @@ Green, Richard E, Johannes Krause, Adrian W Briggs, Tomislav Maricic, Udo Stenze
 </tbody>
 </table>
 <p>You can see that each position which is similar between A and B, but different to C contributes 1, all other SNPs 0. So it directly measures similarity between A and B on alleles that differ from the outgroup C.</p>
-<p>We can use this statistic to measure for example the the genetic affinity to East Asia, by performing the statistic F3(Han, X; Mbuti), where Mbuti is a distant African population and acts as outgroup here, Han denote Han Chinese, and X denotes various European populations that we want to test.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that the averaging-relation shown for F4 statistics above is also true for Outgroup-F3 statistics, but only for populations A and B, not for C. So if you have multiple samples in A and B, you may think of this statistic being the <em>average</em> over all pairwise nucleotide similarities between individuals in A and B with respect to the same outgroup C.</p>
+</div>
+</div>
+<p>We can use this statistic to measure for example the genetic affinity to East Asia, by performing the statistic F3(Han, X; Mbuti), where Mbuti is a distant African population and acts as outgroup here, Han denote Han Chinese, and X denotes various European populations that we want to test.</p>
 <p>You can again define a configuration file that performs looping over various populations X for you:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fstats</span><span class="kw">:</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> F3</span></span>
@@ -684,16 +729,16 @@ Green, Richard E, Johannes Krause, Adrian W Briggs, Tomislav Maricic, Udo Stenze
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="st">"Orcadian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Russian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Sardinian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Scottish"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Sicilian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Spanish_North"</span><span class="kw">,</span></span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="st">"Spanish"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Ukrainian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Finland_Levanluhta"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Russia_Bolshoy"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Russia_Chalmny_Varre"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Saami.DG"</span><span class="kw">]</span></span>
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">c</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"Mbuti"</span><span class="kw">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>which cycles through many populations from Europe, including the ancient individuals from Chalmny Varre, Bolshoy Oleni Ostrov and Levänluhta. We store this file in a file called <code>fstats_working/OutgroupF3_europe.config</code> and run via:</p>
+<p>which cycles through many populations from Europe, including the ancient individuals from Chalmny Varre, Bolshoy Oleni Ostrov and Levänluhta (described in <span class="citation" data-cites="Lamnidis2018">(<a href="references.html#ref-Lamnidis2018" role="doc-biblioref">Lamnidis et al. 2018</a>)</span>). We store this file in a file called <code>fstats_working/OutgroupF3_europe.config</code> and run via:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">xerxes</span> fstats <span class="at">--statConfig</span> fstats_working/OutgroupF3_europe.config <span class="at">-d</span> ~/dev/poseidon-framework/community-archive <span class="at">-f</span> fstats_working/outgroupf3_europe.tsv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-warning callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Warning
 </div>
 </div>
@@ -739,7 +784,7 @@ Warning
 | F3        | Han | Russia_Chalmny_Varre | Mbuti |   | 428215  | 5.4000e-2      | 5.4000e-2          | 5.6936e-4        | 94.84371082564112  |
 | F3        | Han | Saami.DG             | Mbuti |   | 585193  | 5.4727e-2      | 5.4728e-2          | 5.5546e-4        | 98.5265149143263   |
 '-----------'-----'----------------------'-------'---'---------'----------------'--------------------'------------------'--------------------'</code></pre>
-<p>Now it’s time to plot these results using R:</p>
+<p>Now it’s time to plot these results using R. Let’s first read in the table:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"fstats_working/outgroupf3_europe.tsv"</span>, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -763,17 +808,19 @@ Warning
 6       0.00046788          103.7967</code></pre>
 </div>
 </div>
-<p>Nice, now on to plotting (here I’m using Base R for zero-dependency pain, you’re welcome):</p>
+<p>Nice, now on to plotting (here I’m using Base R for zero-dependency pain, you’re welcome!):</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>order <span class="ot">&lt;-</span> <span class="fu">order</span>(d<span class="sc">$</span>Estimate_Total)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(d<span class="sc">$</span>Estimate_Jackknife[order], <span class="fu">seq_along</span>(d<span class="sc">$</span>b),</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"Z Score"</span>, <span class="at">ylab=</span><span class="cn">NA</span>, <span class="at">yaxt =</span> <span class="st">"n"</span>,</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fu">min</span>(d<span class="sc">$</span>Estimate_Jackknife) <span class="sc">-</span> <span class="fl">0.001</span>, <span class="fu">max</span>(d<span class="sc">$</span>Estimate_Jackknife) <span class="sc">+</span> <span class="fl">0.003</span>),</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"F3(Han, X; Mbuti)"</span>)</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(d<span class="sc">$</span>Estimate_Jackknife[order]<span class="sc">+</span><span class="fl">0.001</span>, <span class="fu">seq_along</span>(d<span class="sc">$</span>b), <span class="at">labels =</span> d<span class="sc">$</span>b, <span class="at">adj=</span><span class="dv">0</span>)</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(d<span class="sc">$</span>Estimate_Jackknife[order] <span class="sc">-</span> d<span class="sc">$</span>StdErr_Jackknife[order], <span class="fu">seq_along</span>(d<span class="sc">$</span>b),</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>       d<span class="sc">$</span>Estimate_Jackknife[order] <span class="sc">+</span> d<span class="sc">$</span>StdErr_Jackknife[order], <span class="fu">seq_along</span>(d<span class="sc">$</span>b),</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">length=</span><span class="fl">0.05</span>, <span class="at">angle=</span><span class="dv">90</span>, <span class="at">code=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>order <span class="ot">&lt;-</span> <span class="fu">order</span>(d<span class="sc">$</span>Estimate_Total) <span class="co"># order the estimates for visual effect</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> d<span class="sc">$</span>Estimate_Jackknife[order]</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>xErr <span class="ot">&lt;-</span> d<span class="sc">$</span>StdErr_Jackknife[order]</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">seq_along</span>(d<span class="sc">$</span>b)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">xlab =</span> <span class="st">"Z Score"</span>, <span class="at">ylab =</span> <span class="cn">NA</span>, <span class="at">yaxt =</span> <span class="st">"n"</span>, <span class="co"># plot no y-axis ticks</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">0.048</span>,<span class="fl">0.06</span>),</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"F3(Han, X; Mbuti)"</span>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the labels</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(x <span class="sc">+</span> <span class="fl">0.001</span>, y, <span class="at">labels =</span> d<span class="sc">$</span>b, <span class="at">adj=</span><span class="dv">0</span>)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the error bars</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="fu">arrows</span>(x <span class="sc">-</span> xErr, y, x <span class="sc">+</span> xErr, y, <span class="at">length=</span><span class="fl">0.05</span>, <span class="at">angle=</span><span class="dv">90</span>, <span class="at">code=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -785,7 +832,23 @@ Warning
 <p>As expected, the ancient samples and modern Saami are the ones with the highest allele sharing with present-day East Asians (as represented by Han) compared to many other Europeans.</p>
 
 
-
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-Green2010" class="csl-entry" role="doc-biblioentry">
+Green, Richard E, Johannes Krause, Adrian W Briggs, Tomislav Maricic, Udo Stenzel, Martin Kircher, Nick Patterson, et al. 2010. <span>“A Draft Sequence of the Neandertal Genome.”</span> <em>Science</em> 328 (5979): 710–22. <a href="http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed&amp;id=20448178&amp;retmode=ref&amp;cmd=prlinks">http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed&amp;id=20448178&amp;retmode=ref&amp;cmd=prlinks</a>.
+</div>
+<div id="ref-Lamnidis2018" class="csl-entry" role="doc-biblioentry">
+Lamnidis, Thiseas C, Kerttu Majander, Choongwon Jeong, Elina Salmela, Anna Wessman, Vyacheslav Moiseyev, Valery Khartanovich, et al. 2018. <span>“Ancient Fennoscandian Genomes Reveal Origin and Spread of Siberian Ancestry in Europe.”</span> <em>Nature Communications</em> 9 (1): 5018. <a href="https://doi.org/10.1038/s41467-018-07483-5">https://doi.org/10.1038/s41467-018-07483-5</a>.
+</div>
+<div id="ref-Martin2015" class="csl-entry" role="doc-biblioentry">
+Martin, Simon H, John W Davey, and Chris D Jiggins. 2015. <span>“Evaluating the Use of <span>ABBA-BABA</span> Statistics to Locate Introgressed Loci.”</span> <em>Molecular Biology and Evolution</em> 32 (1): 244–57. <a href="https://doi.org/10.1093/molbev/msu269">https://doi.org/10.1093/molbev/msu269</a>.
+</div>
+<div id="ref-Patterson2012" class="csl-entry" role="doc-biblioentry">
+Patterson, Nick, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin Rohland, Yiping Zhan, Teri Genschoreck, Teresa Webster, and David Reich. 2012. <span>“Ancient Admixture in Human History.”</span> <em>Genetics</em> 192 (3): 1065–93. <a href="https://doi.org/10.1534/genetics.112.145037">https://doi.org/10.1534/genetics.112.145037</a>.
+</div>
+<div id="ref-Peter2016" class="csl-entry" role="doc-biblioentry">
+Peter, Benjamin M. 2016. <span>“Admixture, Population Structure, and <span>F-Statistics</span>.”</span> <em>Genetics</em> 202 (4): 1485–1501. <a href="https://doi.org/10.1534/genetics.115.183913">https://doi.org/10.1534/genetics.115.183913</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -816,23 +879,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
-      }
-    }
-    return false;
-  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
+    target: function(trigger) {
+      return trigger.previousElementSibling;
     }
   });
   clipboard.on('success', function(e) {
@@ -844,24 +893,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
     setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -897,128 +929,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
       });
-    }
+      return popup.innerHTML;
+    });
   }
 });
 </script>

@@ -1,11 +1,9 @@
 ---
-title: "Introduction to F-Statistics"
+title: "Introduction to F3- and F4-Statistics"
 author: "Stephan Schiffels"
 date: "10/26/2023"
 bibliography: references.bib
 toc: true
-reference-location: margin
-citation-location: margin
 ---
 
 ## Admixture - F3 Statistics
@@ -108,14 +106,14 @@ Here is the result that you should get, nicely layouted in a Text-table:
 ```
 
 :::{.callout-tip}
-Use the option `--raw` if you prefer tab-separated output to read into Spreadsheet-software or into R or pythin scripts
+Use the option `-f <FILE>` to output the results additionally to a tab-separated file, or `--raw` if you prefer the standard output to be tab-separated
 :::
 
 You can see that in all cases this statistic is negative (`Estimate_Total`). The next two columns ( `Estimate_Jackknife` and `StdErr_Jackknife`) are computed using Jackknifing (see [the xerxes whitepaper](https://github.com/poseidon-framework/poseidon-analysis-hs/blob/main/docs/xerxes_whitepaper.pdf) for details). The last column is the Z score, and it is important here: It gives the deviation of the f3 statistic from zero in units of the standard error. As general rule, a Z score of -3 or more suggests a significant rejection of the Null hypothesis that the statistic is not negative. In this case, all of the statistics are significantly negative (with one borderline exception), proving that Finnish have ancestral admixture of East and West Eurasian ancestry. Here, Eastern ancestry is represented by Nganasan or Russia_Bolshoy, respectively, while Western ancestry by French, Icelandic, Lithuanian and Norwegian, respectively. Note that the statistics does not suggest when this admixture happened!
 
 ### Running xerxes via a configuration file
 
-As you will have noticed, the command line above is getting quite long, since a separate `--stat` option has to be entered for every statistic to be computed. There is a more powerful and elegant interface to xerxes, which uses a configuration file. To illustrate it, let us consider the configuration file (which can be found in `fstats_working/F3_finnish.config` in the git-repository of this book) needed to compute the same statistic as above:
+As you will have noticed, the command line above is getting quite long, since a separate `--stat` option has to be entered for every statistic to be computed. There is a more powerful and elegant interface to xerxes, which uses a configuration file in [YAML format](https://de.wikipedia.org/wiki/YAML). To illustrate it, let us consider the configuration file (which can be found in `fstats_working/F3_finnish.config` in the git-repository of this book) needed to compute the same statistic as above:
 
 ```Yaml
 fstats:
@@ -131,13 +129,14 @@ You can then run xerxes as
 xerxes fstats -d ~/dev/poseidon-framework/community-archive --statConfig fstats_working/F3_finnish.config
 ```
 
-So `xerxes` then automatically creates all combinations of populations listed in slotes `a`, `b` and `c`. 
+So `xerxes` then automatically creates all combinations of populations listed in slots `a`, `b` and `c`. 
 
 :::{.callout-note}
 Note that there are actually three types of F3-statistics supported by xerxes:
+
 * `F3vanilla`: The purest form, defined literally as $\langle(c−a)(c−b)\rangle$
 * `F3`: A bias-corrected version, which is only valid for groups in C that have non-zero heterozygosity
-* `F3star`: This is the one that is normalised by the heterozgygosity of the third population, C.
+* `F3star`: This one is normalised by the heterozgygosity of the third population, C, as suggested in [@Patterson2012] and implemented in the [Admixtools package](https://github.com/DReichLab/AdmixTools).
 
 The [white-paper]((https://github.com/poseidon-framework/poseidon-analysis-hs/blob/main/docs/xerxes_whitepaper.pdf)) explains this in detail.
 :::
@@ -146,16 +145,19 @@ The [white-paper]((https://github.com/poseidon-framework/poseidon-analysis-hs/bl
 The configuration file format has a lot more options. Here is a bit more complex example, but see also [the documentation](https://www.poseidon-adna.org/#/xerxes?id=input-via-a-configuraton-file):
 
 ```Yaml
+# You can define groups right within the configuration file.
+# here we use negative selection to remove individuals from the
+# newly defined groups
 groupDefs:
   CEU2: ["CEU.SG", "-<NA12889.SG>", "-<NA12890.SG>"]
   FIN2: ["FIN.SG", "-<HG00383.SG>", "-<HG00384.SG>"]
   GBR2: ["GBR.SG", "-<HG01791.SG>", "-<HG02215.SG>"]
   IBS2: ["IBS.SG", "-<HG02238.SG>", "-<HG02239.SG>"]
 fstats:
-- type: F2
+- type: F2 # this will create 2x2 = 4 F2-Statistics
   a: ["French", "Spanish"]
   b: ["Han", "CEU2"]
-- type: F3 # This will create 3x2x1 = 6 Statistics
+- type: F3vanilla # This will create 3x2x1 = 6 Statistics
   a: ["French", "Spanish", "Mbuti"]
   b: ["Han", "CEU2"]
   c: ["<Chimp.REF>"]
@@ -164,6 +166,7 @@ fstats:
   b: ["<I0156.SG>", "<I0157.SG>", "<I0159.SG>", "<I0160.SG>", "<I0161.SG>"]
   c: ["CEU2", "FIN2", "GBR2", "IBS2"]
   d: ["<Chimp.REF>"]
+# Altogether: 110 statistics of different types
 ```
 
 which will not just create multiple statistic using row-combinations, as described, but also uses newly defined groups and combines multiple statistic types (F2, F3 and F4) in one run.
@@ -177,6 +180,8 @@ A different way to test for admixture is by “F4 statistics” (or “D statist
 F4 statistics are also defined in terms of correlations of allele frequency differences, similarly to F3 statistics, but involving four different populations, not just three. Specifically we define
 
 $$F4(A,B;C,D)=\langle(a−b)(c−d)\rangle.$$
+
+### Shaping intuition - the ABBA- and BABA-sites
 
 To understand the statistics, consider the following tree:
 
@@ -197,9 +202,20 @@ It is helpful to again consider an example using a SNP list, this time assuming 
 | 6                | 1 | 0 | 0 | 0 | 0            |
 | $F_4(A, B;C, D)$ |   |   |   |   | **-0.0167**  |
 
-You can see that the only SNPs that contribute positivel to this statistics are SNPs where the alleles are distributed as `1010` and `0101`, and the only SNPs that contribute negatively are `1001` and `0110`. In the literature, the two patterns have been dubbed "ABBA" and "BABA", which is why the statistical test behind this statistic (see below) was sometimes called the ABBA-BABA test (see for example [@Martin2015]).
+You can see that the only SNPs that contribute positively to this statistics are SNPs where the alleles are distributed as `1010` and `0101`, and the only SNPs that contribute negatively are `1001` and `0110`. In the literature, the two patterns have been dubbed "ABBA" and "BABA", which is why the statistical test behind this statistic (see below) was sometimes called the ABBA-BABA test (see for example [@Martin2015]).
 
 The intuition here is straight-forward: In positions that are polymorphic in both $(A,B)$ and $(C,D)$, this statistic asks whether B is genetically more similar to C than it is to D. This is most useful as a test for "treeness": If A, B, C, D are related to each other as indicated in the above tree, then C should be equally closely related to C as to D. But if we actually find evidence that B is closer to C than to D, or vice versa, then this means that the tree above cannot be correct, but that there must be a closer connection between B and C or B and D, depending on the sign of the statistic.
+
+### From single samples to allele frequencies
+
+So the ABBA- and BABA-categories of SNPs help shape intuition for how this statistic behaves for single haploid genomes. But what about population allele frequencies? Looking back at the formula $\langle(a−b)(c−d)\rangle$ this doesn't help very much with intuition how this behaves with frequencies. Well, a nice feature of F4-Statistics is that averages factor out. This means, that if you have multiple samples in one or multiple slots A, B, C or D, the total F4-statistic of the _groups_ is exactly equal to the _average_ of F4-Statistics of the _individuals_. Here is a more mathematical definition.
+
+Let's say we have 2 individuals in each of A and B, so we may perhaps write $A=\{A_1,A_2\}$ and $B=\{B_1,B_2\}$. Then one can show to have
+
+$$F4(A, B; C, D) = \text{Average of}[F4(A_1, B_1; C, D), F4(A_1, B_2; C, D), F4(A_2, B_1; C, D), F4(A_2, B_2; C, D)]$$
+
+so just thte average over all individual-based F4-statistics. And this can be shown to be true for arbitrary numbers of samples. So in other words: An F4-Statistic _always_ measures the _average_ excess of pairwise BABA SNPs over ABBA SNPs. To me, this is a useful insight, as I find thinking in terms of ABBA-BABA somehow more helpful than thinking in terms of correlations of allele-frequency differences (which is really what the original formula is).
+
 
 :::{.callout-note}
 F4-statistics have been famously used to show that Neanderthals are more closely related to Non-African populations than to Africans, suggesting gene-flow between Neanderthals and Non-Africans (shown in [@Green2010]). You can reproduce this famous result with 
@@ -213,6 +229,8 @@ which shows that the first statistic is significantly positive with a Z-score of
 :::
 
 The way this statistic is often used, is to put a divergent outgroup as population A, for which we know for sure that there was no admixture into either C or D. With this setup, we can then test for gene flow between B and D (if the statistic is positive), or B and C (if it is negative).
+
+### Running F4-Statistics with xerxes
 
 Here, we can use this statistic to test for East Asian admixture in Finns, similarly to the test using Admixture F3 statistics above. We will again use `xerxes fstats`. We again prepare a configuration file (in `fstats_working/F4_finish.config` in the git-repository of this book), this time with four populations (A, B, C, D):
 
@@ -274,7 +292,11 @@ Here is again a SNP table to illustrate, using haploid individuals:
 
 You can see that each position which is similar between A and B, but different to C contributes 1, all other SNPs 0. So it directly measures similarity between A and B on alleles that differ from the outgroup C. 
 
-We can use this statistic to measure for example the the genetic affinity to East Asia, by performing the statistic F3(Han, X; Mbuti), where Mbuti is a distant African population and acts as outgroup here, Han denote Han Chinese, and X denotes various European populations that we want to test.
+:::{.callout-note}
+Note that the averaging-relation shown for F4 statistics above is also true for Outgroup-F3 statistics, but only for populations A and B, not for C. So if you have multiple samples in A and B, you may think of this statistic being the _average_ over all pairwise nucleotide similarities between individuals in A and B with respect to the same outgroup C.
+:::
+
+We can use this statistic to measure for example the genetic affinity to East Asia, by performing the statistic F3(Han, X; Mbuti), where Mbuti is a distant African population and acts as outgroup here, Han denote Han Chinese, and X denotes various European populations that we want to test.
 
 You can again define a configuration file that performs looping over various populations X for you:
 
@@ -290,7 +312,7 @@ fstats:
   c: ["Mbuti"]
 ```	
 
-which cycles through many populations from Europe, including the ancient individuals from Chalmny Varre, Bolshoy Oleni Ostrov and Levänluhta. We store this file in a file called `fstats_working/OutgroupF3_europe.config` and run via:
+which cycles through many populations from Europe, including the ancient individuals from Chalmny Varre, Bolshoy Oleni Ostrov and Levänluhta (described in [@Lamnidis2018]). We store this file in a file called `fstats_working/OutgroupF3_europe.config` and run via:
 
 
 ```{bash, eval=FALSE}
@@ -344,7 +366,7 @@ Here is the output of this run (but note that a tab-separated version was also s
 '-----------'-----'----------------------'-------'---'---------'----------------'--------------------'------------------'--------------------'
 ```
 
-Now it’s time to plot these results using R:
+Now it’s time to plot these results using R. Let's first read in the table:
 
 ```{r}
 d <- read.csv("fstats_working/outgroupf3_europe.tsv", sep = "\t")
@@ -356,22 +378,24 @@ We can check that it worked:
 head(d)
 ```
 
-Nice, now on to plotting (here I'm using Base R for zero-dependency pain, you're welcome):
+Nice, now on to plotting (here I'm using Base R for zero-dependency pain, you're welcome!):
 
 ```{r}
 #| fig-height: 8
 #| fig-width: 8
 #| out-width: "100%"
 #| fig-align: "center"
-order <- order(d$Estimate_Total)
-plot(d$Estimate_Jackknife[order], seq_along(d$b),
-     xlab="Z Score", ylab=NA, yaxt = "n",
-     xlim = c(min(d$Estimate_Jackknife) - 0.001, max(d$Estimate_Jackknife) + 0.003),
+order <- order(d$Estimate_Total) # order the estimates for visual effect
+x <- d$Estimate_Jackknife[order]
+xErr <- d$StdErr_Jackknife[order]
+y <- seq_along(d$b)
+plot(x, y, xlab = "Z Score", ylab = NA, yaxt = "n", # plot no y-axis ticks
+     xlim = c(0.048,0.06),
      main = "F3(Han, X; Mbuti)")
-text(d$Estimate_Jackknife[order]+0.001, seq_along(d$b), labels = d$b, adj=0)
-arrows(d$Estimate_Jackknife[order] - d$StdErr_Jackknife[order], seq_along(d$b),
-       d$Estimate_Jackknife[order] + d$StdErr_Jackknife[order], seq_along(d$b),
-       length=0.05, angle=90, code=3)
+# plot the labels
+text(x + 0.001, y, labels = d$b, adj=0)
+# plot the error bars
+arrows(x - xErr, y, x + xErr, y, length=0.05, angle=90, code=3)
 ```
 
 As expected, the ancient samples and modern Saami are the ones with the highest allele sharing with present-day East Asians (as represented by Han) compared to many other Europeans.
