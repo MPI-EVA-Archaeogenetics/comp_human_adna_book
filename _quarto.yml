@@ -11,6 +11,7 @@ book:
     - Quarto_intro.qmd
     - poseidon.qmd
     - fstats.qmd
+    - eager.qmd
     - references.qmd
 
 bibliography: references.bib
