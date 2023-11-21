@@ -1,0 +1,306 @@
+---
+title: "Introduction to nf-core/eager"
+author: "Selina Carlhoff"
+date: "11/16/2023"
+bibliography: references.bib
+toc: true
+reference-location: margin
+citation-location: margin
+execute:
+  eval: false
+---
+
+![](img/eager/nf-core_eager_logo_outline_drop.png){fig-align="center" width="339"}
+
+## Why do we need nf-core/eager?
+
+1.  Compared to other Next-Generation Sequencing data, the chemical structure and increased risk of present-day contamination require **methods specialized for ancient DNA** in both the wet and the dry lab.
+2.  Ensuring the authenticity of ancient genomic data is one of the main focuses of bioinformatic tools developed for the study of ancient DNA and underlines the necessity of **reproducibility** of results.
+3.  With an increasing number of laboratories contributing to the field, the available computational resources and previous bioinformatic experience varies greatly. To increase **accessibility**, newly developed tools should be adaptable to different environments, efficient, consistently maintained and well-documented.
+
+## What can nf-core/eager do?
+
+nf-core/eager streamlines the initial steps of ancient DNA analysis from FASTQ files after sequencing to variant calling [@FellowsYates2021].
+
+1.  Preprocessing:
+    1.  FastQC (sequencing quality control)
+    2.  AdapterRemoval2/fastp (sequencing artifact clean-up)
+2.  Mapping:
+    1.  BWA aln/BWA mem/CircularMapper/Bowtie2 (alignment)
+    2.  SAMtools (mapping quality filtering)
+    3.  Picard MarkDuplicates/DeDup (PCR duplicate removal)
+    4.  SAMtools/PreSeq/Qualimap2/BEDtools/Sex.DetERRmine/EndorSpy/MtNucRatio (mapping statistics)
+3.  aDNA evaluation:
+    1.  DamageProfiler/mapDamage2 (damage assessment)
+    2.  PMDtools (aDNA read selection)
+    3.  mapDamage2/Bamutils (damage removal)
+    4.  ANGSD (human contamination estimation)
+    5.  BBduk/HOPS/Kraken & Kraken Parse/MALT & MaltExtract (metagenomic screening)
+4.  Variant calling: GATK UnifiedGenotyper & HaplotypeCaller/sequenceTools pileupCaller/VCF2Genome/MultiVCFAnalyzer/freebayes/ANGSD
+5.  Report generation: MultiQC (summarize all generated statistics)
+
+![](img/eager/eager2_workflow.png){fig-align="center"}
+
+## How do I use nf-core/eager?
+
+### Installation
+
+You need:
+
+-   a Unix machine (HPC-cluster or a computer running Linux or MacOS)
+
+-   an installation of [docker](https://www.docker.com/) or [apptainer](https://apptainer.org/) (formerly known as singularity) or [conda](https://docs.conda.io/en/latest/), java and nextflow (e.g. via conda)
+
+-   internet connection
+
+Download the latest version of nf-core/eager
+
+``` bash
+nextflow pull nf-core/eager 
+# for a specific version
+nextflow pull nf-core/eager -r 2.5.0
+```
+
+Run a test specifying your choice of conda, docker or singularity
+
+``` bash
+nextflow run nf-core/eager -r 2.5.0 -profile test_tsv,docker
+```
+
+To optimize the use of available clusters, queues and resources, check if a Nextflow [pipeline configuration](https://nf-co.re/configs) is already available for your institution or computing environment. If not, prepare a custom profile tailored to your computational resources and setup. These are then added as a profile.
+
+``` bash
+nextflow run nf-core/eager -r 2.5.0 -profile test_tsv,eva #for MPI-EVA
+```
+
+### Input preparation
+
+You can run nf-core/eager by providing either a path to fastq or bam files or a path to a tab-separated table of input data to `--input`. For a large number of samples and convenience, a tsv is usually the preferred option. Using a tsv input also allows for merging of different files (e.g. different libraries, different UDG treatments, etc.) at different stages of the pipeline.
+
+![Pipeline stages and merging steps performed for a single sample with different libraries and different UDG treatments.](img/eager/merging_files.png){fig-align="center"}
+
+A tsv input file contains the following columns, detailing the name of the sample, library, sequencing lane, colour chemistry depending on the sequencer used, target organism, library strandedness, UDG treatment, path to fastq with forward reads (SE and PE), path to reverse reads (only PE), path to bam (optional). nf-core/eager will treat the data according to the provided information, e.g. only trim UDG half data and genotype single-stranded libraries using single-stranded mode.
+
+```         
+Sample_Name Library_ID Lane Colour_Chemistry SeqType Organism Strandedness UDG_Treatment R1                                                                                                                                  R2                                                                                                                                  BAM
+JK2782      JK2782     1    4                PE      Mammoth  single       half          https://github.com/nf-core/test-datasets/raw/eager/testdata/Mammoth/fastq/JK2782_TGGCCGATCAACGA_L008_R1_001.fastq.gz.tengrand.fq.gz https://github.com/nf-core/test-datasets/raw/eager/testdata/Mammoth/fastq/JK2782_TGGCCGATCAACGA_L008_R2_001.fastq.gz.tengrand.fq.gz NA
+JK2802      JK2802     2    2                SE      Mammoth  double       full          NA                                                                                                                                  NA                                                                                                                                  https://github.com/nf-core/test-datasets/raw/eager/testdata/Mammoth/fastq/JK2802_AGAATAACCTACCA_L008_R1_001.fastq.gz.tengrand.bam
+```
+
+Collecting and double-checking this information is time consuming, but crucial!
+
+If you realize you have different libraries from same individual, you should enter the same Sample_Name for all respective libraries. nf-core/eager will then produce all steps for the independent libraries (e.g. endogenous DNA, sequencing quality control, contamination estimation, etc.), but merge the deduplicated bam files before genotyping, genetic sex estimation and coverage calculation. To avoid re-mapping the whole dataset and conserve computing resources, also consider providing the mapped bam files to nf-core/eager directly.
+
+:::{.callout-tip}
+At DAG, we can take advantage of all the information entered in Pandora to produce a eager-ready tsv with [pandora2eager](https://github.com/sidora-tools/pandora2eager).
+:::
+
+### Parameter customization
+
+By default nf-core/eager runs the following, when you only provide input data and a reference genome:
+
+``` bash
+nextflow run nf-core/eager --input <INPUT>.tsv --fasta '<REFERENCE>.fasta' -profile eva
+```
+
+1.  Preprocessing:
+    1.  FastQC (sequencing quality control)
+    2.  AdapterRemoval2 (sequencing artifact clean-up)
+2.  Mapping:
+    1.  BWA aln (alignment)
+    2.  Picard MarkDuplicates (PCR duplicate removal)
+    3.  SAMtools/PreSeq/Qualimap2/EndorSpy (mapping statistics)
+3.  aDNA evaluation: DamageProfiler (damage assessment)
+4.  Report generation: MultiQC (summarize all generated statistics)
+
+The most direct way to add analysis steps (e.g. turn on genotyping) or change settings (e.g. shorter read length cut-off) is to add more parameters to the command line, in this case `--run_genotyping --genotyping_tool pileupcaller` and `--clip_readlength 25`, respectively. However, this gets cumbersome for the rather extensive workflows we usually employ for human aDNA analysis, including read trimming based on UDG treatment, genetic sex estimation, human nuclear contamination estimation, mitochondrial to nuclear ratio estimation and genotyping.
+
+But the power of nf-core/eager lies in its adaptability to your specific analysis needs and the possibility to 'remember' your favorite settings with a personal configuration file. This separate file can contain all parameters for your required tools, as well as custom computational resource requests. For 1240K capture data, a profile mapping to the hs37d5 reference genome with genotyping could look like this:
+
+``` bash
+profiles{
+  TF_hs37 { #name of the profile
+    params {
+        config_profile_description = "human 1240K data hs37d5 + genotyping"
+        config_profile_contact = "Selina Carlhoff (@scarlhoff)"
+        email = "selina_carlhoff@eva.mpg.de"
+        snpcapture_bed = "/PATH/1240K.pos.list_hs37d5.0based.bed"
+        fasta = "/PATH/hs37d5/hs37d5.fa"
+        fasta_index = "/PATH/hs37d5/hs37d5.fa.fai"
+        bwa_index = "/PATH/hs37d5/"
+        skip_preseq = true
+        clip_readlength = 30
+        preserve5p = true
+        bwaalnn = 0.01
+        bwaalnl = 16500
+        run_bam_filtering = true
+        bam_mapping_quality_threshold = 30
+        bam_filter_minreadlength = 30
+        bam_unmapped_type = "discard"
+        run_trim_bam = true
+        bamutils_clip_double_stranded_half_udg_left = 2
+        bamutils_clip_double_stranded_half_udg_right = 2
+        bamutils_clip_single_stranded_none_udg_left = 0
+        bamutils_clip_single_stranded_none_udg_right = 0
+        run_genotyping = true
+        genotyping_tool = "pileupcaller"
+        genotyping_source = "trimmed"
+        pileupcaller_bedfile = "/PATH/1240K.pos.list_hs37d5.0based.bed"
+        pileupcaller_snpfile = "/PATH/1240K.snp"
+        run_mtnucratio = true
+        mtnucratio_header = "MT"
+        run_sexdeterrmine = true
+        sexdeterrmine_bedfile = "/PATH/1240K.pos.list_hs37d5.0based.bed"
+        run_nuclear_contamination = true
+        contamination_chrom_name = "X"
+    }
+    process {
+    maxRetries = 2
+        withName:bwa {
+        time = { task.attempt == 3 ? 1440.h : task.attempt == 2 ? 72.h : 48.h }
+        }
+        withName:markduplicates {
+        memory = { task.attempt == 3 ? 16.GB : task.attempt == 2 ? 8.GB : 4.GB }
+        }
+        withName: mtnucratio {
+            memory = '10.G'
+            time = '24.h'
+        }
+    }
+  }
+}
+```
+
+The configuration file is then provided to nf-core/eager via the `-profile` and `-c` flag.
+
+``` bash
+nextflow run nf-core/eager -–input <INPUT>.tsv -profile TF_hs37,eva,archgen -c /<PATH>/eager2.config
+```
+
+Full documentation of all parameters is available on the [nf-core/eager website](https://nf-co.re/eager/2.5.0/parameters).
+
+:::{.callout-tip}
+The standardised parameters for the DAG automated pipeline can be found at `/mnt/archgen/Autorun_eager/conf/Autorun.config`.
+:::
+
+### Run submission
+
+Once all input files and parameters are prepared, you are ready for submission. To make sure that the workflow continues running when you disconnect from the cluster or shut down your computer, nf-core/eager should be run in a screen session.
+
+``` bash
+# create a screen session
+screen -R eager
+# submit nf-core/eager run
+nextflow run nf-core/eager –input <INPUT>.tsv -profile <YOUR_PROFILE> -c /<PATH>/<YOUR_CONFIG>.config
+# disconnect from screen session by pressing Ctrl+A+D
+# reconnect to screen session
+screen -r eager
+# end screen session after successful pipeline execution
+exit
+```
+
+After submitting a command specifying all the parameters you would like to use, Nextflow generates the corresponding shell scripts and submits each job to your scheduler according to your requested computational resources. You can track the execution status live in the terminal or on [Nextflow Tower](https://cloud.tower.nf/). For use with tower, you should assign the run an identifiable name with `-name` and activate tracking using `-with-tower`.
+
+### Output
+
+During the progression of the run, the results of each pipeline steps are collected in separate output directories. These contain the raw outputs of each tool, including any generated files (e.g. deduplicated bam files or genotypes).
+
+``` bash
+<RUNNAME>/
+- results/
+  - adapterremoval/
+  - damageprofiler/
+  - deduplication/
+  - documentation/
+  - endorspy/
+  - fastqc/
+  - genotyping/
+  - lanemerging/
+  - mapping/
+  - merged_bams/
+  - multiqc/
+  - nuclear_contamination/
+  - pipeline_info/
+  - qualimap/
+  - reference_genome/
+  - samtools/
+  - sex_determination/
+  - trimmed_bam/
+- work/
+```
+
+But as a first overview, we want to look at the summary of all statistics aggregated in `multiqc/multiqc_report.html`.
+
+![Screenshot of the top section of a MultiQC report](img/eager/multiqc_report.png){fig-align="center"}
+
+This table collects the output from all tools, so you can get an overview of sequenced reads per sequencing run, endogenous DNA per library, covered SNPs per sample and much more. You can also inspect and export crucial plots, such as read length distribution and damage profile. The end of the report also contains a list of all software versions and an overview of which profiles were used.
+
+![Ancient DNA damage plot as generated by MultiQC](img/eager/fiveprime_misinc_plot-1.png){fig-align="center" width="1200"}
+
+### Trouble shooting
+
+A common issue with nf-core/eager, especially when used in combination with the SGE scheduler, are memory issues with java-driven tools, e.g. MarkDuplicates. Sometimes the pipeline does not catch cases properly, where the allocated memory is exceeded, and the job keeps running instead of being re-submitted with larger memory allocation. Therefore, if you notice jobs running much longer than expected, it is worth checking the `work/` directory, where all information about each submitted job is recorded. Each job is assigned a randomly generated name using numbers and letter which you can identify from the log printed in to your screen, the `<RUNNAME>/.nextflow.log` or Nextflow tower. Each work directory contains files tracing the execution of the job.
+
+``` bash
+<RUNNAME>/
+- work/
+  - <WORKDIRECTORY>/
+    - .command.sh # exact command run for this tool
+    - .command.run # exact command submitted to the scheduler
+    - .command.log # any messages during the execution
+    - .command.err # any error messages
+    - .command.out # any output messages
+    - .command.trace # assigned computational resources
+```
+
+If you spot `java.lang.OutOfMemoryError: unable to create new native thread` in `.command.log` or `command.err`, you can delete the individual job from the scheduling queue. It will be re-submitted automatically with larger memory allocation.
+
+If you've had an issue with a run or want to restart the pipeline, you can do so using `-resume`. Nextflow will used cached results from any pipeline steps where the inputs are the same, continuing from where it got to previously. You can also supply a run name to resume a specific run: `-resume [run-name]`. Use the `nextflow log` command to show previous run names.
+
+## How do I report the usage of nf-core/eager?
+
+If you use nf-core/eager for your analysis, please cite Fellows Yates et al. [-@FellowsYates2021] and the release of nf-core/eager on [zenodo](https://zenodo.org/records/10078633), as well as the nf-core publication [@ewels2020]. As nf-core/eager is only the pipeline connecting multiple tools, please also cite the version of each used tool, the respective individual publications and add the full command for easy reproducibility.
+
+``` bash
+nextflow run nf-core/eager
+        -profile eva,archgen
+        -r 2.4.0
+        --input <INPUT>.tsv
+        --min_adap_overlap 1
+        --clip_readlength 30
+        --clip_min_read_quality 20
+        --preserve5p
+        --mapper bwaaln
+        --bwaalnnn 0.01
+        --bwaalno 2
+        --run_bam_filtering true
+        --bam_mapping_quality_threshold 30
+        --bam_filter_minreadlength 30
+        --bam_unmapped_type discard
+        --dedupper markduplicates
+        --damageprofiler_length 100
+        --damageprofiler_threshold 15
+        --damageprofiler_yaxis 0.3
+```
+
+## How do I update nf-core/eager?
+
+``` bash
+nextflow pull nf-core/eager
+#or for a specific version
+nextflow pull nf-core/eager -r 2.5.0
+```
+
+## What's next for nf-core/eager?
+
+While nf-core/eager 2.5.0 has only been released recently, behind the scenes the development team has been very busy re-writing nf-core/eager to be more efficient and include even more functionality. So look out for nf-core/eager 3.0 release sometime soon!
+
+![Overview of the development status of nf-core/eager 3.0 as of October 2023, new functionality marked in purple.](img/eager/eager3_metromap_complex_developmentupdate_20231020.png){fig-align="center"}
+
+## How can I get help with problems or questions?
+
+![](img/eager/nf-core.png){width="20"}Check the website for in-depth documentation of [nf-core/eager](https://nf-co.re/eager/2.5.0).
+
+![](img/eager/github.png){width="20"} Raise your issue on [GitHub](https://github.com/nf-core/eager/).
+
+![](img/eager/slack.jpg){width="20"}Join the #eager channel on the nf-core [Slack](https://nf-co.re/join#slack).
