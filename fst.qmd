@@ -1,0 +1,85 @@
+---
+title: "Measuring population structure using Fst"
+author: "Joscha Gretzinger and Stephan Schiffels"
+date: "11/23/2023"
+bibliography: references.bib
+toc: true
+reference-location: margin
+citation-location: margin
+execute:
+  eval: false
+---
+
+## Introduction
+
+$F_\text{ST}$ is a measure for population differentiation. It sometimes called the ["Fixation Index"](https://en.wikipedia.org/wiki/Fixation_index). While there are various mathematical definitions, which differ in subtle ways, we here follow the definition from [@Patterson2012], which on page 25 (or 1089 in the printed issue) defines:
+
+$$F_\text{ST}(A,B)=\frac{(a-b)^2}{a(1-b)+b(1-a)}$$
+
+Here, $a$ and $b$ denote _population allele frequencies_, which are in principle unobserved, but can be approximated by _sample allele frequencies_. This approximation is biased, and [@Patterson2012] gives additional formulae for an (asympotically) unbiased estimator.
+
+From this definition, you can see that $F_\text{ST}(A,B)$ is closely related to F2-statistics, introduced in [@Patterson2012]:
+
+$$F_2(A,B)=(a-b)^2$$.
+
+In some sense, $F_\text{ST}(A,B)$ can be considered a normalised version of $F_2(A,B)$.
+
+If you've gone through our [chapter on F3 and F4 statistics](fstats.qmd), you will have already encountered our software [xerxes](https://www.poseidon-adna.org/#/xerxes?id=xerxes-cli-software). You can compute both the biased and the approximately unbiased estimators for $F_\text{ST}(A,B)$, using the `FST` or `FSTvanilla` statistics, as defined in the [whitepaper](https://github.com/poseidon-framework/poseidon-analysis-hs/blob/main/docs/xerxes_whitepaper.pdf).
+
+For what follows, we will use the approximately unbiased form `FST`.
+
+$F_\text{ST}(A,B)$ has a convenient and untuitive scale: It ranges from 0 to 1, where $F_\text{ST}(A,B)=0$ denotes that $A$ and $B$ are the _same_ population, with no differentiation whatsoever. On the other hand of the spectrum we have $F_\text{ST}(A,B)=1$, which would mean that two populations are fully separated.
+
+Another way to see this measure is to consider it as _relative shared variance_: If you consider genetic variation _between_ $A$ and $B$, and _within_ each of $A$ and $B$, then $F_\text{ST}(A,B)$ can be considered to measure the average variance _between_ populations relative to the average variance _within_ populations, again with intuitive boundaries 0 and 1.
+
+## Computing FST using xerxes
+
+For human present-day populations, we can compute pairwise FSt using [xerxes](https://www.poseidon-adna.org/#/xerxes?id=xerxes-cli-software).
+
+We here chose a number of populations from [@Patterson2012] with more than 10 samples per population, and prepare the following config file for xerxes:
+
+```Yaml
+fstats:
+- type: FST
+  a: ["Adygei", "Balochi", "Basque", "BedouinA", "BedouinB", "Biaka", "Brahui", "Burusho", "Druze", "French", "Han", "Hazara", "Italian_North", "Japanese", "Kalash", "Karitiana", "Makrani", "Mandenka", "Mayan", "Mozabite", "Orcadian", "Palestinian", "Papuan", "Pathan", "Pima", "Russian", "Sardinian", "Sindhi_Pakistan", "Yakut", "Yoruba"]
+  b: ["Adygei", "Balochi", "Basque", "BedouinA", "BedouinB", "Biaka", "Brahui", "Burusho", "Druze", "French", "Han", "Hazara", "Italian_North", "Japanese", "Kalash", "Karitiana", "Makrani", "Mandenka", "Mayan", "Mozabite", "Orcadian", "Palestinian", "Papuan", "Pathan", "Pima", "Russian", "Sardinian", "Sindhi_Pakistan", "Yakut", "Yoruba"]
+- type: F2
+  a: ["Adygei", "Balochi", "Basque", "BedouinA", "BedouinB", "Biaka", "Brahui", "Burusho", "Druze", "French", "Han", "Hazara", "Italian_North", "Japanese", "Kalash", "Karitiana", "Makrani", "Mandenka", "Mayan", "Mozabite", "Orcadian", "Palestinian", "Papuan", "Pathan", "Pima", "Russian", "Sardinian", "Sindhi_Pakistan", "Yakut", "Yoruba"]
+  b: ["Adygei", "Balochi", "Basque", "BedouinA", "BedouinB", "Biaka", "Brahui", "Burusho", "Druze", "French", "Han", "Hazara", "Italian_North", "Japanese", "Kalash", "Karitiana", "Makrani", "Mandenka", "Mayan", "Mozabite", "Orcadian", "Palestinian", "Papuan", "Pathan", "Pima", "Russian", "Sardinian", "Sindhi_Pakistan", "Yakut", "Yoruba"]
+```
+
+This will then produce all combinations of $FST(A, B)$ and $F_2(A, B)$ as indicated in the population lists.
+
+:::{.callout-note}
+Note that the config-file engine in xerxes always computes _all_ the combinations of populations, even for cases of $A=B$. It also doesn't know about symmetry, so will happily compute the redundant statistics $FST(\text{Adygei}, \text{Balochi})$ and $FST(\text{Adygei}, \text{Balochi})$. While this could be possibly improved, there is no big harm done, as this runs fairly quickly.
+:::
+
+We run this config file using the command line
+
+```bash
+REPO=/path/to/community-archive/2012_PattersonGenetics
+
+xerxes fstats -d $REPO --statConfig fstat_world_config.yaml -f fstat_world_output.tsv > fstat_world_table.txt
+```
+
+The standard output, is a nicely layouted ASCII Table, which looks like this in the beginning:
+
+```
+.-----------.-----------------.-----------------.---.---.---------.----------------.--------------------.------------------.---------------------.
+| Statistic |        a        |        b        | c | d | NrSites | Estimate_Total | Estimate_Jackknife | StdErr_Jackknife |  Z_score_Jackknife  |
+:===========:=================:=================:===:===:=========:================:====================:==================:=====================:
+| FST       | Adygei          | Adygei          |   |   | 409606  | -3.2363e-2     | -3.2363e-2         | 1.1079e-6        | -29211.78654425142  |
+| FST       | Adygei          | Balochi         |   |   | 439484  | 1.0183e-2      | 1.0183e-2          | 2.6463e-4        | 38.47836213081687   |
+| FST       | Adygei          | Basque          |   |   | 429795  | 1.5041e-2      | 1.5041e-2          | 3.0579e-4        | 49.18650753804277   |
+| FST       | Adygei          | BedouinA        |   |   | 464801  | 1.1125e-2      | 1.1125e-2          | 2.3306e-4        | 47.733496037556684  |
+| FST       | Adygei          | BedouinB        |   |   | 442878  | 2.6486e-2      | 2.6486e-2          | 4.2233e-4        | 62.71408519081527   |
+| FST       | Adygei          | Biaka           |   |   | 511741  | 0.1241         | 0.1241             | 7.2278e-4        | 171.63603135734155  |
+| FST       | Adygei          | Brahui          |   |   | 439939  | 1.1874e-2      | 1.1874e-2          | 2.6634e-4        | 44.580717401262476  |
+| FST       | Adygei          | Burusho         |   |   | 439428  | 1.5395e-2      | 1.5395e-2          | 2.9055e-4        | 52.98665735172525   |
+| FST       | Adygei          | Druze           |   |   | 448233  | 1.0339e-2      | 1.0339e-2          | 1.9614e-4        | 52.709862042633105  |
+| FST       | Adygei          | French          |   |   | 435238  | 7.7213e-3      | 7.7213e-3          | 2.4507e-4        | 31.506092803895292  |
+| FST       | Adygei          | Han             |   |   | 442553  | 7.7084e-2      | 7.7084e-2          | 7.5943e-4        | 101.5019381212137   |
+```
+
+but of course has many more lines (>1800 in this case). We also used the `-f` flag to output a tab-separated file, here named `fstat_world_output.tsv`, which is easier to read into R.
+
