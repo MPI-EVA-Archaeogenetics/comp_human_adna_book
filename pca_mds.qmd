@@ -9,3 +9,32 @@ citation-location: margin
 execute:
   eval: false
 ---
+
+# Theory
+
+## PCA vs MDS
+
+## Missingness and Projection
+
+## Shrinkage
+
+# Practice
+
+## Preparation
+
+-   (Get trident)
+-   trident fetch --fetchFile fetchFile
+
+## PCA
+
+-   smartpca
+-   plot
+
+## PLINK MDS
+
+-   plink MDS
+-   plot
+
+## Compare plots
+
+# Conclusions
