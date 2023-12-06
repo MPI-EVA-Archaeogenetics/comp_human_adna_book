@@ -238,6 +238,8 @@ PCA_plot_1
 ggsave("PCA_plot_1.png")
 ```
 
+![](img/pca_mds/PCA_plot_1.png)
+
 ```{r}
 PCA_plot_1 +
     geom_point(
@@ -273,6 +275,8 @@ PCA_plot_2
 ggsave("PCA_plot_2.png")
 ```
 
+![](img/pca_mds/PCA_plot_2.png)
+
 Using all the populations in our dataset
 
 ```{r}
@@ -298,6 +302,8 @@ PCA_plot_ap <-  ggplot() +
 PCA_plot_ap
 ggsave("PCA_plot_ap.png")
 ```
+
+![](img/pca_mds/PCA_plot_ap.png)
 
 ## PLINK MDS
 
@@ -386,6 +392,8 @@ ggplot(mds_coords_pl1) +
 ggsave("MDS_poplist1.png")
 
 ```
+
+![](img/pca_mds/MDS_poplist1.png)
 
 ## Compare plots
 
