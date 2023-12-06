@@ -1,0 +1,11 @@
+---
+title: "Dimentionality reduction using PCA and MDS"
+author: "Martyna Molak & Thiseas C. Lamnidis"
+date: "12/07/2023"
+bibliography: references.bib
+toc: true
+reference-location: margin
+citation-location: margin
+execute:
+  eval: false
+---
