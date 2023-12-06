@@ -32,6 +32,8 @@ When using either of these methods, we are essentially representing the data on 
 
 ![A visual representation of the transformation PCA applies to a cloud of points, the range of which is represented by the blue oval. First, the data is rescaled around its own mean value, effectively moving the origin to the center of the data cloud (here shown s a red point). Then, the axes of maximal variation are discovered using linear algebra. Finally, the data is transformed to represent it along the identified axes of variation.](img/pca_mds/pca.gif){fig-align="center" width="40%"}
 
+The results of both of these methods are (usually) a 2 dimensional plot in which the distances between individual points roughly correlates to the genetic distance between these individuals. Therefore, genetically similar individual will be plotted close to one another, and further away from individuals that are more genetically dissimilar.
+
 ## The problem with missing data
 
 A recurring issue when analysing ancient DNA is the high degree of missing data (i.e. missingness). We often apply a minimum coverage filter to our datasets: A generally accepted rule-of-thumb for the 1240K dataset is a minimum of 15 000 covered (i.e. non-missing) SNPs. Another way to express this cutoff is to say that we will "happily" analyse data that is missing a genotype call in **98.8%** of all SNPs in the dataset! So how does this high rate of missingness affect MDS and PCA?
@@ -52,9 +54,34 @@ As you can see, individuals whose genotypes were masked are shifted towards the 
 
 ## Projection
 
-The idea of projection is simple, and applies similarly to both PCA and MDS. First, you use a subset of the
+The idea of projection is simple, and applies similarly to both PCA and MDS. In PCA, you use a subset of the dataset to calculate your axes of variation, and then apply the resulting transformation to additional data, thus projecting them onto those axes. th eimportant detail is that the variation between projected individuals is not taken into account when deciding which the axes of maximal variation are. Similarly, in MDS you project points to the MDS space based on their distances to the points that constructed the space, disregarding the distances of the projected points to one another.
+
+Below is a PCA plot calculated on present-day West Eurasian populations together with some Mesolithic hunter-gatherer individuals (in light brown). On the left side of the plot, the ancient individuals have been included in the calculation of the principal components, while on the right side they are projected on the principal components of the present-day West Eurasians.
+
+![PCA plot of ancient Mesolithic hunter-gatherers and present-day West Eurasian populations. On the right, the hunter gatherers are included in the principal component calculation, while on the left, they are projected on principal components calculated on the present-day populations only. The hunter-gatherers are part of three different groups: Eastern European hunter-gatherers (brown right-facing triangles), Scandinavian hunter-gatherers (brown diamonds), and Western European hunter-gatherers (brown half-filled circles).](img/pca_mds/projection_comparison.png){width="100%"}
+
+There are two things to note here:
+
+-   First, comparing the placement of Eastern European hunter-gatherers (brown right-facing triangles) between the two plots, you can see that projecting these individuals does indeed provide results that are not affected by mean imputation, and thus are not shifted towards the origin.
+-   Secondly, if you compare the positions of the Western European hunter-gatherers (brown half-filled circles), you will notice that projection causes these individuals to be plotted closer to present-day populations.
+
+The degree of missingness in the Western European hunter-gatherers (WHG) is relatively low, and hence the shift in thir placement between the two plots is not the result of mean imputation. Instead, when projected the WHG illustrate the effects of **shrinkage**.
 
 ## Shrinkage
+
+Shrinkage comes in two flavours:
+
+-   The kind of shrinkage you saw with the WHGs above, is pretty intuitive. When projecting populations on axes f variation that do not capture all the variation of the projected populations, they will appear as if they have less variation than reality. This translates to the points "shrinking" towards the origin slightly. that is to say, because the WHG individuals come from a population that harboured far more genetic variation than is present within present-day West Eurasian populations, much of their true variation is "hidden" when projecting them.
+
+-   The second kind of shrinkage (a.k.a. projection bias) arises because "samples used to calculate the PC axes"stretch" the axes" (from the [smartpca documentation](https://github.com/DReichLab/EIG/tree/master/POPGEN)). This problem is exacerbated in datasets where the number of markers far exceeds the number of samples used for PC calculation. This is often the case in human population genomics.
+
+While the first shrinkage flavour can be arguess as a feature of PCA, projection bias can be a problem when trying to compare present-day populations to projected ancient populations. A demonstration of the effects of shrinkage can be seen below:
+
+![Using 10 individuals of each of the three tested populations (Yoruba, French, Han) to calculate PCs, and then projected another 10 individuals of each population reveals the effects of shrinkage on the positions of the projected individuals. In the absence of shrinkage, all points originating from the same population would be overlapping.](img/pca_mds/shrinkage.png){width="100%"}
+
+Shrinkage can be corrected by scaling the eigenvectors of the projected and/or non-projected individuals to bring them more in line with one another. Below is the same dataset as above, but ran through smartpca with the parameter `shrinkmode: YES`:
+
+![Using 10 individuals of each of the three tested populations (Yoruba, French, Han) to calculate PCs, and then projected another 10 individuals of each population. Shrinkage correction was done using 'shrinkmode: YES'](img/pca_mds/shrinkmode.png){width="100%"}
 
 # Practice
 
