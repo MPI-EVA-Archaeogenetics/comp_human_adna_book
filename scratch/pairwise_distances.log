@@ -1,0 +1,29 @@
+PLINK v1.90b3.29 64-bit (24 Dec 2015)
+Options in effect:
+  --bfile scratch/forged_package/PCA_package_1
+  --distance-matrix
+  --out scratch/pairwise_distances
+
+Hostname: bionc21
+Working directory: /r1/people/martyna_molak/pca_mds
+Start time: Wed Dec  6 20:53:42 2023
+
+Random number seed: 1701892422
+338495 MB RAM detected; reserving 169247 MB for main workspace.
+1233013 variants loaded from .bim file.
+1647 people (1132 males, 504 females, 11 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to scratch/pairwise_distances.nosex .
+Using up to 39 threads (change this with --threads).
+Before main variant filters, 1647 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Warning: Nonmissing nonmale Y chromosome genotype(s) present; many commands
+treat these as missing.
+Total genotyping rate is 0.482187.
+1233013 variants and 1647 people pass filters and QC.
+Note: No phenotypes present.
+Excluding 82374 variants on non-autosomes from distance matrix calc.
+Distance matrix calculation complete.
+Distances (proportions) written to scratch/pairwise_distances.mdist , and IDs
+to scratch/pairwise_distances.mdist.id .
+
+End time: Wed Dec  6 20:54:17 2023

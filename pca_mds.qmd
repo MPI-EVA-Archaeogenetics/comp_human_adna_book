@@ -50,9 +50,9 @@ Below is a plot of the results of PCA on a dataset of differnt worldwide populat
 
 As you can see, individuals whose genotypes were masked are shifted towards the plot's origin. So how can we use PCA with ancient samples that have high degrees of missingness? The answer is by using a **L**east **Sq**uares **Project**ion, a.k.a. `lsqproject`!
 
-## PCA Projection
+## Projection
 
-
+The idea of projection is simple, and applies similarly to both PCA and MDS. First, you use a subset of the
 
 ## Shrinkage
 
@@ -175,7 +175,7 @@ Plot PCA
 library(tidyverse)
 
 if(!require('remotes')) install.packages('remotes')
-if (!require('poseidonR')) remotes::install_github('poseidon-framework/poseidonR')
+if (!require('janno')) remotes::install_github('poseidon-framework/janno')
 
 ## Load in poplist data
 poplist1 <- readr::read_tsv("pca_mds_working/PCA_poplists/PCA_poplist1.txt", col_names = "Pops", col_types = 'c')
@@ -187,12 +187,12 @@ PCA_poplist2_ev <- readr::read_fwf("scratch/smartpca_runs/poplist2/PCA_poplist2.
 PCA_all_pops_ev <- readr::read_fwf("scratch/smartpca_runs/all_pops/PCA_all_pops.evec", col_positions=readr::fwf_widths(c(20,11,12,12,12,17), col_names = c("Ind","PC1","PC2","PC3","PC4","Pop")), col_types = 'cnnnnc', comment="#")
 
 ## Finally, we load in the metadata from the forged package annotation file (janno). Here, we keep only the individual Ids, country and their Lat/Lon position.
-metadata<-poseidonR::read_janno("scratch/forged_package/PCA_package_1.janno", to_janno=F)%>% select(Individual_ID, Latitude, Longitude, Country) %>% mutate(Longitude=as.double(Longitude), Latitude=as.double(Latitude))
+metadata<-janno::read_janno("scratch/forged_package/PCA_package_1.janno", to_janno=F)%>% select(Poseidon_ID, Latitude, Longitude, Country) %>% mutate(Longitude=as.double(Longitude), Latitude=as.double(Latitude))
 
 ## Finally, we add the Lat/Lon information to our datasets
-PCA_poplist1_ev <- left_join(PCA_poplist1_ev, metadata, by=c("Ind"="Individual_ID")) %>% mutate(Country=as.factor(Country))
-PCA_poplist2_ev <- left_join(PCA_poplist2_ev, metadata, by=c("Ind"="Individual_ID")) %>% mutate(Country=as.factor(Country))
-PCA_all_pops_ev <- left_join(PCA_all_pops_ev, metadata, by=c("Ind"="Individual_ID")) %>% mutate(Country=as.factor(Country))
+PCA_poplist1_ev <- left_join(PCA_poplist1_ev, metadata, by=c("Ind"="Poseidon_ID")) %>% mutate(Country=as.factor(Country))
+PCA_poplist2_ev <- left_join(PCA_poplist2_ev, metadata, by=c("Ind"="Poseidon_ID")) %>% mutate(Country=as.factor(Country))
+PCA_all_pops_ev <- left_join(PCA_all_pops_ev, metadata, by=c("Ind"="Poseidon_ID")) %>% mutate(Country=as.factor(Country))
 ```
 
 ```{r}
@@ -221,7 +221,7 @@ gridExtra::grid.arrange(Lon_plot, Lat_plot, ncol=2)
 ```
 
 ```{r}
-## Ensuruing the same "orientation" for all users.
+## Ensuring the same "orientation" for all users.
 corner_inds_pl1 <- moderns_pl1 %>% select(Ind, PC1, PC2) %>% filter(Ind %in% c("HGDP00607", "Sir50"))
 if (corner_inds_pl1$PC1[1] > corner_inds_pl1$PC1[2]) { PCA_poplist1_ev <- PCA_poplist1_ev %>% mutate(PC1=-PC1)}
 if (corner_inds_pl1$PC2[1] > corner_inds_pl1$PC2[2]) { PCA_poplist1_ev <- PCA_poplist1_ev %>% mutate(PC2=-PC2)}
@@ -235,6 +235,7 @@ PCA_plot_1 <- p +
                alpha=0.5    ## Makes points semi transparent.
               )
 PCA_plot_1
+ggsave("PCA_plot_1.png")
 ```
 
 ```{r}
@@ -269,6 +270,7 @@ PCA_plot_2 <-  ggplot() +
         pch=17                   ## Change shape of point to solid triangle
      )
 PCA_plot_2
+ggsave("PCA_plot_2.png")
 ```
 
 Using all the populations in our dataset
@@ -278,11 +280,11 @@ Using all the populations in our dataset
 corner_inds_ap <- PCA_all_pops_ev %>% select(Ind, PC1, PC2) %>% filter(Ind %in% c("HGDP00607", "Sir50"))
 if (corner_inds_ap$PC1[1] > corner_inds_ap$PC1[2]) { PCA_all_pops_ev <- PCA_all_pops_ev %>% mutate(PC1=-PC1)}
 if (corner_inds_ap$PC2[1] > corner_inds_ap$PC2[2]) { PCA_all_pops_ev <- PCA_all_pops_ev %>% mutate(PC2=-PC2)}
-moderns_ap <- PCA_all_pops_ev %>% filter(Pop %in% poplist2$Pops) ## Poplist 2 contains all the present-day populations.
+moderns_ap <- PCA_all_pops_ev #%>% filter(Pop %in% poplist2$Pops) ## Poplist 2 contains all the present-day populations.
 
 ## Then we plot the output
 PCA_plot_ap <-  ggplot() +
-     coord_equal(xlim=c(-0.03,0.05)) +
+     coord_equal(xlim=c(-0.03,0.05), ylim=c(-0.04,0.12)) +
      theme_minimal() +
      geom_point(data=moderns_ap, 
                aes(x=PC1, y=PC2, col=Country), 
@@ -294,6 +296,7 @@ PCA_plot_ap <-  ggplot() +
         pch=17                   ## Change shape of point to solid triangle
      )
 PCA_plot_ap
+ggsave("PCA_plot_ap.png")
 ```
 
 ## PLINK MDS
@@ -303,25 +306,33 @@ PCA_plot_ap
 
 ls scratch/forged_package/
 
+# Compute pairwise distances of all individuals
 plink --bfile scratch/forged_package/PCA_package_1 --distance-matrix --out scratch/pairwise_distances
 ```
 
 ```{r}
 
-inds <- readr::read_tsv("scratch/pairwise_distances.mdist.id", col_types="cc", col_names=c("Population", "Individual"))
+inds <- readr::read_tsv("scratch/pairwise_distances.mdist.id", col_types="cc", col_names=c("Population", "Poseidon_ID"))
 inds
 
-dist_mat <- matrix(scan("scratch/pairwise_distances.mdist"), ncol=1666)
+metadata<-janno::read_janno("scratch/forged_package/PCA_package_1.janno", to_janno=F)%>% select(Poseidon_ID, Latitude, Longitude, Country) %>% mutate(Longitude=as.double(Longitude), Latitude=as.double(Latitude))
+
+## Finally, we add the Lat/Lon information to our datasets
+inds <- left_join(inds, metadata, by="Poseidon_ID")
+
+dist_mat <- matrix(scan("scratch/pairwise_distances.mdist"), ncol=1647)
 dim(dist_mat)
 
 ?heatmap
 
+# first try and filter for a few populations:
 unique(inds$Population)
 
 indices <- inds$Population %in% c('French', 'Greek', 'Nganasan')
 head(indices, 40)
 
 heatmap(dist_mat[indices,indices], labRow = inds$Population[indices], labCol = inds$Population[indices])
+
 
 library(ggplot2)
 library(magrittr) # This is for the pipe operator %>%
@@ -332,24 +343,26 @@ mds_coords <- tibble::as_tibble(mds_coords) %>%
 mds_coords
 
 ggplot(mds_coords) + 
-    geom_point(aes(x=C1, y=C2)) +
+    geom_point(aes(x=C1, y=C2, col=Country)) +
     theme_minimal() +
     coord_equal()
 
-corner_inds <- mds_coords %>% dplyr::select(Individual, C1, C2) %>% dplyr::filter(Individual %in% c("HGDP00607", "Sir50"))
+corner_inds <- mds_coords %>% dplyr::select(Poseidon_ID, C1, C2) %>% dplyr::filter(Poseidon_ID %in% c("HGDP00607", "Sir50"))
 if (corner_inds$C1[1] > corner_inds$C1[2]) { mds_coords <- mds_coords %>% mutate(C1=-C1)}
 if (corner_inds$C2[1] > corner_inds$C2[2]) { mds_coords <- mds_coords %>% mutate(C2=-C2)}
 
 ggplot(mds_coords) + 
-    geom_point(aes(x=C1, y=C2)) +
+    geom_point(aes(x=C1, y=C2, col=Country)) +
     theme_minimal() +
     coord_equal()
 
+## How does MDS compare to PCA if we restrict to the populations in poplist1?
 ## Read in the poplist
-poplist1 <- readr::read_tsv("PCA_poplists/PCA_poplist1.txt", col_names = "Pops", col_types = 'c')
+poplist1 <- readr::read_tsv("pca_mds_working/PCA_poplists/PCA_poplist1.txt", col_names = "Pops", col_types = 'c')
 
 ## Filter distance matrix
 indices_pl1 <- inds$Population %in% poplist1$Pops
+
 dist_mat[indices_pl1, indices_pl1]
 
 ## Do MDS
@@ -361,16 +374,16 @@ mds_coords_pl1
 
 
 ## Reorient
-corner_inds_mds1 <- mds_coords_pl1 %>% dplyr::select(Individual, C1, C2) %>% dplyr::filter(Individual %in% c("HGDP00607", "Sir50"))
+corner_inds_mds1 <- mds_coords_pl1 %>% dplyr::select(Poseidon_ID, C1, C2) %>% dplyr::filter(Poseidon_ID %in% c("HGDP00607", "Sir50"))
 if (corner_inds_mds1$C1[1] > corner_inds_mds1$C1[2]) { mds_coords_pl1 <- mds_coords_pl1 %>% mutate(C1=-C1)}
 if (corner_inds_mds1$C2[1] > corner_inds_mds1$C2[2]) { mds_coords_pl1 <- mds_coords_pl1 %>% mutate(C2=-C2)}
 
 ## Plot
 ggplot(mds_coords_pl1) + 
-    geom_point(aes(x=C1, y=C2)) +
+    geom_point(aes(x=C1, y=C2, col=Country)) +
     theme_minimal() +
     coord_equal()
-
+ggsave("MDS_poplist1.png")
 
 ```
 
