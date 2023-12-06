@@ -46,11 +46,13 @@ Unlike MDS, PCA is severely affected by missing data. During the rescaling of th
 
 Below is a plot of the results of PCA on a dataset of differnt worldwide populations [@Reich2012]. In an attempt to limit the effects of colonial admixture on the studied Native American populations, the authors masked parts of the genomes of Native Americans that matched the European or African populations in their dataset, replacing those genotypes with missing data.
 
-![PCA results on the same dataset based on the raw data (left), and after masking parts of the genome in Native American populations that match European populations. Due to mean imputation, masked individuals are attracted to the Origin. ](img/pca_mds/missingness_in_PCA.png){width="100%"}
+![PCA results on the same dataset based on the raw data (left), and after masking parts of the genome in Native American populations that match European populations. Due to mean imputation, masked individuals are attracted to the Origin.](img/pca_mds/missingness_in_PCA.png){width="100%"}
 
-As you can see, individuals whose genotypes were masked are shifted towards the plot's origin. 
+As you can see, individuals whose genotypes were masked are shifted towards the plot's origin. So how can we use PCA with ancient samples that have high degrees of missingness? The answer is by using a **L**east **Sq**uares **Project**ion, a.k.a. `lsqproject`!
 
 ## PCA Projection
+
+
 
 ## Shrinkage
 
