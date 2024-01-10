@@ -92,15 +92,27 @@ Get trident (Linux):
 ```{bash}
 # download Trident v1.4.0.3 binary
 wget https://github.com/poseidon-framework/poseidon-hs/releases/download/v1.4.0.3/trident-Linux
+# rename to trident
+mv trident-Linux trident
+
 # make it executable
-chmod +x trident-Linux
+chmod +x trident
 # run it
-./trident-Linux -h
+./trident -h
 ```
 
-trident for MacOS:\
-<https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-macOS>
+trident for MacOS:
+```{bash}
+# download Trident v1.4.0.3 binary
+curl -LO https://github.com/poseidon-framework/poseidon-hs/releases/download/v1.4.0.3/trident-macOS
+# rename to trident
+mv trident-macOS trident
 
+# make it executable
+chmod +x trident
+# run it
+./trident -h
+```
 trident for Windows:\
 <https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Windows.exe>
 
@@ -109,26 +121,42 @@ Practise dataset:
 ```{bash}
 mkdir -p scratch/poseidon-repository
 # This will take a few seconds to pull the data from the server
-./trident-Linux fetch -d scratch/poseidon-repository --fetchFile "pca_mds_working/exampleData.fetchFile.txt"
+./trident fetch -d scratch/poseidon-repository --fetchFile "pca_mds_working/exampleData.fetchFile.txt"
+```
 
+```{bash}
 # Check composition of one of the downloaded packages
 ls scratch/poseidon-repository/2014_LazaridisNature-4.0.2
+```
 
+```{bash}
 # List all groups (populations) comprised by the downloaded packages
-./trident-Linux list --groups -d scratch/poseidon-repository/
+./trident list --groups -d scratch/poseidon-repository/
+```
 
+```{bash}
 # Summarize information about  the downloaded packages
-./trident-Linux summarise -d scratch/poseidon-repository
+./trident summarise -d scratch/poseidon-repository
+```
 
+```{bash}
 # Choose population list for analysis (list for this excercise in "exampleData.forgeFile.txt"")
 head pca_mds_working/exampleData.forgeFile.txt
+```
 
+```{bash}
 # Count the number of listed populations to include
 wc -l pca_mds_working/exampleData.forgeFile.txt
+```
 
+```{bash}
 # Create (forge) a new repository with chosen groups from the downloaded packages
-./trident-Linux forge -d scratch/poseidon-repository -o scratch/forged_package -n PCA_package_1 --forgeFile pca_mds_working/exampleData.forgeFile.txt --outFormat EIGENSTRAT
-
+./trident forge \
+  -d scratch/poseidon-repository \
+  -o scratch/forged_package \
+  -n PCA_package_1 \
+  --forgeFile pca_mds_working/exampleData.forgeFile.txt \
+  --outFormat EIGENSTRAT
 ```
 
 ## PCA
@@ -152,10 +180,14 @@ lsqproject: YES     ## Project individuals not included in PC calculation onto t
 outliermode: 2      ## Turns off automatic outlier removal.
 numoutevec:  4       ## The number of eigenvectors to print per sample. Default is 10.
 EOF
+```
 
+```{bash}
 # Run smartpca
 smartpca -p scratch/smartpca_runs/poplist1/parameters.par
+```
 
+```{bash}
 # Inspect the output files
 ls scratch/smartpca_runs/poplist1/
 head scratch/smartpca_runs/poplist1/PCA_poplist1.evec
@@ -169,11 +201,15 @@ Adding populations (Native Americans)
 wc -l pca_mds_working/PCA_poplists/*
 
 diff -y --suppress-common-lines pca_mds_working/PCA_poplists/PCA_poplist1.txt pca_mds_working/PCA_poplists/PCA_poplist2.txt
+```
 
+```{bash}
 # Replace poplist1 with poplist2 in the smartpca parameter file
 sed 's/poplist1/poplist2/g' scratch/smartpca_runs/poplist1/parameters.par > scratch/smartpca_runs/poplist2/parameters.par
 cat scratch/smartpca_runs/poplist2/parameters.par
+```
 
+```{bash}
 # Rerun smartpca using poplist2 (additional populations)
 smartpca -p scratch/smartpca_runs/poplist2/parameters.par
 
@@ -186,10 +222,13 @@ Skipping projection (running smartpca without a poplist)
 ```{bash}
 mkdir -p scratch/smartpca_runs/all_pops
 head -n 7 scratch/smartpca_runs/poplist1/parameters.par | sed 's/poplist1/all_pops/g' > scratch/smartpca_runs/all_pops/parameters.par
-!tail -n 2 scratch/smartpca_runs/poplist1/parameters.par >> scratch/smartpca_runs/all_pops/parameters.par
+tail -n 2 scratch/smartpca_runs/poplist1/parameters.par >> scratch/smartpca_runs/all_pops/parameters.par
 echo "maxpops: 200" >> scratch/smartpca_runs/all_pops/parameters.par
 echo "fastmode: YES" >> scratch/smartpca_runs/all_pops/parameters.par
 cat scratch/smartpca_runs/all_pops/parameters.par
+```
+
+```{bash}
 ## Runtime of about 2 minutes
 smartpca -p scratch/smartpca_runs/all_pops/parameters.par
 ls scratch/smartpca_runs/all_pops/
@@ -262,7 +301,6 @@ PCA_plot_1 <- p +
                alpha=0.5    ## Makes points semi transparent.
               )
 PCA_plot_1
-ggsave("PCA_plot_1.png")
 ```
 
 ![](img/pca_mds/PCA_plot_1.png)
@@ -274,6 +312,8 @@ PCA_plot_1 +
         aes(x=PC1, y=PC2),       ## Set the x and y axes for this set of points
         pch=17                   ## Change shape of point to solid triangle
     )
+ggsave("PCA_plot_1.png")
+
 ```
 
 Added populations (Native Americans)
@@ -335,7 +375,8 @@ ggsave("PCA_plot_ap.png")
 ## PLINK MDS
 
 ```{bash}
-./trident-Linux genoconvert -d scratch/forged_package --outFormat PLINK
+##Convert package to PLINK format
+./trident genoconvert -d scratch/forged_package --outFormat PLINK
 
 ls scratch/forged_package/
 
@@ -344,29 +385,37 @@ plink --bfile scratch/forged_package/PCA_package_1 --distance-matrix --out scrat
 ```
 
 ```{r}
-
+## Read in individual IDs from MDS results
 inds <- readr::read_tsv("scratch/pairwise_distances.mdist.id", col_types="cc", col_names=c("Population", "Poseidon_ID"))
 inds
+```
 
-metadata<-janno::read_janno("scratch/forged_package/PCA_package_1.janno", to_janno=F)%>% select(Poseidon_ID, Latitude, Longitude, Country) %>% mutate(Longitude=as.double(Longitude), Latitude=as.double(Latitude))
+```{r}
+metadata <- janno::read_janno("scratch/forged_package/PCA_package_1.janno", to_janno=F)%>% select(Poseidon_ID, Latitude, Longitude, Country) %>% mutate(Longitude=as.double(Longitude), Latitude=as.double(Latitude))
 
 ## Finally, we add the Lat/Lon information to our datasets
 inds <- left_join(inds, metadata, by="Poseidon_ID")
 
-dist_mat <- matrix(scan("scratch/pairwise_distances.mdist"), ncol=1647)
+dist_mat <- matrix(scan("scratch/pairwise_distances.mdist"), ncol=nrow(inds))
 dim(dist_mat)
+```
 
+```{r}
 ?heatmap
+```
 
+```{r}
 # first try and filter for a few populations:
 unique(inds$Population)
 
 indices <- inds$Population %in% c('French', 'Greek', 'Nganasan')
 head(indices, 40)
 
+## Generate a heatmap
 heatmap(dist_mat[indices,indices], labRow = inds$Population[indices], labCol = inds$Population[indices])
+```
 
-
+```{r}
 library(ggplot2)
 library(magrittr) # This is for the pipe operator %>%
 mds_coords <- cmdscale(dist_mat)
@@ -375,11 +424,14 @@ mds_coords <- tibble::as_tibble(mds_coords) %>%
     dplyr::bind_cols(inds)
 mds_coords
 
-ggplot(mds_coords) + 
-    geom_point(aes(x=C1, y=C2, col=Country)) +
-    theme_minimal() +
-    coord_equal()
+## Un-oriented plot
+# ggplot(mds_coords) + 
+#     geom_point(aes(x=C1, y=C2, col=Country)) +
+#     theme_minimal() +
+#     coord_equal()
+```
 
+```{r}
 corner_inds <- mds_coords %>% dplyr::select(Poseidon_ID, C1, C2) %>% dplyr::filter(Poseidon_ID %in% c("HGDP00607", "Sir50"))
 if (corner_inds$C1[1] > corner_inds$C1[2]) { mds_coords <- mds_coords %>% mutate(C1=-C1)}
 if (corner_inds$C2[1] > corner_inds$C2[2]) { mds_coords <- mds_coords %>% mutate(C2=-C2)}
@@ -388,7 +440,9 @@ ggplot(mds_coords) +
     geom_point(aes(x=C1, y=C2, col=Country)) +
     theme_minimal() +
     coord_equal()
+```
 
+```{r}
 ## How does MDS compare to PCA if we restrict to the populations in poplist1?
 ## Read in the poplist
 poplist1 <- readr::read_tsv("pca_mds_working/PCA_poplists/PCA_poplist1.txt", col_names = "Pops", col_types = 'c')
@@ -397,7 +451,9 @@ poplist1 <- readr::read_tsv("pca_mds_working/PCA_poplists/PCA_poplist1.txt", col
 indices_pl1 <- inds$Population %in% poplist1$Pops
 
 dist_mat[indices_pl1, indices_pl1]
+```
 
+```{r}
 ## Do MDS
 mds_coords_pl1 <- cmdscale(dist_mat[indices_pl1,indices_pl1])
 colnames(mds_coords_pl1) <- c("C1", "C2")
