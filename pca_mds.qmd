@@ -75,13 +75,15 @@ Shrinkage comes in two flavours:
 
 -   The second kind of shrinkage (a.k.a. projection bias) arises because "samples used to calculate the PC axes"stretch" the axes" (from the [smartpca documentation](https://github.com/DReichLab/EIG/tree/master/POPGEN)). This problem is exacerbated in datasets where the number of markers far exceeds the number of samples used for PC calculation. This is often the case in human population genomics.
 
-While the first shrinkage flavour can be arguess as a feature of PCA, projection bias can be a problem when trying to compare present-day populations to projected ancient populations. A demonstration of the effects of shrinkage can be seen below:
+While the first shrinkage flavour can be argued to be a feature of PCA, projection bias can be a problem when trying to compare present-day populations to projected ancient populations. A demonstration of the effects of shrinkage can be seen below:
 
 ![Using 10 individuals of each of the three tested populations (Yoruba, French, Han) to calculate PCs, and then projected another 10 individuals of each population reveals the effects of shrinkage on the positions of the projected individuals. In the absence of shrinkage, all points originating from the same population would be overlapping.](img/pca_mds/shrinkage.png){width="100%"}
 
 Shrinkage can be corrected by scaling the eigenvectors of the projected and/or non-projected individuals to bring them more in line with one another. Below is the same dataset as above, but ran through smartpca with the parameter `shrinkmode: YES`:
 
 ![Using 10 individuals of each of the three tested populations (Yoruba, French, Han) to calculate PCs, and then projected another 10 individuals of each population. Shrinkage correction was done using 'shrinkmode: YES'](img/pca_mds/shrinkmode.png){width="100%"}
+
+As a note of caution, `shrinkmode: Yes` increases the runtime greatly. An alternative would be to identify specific present-day populations that are of interest for the ancient-to-modern comparison, and project those as well. So, for example, if we were to compare Iron Age individuals from Germany with present-day individuals from Germany, then we could decide to take out some or all present-day Germans and project those as well. That would make them fully comparable. 
 
 # Practice
 
