@@ -10,6 +10,30 @@ execute:
   eval: false
 ---
 
+# Installing mobest
+
+## Install mobest directly as an R package
+
+mobest is an R package and can be **installed directly from GitHub** with the following code on the R console:
+
+```r
+if(!require('remotes')) install.packages('remotes')
+remotes::install_github('nevrome/mobest')
+```
+
+You can also install specific/older versions of mobest with the following syntax: `nevrome/mobest[@ref|#pull|@*release]`. For example to install the publication release version you can run `remotes::install_github('nevrome/mobest@1.0.0')`.
+
+For any of this too work a number of **system libraries** (mostly for processing geospatial data) have to be installed on your system, primarily for one particular dependency of mobest: the **`sf` R package**. The following table includes the libraries and the names of the relevant packages in the package management systems of various Linux distributions and MacOS.
+
+| System library                                                        | deb package<br>(Ubuntu/Debian) | rpm package<br>(Fedora/CentOS) | pkgbuild package<br>(Arch) | brew package<br>(MacOS) |
+|-----------------------------------------------------------------------|----------------------------------|---------------------------------|-------------------------|----------------------|
+| [GDAL](https://gdal.org)                                              | libgdal-dev                      | gdal                            | gdal                    | gdal                 |
+| [GEOS](https://libgeos.org/)                                          | libgeos-dev<br>libgeos++-dev        | geos-devel                      | geos                    | geos                 |
+| [PROJ](https://proj.org)                                              | libproj-dev                      | proj-devel<br>sqlite-devel         | proj                    | proj                 |
+| [UDUNITS-2](https://www.unidata.ucar.edu/software/udunits/)           | libudunits2-dev                  | udunits                         | udunits                 | udunits              |
+
+The `sf` package maintainers provide a good explanation how to install these: <https://r-spatial.github.io/sf/#installing>
+
 # A basic similarity search workflow
 
 This section explains the setup for a basic ancestry similarity search with mobest in R. 
