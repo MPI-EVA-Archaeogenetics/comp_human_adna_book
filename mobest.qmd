@@ -8,6 +8,7 @@ reference-location: margin
 citation-location: margin
 execute:
   eval: false
+shift-heading-level-by: 1
 ---
 
 # Installing mobest
@@ -38,7 +39,7 @@ The `sf` package maintainers provide a good explanation how to install these: <h
 
 This section explains the setup for a basic ancestry similarity search with mobest in R. 
 
-For didactic purposes we use a simplified version of the data and code generated for the publication that introduced mobest: {cite:p}`Schmid2023`. This is a fairly generic setup you can adjust to the needs of other and more specific projects.
+For didactic purposes we use a simplified version of the data and code generated for the publication that introduced mobest: @Schmid2023. This is a fairly generic setup you can adjust to the needs of other and more specific projects.
 
 The script explained in the following sections as well as the data required for it can be downloaded in its entirety here:
 
@@ -123,17 +124,17 @@ ggplot() + geom_sf(data = research_land_outline_4326)
 
 At this point we run into a specific issue of mobest: It requires its "independent" spatial and temporal coordinates to be coordinates in a [Cartesian system](https://en.wikipedia.org/wiki/Cartesian_coordinate_system) describing [Euclidean space](https://en.wikipedia.org/wiki/Euclidean_space). For the spatial coordinates that means we can not work with latitude and longitude coordinates on a sphere, but have to transform them. We have to apply [map projection](https://en.wikipedia.org/wiki/Map_projection) to represent the curved, two dimensional surface of our planet on a simple plane.
 
-```{note}
+::: {.callout-note}
 The question how exactly this should be done and which CRS to choose depends on the position, size and shape of the research area. Each map projection algorithm has different properties regarding whether they manage to preserve or distort size, shape, distances and directions of areas and lines compared to the actual circumstances on Earth. Generally the larger the research area the bigger the distortion of these properties becomes. But for mobest we ideally want to represent all them accurately. mobest is therefore unfit for origin search on a global scale, but can usually be well applied for individual countries with the projections recommended by their cartographic agencies. For an intermediate, continental scale, as in this example, we have to choose our CRS wisely. 
-```
+:::
 
-We decided to follow the recommendation of {cite:p}`Annoni2003`.
+We decided to follow the recommendation of @Annoni2003.
 
 > *The Workshop recommends that the European Commission:*    
 > *- Uses for statistical analysis and display a ETRS89 Lambert Azimuthal Equal Area coordinate reference system of 2001 [ETRS -LAEA11 ], that is specified by ETRS89 as datum and the Lambert Azimuthal Equal Area map projection.*    
 > *- ...*
 
-This setting is documented in the EPSG code [3035](https://epsg.io/3035). Our decision comes at the price of increased inaccuracy especially in the North- and South-East of the research area where we get very far away from the specified centre for EPSG:3035 at 52° latitude and 10° longitude (see {cite:p}`Tsoulos2003` p.53 for a visualization of the deformative effects).
+This setting is documented in the EPSG code [3035](https://epsg.io/3035). Our decision comes at the price of increased inaccuracy especially in the North- and South-East of the research area where we get very far away from the specified centre for EPSG:3035 at 52° latitude and 10° longitude (see @Tsoulos2003 p.53 for a visualization of the deformative effects).
 
 To transform the land outline in the research area from EPSG:4326 to EPSG:3035 we can apply `sf::st_transform()`.
 
@@ -179,7 +180,7 @@ ggplot() +
 
 mobest requires a set of data points, archaeogenetic samples, to inform the ancestry field interpolation. For each sample the position in space, time and a dependent variable space (e.g. the coordinates in a PCA analysis) must be known. This information must be provided in a specific format. A typical mobest workflow involves preparing a sample list in a .xlsx or .csv table, which could then be read into R and transformed to the correct format.
 
-For this tutorial we rely on the data used and published in {cite:p}`Schmid2023`. The following, hidden section includes the code to prepare the sample table we need from the supplementary tables published with the paper.
+For this tutorial we rely on the data used and published in @Schmid2023. The following, hidden section includes the code to prepare the sample table we need from the supplementary tables published with the paper.
 
 <details>
 <summary>Code to prepare the input data table.</summary>
@@ -236,7 +237,7 @@ samples_basic <- readr::read_csv("docs/data/samples_basic.csv")
 | Latitude          | dbl  | The latitude coordinate where this sample was recovered  |
 | Longitude         | dbl  | The longitude coordinate |
 | Date_BC_AD_Median | int  | The median age of this sample in years BC/AD<br>(negative numbers for BC, positive ones for AD) |
-| MDS_C1            | dbl  | The coordinate of this sample on dimension 1 of an MDS analysis.<br>See {cite:p}`Schmid2023` for more details on how this was obtained |
+| MDS_C1            | dbl  | The coordinate of this sample on dimension 1 of an MDS analysis.<br>See @Schmid2023 for more details on how this was obtained |
 | MDS_C2            | dbl  | The coordinate of this sample on MDS dimension 2 |
 
 These variables are a minimum for a meaningful mobest run and must be known for all samples. Samples with missing information in any of these columns have to excluded from the input.
@@ -285,7 +286,7 @@ mobest's similarity search usually takes the perspective of an individual sample
 
 Technically this is only a requirement of the mobest interface. Conceptually such a similarity search only really requires the dependent variable space position of interest. The added benefit of having all information there is the `relative` time search setting (see below) and a very comprehensive output table for the most common use-case.
 
-In this example we will locate one specific sample with a pretty well studied ancestry history: The sample named `Stuttgart` published in {cite}`Lazaridis2014`. We can select it as a subset of our sample table:
+In this example we will locate one specific sample with a pretty well studied ancestry history: The sample named `Stuttgart` published in @Lazaridis2014. We can select it as a subset of our sample table:
 
 ```r
 search_samples <- samples_projected %>%
@@ -377,11 +378,11 @@ search_dep <- mobest::create_obs(
 
 #### Kernel parameter settings
 
-The `locest()` argument `kernel` takes an object of the class {ref}`mobest_kernelsetting <types:kernel parameter settings>`. This type encodes kernel configurations for each dependent variable, so the parameters for the Gaussian process regression (GPR) interpolation that should be used for this variable. These include mostly the lengthscale parameters in space (x and y) and time, as well as the nugget parameter. In very simple terms the former specify how far in space and time an individual sample's genetic position should inform the interpolated field. The nugget, on the other hand, is an error term to model local (for observations from the same position in space and time) variability. See {cite:p}`Gramacy2020`, specifically [here](https://bookdown.org/rbg/surrogates/chap5.html#chap5hyper), for more information.
+The `locest()` argument `kernel` takes an object of the class {ref}`mobest_kernelsetting <types:kernel parameter settings>`. This type encodes kernel configurations for each dependent variable, so the parameters for the Gaussian process regression (GPR) interpolation that should be used for this variable. These include mostly the lengthscale parameters in space (x and y) and time, as well as the nugget parameter. In very simple terms the former specify how far in space and time an individual sample's genetic position should inform the interpolated field. The nugget, on the other hand, is an error term to model local (for observations from the same position in space and time) variability. See @Gramacy2020, specifically [here](https://bookdown.org/rbg/surrogates/chap5.html#chap5hyper), for more information.
 
-```{warning}
+::: {.callout-warning}
 A technical detail that should be mentioned here: by default mobest does not perform GPR directly, but first detrends the data with a simple linear model and then applies GPR to its residuals. For more about this see {ref}`Gaussian process regression on top of a linear model <advanced:gaussian process regression on top of a linear model>`.
-```
+:::
 
 Here is a possible kernel configuration for our example. We construct two kernel settings, one for each ancestry component, with `mobest::create_kernel()` in `mobest::create_kernset()`. 
 
@@ -400,11 +401,11 @@ kernset <- mobest::create_kernset(
 
 Note how we scale the lengthscale parameters: `dsx` and `dsy` are set in meters (800 * 1000m = 800km) and `dt` in years (800y). `g` is dimensionless. With the setting specified here both dependent variables will be interpolated with the same, very smooth (several hundred kilometers and years in diameter) kernel.
 
-The main question naturally arising from this, is how to set these parameters for a given dataset and research question. There are various empirical ways to find optimal values through numerical optimization. See Supplementary Text 2 of {cite:p}`Schmid2023` for the approaches we applied. One concrete workflow to estimate the nugget from the variogram and the lengthscale parameters through crossvalidation is explained in {doc}`Interpolation parameter estimation <estimation>`.
+The main question naturally arising from this, is how to set these parameters for a given dataset and research question. There are various empirical ways to find optimal values through numerical optimization. See Supplementary Text 2 of @Schmid2023 for the approaches we applied. One concrete workflow to estimate the nugget from the variogram and the lengthscale parameters through crossvalidation is explained in {doc}`Interpolation parameter estimation <estimation>`.
 
-```{note}
-While estimating the nugget is generally advisable, we would argue, that the computationally expensive crossvalidation workflow to estimate the lengthscale parameters is not always necessary for basic applications of mobest. The analysis in {cite:p}`Schmid2023` showed that Gaussian process regression returns reasonably accurate interpolation results for a large range of kernel parameter settings, as long as they reflect a plausible intuition about the mobility behaviour of human ancestry, which generally operates on a scale of hundreds of kilometres and years. mobest is primarily a visualization method and adjusting its parameters to ones liking is legitimate if the choices are communicated transparently.
-```
+::: {.callout-note}
+While estimating the nugget is generally advisable, we would argue, that the computationally expensive crossvalidation workflow to estimate the lengthscale parameters is not always necessary for basic applications of mobest. The analysis in @Schmid2023 showed that Gaussian process regression returns reasonably accurate interpolation results for a large range of kernel parameter settings, as long as they reflect a plausible intuition about the mobility behaviour of human ancestry, which generally operates on a scale of hundreds of kilometres and years. mobest is primarily a visualization method and adjusting its parameters to ones liking is legitimate if the choices are communicated transparently.
+:::
 
 #### Search positions
 
