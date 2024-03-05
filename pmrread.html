@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.475">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Martyna Molak">
+<meta name="dcterms.date" content="2024-02-15">
+
+<title>Pairwise mismatch rate (PMR) and READ relatedness inference</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="pmrread_files/libs/clipboard/clipboard.min.js"></script>
+<script src="pmrread_files/libs/quarto-html/quarto.js"></script>
+<script src="pmrread_files/libs/quarto-html/popper.min.js"></script>
+<script src="pmrread_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="pmrread_files/libs/quarto-html/anchor.min.js"></script>
+<link href="pmrread_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="pmrread_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="pmrread_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="pmrread_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="pmrread_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background">Background</a></li>
+  <li><a href="#pairwise-mismatch-rate-pmr" id="toc-pairwise-mismatch-rate-pmr" class="nav-link" data-scroll-target="#pairwise-mismatch-rate-pmr">Pairwise Mismatch Rate (PMR)</a></li>
+  <li><a href="#read-version-1" id="toc-read-version-1" class="nav-link" data-scroll-target="#read-version-1">READ (version 1)</a></li>
+  <li><a href="#readv2" id="toc-readv2" class="nav-link" data-scroll-target="#readv2">READv2</a></li>
+  <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage">Usage</a>
+  <ul class="collapse">
+  <li><a href="#running-read-version-1" id="toc-running-read-version-1" class="nav-link" data-scroll-target="#running-read-version-1">Running READ (version 1)</a></li>
+  <li><a href="#running-read-v2" id="toc-running-read-v2" class="nav-link" data-scroll-target="#running-read-v2">Running READ v2</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Pairwise mismatch rate (PMR) and READ relatedness inference</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Martyna Molak </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 15, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="background" class="level2">
+<h2 class="anchored" data-anchor-id="background">Background</h2>
+<section id="measures-of-relatedness" class="level4">
+<h4 class="anchored" data-anchor-id="measures-of-relatedness">Measures of relatedness</h4>
+<p><strong>Coefficient of relationship</strong>, denoted <span class="math inline">\(r_{ij}\)</span> , defined by Sewall Wright in 1922 <span class="citation" data-cites="Wright1922-vm">(<a href="#ref-Wright1922-vm" role="doc-biblioref">Wright 1922</a>)</span>, is a measure of the degree of biological relationship between two individuals, commonly used in genetics and genealogy. It calculates the proportion of genes that two individuals have in common as a result of their genetic relationship. The coefficient of relationship is a derivative of the coefficient of inbreeding (<span class="math inline">\(f_k\)</span> or <span class="math inline">\(C_{I_k}\)</span>) defined by Wright a year earlier. A coefficient of inbreeding for an individual is typically one-half the coefficient of relationship between the parents.</p>
+<p>Coefficient of relationship between the parents approaches a value of 1 as the level of inbreeding increases and approaches 0 the more remote the common ancestors are.</p>
+<p>In human relationships, coefficient of relationship is often calculated based on the knowledge of the family tree, typically extending to up to three or four generations, using a formula:</p>
+<p><span class="math display">\[
+r_{ij} = \sum (^1/_2)^{L_{ij}}
+\]</span> where <span class="math inline">\(L\)</span> is the numbers of generation links between two individuals (<span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>). E.g. full siblings are linked by two links through the mother (siblingA - mother - siblingB) and two links through the father (siblingA - father - siblingB), therefore the coefficient of relationship between them is <span class="math inline">\(r = (^1/_2)^2 + (^1/_2)^2 = (^1/_4) + (^1/_4) = (^1/_2)\)</span> , while e.g.&nbsp;a person with their aunt are linked by three links through the shared grandmother/mother and three through the shared grandfather/father, so <span class="math inline">\(r=(^1/_2)^3 + (^1/_2)^3 = (^1/_8) + (^1/_8) = (^1/_4)\)</span> .</p>
+<p>Note that under such definition, the coefficient of relationship is a lower bound and an actual value that may be up to a few percent higher due to unaccounted for consanguinity within the pedigree. The value is accurate to within 1% if the full family tree of both individuals is known to a depth of seven generations.</p>
+<p><strong>Kinship coefficient</strong>, denoted <span class="math inline">\(\phi_{ij}\)</span> [fa:i], is the probability that one allele sampled from individual <span class="math inline">\(i\)</span> and one allele sampled from the same locus from individual <span class="math inline">\(j\)</span> are identical by descent.</p>
+<p><span class="math inline">\(1 - \phi_{ij}\)</span> can thus be interpreted as the probability that a randomly sampled allele from each individual is not identical by descent. Assuming that alleles are not under linkage disequilibrium, this value can be estimated from genome-wide data for a pair of individuals.</p>
+<p>Kinship coefficient <span class="math inline">\(\phi_{ij}\)</span> , under some assumptions such as limited inbreeding, is related to Wright’s coefficient of relationship, denoted <span class="math inline">\(r_{ij}\)</span> , via:</p>
+<p><span class="math display">\[
+\phi_{ij} = (^1/_2)r_{ij}
+\]</span> and hence provides a direct relationship between the degrees of relatedness from the pedigree and the expected kinship coefficient <span class="math inline">\(\phi_{ij}\)</span> .</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/pmrread/CoefficientsOfRelatednessAndKinship.JPG" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption"><strong>Table 1.</strong> Values of the coefficient of relatedness and the kinship coefficient for different pedigree relationships up to the second-degree, assuming that <span class="math inline">\(C_I\)</span> = 0. From Rohrlach et al. <span class="citation" data-cites="Rohrlach2023.04.17.537144">(<a href="#ref-Rohrlach2023.04.17.537144" role="doc-biblioref">2023</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="pairwise-mismatch-rate-pmr" class="level2">
+<h2 class="anchored" data-anchor-id="pairwise-mismatch-rate-pmr">Pairwise Mismatch Rate (PMR)</h2>
+<p>Methods of relatedness estimation applied routinely to modern data are not applicable to ancient genomes due to small numbers of individuals sampled and high rate of data missingness (ie. low coverage), as well as due to lack of diploid phased genomic data available for majority of such samples. Thus, estimation of the coefficient of relatedness for ancient individuals using these methods is prone to biases and generally unreliable.</p>
+<p>Pairwise mismatch rate (PMR) was introduced by <span class="citation" data-cites="Kennett2017-qw">(<a href="#ref-Kennett2017-qw" role="doc-biblioref">Kennett et al. 2017</a>)</span> as a means to estimate relatedness between ancient individuals (<strong>Figure 1</strong>). For each pair of individuals they computed the average mismatch rate across all autosomal SNPs covered by at least one sequence read for both of the two compared individuals (when &gt;1 sequence read was present for one individual at a given site, a random read was sampled for the analysis) and computed standard errors using a weighted block jackknife. Mismatch rates significantly lower (Z&gt;3) than the highest observed value, provided putative evidence of relatedness.</p>
+<p>The PMR can be used to estimate the kinship coefficient, which, assuming that we can account for the inbreeding coefficient <span class="math inline">\(C_I\)</span>, can be used to estimate the degree of relatedness. Hence, we may gain insights into the pedigree joining many individuals (to a certain resolution). Kennett et al’s <span class="citation" data-cites="Kennett2017-qw">(<a href="#ref-Kennett2017-qw" role="doc-biblioref">2017</a>)</span> <span class="math inline">\(PMR\)</span> estimation, however, did not include a hard-classification method nor was wrapped into any particular software piece.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/pmrread/PMRcalculation.jpg" class="img-fluid figure-img" width="500"></p>
+<p></p><figcaption class="figure-caption"><strong>Fig 1.</strong> Pairwise mismatch rate calculation (PMR). A) Pseudohaploid genomes are compared within each pair of individuals. B) Only sites called in both individuals are considered (filled circles) and classified as match (green) or mismatch (red). Accounting for linkage disequilibrium: C) Estimation of PMR using sliding window (as implemented in READ) as well as genome-wide (optional in READv2). D) Estimation of PMR on thinned SNP data (as implemented in BREADR)</figcaption><p></p>
+</figure>
+</div>
+<p><strong>Accounting for pseudohaploidization:</strong></p>
+<p>Due to pseudohaploidisation (ie. drawing one allele randomly for each position) identical individuals will have an expected PMR of half of this between unrelated individuals.<br>
+The estimate of relatedness coefficient <span class="math inline">\(r\)</span> needs therefore be corrected using the expected mismatch rate in non-related individuals. In <span class="citation" data-cites="Kennett2017-qw">(<a href="#ref-Kennett2017-qw" role="doc-biblioref">Kennett et al. 2017</a>)</span> they chose correction based on the approximate maximum mismatch rates observed: <span class="math inline">\(b = max(PMR_{observed})/2\)</span> . The estimator they used is thus:<br>
+<span class="math display">\[
+r = 1 - ((PMR_{ij} - b)/b) .
+\]</span></p>
+<p>PMR estimation in ancient-DNA-based inference of relatedness has first been implemented as separate software with READ <span class="citation" data-cites="Monroy_Kuhn2018-fb">(<a href="#ref-Monroy_Kuhn2018-fb" role="doc-biblioref">Monroy Kuhn, Jakobsson, and Günther 2018</a>)</span> and then by its successor - READv2 <span class="citation" data-cites="Alacamli2024-xq">(<a href="#ref-Alacamli2024-xq" role="doc-biblioref">Alaçamlı et al. 2024</a>)</span>. Other software used in relatedness estimation among ancient individuals, such as BREADR <span class="citation" data-cites="Rohrlach2023.04.17.537144">(<a href="#ref-Rohrlach2023.04.17.537144" role="doc-biblioref">Rohrlach et al. 2023</a>)</span>, also build on PMR.</p>
+<p><strong>Accounting for linkage disequilibrium:</strong><br>
+Linkage disequilibrium (LD, non-independent co-inheritance) of the loci included in the PMR estimation will bias the results towards falsely positive relatedness detection. To minimize this effect, different approaches can be employed. This is particularly crucial, when analyzing genome-wide (shotgun) data. In the 1240k SNP panel widely used in ancient genomics the analysed loci have already been selected taking LD into account. The approaches to minimize the LD bias that have been employed in PMR estimation comprise PMR estimation separately over consecutive genome fragments (sliding window) and obtaining median estimate among them (e.g., implemented in READv1, and as an option in READv2; <strong>Figure 1C</strong>), and decreasing the number of SNPs included in the analysis using a threshold of physical proximity of SNPs along the genome (thinning; e.g., implemented in BREADR; <strong>Figure 1D</strong>).</p>
+<p><strong>Good practice</strong>: Only pairs with at least 10,000 overlapping SNPs of the 1240k SNP panel should be included in PMR estimation <span class="citation" data-cites="Furtwangler2020-ce">(<a href="#ref-Furtwangler2020-ce" role="doc-biblioref">Furtwängler et al. 2020</a>)</span></p>
+</section>
+<section id="read-version-1" class="level2">
+<h2 class="anchored" data-anchor-id="read-version-1">READ (version 1)</h2>
+<p>Relationship Estimation from Ancient DNA <span class="citation" data-cites="Monroy_Kuhn2018-fb">(<a href="#ref-Monroy_Kuhn2018-fb" role="doc-biblioref">Monroy Kuhn, Jakobsson, and Günther 2018</a>)</span> - formalized implementation of PMR for ancient genomic data.</p>
+<ul>
+<li><p>Pseudohaploid input data (TPED/TFAM format)</p></li>
+<li><p>Division of the genome into non-overlapping windows of 1 Mbps each and calculation of the proportion of non-matching alleles inside each window (<em>P</em>0) for each pair of individuals.</p></li>
+<li><p>Normalization of <em>P</em>0 using the value expected for a randomly chosen pair of unrelated individuals from the population (in order to make the classification independent of within population diversity, SNP ascertainment and marker density).<br>
+This value is estimated by calculation of the median of all average pairwise <em>P</em>0 per window across all pairs of individuals, which, under sufficient sample size, can be treated as a proxy for an expected <em>P</em>0 in a pair of unrelated individuals. Normalization can also be performed using parameters other than median, e.g., maximum observed <em>P</em>0 value among the pairs.</p></li>
+<li><p>Classification of each pair of individuals as unrelated, second-degree (i.e.&nbsp;nephew/niece-uncle/aunt, grandparent-grand- child or half-siblings), first-degree (parent-offspring or siblings) or identical individuals/identical twins from the average across the per-window proportions of non-matching alleles (<em>P</em>0).</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/pmrread/READ1.JPG" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption"><strong>Figure 2.</strong> Outline of the general READ workflow to estimate the degree of relationship between two individuals. From <span class="citation" data-cites="Monroy_Kuhn2018-fb">(<a href="#ref-Monroy_Kuhn2018-fb" role="doc-biblioref">Monroy Kuhn, Jakobsson, and Günther 2018</a>)</span></figcaption><p></p>
+</figure>
+</div>
+<p><strong>Pluses:</strong> The method has been shown to work quite well with as little as <strong>0.1x shotgun coverage</strong> per genome. It has very <strong>simple assumptions</strong> estimating the expected pairwise mismatch rate from the data <strong>without the need for population allele frequencies</strong>. It can thus be used as <strong>part of initial QC procedures</strong> (e.g.&nbsp;identifying duplicated individuals) or in populations (or species) for which little additional information is available.<br>
+<strong>Minuses:</strong> READ had been implemented as a <strong>Python 2</strong> script. The last version of Python 2 was released in 2020 and some systems have already stopped supporting the language. Furthermore, READ wrote a <strong>large number of temporary files</strong> to the hard disk which were then analyzed by a separate R script called from the Python script.</p>
+</section>
+<section id="readv2" class="level2">
+<h2 class="anchored" data-anchor-id="readv2">READv2</h2>
+<p>New implementation of READ <span class="citation" data-cites="Alacamli2024-xq">(<a href="#ref-Alacamli2024-xq" role="doc-biblioref">Alaçamlı et al. 2024</a>)</span></p>
+<section id="improvements-over-version-1" class="level5">
+<h5 class="anchored" data-anchor-id="improvements-over-version-1">Improvements over version 1</h5>
+<ul>
+<li>All analyses are carried out within a <strong>single Python3 script</strong> using NumPy <span class="citation" data-cites="Harris2020-vr">(<a href="#ref-Harris2020-vr" role="doc-biblioref">Harris et al. 2020</a>)</span> and pandas <span class="citation" data-cites="McKinney2010-zp">(<a href="#ref-McKinney2010-zp" role="doc-biblioref">McKinney 2010</a>)</span> libraries.</li>
+<li>Major analysis <strong>speed</strong> improvement (although more memory-intensive)</li>
+<li>Avoids excessive use of temporary files and the calling of a separate R script.</li>
+<li>Minor gain in accuracy due to changes in some default values (based on performance tests results).</li>
+<li>Introduction of the <strong>“effective number of overlapping SNPs”</strong> (number of overlapping SNPs times the pairwise mismatch rate expected for unrelated individuals) representing a measure of the amount of information available for kinship estimation in a given pair of individuals. Provides benchmarking and increases comparability between studies.</li>
+<li>Ability to <strong>classify up to third-degree relatives</strong> (requires at least 5000 effectively overlapping SNPs).</li>
+<li>Ability to <strong>differentiate between different types of first-degree relationships</strong> (ie. full siblings vs parent-offspring; requires at least 10,000 effectively overlapping SNPs).</li>
+<li>Feasible for as much as 696 individuals (241 860 pairs) provided enough available memory.</li>
+<li>Genome-wide <em>P</em>0 calculation as default; with the uncertainty estimated using a block-jackknife approach with block sizes of 5 Mb (as commonly employed in human population genomic studies; <span class="citation" data-cites="Patterson2012-im">(<a href="#ref-Patterson2012-im" role="doc-biblioref">Patterson et al. 2012</a>)</span>). Option to use window-based approach of chosen window size also available.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/pmrread/Alacamli.F5.Folwchart.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption"><strong>Figure 3.</strong> READv2 flowchart. From <span class="citation" data-cites="Alacamli2024-xq">(<a href="#ref-Alacamli2024-xq" role="doc-biblioref">Alaçamlı et al. 2024</a>)</span></figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="noteworthy-properties" class="level5">
+<h5 class="anchored" data-anchor-id="noteworthy-properties">Noteworthy properties</h5>
+<p>Overall, READv2 performs well down to at least <strong>0.1X sequence data</strong> in the simulated dataset. This corresponded to on average about 1,878 overlapping SNPs for each pair of individuals at an expected mismatch for unrelated individuals of ∼0.247.</p>
+<p>In default settings, READv2 performs a genome-wide estimate of the pairwise mismatch rate, based on which it will assess the degree of relationship in each pair of individuals. This is followed by a <strong>separate round of classification for first-degree relatives</strong>. Here, the genome is divided into 20Mb windows and the proportion of windows that are classified as either “identical/twin” or “unrelated” is estimated. These proportions correspond to Cotterman coefficients <span class="math inline">\(k_0\)</span> – windows classified as unrelated (i.e.&nbsp;no shared chromosome), and <span class="math inline">\(k_2\)</span> – windows classified as identical (i.e.&nbsp;both chromosomes shared). Expected <span class="math inline">\(k_0 + k_2\)</span> is low for parent-offspring and around 0.5 for full siblings when sufficient data are available.<br>
+If that proportion is less than 0.3, the pair is classified as <strong>“parent-offspring”</strong>; if it is between 0.35 and 0.6, the pair is classified as <strong>“siblings”</strong>. For other proportions, or when the number of effectively overlapping SNPs is below 10,000, the pair remains classified as “first-degree” without further specification.<br>
+The two types of relations are well separated down to 0.5X coverage in the simulated dataset (or ∼8,000 “effectively overlapping SNPs”), but they overlap at 0.2X and below. Hence, to avoid wrongly classifying parent-offspring pairs as siblings, READv2 applies a default cutoff of 10,000 effectively overlapping SNPs, below which classification is not performed. (In <span class="citation" data-cites="Rivollat2020-qq">(<a href="#ref-Rivollat2020-qq" role="doc-biblioref">Rivollat et al. 2020</a>)</span> a cutoff of 7000 effective SNP number cutoff was used.)</p>
+<p><strong>Warnings:</strong> At low coverage (0.05x and 0.1x) there are high false positive rates for second- and third-degree relatedness; many unrelated pairs are classified into these categories. At 0.01X, unrelated individuals are even classified as first-degree or identical twins, resulting in a reduced false positive rate for second- and third-degree but an increased false positive rate for first-degree. To avoid false classifications in empirical data, READv2 applies a conservative threshold of 5000 “effectively overlapping SNPs”, below which no attempt to classify third-degree relatives is taken.</p>
+<p>According to the authors READv2 alone can lead to very similar results as the combination of READv1 and lcMLkin. output table by including information such as the number of overlapping SNPs, the number of effectively overlapping SNPs, and the kinship coefficient <span class="math inline">\(μ\)</span> (= 1 - normalized <em>P</em>0)</p>
+</section>
+<section id="comparison-with-other-methods" class="level5">
+<h5 class="anchored" data-anchor-id="comparison-with-other-methods">Comparison with other methods</h5>
+<p>READv2 is very similar in its approach to BREADR <span class="citation" data-cites="Rohrlach2023.04.17.537144">(<a href="#ref-Rohrlach2023.04.17.537144" role="doc-biblioref">Rohrlach et al. 2023</a>)</span> and TKGWV2 <span class="citation" data-cites="Fernandes2021-ze">(<a href="#ref-Fernandes2021-ze" role="doc-biblioref">Fernandes et al. 2021</a>)</span>, with each tool having its own unique features. READv2 has the functionality to separate the different first-degree relationships, BREADR has a better quantification of uncertainty, and TKGWV2 works well with lower amounts of input data.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/pmrread/Alacamli.TS1.gif" class="img-fluid figure-img" width="500"></p>
+<p></p><figcaption class="figure-caption"><strong>Table 2.</strong> Comparison of methods available for relatedness reconstruction in ancient genomic data. From Alaçamlı et al. <span class="citation" data-cites="Alacamli2024-xq">(<a href="#ref-Alacamli2024-xq" role="doc-biblioref">2024</a>)</span>.</figcaption><p></p>
+</figure>
+</div>
+<p>For further comparison of some of the methods available, you can also refer to the paper by Akturk et al. <span class="citation" data-cites="Akturk2023-yr">(<a href="#ref-Akturk2023-yr" role="doc-biblioref">2023</a>)</span></p>
+</section>
+</section>
+<section id="usage" class="level2">
+<h2 class="anchored" data-anchor-id="usage">Usage</h2>
+<section id="running-read-version-1" class="level3">
+<h3 class="anchored" data-anchor-id="running-read-version-1">Running READ (version 1)</h3>
+<p>READ version 1 is implemented in Python 2.</p>
+<p>The input for <a href="https://bitbucket.org/tguenther/read/src/master/">READ</a> is a pair of files in Plink’s TPED/TFAM.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Get READ off Bitbucket</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://bitbucket.org/tguenther/read.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If starting from eigenstrat files you will need to use for example:</p>
+<ul>
+<li>convertf (<a href="https://github.com/DReichLab/EIG">Eigensoft</a>) and <a href="https://www.cog-genomics.org/plink/">plink</a> transpose:</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Create a parameter file for Eigensoft convertf:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="st">genotypename:    myGenotypeFile.geno</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="st">snpname:         myGenotypeFile.snp</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="st">indivname:       myGenotypeFile.ind</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="st">outputformat:    PACKEDPED</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="st">genotypeoutname: myGenotypeFile.bed</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="st">snpoutname:      myGenotypeFile.bim</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="st">indivoutname:    myGenotypeFile.fam</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="st">"</span> <span class="op">&gt;</span> scratch/myGenotypeFile.GenotToBed.convertf.param</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">## Convert eigenstrat to packedped</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="ex">PathTo_EigensoftConvertf</span> <span class="at">-p</span> myGenotypeFile.GenotToBed.convertf.param</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">## Transpose packedped to tped</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="ex">plink</span> <span class="at">--bfile</span> myGenotypeFile <span class="at">--recode</span> transpose <span class="at">--out</span> myGenotypeFile </span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">## The output is myGenotypeFile.tped, myGenotypeFile.tfam, myGenotypeFile.nosex, myGenotypeFile.log</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>or</p>
+<ul>
+<li><a href="https://www.poseidon-adna.org/#/trident">trident genoconvert</a>, if you are working with <a href="https://www.poseidon-adna.org/#/">Poseidon</a> packages:</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Convert eigenstrat-formatted package(s) to plink-formatted</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">trident</span> genoconvert <span class="at">-d</span> ... <span class="at">-d</span> ... <span class="at">--outFormat</span> PLINK</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>With the generated PLINK files you can no run READ:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Run READ</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> pathTo_Read.py myGenotypeFile <span class="op">&lt;</span>normalization_method<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="options" class="level4">
+<h4 class="anchored" data-anchor-id="options">Options</h4>
+<p>normalization_method:</p>
+<ul>
+<li><p>median (default) - assuming that most pairs of compared individuals are unrelated, READ uses the median across all pairs for normalization.</p></li>
+<li><p>mean - READ uses the mean across all pairs for normalization, this would be more sensitive to outliers in the data (e.g.&nbsp;recent migrants or identical twins)</p></li>
+<li><p>max - READ uses the maximum across all pairs for normalization. This should be used to test trios where both parents are supposed to be unrelated but the offspring is a first degree relative to both others.</p></li>
+<li><p>value &lt;val&gt; - READ uses a user-defined value for normalization. This can be used if the value from another population should be used for normalization. That would be useful if only two individuals are available for the test population. A value can be obtained from the NonNormalized<em>P</em>0 column of the file meansP0_AncientDNA_normalized from a previous run of READ.</p></li>
+</ul>
+<p>Optionally, one can add <code>--window_size</code> &lt;value&gt; at the end in order to modify the window size used (default: 1000000).</p>
+</section>
+<section id="output" class="level4">
+<h4 class="anchored" data-anchor-id="output">Output:</h4>
+<p>“READ_results”:</p>
+<pre><code>PairIndividuals Relationship Z_upper Z_lower I0232I0358 Unrelated NA -17.0238 ... I0354I0360 First Degree 3.8987 -9.6782 I0354I0361 Unrelated NA -15.4353 ... I0421I0430 First Degree 7.5325 -12.1995 I0421I0431 Unrelated NA -3.9037 ...</code></pre>
+<p>““meansP0_AncientDNA_normalized”:</p>
+<pre><code>PairIndividuals Normalized2AlleleDifference StandardError NonNormalizedP0 NonNormalizedStandardError I0232I0358 1.0069 0.0059 0.2531 0.00149 ... I0354I0360 0.7587 0.0138 0.1907 0.0035 I0354I0361 1.0092 0.0067 0.2537 0.0017 ... I0421I0430 0.7409 0.0095 0.1862 0.0024 I0421I0431 1.0115 0.0270 0.2543 0.0068 ...</code></pre>
+<p>“READ_results_plot.pdf”:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/pmrread/READ_results_plot.jpg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="running-read-v2" class="level3">
+<h3 class="anchored" data-anchor-id="running-read-v2">Running READ v2</h3>
+<p><a href="https://github.com/GuntherLab/READv2">READv2</a> is recommended to be ran as <a href="https://docs.anaconda.com/free/miniconda/">conda</a> environment.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Preparing the environment</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/GuntherLab/READv2.git</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> create <span class="at">-n</span> readv2 python=3.7 pandas=1.1.1 numpy=1.18.3 pip=22.3.1 matplotlib=3.5.3</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate readv2</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install plinkio  <span class="co">## Used for format conversion of the inpt data.</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co">## Personally I couldn't make plinkio work and am using Poseidon/trident or eigensoft convertf (as described below).</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The input for READv2 is a trio of files in Plink’s <strong>BED/BIM/FAM</strong> format.</p>
+<p>If starting with files in EIGENSTRAT format, they can be converted to PLINK format using for example:</p>
+<ul>
+<li>convertf (<a href="https://github.com/DReichLab/EIG">Eigensoft</a>) and <a href="https://www.cog-genomics.org/plink/">plink</a> transpose:</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Create convertf parameter file for converting .geno to .bed files (this can probably also be done using PLINKIO, as implemented in READv2 documentation):</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="st">genotypename:    myGenotypeFile.geno</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="st">snpname:         myGenotypeFile.snp</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="st">indivname:       myGenotypeFile.ind</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="st">outputformat:    PACKEDPED</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="st">genotypeoutname: myGenotypeFile.bed</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="st">snpoutname:      myGenotypeFile.bim</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="st">indivoutname:    myGenotypeFile.fam</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="st">"</span> <span class="op">&gt;</span> scratch/myGenotypeFile.GenoToBed.convertf.param</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">## Convert eigenstrat to packedped</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="ex">PathTo_EigensoftConvertf</span> <span class="at">-p</span> myGenotypeFile.GenotToBed.convertf.param</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">## The output is myGenotypeFile.bed, myGenotypeFile.fam, myGenotypeFile.bim</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>or</p>
+<ul>
+<li><a href="https://www.poseidon-adna.org/#/trident">trident genoconvert</a>, if you are working with <a href="https://www.poseidon-adna.org/#/">Poseidon</a> packages:</li>
+</ul>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Convert eigenstrat-formatted package(s) to plink-formatted       </span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">trident</span> genoconvert <span class="at">-d</span> ... <span class="at">-d</span> ... <span class="at">--outFormat</span> PLINK</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>With the PLINK format files you can run READv2:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Activate READv2 conda environment</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate readv2</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">## Run READv2</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> pathTo_Readv2.py <span class="at">-i</span> myGenotypeFile</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>READv2 options:</p>
+<ul>
+<li><p><code>-i</code>, <code>--input_file val</code> – Input file prefix (required). The current READ version only supports Plink bed/bim/fam files.</p></li>
+<li><p><code>-n</code>, <code>--norm_method val</code> – Normalization method (either ‘mean’, ‘median’, ‘max’ or ‘value’).</p>
+<ul>
+<li><p>median (default) – assuming that most pairs of compared individuals are unrelated, READ uses the median across all pairs for normalization.</p></li>
+<li><p>mean – READ uses the mean across all pairs for normalization, this would be more sensitive to outliers in the data (e.g.&nbsp;recent migrants or identical twins)</p></li>
+<li><p>max – READ uses the maximum across all pairs for normalization. This should be used to test trios where both parents are supposed to be unrelated but the offspring is a first-degree relative to both others.</p></li>
+<li><p>value – READ uses a user-defined value for normalization. This can be used if the value from another population should be used for normalization. That would be useful if only two individuals are available for the test population. Normalization value needs to be provided through <code>--norm_value</code></p></li>
+</ul></li>
+<li><p><code>--norm_value val</code> – Provide a user-defined normalization value</p></li>
+<li><p><code>--window_size val</code> – Change window size for block jackknife or for window-based P0 estimates (as in READv1), default: 5000000</p></li>
+<li><p><code>--window_est</code> – Window based estimate of P0 (as opposed to the genome-wide estimate, default in READv2)</p></li>
+<li><p><code>-h</code>, <code>--help</code> – Print help message</p></li>
+<li><p><code>-v</code>, <code>--version</code> – Print version</p></li>
+</ul>
+<section id="output-1" class="level4">
+<h4 class="anchored" data-anchor-id="output-1">Output:</h4>
+<p>“meansP0_AncientDNA_normalized_READv2”</p>
+<pre><code>PairIndividuals Norm2AlleleDiff StError_2Allele_Norm    Nonnormalized_P0    Nonnormalized_P0_serr   OverlapNSNPs
+I0232I0358  1.0052  0.0076    0.2553  0.0019    261263
+...
+I0234I0423  0.9659  0.0083  0.2453  0.0021    195053
+I0234I0424  0.9985  0.0071    0.2536 0.0018   224327
+...
+I0354I0360  0.7464  0.0137    0.1896 0.0035    21056
+I0354I0361  1.0046  0.0089    0.2552  0.0023    147438
+...</code></pre>
+<p>“Read_Results.tsv”</p>
+<pre><code>PairIndividuals Rel Zup Zdown   P0_mean Nonnormalized_P0    Nonnormalized_P0_serr   1st_Type    Perc_Win_1stdeg_P0  OverlapNSNPs    NSNPsXNorm  KinshipCoefficient
+I0232I0358  Unrelated   NA  12.9726  1.0052  0.2553  0.0019    N/A 0.9150  261263  66362.1298    -0.0052
+...
+I0234I0423  Third Degree    0.3487  7.1920   0.9659  0.2453  0.0021    N/A 0.7974  195053  49544.4533   0.0341
+I0234I0424  Unrelated   NA  12.9201  0.9985  0.2536 0.0018   N/A 0.9020  224327  56980.1981    0.0015
+...
+I0354I0360  First Degree    4.7682   8.7575   0.7464  0.1896 0.0035   N/A 0.3816  21056   5348.3310   0.2536
+I0354I0361  Unrelated   NA  11.0926 1.0046  0.2552  0.0023    N/A 0.9281  147438  37450.0013  -0.0046
+...</code></pre>
+<p>“READ.pdf”:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/pmrread/READv2_result_plot.jpg" class="img-fluid figure-img"></p>
+</figure>
+</div>
+
+</section>
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Akturk2023-yr" class="csl-entry" role="doc-biblioentry">
+Aktürk, Şevval, Igor Mapelli, Merve Nur Güler, Kanat Gürün, Büşra Katırcıoğlu, Kıvılcım Başak Vural, Ekin Sağlıcan, et al. 2023. <span>“Benchmarking Kinship Estimation Tools for Ancient Genomes Using Pedigree Simulations.”</span> <em>bioRxiv</em>.
+</div>
+<div id="ref-Alacamli2024-xq" class="csl-entry" role="doc-biblioentry">
+Alaçamlı, Erkin, Thijessen Naidoo, Şevval Aktürk, Merve N Güler, Igor Mapelli, Kıvılcım Başak Vural, Mehmet Somel, Helena Malmström, and Torsten Günther. 2024. <span>“<span>READv2</span>: Advanced and User-Friendly Detection of Biological Relatedness in Archaeogenomics.”</span> <em>bioRxiv</em>.
+</div>
+<div id="ref-Fernandes2021-ze" class="csl-entry" role="doc-biblioentry">
+Fernandes, Daniel M, Olivia Cheronet, Pere Gelabert, and Ron Pinhasi. 2021. <span>“<span>TKGWV2</span>: An Ancient <span>DNA</span> Relatedness Pipeline for Ultra-Low Coverage Whole Genome Shotgun Data.”</span> <em>Sci. Rep.</em> 11 (1): 21262.
+</div>
+<div id="ref-Furtwangler2020-ce" class="csl-entry" role="doc-biblioentry">
+Furtwängler, Anja, A B Rohrlach, Thiseas C Lamnidis, Luka Papac, Gunnar U Neumann, Inga Siebke, Ella Reiter, et al. 2020. <span>“Ancient Genomes Reveal Social and Genetic Structure of Late Neolithic Switzerland.”</span> <em>Nat. Commun.</em> 11 (1): 1915.
+</div>
+<div id="ref-Harris2020-vr" class="csl-entry" role="doc-biblioentry">
+Harris, Charles R, K Jarrod Millman, Stéfan J van der Walt, Ralf Gommers, Pauli Virtanen, David Cournapeau, Eric Wieser, et al. 2020. <span>“Array Programming with <span>NumPy</span>.”</span> <em>Nature</em> 585 (7825): 357–62.
+</div>
+<div id="ref-Kennett2017-qw" class="csl-entry" role="doc-biblioentry">
+Kennett, Douglas J, Stephen Plog, Richard J George, Brendan J Culleton, Adam S Watson, Pontus Skoglund, Nadin Rohland, et al. 2017. <span>“Archaeogenomic Evidence Reveals Prehistoric Matrilineal Dynasty.”</span> <em>Nat. Commun.</em> 8 (February): 14115.
+</div>
+<div id="ref-McKinney2010-zp" class="csl-entry" role="doc-biblioentry">
+McKinney, Wes. 2010. <span>“Data Structures for Statistical Computing in Python,”</span> 56–61.
+</div>
+<div id="ref-Monroy_Kuhn2018-fb" class="csl-entry" role="doc-biblioentry">
+Monroy Kuhn, Jose Manuel, Mattias Jakobsson, and Torsten Günther. 2018. <span>“Estimating Genetic Kin Relationships in Prehistoric Populations.”</span> <em>PLoS One</em> 13 (4): e0195491.
+</div>
+<div id="ref-Patterson2012-im" class="csl-entry" role="doc-biblioentry">
+Patterson, Nick, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin Rohland, Yiping Zhan, Teri Genschoreck, Teresa Webster, and David Reich. 2012. <span>“Ancient Admixture in Human History.”</span> <em>Genetics</em> 192 (3): 1065–93.
+</div>
+<div id="ref-Rivollat2020-qq" class="csl-entry" role="doc-biblioentry">
+Rivollat, Maı̈té, Choongwon Jeong, Stephan Schiffels, İşil Küçükkalıpçı, Marie-Hélène Pemonge, Adam Benjamin Rohrlach, Kurt W Alt, et al. 2020. <span>“Ancient Genome-Wide <span>DNA</span> from France Highlights the Complexity of Interactions Between Mesolithic Hunter-Gatherers and Neolithic Farmers.”</span> <em>Sci Adv</em> 6 (22): eaaz5344.
+</div>
+<div id="ref-Rohrlach2023.04.17.537144" class="csl-entry" role="doc-biblioentry">
+Rohrlach, Adam B, Jonathan Tuke, Divyaratan Popli, and Wolfgang Haak. 2023. <span>“BREADR: An r Package for the Bayesian Estimation of Genetic Relatedness from Low-Coverage Genotype Data.”</span> <em>bioRxiv</em>. <a href="https://doi.org/10.1101/2023.04.17.537144">https://doi.org/10.1101/2023.04.17.537144</a>.
+</div>
+<div id="ref-Wright1922-vm" class="csl-entry" role="doc-biblioentry">
+Wright, Sewall. 1922. <span>“Coefficients of Inbreeding and Relationship.”</span> <em>Am. Nat.</em> 56 (645): 330–38.
+</div>
+</div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
