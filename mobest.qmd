@@ -11,9 +11,11 @@ execute:
 shift-heading-level-by: 1
 ---
 
-# Installing mobest
+# Overview
 
-## Install mobest directly as an R package
+...
+
+# Installing mobest
 
 mobest is an R package and can be **installed directly from GitHub** with the following code on the R console:
 
@@ -239,6 +241,7 @@ samples_basic <- readr::read_csv("docs/data/samples_basic.csv")
 | Date_BC_AD_Median | int  | The median age of this sample in years BC/AD<br>(negative numbers for BC, positive ones for AD) |
 | MDS_C1            | dbl  | The coordinate of this sample on dimension 1 of an MDS analysis.<br>See @Schmid2023 for more details on how this was obtained |
 | MDS_C2            | dbl  | The coordinate of this sample on MDS dimension 2 |
+: {tbl-colwidths="[20,10,70]"}
 
 These variables are a minimum for a meaningful mobest run and must be known for all samples. Samples with missing information in any of these columns have to excluded from the input.
 
@@ -491,6 +494,7 @@ Here is a list of the variables returned in `mobest_locateoverview` for each of 
 |search_time          |Search time as provided by the user in `locate()`'s `search_time` argument|
 |search_measured      |Genetic coordinate of the search sample in the dependent variable space|
 |probability          |Probability density for `search_measured` given all other parameters|
+: {tbl-colwidths="[20,80]"}
 
 As a result of the permutation of parameters, the size of the prediction grid and the number of search points, the number of rows in a `mobest_locateoverview` table can be calculated as a product of the individual counts of all relevant entities. One way to quickly validate the output of `locate()` and `locate_multi()` is to calculate the number of expected results based on the input and compare it with the actual number of rows in the output. For our example this calculation is fairly simple:
 
