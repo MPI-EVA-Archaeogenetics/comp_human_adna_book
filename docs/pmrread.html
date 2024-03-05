@@ -9,7 +9,7 @@
 <meta name="author" content="Martyna Molak">
 <meta name="dcterms.date" content="2024-02-15">
 
-<title>Pairwise mismatch rate (PMR) and READ relatedness inference</title>
+<title>Computational Methods for human population genetics and ancient DNA - 5&nbsp; Pairwise mismatch rate (PMR) and READ relatedness inference</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -107,46 +107,139 @@ div.csl-indent {
 </style>
 
 
-<script src="pmrread_files/libs/clipboard/clipboard.min.js"></script>
-<script src="pmrread_files/libs/quarto-html/quarto.js"></script>
-<script src="pmrread_files/libs/quarto-html/popper.min.js"></script>
-<script src="pmrread_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="pmrread_files/libs/quarto-html/anchor.min.js"></script>
-<link href="pmrread_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="pmrread_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="pmrread_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="pmrread_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="pmrread_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./eager.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
 
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
-<body>
+<body class="nav-sidebar floating">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Pairwise mismatch rate (PMR) and READ relatedness inference</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Computational Methods for human population genetics and ancient DNA</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Quarto_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./poseidon.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Genotype and context data management with Poseidon</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fstats.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to F3- and F4-Statistics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eager.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction to nf-core/eager</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pmrread.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Pairwise mismatch rate (PMR) and READ relatedness inference</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background">Background</a></li>
-  <li><a href="#pairwise-mismatch-rate-pmr" id="toc-pairwise-mismatch-rate-pmr" class="nav-link" data-scroll-target="#pairwise-mismatch-rate-pmr">Pairwise Mismatch Rate (PMR)</a></li>
-  <li><a href="#read-version-1" id="toc-read-version-1" class="nav-link" data-scroll-target="#read-version-1">READ (version 1)</a></li>
-  <li><a href="#readv2" id="toc-readv2" class="nav-link" data-scroll-target="#readv2">READv2</a></li>
-  <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage">Usage</a>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="toc-section-number">5.1</span>  Background</a></li>
+  <li><a href="#pairwise-mismatch-rate-pmr" id="toc-pairwise-mismatch-rate-pmr" class="nav-link" data-scroll-target="#pairwise-mismatch-rate-pmr"><span class="toc-section-number">5.2</span>  Pairwise Mismatch Rate (PMR)</a></li>
+  <li><a href="#read-version-1" id="toc-read-version-1" class="nav-link" data-scroll-target="#read-version-1"><span class="toc-section-number">5.3</span>  READ (version 1)</a></li>
+  <li><a href="#readv2" id="toc-readv2" class="nav-link" data-scroll-target="#readv2"><span class="toc-section-number">5.4</span>  READv2</a></li>
+  <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage"><span class="toc-section-number">5.5</span>  Usage</a>
   <ul class="collapse">
-  <li><a href="#running-read-version-1" id="toc-running-read-version-1" class="nav-link" data-scroll-target="#running-read-version-1">Running READ (version 1)</a></li>
-  <li><a href="#running-read-v2" id="toc-running-read-v2" class="nav-link" data-scroll-target="#running-read-v2">Running READ v2</a></li>
+  <li><a href="#running-read-version-1" id="toc-running-read-version-1" class="nav-link" data-scroll-target="#running-read-version-1"><span class="toc-section-number">5.5.1</span>  Running READ (version 1)</a></li>
+  <li><a href="#running-read-v2" id="toc-running-read-v2" class="nav-link" data-scroll-target="#running-read-v2"><span class="toc-section-number">5.5.2</span>  Running READ v2</a></li>
   </ul></li>
   </ul>
 </nav>
-</div>
+    </div>
+<!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Pairwise mismatch rate (PMR) and READ relatedness inference</h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Pairwise mismatch rate (PMR) and READ relatedness inference</span></h1>
 </div>
 
 
@@ -173,11 +266,11 @@ div.csl-indent {
 
 </header>
 
-<section id="background" class="level2">
-<h2 class="anchored" data-anchor-id="background">Background</h2>
-<section id="measures-of-relatedness" class="level4">
-<h4 class="anchored" data-anchor-id="measures-of-relatedness">Measures of relatedness</h4>
-<p><strong>Coefficient of relationship</strong>, denoted <span class="math inline">\(r_{ij}\)</span> , defined by Sewall Wright in 1922 <span class="citation" data-cites="Wright1922-vm">(<a href="#ref-Wright1922-vm" role="doc-biblioref">Wright 1922</a>)</span>, is a measure of the degree of biological relationship between two individuals, commonly used in genetics and genealogy. It calculates the proportion of genes that two individuals have in common as a result of their genetic relationship. The coefficient of relationship is a derivative of the coefficient of inbreeding (<span class="math inline">\(f_k\)</span> or <span class="math inline">\(C_{I_k}\)</span>) defined by Wright a year earlier. A coefficient of inbreeding for an individual is typically one-half the coefficient of relationship between the parents.</p>
+<section id="background" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="background"><span class="header-section-number">5.1</span> Background</h2>
+<section id="measures-of-relatedness" class="level4" data-number="5.1.0.1">
+<h4 data-number="5.1.0.1" class="anchored" data-anchor-id="measures-of-relatedness"><span class="header-section-number">5.1.0.1</span> Measures of relatedness</h4>
+<p><strong>Coefficient of relationship</strong>, denoted <span class="math inline">\(r_{ij}\)</span> , defined by Sewall Wright in 1922 <span class="citation" data-cites="Wright1922-vm">(<a href="references.html#ref-Wright1922-vm" role="doc-biblioref">Wright 1922</a>)</span>, is a measure of the degree of biological relationship between two individuals, commonly used in genetics and genealogy. It calculates the proportion of genes that two individuals have in common as a result of their genetic relationship. The coefficient of relationship is a derivative of the coefficient of inbreeding (<span class="math inline">\(f_k\)</span> or <span class="math inline">\(C_{I_k}\)</span>) defined by Wright a year earlier. A coefficient of inbreeding for an individual is typically one-half the coefficient of relationship between the parents.</p>
 <p>Coefficient of relationship between the parents approaches a value of 1 as the level of inbreeding increases and approaches 0 the more remote the common ancestors are.</p>
 <p>In human relationships, coefficient of relationship is often calculated based on the knowledge of the family tree, typically extending to up to three or four generations, using a formula:</p>
 <p><span class="math display">\[
@@ -193,16 +286,16 @@ r_{ij} = \sum (^1/_2)^{L_{ij}}
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/pmrread/CoefficientsOfRelatednessAndKinship.JPG" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption"><strong>Table 1.</strong> Values of the coefficient of relatedness and the kinship coefficient for different pedigree relationships up to the second-degree, assuming that <span class="math inline">\(C_I\)</span> = 0. From Rohrlach et al. <span class="citation" data-cites="Rohrlach2023.04.17.537144">(<a href="#ref-Rohrlach2023.04.17.537144" role="doc-biblioref">2023</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption"><strong>Table 1.</strong> Values of the coefficient of relatedness and the kinship coefficient for different pedigree relationships up to the second-degree, assuming that <span class="math inline">\(C_I\)</span> = 0. From Rohrlach et al. <span class="citation" data-cites="Rohrlach2023.04.17.537144">(<a href="references.html#ref-Rohrlach2023.04.17.537144" role="doc-biblioref">2023</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
 </section>
 </section>
-<section id="pairwise-mismatch-rate-pmr" class="level2">
-<h2 class="anchored" data-anchor-id="pairwise-mismatch-rate-pmr">Pairwise Mismatch Rate (PMR)</h2>
+<section id="pairwise-mismatch-rate-pmr" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="pairwise-mismatch-rate-pmr"><span class="header-section-number">5.2</span> Pairwise Mismatch Rate (PMR)</h2>
 <p>Methods of relatedness estimation applied routinely to modern data are not applicable to ancient genomes due to small numbers of individuals sampled and high rate of data missingness (ie. low coverage), as well as due to lack of diploid phased genomic data available for majority of such samples. Thus, estimation of the coefficient of relatedness for ancient individuals using these methods is prone to biases and generally unreliable.</p>
-<p>Pairwise mismatch rate (PMR) was introduced by <span class="citation" data-cites="Kennett2017-qw">(<a href="#ref-Kennett2017-qw" role="doc-biblioref">Kennett et al. 2017</a>)</span> as a means to estimate relatedness between ancient individuals (<strong>Figure 1</strong>). For each pair of individuals they computed the average mismatch rate across all autosomal SNPs covered by at least one sequence read for both of the two compared individuals (when &gt;1 sequence read was present for one individual at a given site, a random read was sampled for the analysis) and computed standard errors using a weighted block jackknife. Mismatch rates significantly lower (Z&gt;3) than the highest observed value, provided putative evidence of relatedness.</p>
-<p>The PMR can be used to estimate the kinship coefficient, which, assuming that we can account for the inbreeding coefficient <span class="math inline">\(C_I\)</span>, can be used to estimate the degree of relatedness. Hence, we may gain insights into the pedigree joining many individuals (to a certain resolution). Kennett et al’s <span class="citation" data-cites="Kennett2017-qw">(<a href="#ref-Kennett2017-qw" role="doc-biblioref">2017</a>)</span> <span class="math inline">\(PMR\)</span> estimation, however, did not include a hard-classification method nor was wrapped into any particular software piece.</p>
+<p>Pairwise mismatch rate (PMR) was introduced by <span class="citation" data-cites="Kennett2017-qw">(<a href="references.html#ref-Kennett2017-qw" role="doc-biblioref">Kennett et al. 2017</a>)</span> as a means to estimate relatedness between ancient individuals (<strong>Figure 1</strong>). For each pair of individuals they computed the average mismatch rate across all autosomal SNPs covered by at least one sequence read for both of the two compared individuals (when &gt;1 sequence read was present for one individual at a given site, a random read was sampled for the analysis) and computed standard errors using a weighted block jackknife. Mismatch rates significantly lower (Z&gt;3) than the highest observed value, provided putative evidence of relatedness.</p>
+<p>The PMR can be used to estimate the kinship coefficient, which, assuming that we can account for the inbreeding coefficient <span class="math inline">\(C_I\)</span>, can be used to estimate the degree of relatedness. Hence, we may gain insights into the pedigree joining many individuals (to a certain resolution). Kennett et al’s <span class="citation" data-cites="Kennett2017-qw">(<a href="references.html#ref-Kennett2017-qw" role="doc-biblioref">2017</a>)</span> <span class="math inline">\(PMR\)</span> estimation, however, did not include a hard-classification method nor was wrapped into any particular software piece.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/pmrread/PMRcalculation.jpg" class="img-fluid figure-img" width="500"></p>
@@ -211,18 +304,18 @@ r_{ij} = \sum (^1/_2)^{L_{ij}}
 </div>
 <p><strong>Accounting for pseudohaploidization:</strong></p>
 <p>Due to pseudohaploidisation (ie. drawing one allele randomly for each position) identical individuals will have an expected PMR of half of this between unrelated individuals.<br>
-The estimate of relatedness coefficient <span class="math inline">\(r\)</span> needs therefore be corrected using the expected mismatch rate in non-related individuals. In <span class="citation" data-cites="Kennett2017-qw">(<a href="#ref-Kennett2017-qw" role="doc-biblioref">Kennett et al. 2017</a>)</span> they chose correction based on the approximate maximum mismatch rates observed: <span class="math inline">\(b = max(PMR_{observed})/2\)</span> . The estimator they used is thus:<br>
+The estimate of relatedness coefficient <span class="math inline">\(r\)</span> needs therefore be corrected using the expected mismatch rate in non-related individuals. In <span class="citation" data-cites="Kennett2017-qw">(<a href="references.html#ref-Kennett2017-qw" role="doc-biblioref">Kennett et al. 2017</a>)</span> they chose correction based on the approximate maximum mismatch rates observed: <span class="math inline">\(b = max(PMR_{observed})/2\)</span> . The estimator they used is thus:<br>
 <span class="math display">\[
 r = 1 - ((PMR_{ij} - b)/b) .
 \]</span></p>
-<p>PMR estimation in ancient-DNA-based inference of relatedness has first been implemented as separate software with READ <span class="citation" data-cites="Monroy_Kuhn2018-fb">(<a href="#ref-Monroy_Kuhn2018-fb" role="doc-biblioref">Monroy Kuhn, Jakobsson, and Günther 2018</a>)</span> and then by its successor - READv2 <span class="citation" data-cites="Alacamli2024-xq">(<a href="#ref-Alacamli2024-xq" role="doc-biblioref">Alaçamlı et al. 2024</a>)</span>. Other software used in relatedness estimation among ancient individuals, such as BREADR <span class="citation" data-cites="Rohrlach2023.04.17.537144">(<a href="#ref-Rohrlach2023.04.17.537144" role="doc-biblioref">Rohrlach et al. 2023</a>)</span>, also build on PMR.</p>
+<p>PMR estimation in ancient-DNA-based inference of relatedness has first been implemented as separate software with READ <span class="citation" data-cites="Monroy_Kuhn2018-fb">(<a href="references.html#ref-Monroy_Kuhn2018-fb" role="doc-biblioref">Monroy Kuhn, Jakobsson, and Günther 2018</a>)</span> and then by its successor - READv2 <span class="citation" data-cites="Alacamli2024-xq">(<a href="references.html#ref-Alacamli2024-xq" role="doc-biblioref">Alaçamlı et al. 2024</a>)</span>. Other software used in relatedness estimation among ancient individuals, such as BREADR <span class="citation" data-cites="Rohrlach2023.04.17.537144">(<a href="references.html#ref-Rohrlach2023.04.17.537144" role="doc-biblioref">Rohrlach et al. 2023</a>)</span>, also build on PMR.</p>
 <p><strong>Accounting for linkage disequilibrium:</strong><br>
 Linkage disequilibrium (LD, non-independent co-inheritance) of the loci included in the PMR estimation will bias the results towards falsely positive relatedness detection. To minimize this effect, different approaches can be employed. This is particularly crucial, when analyzing genome-wide (shotgun) data. In the 1240k SNP panel widely used in ancient genomics the analysed loci have already been selected taking LD into account. The approaches to minimize the LD bias that have been employed in PMR estimation comprise PMR estimation separately over consecutive genome fragments (sliding window) and obtaining median estimate among them (e.g., implemented in READv1, and as an option in READv2; <strong>Figure 1C</strong>), and decreasing the number of SNPs included in the analysis using a threshold of physical proximity of SNPs along the genome (thinning; e.g., implemented in BREADR; <strong>Figure 1D</strong>).</p>
-<p><strong>Good practice</strong>: Only pairs with at least 10,000 overlapping SNPs of the 1240k SNP panel should be included in PMR estimation <span class="citation" data-cites="Furtwangler2020-ce">(<a href="#ref-Furtwangler2020-ce" role="doc-biblioref">Furtwängler et al. 2020</a>)</span></p>
+<p><strong>Good practice</strong>: Only pairs with at least 10,000 overlapping SNPs of the 1240k SNP panel should be included in PMR estimation <span class="citation" data-cites="Furtwangler2020-ce">(<a href="references.html#ref-Furtwangler2020-ce" role="doc-biblioref">Furtwängler et al. 2020</a>)</span></p>
 </section>
-<section id="read-version-1" class="level2">
-<h2 class="anchored" data-anchor-id="read-version-1">READ (version 1)</h2>
-<p>Relationship Estimation from Ancient DNA <span class="citation" data-cites="Monroy_Kuhn2018-fb">(<a href="#ref-Monroy_Kuhn2018-fb" role="doc-biblioref">Monroy Kuhn, Jakobsson, and Günther 2018</a>)</span> - formalized implementation of PMR for ancient genomic data.</p>
+<section id="read-version-1" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="read-version-1"><span class="header-section-number">5.3</span> READ (version 1)</h2>
+<p>Relationship Estimation from Ancient DNA <span class="citation" data-cites="Monroy_Kuhn2018-fb">(<a href="references.html#ref-Monroy_Kuhn2018-fb" role="doc-biblioref">Monroy Kuhn, Jakobsson, and Günther 2018</a>)</span> - formalized implementation of PMR for ancient genomic data.</p>
 <ul>
 <li><p>Pseudohaploid input data (TPED/TFAM format)</p></li>
 <li><p>Division of the genome into non-overlapping windows of 1 Mbps each and calculation of the proportion of non-matching alleles inside each window (<em>P</em>0) for each pair of individuals.</p></li>
@@ -233,19 +326,19 @@ This value is estimated by calculation of the median of all average pairwise <em
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/pmrread/READ1.JPG" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption"><strong>Figure 2.</strong> Outline of the general READ workflow to estimate the degree of relationship between two individuals. From <span class="citation" data-cites="Monroy_Kuhn2018-fb">(<a href="#ref-Monroy_Kuhn2018-fb" role="doc-biblioref">Monroy Kuhn, Jakobsson, and Günther 2018</a>)</span></figcaption><p></p>
+<p></p><figcaption class="figure-caption"><strong>Figure 2.</strong> Outline of the general READ workflow to estimate the degree of relationship between two individuals. From <span class="citation" data-cites="Monroy_Kuhn2018-fb">(<a href="references.html#ref-Monroy_Kuhn2018-fb" role="doc-biblioref">Monroy Kuhn, Jakobsson, and Günther 2018</a>)</span></figcaption><p></p>
 </figure>
 </div>
 <p><strong>Pluses:</strong> The method has been shown to work quite well with as little as <strong>0.1x shotgun coverage</strong> per genome. It has very <strong>simple assumptions</strong> estimating the expected pairwise mismatch rate from the data <strong>without the need for population allele frequencies</strong>. It can thus be used as <strong>part of initial QC procedures</strong> (e.g.&nbsp;identifying duplicated individuals) or in populations (or species) for which little additional information is available.<br>
 <strong>Minuses:</strong> READ had been implemented as a <strong>Python 2</strong> script. The last version of Python 2 was released in 2020 and some systems have already stopped supporting the language. Furthermore, READ wrote a <strong>large number of temporary files</strong> to the hard disk which were then analyzed by a separate R script called from the Python script.</p>
 </section>
-<section id="readv2" class="level2">
-<h2 class="anchored" data-anchor-id="readv2">READv2</h2>
-<p>New implementation of READ <span class="citation" data-cites="Alacamli2024-xq">(<a href="#ref-Alacamli2024-xq" role="doc-biblioref">Alaçamlı et al. 2024</a>)</span></p>
-<section id="improvements-over-version-1" class="level5">
-<h5 class="anchored" data-anchor-id="improvements-over-version-1">Improvements over version 1</h5>
+<section id="readv2" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="readv2"><span class="header-section-number">5.4</span> READv2</h2>
+<p>New implementation of READ <span class="citation" data-cites="Alacamli2024-xq">(<a href="references.html#ref-Alacamli2024-xq" role="doc-biblioref">Alaçamlı et al. 2024</a>)</span></p>
+<section id="improvements-over-version-1" class="level5" data-number="5.4.0.0.1">
+<h5 data-number="5.4.0.0.1" class="anchored" data-anchor-id="improvements-over-version-1"><span class="header-section-number">5.4.0.0.1</span> Improvements over version 1</h5>
 <ul>
-<li>All analyses are carried out within a <strong>single Python3 script</strong> using NumPy <span class="citation" data-cites="Harris2020-vr">(<a href="#ref-Harris2020-vr" role="doc-biblioref">Harris et al. 2020</a>)</span> and pandas <span class="citation" data-cites="McKinney2010-zp">(<a href="#ref-McKinney2010-zp" role="doc-biblioref">McKinney 2010</a>)</span> libraries.</li>
+<li>All analyses are carried out within a <strong>single Python3 script</strong> using NumPy <span class="citation" data-cites="Harris2020-vr">(<a href="references.html#ref-Harris2020-vr" role="doc-biblioref">Harris et al. 2020</a>)</span> and pandas <span class="citation" data-cites="McKinney2010-zp">(<a href="references.html#ref-McKinney2010-zp" role="doc-biblioref">McKinney 2010</a>)</span> libraries.</li>
 <li>Major analysis <strong>speed</strong> improvement (although more memory-intensive)</li>
 <li>Avoids excessive use of temporary files and the calling of a separate R script.</li>
 <li>Minor gain in accuracy due to changes in some default values (based on performance tests results).</li>
@@ -253,40 +346,40 @@ This value is estimated by calculation of the median of all average pairwise <em
 <li>Ability to <strong>classify up to third-degree relatives</strong> (requires at least 5000 effectively overlapping SNPs).</li>
 <li>Ability to <strong>differentiate between different types of first-degree relationships</strong> (ie. full siblings vs parent-offspring; requires at least 10,000 effectively overlapping SNPs).</li>
 <li>Feasible for as much as 696 individuals (241 860 pairs) provided enough available memory.</li>
-<li>Genome-wide <em>P</em>0 calculation as default; with the uncertainty estimated using a block-jackknife approach with block sizes of 5 Mb (as commonly employed in human population genomic studies; <span class="citation" data-cites="Patterson2012-im">(<a href="#ref-Patterson2012-im" role="doc-biblioref">Patterson et al. 2012</a>)</span>). Option to use window-based approach of chosen window size also available.</li>
+<li>Genome-wide <em>P</em>0 calculation as default; with the uncertainty estimated using a block-jackknife approach with block sizes of 5 Mb (as commonly employed in human population genomic studies; <span class="citation" data-cites="Patterson2012-im">(<a href="references.html#ref-Patterson2012-im" role="doc-biblioref">Patterson et al. 2012</a>)</span>). Option to use window-based approach of chosen window size also available.</li>
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/pmrread/Alacamli.F5.Folwchart.jpg" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption"><strong>Figure 3.</strong> READv2 flowchart. From <span class="citation" data-cites="Alacamli2024-xq">(<a href="#ref-Alacamli2024-xq" role="doc-biblioref">Alaçamlı et al. 2024</a>)</span></figcaption><p></p>
+<p></p><figcaption class="figure-caption"><strong>Figure 3.</strong> READv2 flowchart. From <span class="citation" data-cites="Alacamli2024-xq">(<a href="references.html#ref-Alacamli2024-xq" role="doc-biblioref">Alaçamlı et al. 2024</a>)</span></figcaption><p></p>
 </figure>
 </div>
 </section>
-<section id="noteworthy-properties" class="level5">
-<h5 class="anchored" data-anchor-id="noteworthy-properties">Noteworthy properties</h5>
+<section id="noteworthy-properties" class="level5" data-number="5.4.0.0.2">
+<h5 data-number="5.4.0.0.2" class="anchored" data-anchor-id="noteworthy-properties"><span class="header-section-number">5.4.0.0.2</span> Noteworthy properties</h5>
 <p>Overall, READv2 performs well down to at least <strong>0.1X sequence data</strong> in the simulated dataset. This corresponded to on average about 1,878 overlapping SNPs for each pair of individuals at an expected mismatch for unrelated individuals of ∼0.247.</p>
 <p>In default settings, READv2 performs a genome-wide estimate of the pairwise mismatch rate, based on which it will assess the degree of relationship in each pair of individuals. This is followed by a <strong>separate round of classification for first-degree relatives</strong>. Here, the genome is divided into 20Mb windows and the proportion of windows that are classified as either “identical/twin” or “unrelated” is estimated. These proportions correspond to Cotterman coefficients <span class="math inline">\(k_0\)</span> – windows classified as unrelated (i.e.&nbsp;no shared chromosome), and <span class="math inline">\(k_2\)</span> – windows classified as identical (i.e.&nbsp;both chromosomes shared). Expected <span class="math inline">\(k_0 + k_2\)</span> is low for parent-offspring and around 0.5 for full siblings when sufficient data are available.<br>
 If that proportion is less than 0.3, the pair is classified as <strong>“parent-offspring”</strong>; if it is between 0.35 and 0.6, the pair is classified as <strong>“siblings”</strong>. For other proportions, or when the number of effectively overlapping SNPs is below 10,000, the pair remains classified as “first-degree” without further specification.<br>
-The two types of relations are well separated down to 0.5X coverage in the simulated dataset (or ∼8,000 “effectively overlapping SNPs”), but they overlap at 0.2X and below. Hence, to avoid wrongly classifying parent-offspring pairs as siblings, READv2 applies a default cutoff of 10,000 effectively overlapping SNPs, below which classification is not performed. (In <span class="citation" data-cites="Rivollat2020-qq">(<a href="#ref-Rivollat2020-qq" role="doc-biblioref">Rivollat et al. 2020</a>)</span> a cutoff of 7000 effective SNP number cutoff was used.)</p>
+The two types of relations are well separated down to 0.5X coverage in the simulated dataset (or ∼8,000 “effectively overlapping SNPs”), but they overlap at 0.2X and below. Hence, to avoid wrongly classifying parent-offspring pairs as siblings, READv2 applies a default cutoff of 10,000 effectively overlapping SNPs, below which classification is not performed. (In <span class="citation" data-cites="Rivollat2020-qq">(<a href="references.html#ref-Rivollat2020-qq" role="doc-biblioref">Rivollat et al. 2020</a>)</span> a cutoff of 7000 effective SNP number cutoff was used.)</p>
 <p><strong>Warnings:</strong> At low coverage (0.05x and 0.1x) there are high false positive rates for second- and third-degree relatedness; many unrelated pairs are classified into these categories. At 0.01X, unrelated individuals are even classified as first-degree or identical twins, resulting in a reduced false positive rate for second- and third-degree but an increased false positive rate for first-degree. To avoid false classifications in empirical data, READv2 applies a conservative threshold of 5000 “effectively overlapping SNPs”, below which no attempt to classify third-degree relatives is taken.</p>
 <p>According to the authors READv2 alone can lead to very similar results as the combination of READv1 and lcMLkin. output table by including information such as the number of overlapping SNPs, the number of effectively overlapping SNPs, and the kinship coefficient <span class="math inline">\(μ\)</span> (= 1 - normalized <em>P</em>0)</p>
 </section>
-<section id="comparison-with-other-methods" class="level5">
-<h5 class="anchored" data-anchor-id="comparison-with-other-methods">Comparison with other methods</h5>
-<p>READv2 is very similar in its approach to BREADR <span class="citation" data-cites="Rohrlach2023.04.17.537144">(<a href="#ref-Rohrlach2023.04.17.537144" role="doc-biblioref">Rohrlach et al. 2023</a>)</span> and TKGWV2 <span class="citation" data-cites="Fernandes2021-ze">(<a href="#ref-Fernandes2021-ze" role="doc-biblioref">Fernandes et al. 2021</a>)</span>, with each tool having its own unique features. READv2 has the functionality to separate the different first-degree relationships, BREADR has a better quantification of uncertainty, and TKGWV2 works well with lower amounts of input data.</p>
+<section id="comparison-with-other-methods" class="level5" data-number="5.4.0.0.3">
+<h5 data-number="5.4.0.0.3" class="anchored" data-anchor-id="comparison-with-other-methods"><span class="header-section-number">5.4.0.0.3</span> Comparison with other methods</h5>
+<p>READv2 is very similar in its approach to BREADR <span class="citation" data-cites="Rohrlach2023.04.17.537144">(<a href="references.html#ref-Rohrlach2023.04.17.537144" role="doc-biblioref">Rohrlach et al. 2023</a>)</span> and TKGWV2 <span class="citation" data-cites="Fernandes2021-ze">(<a href="references.html#ref-Fernandes2021-ze" role="doc-biblioref">Fernandes et al. 2021</a>)</span>, with each tool having its own unique features. READv2 has the functionality to separate the different first-degree relationships, BREADR has a better quantification of uncertainty, and TKGWV2 works well with lower amounts of input data.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/pmrread/Alacamli.TS1.gif" class="img-fluid figure-img" width="500"></p>
-<p></p><figcaption class="figure-caption"><strong>Table 2.</strong> Comparison of methods available for relatedness reconstruction in ancient genomic data. From Alaçamlı et al. <span class="citation" data-cites="Alacamli2024-xq">(<a href="#ref-Alacamli2024-xq" role="doc-biblioref">2024</a>)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption"><strong>Table 2.</strong> Comparison of methods available for relatedness reconstruction in ancient genomic data. From Alaçamlı et al. <span class="citation" data-cites="Alacamli2024-xq">(<a href="references.html#ref-Alacamli2024-xq" role="doc-biblioref">2024</a>)</span>.</figcaption><p></p>
 </figure>
 </div>
-<p>For further comparison of some of the methods available, you can also refer to the paper by Akturk et al. <span class="citation" data-cites="Akturk2023-yr">(<a href="#ref-Akturk2023-yr" role="doc-biblioref">2023</a>)</span></p>
+<p>For further comparison of some of the methods available, you can also refer to the paper by Akturk et al. <span class="citation" data-cites="Akturk2023-yr">(<a href="references.html#ref-Akturk2023-yr" role="doc-biblioref">2023</a>)</span></p>
 </section>
 </section>
-<section id="usage" class="level2">
-<h2 class="anchored" data-anchor-id="usage">Usage</h2>
-<section id="running-read-version-1" class="level3">
-<h3 class="anchored" data-anchor-id="running-read-version-1">Running READ (version 1)</h3>
+<section id="usage" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="usage"><span class="header-section-number">5.5</span> Usage</h2>
+<section id="running-read-version-1" class="level3" data-number="5.5.1">
+<h3 data-number="5.5.1" class="anchored" data-anchor-id="running-read-version-1"><span class="header-section-number">5.5.1</span> Running READ (version 1)</h3>
 <p>READ version 1 is implemented in Python 2.</p>
 <p>The input for <a href="https://bitbucket.org/tguenther/read/src/master/">READ</a> is a pair of files in Plink’s TPED/TFAM.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Get READ off Bitbucket</span></span>
@@ -321,8 +414,8 @@ The two types of relations are well separated down to 0.5X coverage in the simul
 <p>With the generated PLINK files you can no run READ:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Run READ</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> pathTo_Read.py myGenotypeFile <span class="op">&lt;</span>normalization_method<span class="op">&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="options" class="level4">
-<h4 class="anchored" data-anchor-id="options">Options</h4>
+<section id="options" class="level4" data-number="5.5.1.1">
+<h4 data-number="5.5.1.1" class="anchored" data-anchor-id="options"><span class="header-section-number">5.5.1.1</span> Options</h4>
 <p>normalization_method:</p>
 <ul>
 <li><p>median (default) - assuming that most pairs of compared individuals are unrelated, READ uses the median across all pairs for normalization.</p></li>
@@ -332,8 +425,8 @@ The two types of relations are well separated down to 0.5X coverage in the simul
 </ul>
 <p>Optionally, one can add <code>--window_size</code> &lt;value&gt; at the end in order to modify the window size used (default: 1000000).</p>
 </section>
-<section id="output" class="level4">
-<h4 class="anchored" data-anchor-id="output">Output:</h4>
+<section id="output" class="level4" data-number="5.5.1.2">
+<h4 data-number="5.5.1.2" class="anchored" data-anchor-id="output"><span class="header-section-number">5.5.1.2</span> Output:</h4>
 <p>“READ_results”:</p>
 <pre><code>PairIndividuals Relationship Z_upper Z_lower I0232I0358 Unrelated NA -17.0238 ... I0354I0360 First Degree 3.8987 -9.6782 I0354I0361 Unrelated NA -15.4353 ... I0421I0430 First Degree 7.5325 -12.1995 I0421I0431 Unrelated NA -3.9037 ...</code></pre>
 <p>““meansP0_AncientDNA_normalized”:</p>
@@ -346,8 +439,8 @@ The two types of relations are well separated down to 0.5X coverage in the simul
 </div>
 </section>
 </section>
-<section id="running-read-v2" class="level3">
-<h3 class="anchored" data-anchor-id="running-read-v2">Running READ v2</h3>
+<section id="running-read-v2" class="level3" data-number="5.5.2">
+<h3 data-number="5.5.2" class="anchored" data-anchor-id="running-read-v2"><span class="header-section-number">5.5.2</span> Running READ v2</h3>
 <p><a href="https://github.com/GuntherLab/READv2">READv2</a> is recommended to be ran as <a href="https://docs.anaconda.com/free/miniconda/">conda</a> environment.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Preparing the environment</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/GuntherLab/READv2.git</span>
@@ -405,8 +498,8 @@ The two types of relations are well separated down to 0.5X coverage in the simul
 <li><p><code>-h</code>, <code>--help</code> – Print help message</p></li>
 <li><p><code>-v</code>, <code>--version</code> – Print version</p></li>
 </ul>
-<section id="output-1" class="level4">
-<h4 class="anchored" data-anchor-id="output-1">Output:</h4>
+<section id="output-1" class="level4" data-number="5.5.2.1">
+<h4 data-number="5.5.2.1" class="anchored" data-anchor-id="output-1"><span class="header-section-number">5.5.2.1</span> Output:</h4>
 <p>“meansP0_AncientDNA_normalized_READv2”</p>
 <pre><code>PairIndividuals Norm2AlleleDiff StError_2Allele_Norm    Nonnormalized_P0    Nonnormalized_P0_serr   OverlapNSNPs
 I0232I0358  1.0052  0.0076    0.2553  0.0019    261263
@@ -434,11 +527,8 @@ I0354I0361  Unrelated   NA  11.0926 1.0046  0.2552  0.0023    N/A 0.9281  147438
 </figure>
 </div>
 
-</section>
-</section>
-</section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
 <div id="ref-Akturk2023-yr" class="csl-entry" role="doc-biblioentry">
 Aktürk, Şevval, Igor Mapelli, Merve Nur Güler, Kanat Gürün, Büşra Katırcıoğlu, Kıvılcım Başak Vural, Ekin Sağlıcan, et al. 2023. <span>“Benchmarking Kinship Estimation Tools for Ancient Genomes Using Pedigree Simulations.”</span> <em>bioRxiv</em>.
 </div>
@@ -475,8 +565,12 @@ Rohrlach, Adam B, Jonathan Tuke, Divyaratan Popli, and Wolfgang Haak. 2023. <spa
 <div id="ref-Wright1922-vm" class="csl-entry" role="doc-biblioentry">
 Wright, Sewall. 1922. <span>“Coefficients of Inbreeding and Relationship.”</span> <em>Am. Nat.</em> 56 (645): 330–38.
 </div>
-</div></section></div></main>
-<!-- /main column -->
+</div>
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -610,6 +704,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./eager.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction to nf-core/eager</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 
 

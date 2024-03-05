@@ -440,3 +440,397 @@
   year={2012},
   publisher={Nature Publishing Group UK London}
 }
+
+@UNPUBLISHED{Akturk2023-yr,
+  title    = "Benchmarking kinship estimation tools for ancient genomes using
+              pedigree simulations",
+  author   = "Akt{\"u}rk, {\c S}evval and Mapelli, Igor and G{\"u}ler, Merve
+              Nur and G{\"u}r{\"u}n, Kanat and Kat{\i}rc{\i}o{\u g}lu,
+              B{\"u}{\c s}ra and Vural, K{\i}v{\i}lc{\i}m Ba{\c s}ak and Sa{\u
+              g}l{\i}can, Ekin and {\c C}etin, Mehmet and Yaka, Reyhan and
+              S{\"u}rer, Elif and Ata{\u g}, G{\"o}zde and {\c C}oko{\u g}lu,
+              Sevim Seda and Sevkar, Arda and Ezgi Alt{\i}n{\i}{\c s}{\i}k, N
+              and Koptekin, Dilek and Somel, Mehmet",
+  abstract = "There is growing interest in uncovering genetic kinship patterns
+              in past societies using low-coverage paleogenomes. Here, we
+              benchmark four tools for kinship estimation with such data:
+              lcMLkin, NgsRelate, KIN, and READ, which differ in their input,
+              IBD-estimation methods and statistical approaches. We used
+              pedigree and ancient genome sequence simulations to evaluate
+              these tools when only a limited number (1K to 50K) of shared SNPs
+              (with minor allele frequency $\geq$0.01) are available. The
+              performance of all four tools was comparable using $\geq$20K
+              SNPs. We found that first-degree related pairs can be accurately
+              classified even with 1K SNPs, with 85\% F1 scores using READ and
+              96\% using NgsRelate or lcMLkin. Distinguishing third-degree
+              relatives from unrelated pairs or second-degree relatives was
+              also possible with high accuracy (F1 >90\%) with 5K SNPs using
+              NgsRelate and lcMLkin, while READ and KIN showed lower success
+              (69\% and 79\%, respectively). Meanwhile, noise in population
+              allele frequencies and inbreeding (first cousin mating) led to
+              deviations in kinship coefficients, with different sensitivities
+              across tools. We conclude that using multiple tools in parallel
+              might be an effective approach to achieve robust estimates on
+              ultra-low coverage genomes. \#\#\# Competing Interest Statement
+              The authors have declared no competing interest.",
+  journal  = "bioRxiv",
+  pages    = "2023.11.08.566300",
+  month    =  nov,
+  year     =  2023,
+  language = "en"
+}
+
+@UNPUBLISHED{Alacamli2024-xq,
+  title    = "{READv2}: Advanced and user-friendly detection of biological
+              relatedness in archaeogenomics",
+  author   = "Ala{\c c}aml{\i}, Erkin and Naidoo, Thijessen and Akt{\"u}rk, {\c
+              S}evval and G{\"u}ler, Merve N and Mapelli, Igor and Vural,
+              K{\i}v{\i}lc{\i}m Ba{\c s}ak and Somel, Mehmet and Malmstr{\"o}m,
+              Helena and G{\"u}nther, Torsten",
+  abstract = "The possibility to obtain genome-wide ancient DNA data from
+              multiple individuals has facilitated an unprecedented perspective
+              into prehistoric societies. Studying biological relatedness in
+              these groups requires tailored approaches for analyzing ancient
+              DNA due to its low coverage, post-mortem damage, and potential
+              ascertainment bias. Here we present READv2 (Relatedness
+              Estimation from Ancient DNA version 2), an improved Python 3
+              re-implementation of the most widely used tool for this purpose.
+              While providing increased portability and making the software
+              future-proof, we are also able to show that READv2 (a) is orders
+              of magnitude faster than its predecessor; (b) has increased power
+              to detect pairs of relatives using optimized default parameters;
+              and, when the number of overlapping SNPs is sufficient, (c) can
+              differentiate between full-siblings and parent-offspring, and (d)
+              can classify pairs of third-degree relatedness. We further use
+              READv2 to analyze a large empirical dataset that has previously
+              needed two separate tools to reconstruct complex pedigrees. We
+              show that READv2 yields results and precision similar to the
+              combined approach but is faster and simpler to run. READv2 will
+              become a valuable part of the archaeogenomic toolkit in providing
+              an efficient and user-friendly classification of biological
+              relatedness from pseudohaploid ancient DNA data. \#\#\# Competing
+              Interest Statement The authors have declared no competing
+              interest.",
+  journal  = "bioRxiv",
+  pages    = "2024.01.23.576660",
+  month    =  jan,
+  year     =  2024,
+  language = "en"
+}
+
+
+@ARTICLE{Fernandes2021-ze,
+  title    = "{TKGWV2}: an ancient {DNA} relatedness pipeline for ultra-low
+              coverage whole genome shotgun data",
+  author   = "Fernandes, Daniel M and Cheronet, Olivia and Gelabert, Pere and
+              Pinhasi, Ron",
+  abstract = "Estimation of genetically related individuals is playing an
+              increasingly important role in the ancient DNA field. In recent
+              years, the numbers of sequenced individuals from single sites
+              have been increasing, reflecting a growing interest in
+              understanding the familial and social organisation of ancient
+              populations. Although a few different methods have been
+              specifically developed for ancient DNA, namely to tackle issues
+              such as low-coverage homozygous data, they require a
+              0.1-1$\times$ minimum average genomic coverage per analysed pair
+              of individuals. Here we present an updated version of a method
+              that enables estimates of 1st and 2nd-degrees of relatedness with
+              as little as 0.026$\times$ average coverage, or around 18,000
+              SNPs from 1.3 million aligned reads per sample with average
+              length of 62 bp-four times less data than 0.1$\times$ coverage at
+              similar read lengths. By using simulated data to estimate false
+              positive error rates, we further show that a threshold even as
+              low as 0.012$\times$, or around 4000 SNPs from 600,000 reads,
+              will always show 1st-degree relationships as related. Lastly, by
+              applying this method to published data, we are able to identify
+              previously undocumented relationships using individuals that had
+              been excluded from prior kinship analysis due to their very low
+              coverage. This methodological improvement has the potential to
+              enable relatedness estimation on ancient whole genome shotgun
+              data during routine low-coverage screening, and therefore improve
+              project management when decisions need to be made on which
+              individuals are to be further sequenced.",
+  journal  = "Sci. Rep.",
+  volume   =  11,
+  number   =  1,
+  pages    = "21262",
+  month    =  oct,
+  year     =  2021,
+  language = "en"
+}
+
+
+
+@ARTICLE{Furtwangler2020-ce,
+  title    = "Ancient genomes reveal social and genetic structure of Late
+              Neolithic Switzerland",
+  author   = "Furtw{\"a}ngler, Anja and Rohrlach, A B and Lamnidis, Thiseas C
+              and Papac, Luka and Neumann, Gunnar U and Siebke, Inga and
+              Reiter, Ella and Steuri, Noah and Hald, J{\"u}rgen and Denaire,
+              Anthony and Schnitzler, Bernadette and Wahl, Joachim and
+              Ramstein, Marianne and Schuenemann, Verena J and Stockhammer,
+              Philipp W and Hafner, Albert and L{\"o}sch, Sandra and Haak,
+              Wolfgang and Schiffels, Stephan and Krause, Johannes",
+  abstract = "Genetic studies of Neolithic and Bronze Age skeletons from Europe
+              have provided evidence for strong population genetic changes at
+              the beginning and the end of the Neolithic period. To further
+              understand the implications of these in Southern Central Europe,
+              we analyze 96 ancient genomes from Switzerland, Southern Germany,
+              and the Alsace region in France, covering the Middle/Late
+              Neolithic to Early Bronze Age. Similar to previously described
+              genetic changes in other parts of Europe from the early 3rd
+              millennium BCE, we detect an arrival of ancestry related to Late
+              Neolithic pastoralists from the Pontic-Caspian steppe in
+              Switzerland as early as 2860-2460 calBCE. Our analyses suggest
+              that this genetic turnover was a complex process lasting almost
+              1000 years and involved highly genetically structured populations
+              in this region.",
+  journal  = "Nat. Commun.",
+  volume   =  11,
+  number   =  1,
+  pages    = "1915",
+  month    =  apr,
+  year     =  2020,
+  language = "en"
+}
+
+
+@ARTICLE{Harris2020-vr,
+  title    = "Array programming with {NumPy}",
+  author   = "Harris, Charles R and Millman, K Jarrod and van der Walt,
+              St{\'e}fan J and Gommers, Ralf and Virtanen, Pauli and
+              Cournapeau, David and Wieser, Eric and Taylor, Julian and Berg,
+              Sebastian and Smith, Nathaniel J and Kern, Robert and Picus,
+              Matti and Hoyer, Stephan and van Kerkwijk, Marten H and Brett,
+              Matthew and Haldane, Allan and Del R{\'\i}o, Jaime Fern{\'a}ndez
+              and Wiebe, Mark and Peterson, Pearu and G{\'e}rard-Marchant,
+              Pierre and Sheppard, Kevin and Reddy, Tyler and Weckesser, Warren
+              and Abbasi, Hameer and Gohlke, Christoph and Oliphant, Travis E",
+  abstract = "Array programming provides a powerful, compact and expressive
+              syntax for accessing, manipulating and operating on data in
+              vectors, matrices and higher-dimensional arrays. NumPy is the
+              primary array programming library for the Python language. It has
+              an essential role in research analysis pipelines in fields as
+              diverse as physics, chemistry, astronomy, geoscience, biology,
+              psychology, materials science, engineering, finance and
+              economics. For example, in astronomy, NumPy was an important part
+              of the software stack used in the discovery of gravitational
+              waves1 and in the first imaging of a black hole2. Here we review
+              how a few fundamental array concepts lead to a simple and
+              powerful programming paradigm for organizing, exploring and
+              analysing scientific data. NumPy is the foundation upon which the
+              scientific Python ecosystem is constructed. It is so pervasive
+              that several projects, targeting audiences with specialized
+              needs, have developed their own NumPy-like interfaces and array
+              objects. Owing to its central position in the ecosystem, NumPy
+              increasingly acts as an interoperability layer between such array
+              computation libraries and, together with its application
+              programming interface (API), provides a flexible framework to
+              support the next decade of scientific and industrial analysis.",
+  journal  = "Nature",
+  volume   =  585,
+  number   =  7825,
+  pages    = "357--362",
+  month    =  sep,
+  year     =  2020,
+  language = "en"
+}
+
+
+
+% The entry below contains non-ASCII chars that could not be converted
+% to a LaTeX equivalent.
+@ARTICLE{Kennett2017-qw,
+  title    = "Archaeogenomic evidence reveals prehistoric matrilineal dynasty",
+  author   = "Kennett, Douglas J and Plog, Stephen and George, Richard J and
+              Culleton, Brendan J and Watson, Adam S and Skoglund, Pontus and
+              Rohland, Nadin and Mallick, Swapan and Stewardson, Kristin and
+              Kistler, Logan and LeBlanc, Steven A and Whiteley, Peter M and
+              Reich, David and Perry, George H",
+  abstract = "For societies with writing systems, hereditary leadership is
+              documented as one of the hallmarks of early political complexity
+              and governance. In contrast, it is unknown whether hereditary
+              succession played a role in the early formation of prehistoric
+              complex societies that lacked writing. Here we use an
+              archaeogenomic approach to identify an elite matriline that
+              persisted between 800 and 1130 CE in Chaco Canyon, the centre of
+              an expansive prehistoric complex society in the Southwestern
+              United States. We show that nine individuals buried in an elite
+              crypt at Pueblo Bonito, the largest structure in the canyon, have
+              identical mitochondrial genomes. Analyses of nuclear genome data
+              from six samples with the highest DNA preservation demonstrate
+              mother-daughter and grandmother-grandson relationships, evidence
+              for a multigenerational matrilineal descent group. Together,
+              these results demonstrate the persistence of an elite matriline
+              in Chaco for ∼330 years.",
+  journal  = "Nat. Commun.",
+  volume   =  8,
+  pages    = "14115",
+  month    =  feb,
+  year     =  2017,
+  language = "en"
+}
+
+
+@ARTICLE{McKinney2010-zp,
+  title    = "Data Structures for Statistical Computing in Python",
+  author   = "McKinney, Wes",
+  abstract = "In this paper we are concerned with the practical issues of
+              working with data sets common to finance, statistics, and other
+              related fields. pandas is a new library which aims to facilitate
+              working with these data sets and to provide a set of fundamental
+              building blocks for implementing statistical models. We will
+              discuss specific design issues encountered in the course of
+              developing pandas with relevant examples and some comparisons
+              with the R language. We conclude by discussing possible future
+              directions for statistical computing and data analysis using
+              Python.",
+  pages    = "56--61",
+  year     =  2010
+}
+
+
+@ARTICLE{Monroy_Kuhn2018-fb,
+  title    = "Estimating genetic kin relationships in prehistoric populations",
+  author   = "Monroy Kuhn, Jose Manuel and Jakobsson, Mattias and G{\"u}nther,
+              Torsten",
+  abstract = "Archaeogenomic research has proven to be a valuable tool to trace
+              migrations of historic and prehistoric individuals and groups,
+              whereas relationships within a group or burial site have not been
+              investigated to a large extent. Knowing the genetic kinship of
+              historic and prehistoric individuals would give important
+              insights into social structures of ancient and historic cultures.
+              Most archaeogenetic research concerning kinship has been
+              restricted to uniparental markers, while studies using
+              genome-wide information were mainly focused on comparisons
+              between populations. Applications which infer the degree of
+              relationship based on modern-day DNA information typically
+              require diploid genotype data. Low concentration of endogenous
+              DNA, fragmentation and other post-mortem damage to ancient DNA
+              (aDNA) makes the application of such tools unfeasible for most
+              archaeological samples. To infer family relationships for
+              degraded samples, we developed the software READ (Relationship
+              Estimation from Ancient DNA). We show that our heuristic approach
+              can successfully infer up to second degree relationships with as
+              little as 0.1x shotgun coverage per genome for pairs of
+              individuals. We uncover previously unknown relationships among
+              prehistoric individuals by applying READ to published aDNA data
+              from several human remains excavated from different cultural
+              contexts. In particular, we find a group of five closely related
+              males from the same Corded Ware culture site in modern-day
+              Germany, suggesting patrilocality, which highlights the
+              possibility to uncover social structures of ancient populations
+              by applying READ to genome-wide aDNA data. READ is publicly
+              available from https://bitbucket.org/tguenther/read.",
+  journal  = "PLoS One",
+  volume   =  13,
+  number   =  4,
+  pages    = "e0195491",
+  month    =  apr,
+  year     =  2018,
+  language = "en"
+}
+
+
+
+@ARTICLE{Patterson2012-im,
+  title    = "Ancient admixture in human history",
+  author   = "Patterson, Nick and Moorjani, Priya and Luo, Yontao and Mallick,
+              Swapan and Rohland, Nadin and Zhan, Yiping and Genschoreck, Teri
+              and Webster, Teresa and Reich, David",
+  abstract = "Population mixture is an important process in biology. We present
+              a suite of methods for learning about population mixtures,
+              implemented in a software package called ADMIXTOOLS, that support
+              formal tests for whether mixture occurred and make it possible to
+              infer proportions and dates of mixture. We also describe the
+              development of a new single nucleotide polymorphism (SNP) array
+              consisting of 629,433 sites with clearly documented ascertainment
+              that was specifically designed for population genetic analyses
+              and that we genotyped in 934 individuals from 53 diverse
+              populations. To illustrate the methods, we give a number of
+              examples that provide new insights about the history of human
+              admixture. The most striking finding is a clear signal of
+              admixture into northern Europe, with one ancestral population
+              related to present-day Basques and Sardinians and the other
+              related to present-day populations of northeast Asia and the
+              Americas. This likely reflects a history of admixture between
+              Neolithic migrants and the indigenous Mesolithic population of
+              Europe, consistent with recent analyses of ancient bones from
+              Sweden and the sequencing of the genome of the Tyrolean
+              ``Iceman.''",
+  journal  = "Genetics",
+  volume   =  192,
+  number   =  3,
+  pages    = "1065--1093",
+  month    =  nov,
+  year     =  2012,
+  language = "en"
+}
+
+
+@ARTICLE{Rivollat2020-qq,
+  title    = "Ancient genome-wide {DNA} from France highlights the complexity
+              of interactions between Mesolithic hunter-gatherers and Neolithic
+              farmers",
+  author   = "Rivollat, Ma{\"\i}t{\'e} and Jeong, Choongwon and Schiffels,
+              Stephan and K{\"u}{\c c}{\"u}kkal{\i}p{\c c}{\i}, {\.I}{\c s}il
+              and Pemonge, Marie-H{\'e}l{\`e}ne and Rohrlach, Adam Benjamin and
+              Alt, Kurt W and Binder, Didier and Friederich, Susanne and
+              Ghesqui{\`e}re, Emmanuel and Gronenborn, Detlef and Laporte, Luc
+              and Lefranc, Philippe and Meller, Harald and R{\'e}veillas,
+              H{\'e}l{\`e}ne and Rosenstock, Eva and Rottier, St{\'e}phane and
+              Scarre, Chris and Soler, Ludovic and Wahl, Joachim and Krause,
+              Johannes and Deguilloux, Marie-France and Haak, Wolfgang",
+  abstract = "Starting from 12,000 years ago in the Middle East, the Neolithic
+              lifestyle spread across Europe via separate continental and
+              Mediterranean routes. Genomes from early European farmers have
+              shown a clear Near Eastern/Anatolian genetic affinity with
+              limited contribution from hunter-gatherers. However, no genomic
+              data are available from modern-day France, where both routes
+              converged, as evidenced by a mosaic cultural pattern. Here, we
+              present genome-wide data from 101 individuals from 12 sites
+              covering today's France and Germany from the Mesolithic (N = 3)
+              to the Neolithic (N = 98) (7000-3000 BCE). Using the genetic
+              substructure observed in European hunter-gatherers, we
+              characterize diverse patterns of admixture in different regions,
+              consistent with both routes of expansion. Early western European
+              farmers show a higher proportion of distinctly western
+              hunter-gatherer ancestry compared to central/southeastern
+              farmers. Our data highlight the complexity of the biological
+              interactions during the Neolithic expansion by revealing major
+              regional variations.",
+  journal  = "Sci Adv",
+  volume   =  6,
+  number   =  22,
+  pages    = "eaaz5344",
+  month    =  may,
+  year     =  2020,
+  language = "en"
+}
+
+
+
+@article {Rohrlach2023.04.17.537144,
+	author = {Adam B Rohrlach and Jonathan Tuke and Divyaratan Popli and Wolfgang Haak},
+	title = {BREADR: An R Package for the Bayesian Estimation of Genetic Relatedness from Low-coverage Genotype Data},
+	elocation-id = {2023.04.17.537144},
+	year = {2023},
+	doi = {10.1101/2023.04.17.537144},
+	publisher = {Cold Spring Harbor Laboratory},
+	abstract = {Robust and reliable estimates of how individuals are biologically related to each other are a key source of information when reconstructing pedigrees. In combination with contextual data, reconstructed pedigrees can be used to infer possible kinship practices in prehistoric populations. However, standard methods to estimate biological relatedness from genome sequence data cannot be applied to low coverage sequence data, such as are common in ancient DNA (aDNA) studies. Critically, a statistically robust method for assessing and quantifying the confidence of a classification of a specific degree of relatedness for a pair of individuals, using low coverage genome data, is lacking.In this paper we present the R-package BREADR (Biological RElatedness from Ancient DNA in R), which leverages the so-called pairwise mismatch rate, calculated on optimally-thinned genome-wide pseudo-haploid sequence data, to estimate genetic relatedness up to the second degree, assuming an underlying binomial distribution. BREADR also returns a posterior probability for each degree of relatedness, from identical twins/same individual, first-degree, second-degree or {\textquotedblleft}unrelated{\textquotedblright} pairs, allowing researchers to quantify and report the uncertainty, even for particularly low-coverage data. We show that this method accurately recovers degrees of relatedness for sequence data with coverage as low as 0.04X using simulated data, and then compare the performance of BREADR on empirical data from Bronze Age Iberian human sequence data. The BREADR package is designed for pseudo-haploid genotype data, common in aDNA studies.Competing Interest StatementThe authors have declared no competing interest.},
+	URL = {https://www.biorxiv.org/content/early/2023/04/18/2023.04.17.537144},
+	eprint = {https://www.biorxiv.org/content/early/2023/04/18/2023.04.17.537144.full.pdf},
+	journal = {bioRxiv}
+}
+
+
+@ARTICLE{Wright1922-vm,
+  title     = "Coefficients of Inbreeding and Relationship",
+  author    = "Wright, Sewall",
+  journal   = "Am. Nat.",
+  publisher = "[University of Chicago Press, American Society of Naturalists]",
+  volume    =  56,
+  number    =  645,
+  pages     = "330--338",
+  year      =  1922
+}
