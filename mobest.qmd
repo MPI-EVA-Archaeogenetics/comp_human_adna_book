@@ -21,9 +21,21 @@ mobest is an **R package** providing types and functions for **spatiotemporal in
 
 mobest assumes you have a set of **genetic samples** with **spatial** (two coordinates in a projected reference system) and **temporal** positions (years BC/AD) for which you calculated a derived, numeric measure of **genetic ancestry** (e.g. coordinates in a PCA or MDS space).
 
+![Spatiotemporal distribution of the archaeogenetic samples in @Schmid2023.](img/mobest/overview_spacetime.png)
 
+![Distribution of the archaeogenetic samples in a genetic space constructed via multidimensional scaling.](img/mobest/overview_mds.png){width=60%}
 
 The package then provides a framework to perform spatiotemporal interpolation using **Gaussian process regression** (GPR, "kriging") with the **laGP package** to reconstruct an ancestry field based on the ancestry measure you provided.
+
+::: {layout-nrow=2}
+![Sparse point cloud.](img/mobest/overview_3D_1.png)
+
+![Dense cloud after interpolation.](img/mobest/overview_3D_2.png)
+
+![One timeslice of the interpolated field.](img/mobest/overview_3D_3.png)
+
+![Interpolated C1 mean and sd for this timeslice.](img/mobest/overview_3D_4.png)
+:::
 
 
 
