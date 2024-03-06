@@ -12,7 +12,7 @@ shift-heading-level-by: 1
 ---
 
 ::: {.callout-note}
-The practical parts @sec-install and @sec-basic of the following introduction are a condensed version of two sections of the mobest documentation available at <https://nevrome.de/mobest>. More advanced topics beyond the most basic usecase are also introduced there.
+The practical parts @sec-install and @sec-basic of the following introduction are a condensed version of two sections of the **mobest documentation** available at **<https://nevrome.de/mobest>**. More advanced topics beyond the most basic usecase are also introduced there.
 :::
 
 # Overview
@@ -478,10 +478,13 @@ This means **we expect exactly $2 * 4738 = 9476$ rows** in `search_result`, whic
 
 ### Creating similarity probability maps for individual dependent variables
 
-The most basic similarity probability map we can create with `search_result` is a map for just one parameter permutation, including only one dependent variable. In this case the relevant similarity probability observations are easy to obtain. We can just filter by `dependent_var_id` to only include either `C1` or `C2`.
+The **most basic similarity probability map** we can create with `search_result` is a map for just **one parameter permutation**, including only one dependent variable.
+
+In this case the relevant similarity probability observations are easy to obtain. We can just filter by `dependent_var_id` to only include either `C1` or `C2`.
 
 ```r
-result_C1 <- search_result %>% dplyr::filter(dependent_var_id == "C1")
+result_C1 <- search_result %>%
+  dplyr::filter(dependent_var_id == "C1")
 ```
 
 And this is then easy to plot with `geom_raster()`. We can then plot C1 and C2 together using `cowplot::plot_grid()`.
@@ -495,7 +498,8 @@ p_C1 <- ggplot() +
   coord_fixed()
 
 # for C2
-result_C2 <- search_result %>% dplyr::filter(dependent_var_id == "C2")
+result_C2 <- search_result %>%
+  dplyr::filter(dependent_var_id == "C2")
 p_C2 <- ggplot() +
   geom_raster(
     data = result_C2,
@@ -511,17 +515,22 @@ cowplot::plot_grid(p_C1, p_C2, labels = c("C1", "C2"))
 
 ### Combining the information from multiple dependent variables
 
-The results for individual dependent variables, so ancestry components like MDS or PCA dimensions, can be informative, but are usually under-powered to exclude highly improbable search results. Generally combining them improves the accuracy of the results for individual samples, and we think this is best done by multiplying the results for the different dependent variables. This way spatial areas with high similarity probability for all dependent variables are naturally up-weighted, whereas areas that are unlikely similar for some dependent variables are down-weighted.
+Combining search results for individual MDS or PCA dimensions improves the accuracy of the probability surfaces, and we think this is best done by **multiplying the results for the different dependent variables**.
 
-To perform the multiplication (and the re-normalization afterwards), mobest includes a function `mobest::multiply_dependent_probabilities()`. It works on objects of type `mobest_locateoverview` and yields tabular objects of type `mobest_locateproduct`. For this transformation it is aware of the parameter permutations potentially encoded in the `mobest_locateoverview` table. It only combines the probabilities for dependent variables that share all other parameters. That means the number of rows in `mobest_locateproduct` will be $\frac{1}{\text{Number of dependent variables}}$ times the number of rows in the input `mobest_locateoverview` table.
+To perform the multiplication (and the re-normalization afterwards), mobest includes a function `mobest::multiply_dependent_probabilities()`. It works on objects of type `mobest_locateoverview` and yields tabular objects of type `mobest_locateproduct`.
+
+It is aware of the parameter permutations potentially encoded in the `mobest_locateoverview` table. It **only combines the probabilities for dependent variables that share all other parameters**.
+
+The number of rows in `mobest_locateproduct` will therefore be $\frac{1}{\text{Number of dependent variables}}$ times the number of rows in the input `mobest_locateoverview` table.
 
 If we call it for `search_result` the output will thus have $9476/2=4738$ rows. 
 
 ```r
-search_product <- mobest::multiply_dependent_probabilities(search_result)
+search_product <-
+  mobest::multiply_dependent_probabilities(search_result)
 ```
 
-`mobest_locateproduct` tables feature a perfect subset of the columns in `mobest_locateoverview`. We can plot the combined similarity probability map with the code already applied for the individual dependent variables.
+We can plot the combined similarity probability map with the code already applied for the individual dependent variables.
 
 ```r
 ggplot() +
@@ -534,4 +543,4 @@ ggplot() +
 
 ![The combined ($\text{C1}*\text{C2}$) similarity probability search results for the sample Stuttgart for 6800 BC.](img/mobest/search_map_simple_combined.png)
 
-This figure is the main result of this write-up.
+This concludes a very basic similarity search workflow. Please see the **documentation at <https://nevrome.de/mobest>** for a more extensive version of this writeup and various other tutorials describing more advanced applications of mobest.
