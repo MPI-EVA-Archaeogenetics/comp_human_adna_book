@@ -17,8 +17,17 @@ The practical parts @sec-install and @sec-basic of the following introduction ar
 
 # Overview
 
-...
+mobest is an **R package** providing types and functions for **spatiotemporal interpolation of human genetic ancestry components**, **probabilistic similarity search** and the calculation of a derived measure of ancestry relocation and mobility. The workflow in mobest version 1.0.0 was specifically developed for @Schmid2023.
 
+mobest assumes you have a set of **genetic samples** with **spatial** (two coordinates in a projected reference system) and **temporal** positions (years BC/AD) for which you calculated a derived, numeric measure of **genetic ancestry** (e.g. coordinates in a PCA or MDS space).
+
+
+
+The package then provides a framework to perform spatiotemporal interpolation using **Gaussian process regression** (GPR, "kriging") with the **laGP package** to reconstruct an ancestry field based on the ancestry measure you provided.
+
+
+
+mobest finally allows to derive a **similarity probability** for samples of interest within the interpolated field, which – under certain circumstances – can be interpreted as an **origin probability**.
 
 # Installing mobest {#sec-install}
 
