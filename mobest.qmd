@@ -34,12 +34,14 @@ The package then provides a framework to perform spatiotemporal interpolation us
 
 ![One timeslice of the interpolated field.](img/mobest/overview_3D_3.png)
 
-![Interpolated C1 mean and sd for this timeslice.](img/mobest/overview_3D_4.png)
+![Interpolated C1 mean and error for this timeslice.](img/mobest/overview_3D_4.png)
 :::
 
-
-
 mobest finally allows to derive a **similarity probability** for samples of interest within the interpolated field, which – under certain circumstances – can be interpreted as an **origin probability**.
+
+!["Cutting the field", so measuring the probabilities for a specific ancestry profile (C1 value) for every search point in space.](img/mobest/overview_3D_5.png)
+
+![Similarity probability for the Stuttgart sample (@Lazaridis2014) calculated for the time slice at 5600 BC with two MDS-based ancestry components C1 and C2.](img/mobest/search_map_Stuttgart.png)
 
 # Installing mobest {#sec-install}
 
