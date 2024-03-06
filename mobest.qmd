@@ -192,55 +192,12 @@ ggplot() +
 
 ### Reading the input samples
 
-mobest requires a set of data points, archaeogenetic samples, to inform the ancestry field interpolation. For each sample the position in space, time and a dependent variable space (e.g. the coordinates in a PCA analysis) must be known. This information must be provided in a specific format. A typical mobest workflow involves preparing a sample list in a .xlsx or .csv table, which could then be read into R and transformed to the correct format.
+mobest requires a set of data points, **archaeogenetic samples**, to inform the ancestry field interpolation. For each sample the position in **space, time and a dependent variable space** (e.g. the coordinates in a PCA analysis) must be known.
 
-For this tutorial we rely on the data used and published in @Schmid2023. The following, hidden section includes the code to prepare the sample table we need from the supplementary tables published with the paper.
-
-<details>
-<summary>Code to prepare the input data table.</summary>
+For this tutorial we rely on the **data used and published in @Schmid2023**. You can download a simplified version of this dataset here ([`samples_basic.csv`](https://nevrome.de/mobest/html/master/_downloads/6993cd8a8dddf005e4d1d25c41e7c8ad/samples_basic.csv)) and load it into R.
 
 ```r
-# download .zip archives with tables from https://doi.org/10.17605/OSF.IO/6UWM5
-utils::download.file(
-  url = "https://osf.io/download/kej4s/",
-  destfile = "docs/data/pnas_tables.zip"
-)
-# extract the relevant tables
-utils::unzip(
-  "docs/data/pnas_tables.zip",
-  files = c("Dataset_S1.csv", "Dataset_S2.csv"),
-  exdir = "docs/data/"
-)
-# read data files
-samples_context_raw <- readr::read_csv("docs/data/Dataset_S1.csv")
-samples_genetic_space_raw <- readr::read_csv("docs/data/Dataset_S2.csv")
-# join them by the sample identifier
-samples_raw <- dplyr::left_join(
-  samples_context_raw,
-  samples_genetic_space_raw,
-  by = "Sample_ID"
-)
-# create a useful subset of this table
-samples_basic <- samples_raw %>%
-  dplyr::select(
-    Sample_ID,
-    Latitude, Longitude,
-    Date_BC_AD_Median,
-    MDS_C1 = C1_mds_u, MDS_C2 = C2_mds_u
-  )
-readr::write_csv(samples_basic, file = "docs/data/samples_basic.csv")
-```
-
-</details>
-<br>
-
-You do not have to run this and can instead download the example dataset table `samples_basic.csv` from [here](data/samples_basic.csv). 
-
-When you have download the input data file you can load it into a `tibble` in R.
-
-```r
-samples_basic <- readr::read_csv("docs/data/samples_basic.csv")
-# you have to replace "docs/data/" with the path to your copy of the file
+samples_basic <- readr::read_csv("path/to/your/samples_basic.csv")
 ```
 
 `samples_basic` includes the following columns/variables:
@@ -255,10 +212,9 @@ samples_basic <- readr::read_csv("docs/data/samples_basic.csv")
 | MDS_C2            | dbl  | The coordinate of this sample on MDS dimension 2 |
 : {tbl-colwidths="[20,10,70]"}
 
-These variables are a minimum for a meaningful mobest run and must be known for all samples. Samples with missing information in any of these columns have to excluded from the input.
+These variables are a minimum for a meaningful mobest run and **must be known for all samples**. Samples with missing information in any of these columns have to excluded from the input.
 
-Before we move on, we have to apply one more change to the sample table: Just as for the research area (see {ref}`Projecting the spatial data <basic:projecting the spatial data>` above) we have to transform the coordinates from longitude and latitude coordinates to a projected system, specifically the same as the one we selected above. To do this we can construct an `sf` object from the sample table, apply `sf::st_transform()` and then transform this result back to a `tibble` with the x and y coordinates of EPSG:3035 in extra columns. This last step makes the code a bit awkward.
-
+Just as for the research area we have to **transform the coordinates** from longitude and latitude coordinates to a projected system, specifically the same as the one we selected above.
 
 ```r
 samples_projected <- samples_basic %>%
@@ -275,7 +231,6 @@ samples_projected <- samples_basic %>%
     y = sf::st_coordinates(.)[,2]
   ) %>%
   sf::st_drop_geometry()
-# readr::write_csv(samples_projected, file = "docs/data/samples_projected.csv")
 ```
 
 With the coordinates in the same reference system as the landmass polygons we prepared above we can now combine both in a single figure:
@@ -292,8 +247,6 @@ ggplot() +
 ```
 
 ![The spatial distribution of the informative samples.](img/mobest/samples_map.png)
-
-A number of samples are outside of the area we want to predict here. That is no problem. They will inform the field in the north-eastern fringes of the area of interest and do no harm. It is much more problematic that some areas of our prediction grid are severely under-sampled. We have to keep sampling gaps like this in mind when we interpret the results of the similarity search.
 
 ## Specifying the search sample
 
