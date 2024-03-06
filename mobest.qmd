@@ -28,7 +28,7 @@ mobest assumes you have a set of **genetic samples** with **spatial** (two coord
 The package then provides a framework to perform spatiotemporal interpolation using **Gaussian process regression** (GPR, "kriging") with the **laGP package** to reconstruct an ancestry field based on the ancestry measure you provided.
 
 ::: {layout-nrow=2}
-![Sparse point cloud.](img/mobest/overview_3D_1.png)
+![Sparse point cloud in space and time.](img/mobest/overview_3D_1.png)
 
 ![Dense cloud after interpolation.](img/mobest/overview_3D_2.png)
 
@@ -137,7 +137,7 @@ worldwide_land_outline_4326 <- rnaturalearth::ne_download(
 )
 ```
 
-We can then **crop the land outline** to the research area to obtain the land area we are interested in.
+We can then **crop the land outline to the research area** to obtain the land area we are interested in.
 
 ```r
 research_land_outline_4326 <- sf::st_intersection(
@@ -323,9 +323,9 @@ mobest::locate(
 
 #### Independent and dependent positions
 
-The `locest()` arguments **`independent` and `dependent` take the spatiotemporal and genetic (as for example derived from MDS/PCA) positions of the interpolation-informing samples**.
+The `locest()` arguments **`independent` and `dependent` take the spatiotemporal and genetic** (as for example derived from MDS/PCA) **positions of the interpolation-informing samples**.
 
-Spatiotemporal positions are encoded in mobest with a custom data type: `mobest_spatiotemporalpositions`. For the `independent` argument of `locest()` we have to construct an object of this type with `mobest::create_spatpos()` to represent the positions of the input samples in `samples_projected`.
+**Spatiotemporal positions** are encoded in mobest with a custom data type: `mobest_spatiotemporalpositions`. For the `independent` argument of `locest()` we have to construct an object of this type with `mobest::create_spatpos()` to represent the positions of the input samples in `samples_projected`.
 
 ```r
 ind <- mobest::create_spatpos(
@@ -336,7 +336,7 @@ ind <- mobest::create_spatpos(
 )
 ```
 
-The dependent, genetic variables are also encoded in a custom, tabular type: `mobest_observations` with the constructor function `mobest::create_observations()`.
+The **dependent, genetic variables** are also encoded in a custom, tabular type: `mobest_observations` with the constructor function `mobest::create_observations()`.
 
 ```r
 dep <- mobest::create_obs(
@@ -345,9 +345,9 @@ dep <- mobest::create_obs(
 )
 ```
 
-Note that you can have an **arbitrary number of these components with arbitrary names**.
+Note that you can have an **arbitrary number of these components** with arbitrary names.
 
-The **lengths** and **order** of the vectors (`samples_projected$...`) used for `create_spatpos()` and `create_obs()` all have to be identical.
+The **length** and **order** of these vectors (`samples_projected$...`) used for `create_spatpos()` and `create_obs()` all have to be identical.
 
 For the **search sample** in `search_samples`, finally, we have to construct objects of the same type and structure:
 
@@ -368,13 +368,13 @@ search_dep <- mobest::create_obs(
 
 The `locest()` argument `kernel` takes an object of the class `mobest_kernelsetting`. This type encodes **kernel configurations for each dependent variable**, so the parameters for the **Gaussian process regression (GPR)** interpolation that should be used for this variable.
 
-These include mostly the **lengthscale parameters in space (x and y) and time**, as well as the **nugget parameter**. In very simple terms:
+These include mostly the **lengthscale parameters in space (x and y) and time**, as well as the **nugget parameter** (@Gramacy2020, specifically [here](https://bookdown.org/rbg/surrogates/chap5.html#chap5hyper)). In very simple terms:
 
 **Lengthscale parameters**: How far in space and time should an individual sample's genetic position inform the interpolated field.
 
-**Nugget**: Error term to model local (for observations from the same position in space and time) variability. See @Gramacy2020, specifically [here](https://bookdown.org/rbg/surrogates/chap5.html#chap5hyper).
+**Nugget**: Error term to model local variability, so for observations from the same position in space and time.
 
-Here is a possible kernel configuration for our example. We construct two kernel settings, one for each ancestry component, with `mobest::create_kernel()` in `mobest::create_kernset()`. 
+Here is a possible kernel configuration for our example. We construct **two kernel settings, one for each ancestry component**, with `mobest::create_kernel()` in `mobest::create_kernset()`. 
 
 ```
 kernset <- mobest::create_kernset(
@@ -389,7 +389,7 @@ kernset <- mobest::create_kernset(
 )
 ```
 
-Note how we scale the lengthscale parameters: `dsx` and `dsy` are set in meters (800 * 1000m = 800km) and `dt` in years (800y).
+`dsx` and `dsy` are set in meters (800 * 1000m = 800km) and `dt` in years (800y).
 
 The main question naturally arising from this, is **how to set these parameters for a given dataset and research question**. There are various empirical ways to find optimal values through numerical optimization. See Supplementary Text 2 of @Schmid2023 for the approaches we applied.
 
@@ -409,7 +409,7 @@ We already performed all necessary work for the `search_space_grid` argument, so
 
 The **search time** can be specified as an integer vector of years: e.g. `search_time = c(-500, -200, 100)`.
 
-This vector gets interpreted by `mobest::locate()` in two different ways, which can be selected with the switch argument `search_time_mode`.
+This vector gets interpreted by `mobest::locate()` in two different ways, which can be selected with the switch argument **`search_time_mode`**.
 
 - **`"relative"`**: The `search_time` is interpreted as a $\Delta t$ relative to the age of the search sample(s). Negative values point to ages that are older then the sample age, so in their relative past, and positive ones to younger ages in their relative future.
 - **`"absolute"`** The values in `search_time` are interpreted as absolute ages in years BC/AD.
@@ -429,7 +429,7 @@ The last relevant option of `locate()`, `normalize`, concerns the **normalizatio
 
 ### Calling mobest::locate()
 
-In the previous sections we have thoroughly prepared the input for a first, simple run of `mobest::locate()`. We can now call the function.
+In the previous sections we have thoroughly prepared the input for a first, simple run of `mobest::locate()`. We can now **finally call the function**.
 
 ```r
 search_result <- mobest::locate(
@@ -452,7 +452,7 @@ This typically runs for a couple of seconds, uses every available processor core
 
 ### The mobest_locateoverview table
 
-The output data type `mobest_locateoverview` has a large set of columns, **many not immediately relevant** to the basic example here. This applies especially for the variables documenting the **excessive permutation mechanics** hidden behind the relatively simple interface of `mobest::locate()`.
+The output data type `mobest_locateoverview` has a **large set of columns, many not immediately relevant** to the basic example here. This applies especially for the variables documenting the **excessive permutation mechanics** hidden behind the relatively simple interface of `mobest::locate()`.
 
 Each row of the `mobest_locateoverview` table stores the calculated **interpolated mean, error and similarity probability** (`field_mean`, `field_sd`, `probability`) **for one permutation** of the input point positions in independent and dependent variable space (`independent_table_id` and `dependent_setting_id`), one dependent variable `dependent_var_id`, one iteration of the kernel settings (`kernel_setting_id`: `dsx`, `dsy`, `dt`, `g`), one prediction grid point emerging as a combination of spatial grid and search timeslice (`pred_grid_id`: `field_id`, `field_geo_id`, `field_x`, `field_y`, `field_z`, `search_time`) and finally one search sample (`search_id`, `search_x`, `search_y`, `search_z`, `search_measured`).
  
@@ -544,7 +544,7 @@ To perform the multiplication (and the re-normalization afterwards), mobest incl
 
 It is aware of the parameter permutations potentially encoded in the `mobest_locateoverview` table. It **only combines the probabilities for dependent variables that share all other parameters**.
 
-The number of rows in `mobest_locateproduct` will therefore be $\frac{1}{\text{Number of dependent variables}}$ times the number of rows in the input `mobest_locateoverview` table.
+The number of rows in `mobest_locateproduct` will therefore be $\frac{\text{Number of rows in mobest\_locateoverview}}{\text{Number of dependent variables}}$.
 
 If we call it for `search_result` the output will thus have $9476/2=4738$ rows. 
 
