@@ -10,9 +10,9 @@ execute:
   eval: false
 ---
 
-## Introduction
+## Theory primer
 
-$F_\text{ST}$ is a measure for how differentiated two populations are, taking into account internal genetic variation. It sometimes called the ["Fixation Index"](https://en.wikipedia.org/wiki/Fixation_index). It is in spirit very similar to $F_2$, in that it becomes 0 if two populations are not differentiated at all (meaning they are effectively the same), and the more differentiated, the more positive is the measure. However, $F_\text{ST}$ is scaled very differently from $F_2$. While both statistics range mathematically from 0 to 1, the upper bound 1 has very different meanings in both. A theoretical value of $F_2=1$ would mean that both populations are fixed at different alleles in all studied SNPs, which is practically not possible (even completely random fixations would suggest that 1/4 of them would agree given that there are only four nucleotides, let alone the fact that such deeply diverged populations/species would not be alignable anymore). One can say that the time-scale on which $F_2$ approaches 1 is the time scale of nucleotide substitutions (i.e. mutations plus fixation) along species branches, which in neutral evolution is given by the inverse mutation rate $1/\mu$. This would mean something on the order of $10^8$ generations, which is arguably as deep as the tree of live itself. In contrast, $F_\text{ST}$ approaches 1 on the time-scale of fixation of standing variation, which is $2N$ generations, which for humans is on the order of 10000 generations, so around the depth of modern-human diversity from its origins in Africa several hundred thousand years ago. Arguably, this time scale is much more useful for data analyses and thus easier to interpret.
+$F_\text{ST}$ is a measure for how differentiated two populations are, taking into account internal genetic variation. It sometimes called the ["Fixation Index"](https://en.wikipedia.org/wiki/Fixation_index). It is in spirit very similar to $F_2$, in that it becomes 0 if two populations are not differentiated at all (meaning they are effectively the same), and the more differentiated, the more positive is the measure. However, $F_\text{ST}$ is scaled very differently from $F_2$.
 
 While there are various mathematical definitions for both the theoretical definition and estimation for $F_\text{ST}$, which differ in subtle ways, we here follow the excellent paper by [@Bhatia2013], which proposes the following estimator, termed Hudson-estimator:
 
@@ -34,7 +34,7 @@ $F_\text{ST}$ between two populations A and B is then defined as $$F_\text{ST}(A
 so the average of the two drift processes.
 ::: 
 
-[@Bhatia2013] show that the Hudson-estimator above can be recast as
+It is fairly straight forward to see (and shown in [@Bhatia2013]) that the Hudson-estimator above can be recast as
 
 $$F_\text{ST}(A,B)=\frac{(a-b)^2}{a(1-b)+b(1-a)}$$
 
@@ -44,7 +44,9 @@ From this definition, you can see that $F_\text{ST}(A,B)$ is closely related to 
 
 $$F_2(A,B)=(a-b)^2$$.
 
-In some sense, $F_\text{ST}(A,B)$ can be considered a normalised version of $F_2(A,B)$.
+In some sense, $F_\text{ST}(A,B)$ can be considered a normalised version of $F_2(A,B)$. While both statistics range mathematically from 0 to 1, the upper bound 1 has very different meanings in both. A theoretical value of $F_2=1$ would mean that both populations are fixed at different alleles in all studied SNPs, which is practically not possible (even completely random fixations would suggest that 1/4 of them would agree given that there are only four nucleotides, let alone the fact that such deeply diverged populations/species would not be alignable anymore). One can say that the time-scale on which $F_2$ approaches 1, for non-ascertained SNPs, so the entire genome, is the time scale of nucleotide substitutions (i.e. mutations plus fixation) along species branches, which in neutral evolution is given by the inverse mutation rate $1/\mu$. This would mean something on the order of $10^8$ generations, which is arguably as deep as the tree of live itself. In contrast, $F_\text{ST}$ approaches 1 on the time-scale of fixation of standing variation, which is $2N$ generations, which for humans is on the order of 10000 generations, so around the depth of modern-human diversity from its origins in Africa several hundred thousand years ago. Arguably, this time scale is much more useful for data analyses and thus easier to interpret.
+
+Of course, in practice, one uses some ascertained SNP set, as also here in our examples below, in which case values are much higher because we consider only variants that are segregating in human populations within a relatively high allele frequency.
 
 If you've gone through our [chapter on F3 and F4 statistics](fstats.qmd), you will have already encountered our software [xerxes](https://www.poseidon-adna.org/#/xerxes?id=xerxes-cli-software). You can compute both the biased and the approximately unbiased estimators for $F_\text{ST}(A,B)$, using the `FST` or `FSTvanilla` statistics, as defined in the [whitepaper](https://github.com/poseidon-framework/poseidon-analysis-hs/blob/main/docs/xerxes_whitepaper.pdf).
 
@@ -73,7 +75,7 @@ fstats:
 This will then produce all combinations of $FST(A, B)$ and $F_2(A, B)$ as indicated in the population lists.
 
 :::{.callout-note}
-Note that the config-file engine in xerxes always computes _all_ the combinations of populations, even for cases of $A=B$. It also doesn't know about symmetry, so will happily compute the redundant statistics $FST(\text{Adygei}, \text{Balochi})$ and $FST(\text{Adygei}, \text{Balochi})$. While this could be possibly improved, there is no big harm done, as this runs fairly quickly.
+Note that the config-file engine in xerxes always computes _all_ the combinations of populations, even for cases of $A=B$. It also doesn't know about symmetry, so will happily compute the redundant statistics $FST(\text{Adygei}, \text{Adygei})$ and $FST(\text{Adygei}, \text{Adygei})$. While this could be possibly improved, there is no big harm done, as this runs fairly quickly.
 :::
 
 We run this config file using the command line
@@ -87,21 +89,66 @@ xerxes fstats -d $REPO --statConfig fstat_world_config.yaml -f fstat_world_outpu
 The standard output, is a nicely layouted ASCII Table, which looks like this in the beginning:
 
 ```
-.-----------.-----------------.-----------------.---.---.---------.----------------.--------------------.------------------.---------------------.
-| Statistic |        a        |        b        | c | d | NrSites | Estimate_Total | Estimate_Jackknife | StdErr_Jackknife |  Z_score_Jackknife  |
-:===========:=================:=================:===:===:=========:================:====================:==================:=====================:
-| FST       | Adygei          | Adygei          |   |   | 409606  | -3.2363e-2     | -3.2363e-2         | 1.1079e-6        | -29211.78654425142  |
-| FST       | Adygei          | Balochi         |   |   | 439484  | 1.0183e-2      | 1.0183e-2          | 2.6463e-4        | 38.47836213081687   |
-| FST       | Adygei          | Basque          |   |   | 429795  | 1.5041e-2      | 1.5041e-2          | 3.0579e-4        | 49.18650753804277   |
-| FST       | Adygei          | BedouinA        |   |   | 464801  | 1.1125e-2      | 1.1125e-2          | 2.3306e-4        | 47.733496037556684  |
-| FST       | Adygei          | BedouinB        |   |   | 442878  | 2.6486e-2      | 2.6486e-2          | 4.2233e-4        | 62.71408519081527   |
-| FST       | Adygei          | Biaka           |   |   | 511741  | 0.1241         | 0.1241             | 7.2278e-4        | 171.63603135734155  |
-| FST       | Adygei          | Brahui          |   |   | 439939  | 1.1874e-2      | 1.1874e-2          | 2.6634e-4        | 44.580717401262476  |
-| FST       | Adygei          | Burusho         |   |   | 439428  | 1.5395e-2      | 1.5395e-2          | 2.9055e-4        | 52.98665735172525   |
-| FST       | Adygei          | Druze           |   |   | 448233  | 1.0339e-2      | 1.0339e-2          | 1.9614e-4        | 52.709862042633105  |
-| FST       | Adygei          | French          |   |   | 435238  | 7.7213e-3      | 7.7213e-3          | 2.4507e-4        | 31.506092803895292  |
-| FST       | Adygei          | Han             |   |   | 442553  | 7.7084e-2      | 7.7084e-2          | 7.5943e-4        | 101.5019381212137   |
+.-----------.-----------------.-----------------.---.---.---------.----------------.--------------------.------------------.--------------------.
+| Statistic |        a        |        b        | c | d | NrSites | Estimate_Total | Estimate_Jackknife | StdErr_Jackknife | Z_score_Jackknife  |
+:===========:=================:=================:===:===:=========:================:====================:==================:====================:
+| FST       | Adygei          | Adygei          |   |   | 593124  | 0.0000         | 0.0000             | 0.0000           | NaN                |
+| FST       | Adygei          | Balochi         |   |   | 593124  | 1.2789e-2      | 1.2789e-2          | 3.3572e-4        | 38.09517110646904  |
+| FST       | Adygei          | Basque          |   |   | 593124  | 1.8790e-2      | 1.8790e-2          | 4.0141e-4        | 46.810358341103225 |
+| FST       | Adygei          | BedouinA        |   |   | 593124  | 1.3017e-2      | 1.3017e-2          | 2.9647e-4        | 43.90737238689979  |
+| FST       | Adygei          | BedouinB        |   |   | 593124  | 3.3455e-2      | 3.3454e-2          | 5.7648e-4        | 58.03217592610529  |
+| FST       | Adygei          | Biaka           |   |   | 593124  | 0.1716         | 0.1716             | 1.2185e-3        | 140.85275693678508 |
+| FST       | Adygei          | Brahui          |   |   | 593124  | 1.4644e-2      | 1.4644e-2          | 3.4481e-4        | 42.46989237781921  |
+| FST       | Adygei          | Burusho         |   |   | 593124  | 1.8566e-2      | 1.8566e-2          | 3.8156e-4        | 48.6573908240317   |
+| FST       | Adygei          | Druze           |   |   | 593124  | 1.2173e-2      | 1.2173e-2          | 2.6659e-4        | 45.65975464203526  |
+| FST       | Adygei          | French          |   |   | 593124  | 9.7730e-3      | 9.7730e-3          | 3.1627e-4        | 30.9006924987833   |
+| FST       | Adygei          | Han             |   |   | 593124  | 9.8759e-2      | 9.8759e-2          | 1.1973e-3        | 82.48660429503893  |
+| FST       | Adygei          | Hazara          |   |   | 593124  | 3.0725e-2      | 3.0726e-2          | 7.1478e-4        | 42.98629834431124  |
+| FST       | Adygei          | Italian_North   |   |   | 593124  | 8.6600e-3      | 8.6601e-3          | 2.7883e-4        | 31.058813893781032 |
+
 ```
 
 but of course has many more lines (>1800 in this case). We also used the `-f` flag to output a tab-separated file, here named `fstat_world_output.tsv`, which is easier to read into R.
 
+## Plotting results in R
+
+We first load the data
+
+```{r message=FALSE, warning=FALSE, errors=FALSE}
+library(magrittr)
+dat <- readr::read_tsv("fst_working/fstat_world_output.tsv") %>%
+  dplyr::select(-c(c, d, Z_score_Jackknife))
+datFST <- dat %>% dplyr::filter(Statistic == "FST")
+datF2 <- dat %>% dplyr::filter(Statistic == "F2")
+datFST
+```
+
+Ok, this looks good. Let's check out the largest values
+
+```{r}
+dat %>% dplyr::arrange(-Estimate_Total)
+```
+
+which shows that the largest FST values of around 0.3 are observed between Karitiana, from South America, and Biaka from Papua Neu Guinea (but note that these values are dependent on the ascertainment of SNPs, which here causes inflation)
+
+Here is a histogram of the values
+
+```{r}
+hist(datFST$Estimate_Total)
+```
+
+So most values are in the range of a few percent and 20 percent, with a mean of
+
+```{r}
+mean(datFST$Estimate_Total)
+```
+
+We can compare that to F2:
+
+```{r}
+hist(datF2$Estimate_Total)
+```
+
+which is an order of magnitude smaller.
+
+So one of the key things to visualise is the pairwise matrix of FST:

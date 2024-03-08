@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 REPO=/Users/stephan_schiffels/dev/poseidon-framework/community-archive/2012_PattersonGenetics
 
