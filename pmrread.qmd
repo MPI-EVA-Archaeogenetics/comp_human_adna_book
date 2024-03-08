@@ -3,7 +3,7 @@ title: "Pairwise mismatch rate (PMR) and READ relatedness inference"
 author: "Martyna Molak"
 date: "02/15/2024"
 editor: visual
-bibliography: pmrread.bib
+bibliography: references.bib
 toc: true
 ---
 
