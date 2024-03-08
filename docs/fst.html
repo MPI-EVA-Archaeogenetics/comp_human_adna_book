@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.1.163">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,10 +19,9 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -49,19 +48,48 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
+    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-/* CSS for citations */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging-indent div.csl-entry {
+.hanging div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -75,7 +103,8 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}</style>
+}
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -112,12 +141,10 @@ div.csl-indent {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-submit-button-title": "Submit"
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
@@ -126,16 +153,11 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fst.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
       </button>
     </div>
   </nav>
@@ -143,74 +165,66 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Computational Methods for human population genetics and ancient DNA</a> 
     </div>
       </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
+      <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-        </div>
+      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Preface</span></a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Quarto_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></span></a>
+  <a href="./Quarto_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./poseidon.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Genotype and context data management with Poseidon</span></span></a>
+  <a href="./poseidon.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Genotype and context data management with Poseidon</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fstats.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to F3- and F4-Statistics</span></span></a>
+  <a href="./fstats.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to F3- and F4-Statistics</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./eager.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction to nf-core/eager</span></span></a>
+  <a href="./eager.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction to nf-core/eager</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fst.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></span></a>
+  <a href="./fst.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References</span></a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#theory-primer" id="toc-theory-primer" class="nav-link active" data-scroll-target="#theory-primer"><span class="header-section-number">5.1</span> Theory primer</a></li>
-  <li><a href="#computing-fst-using-xerxes" id="toc-computing-fst-using-xerxes" class="nav-link" data-scroll-target="#computing-fst-using-xerxes"><span class="header-section-number">5.2</span> Computing FST using xerxes</a></li>
-  <li><a href="#plotting-results" id="toc-plotting-results" class="nav-link" data-scroll-target="#plotting-results"><span class="header-section-number">5.3</span> Plotting results</a></li>
+  <li><a href="#theory-primer" id="toc-theory-primer" class="nav-link active" data-scroll-target="#theory-primer"><span class="toc-section-number">5.1</span>  Theory primer</a></li>
+  <li><a href="#computing-fst-using-xerxes" id="toc-computing-fst-using-xerxes" class="nav-link" data-scroll-target="#computing-fst-using-xerxes"><span class="toc-section-number">5.2</span>  Computing FST using xerxes</a></li>
+  <li><a href="#plotting-results-in-r" id="toc-plotting-results-in-r" class="nav-link" data-scroll-target="#plotting-results-in-r"><span class="toc-section-number">5.3</span>  Plotting results in R</a></li>
   </ul>
 </nav>
     </div>
@@ -219,7 +233,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></h1>
 </div>
 
 
@@ -239,7 +253,6 @@ div.csl-indent {
       <p class="date">November 23, 2023</p>
     </div>
   </div>
-  
     
   </div>
   
@@ -252,34 +265,35 @@ div.csl-indent {
 <p>While there are various mathematical definitions for both the theoretical definition and estimation for <span class="math inline">\(F_\text{ST}\)</span>, which differ in subtle ways, we here follow the excellent paper by <span class="citation" data-cites="Bhatia2013">(<a href="references.html#ref-Bhatia2013" role="doc-biblioref">Bhatia et al. 2013</a>)</span>, which proposes the following estimator, termed Hudson-estimator:</p>
 <div class="no-row-height column-margin column-container"></div><p><span class="math display">\[F_\text{ST}=1-\frac{H_w}{H_b}\]</span></p>
 <p>Here, <span class="math inline">\(H_w\)</span> is the average heterozygosity within each population, and <span class="math inline">\(H_b\)</span> is the average heterozygosity between two populations. We can easily read off the two boundaries of the definition: At the lower end, we have <span class="math inline">\(F_\text{ST}=0\)</span> if and only if <span class="math inline">\(H_w=H_b\)</span>, so there is no difference between heterozygosity measured within or between groups, which is equivalent to saying that the two populations are the same. On the upper end we have <span class="math inline">\(F_\text{ST}=1\)</span> if and only if <span class="math inline">\(H_w=0\)</span>, so all observed variants are fully fixed in both populations (but not necessarily different between the populations).</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-note callout callout-style-default callout-captioned page-columns page-full">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Note
 </div>
 </div>
-<div class="callout-body-container callout-body">
+<div class="callout-body-container callout-body page-columns page-full">
 <p><span class="citation" data-cites="Bhatia2013">(<a href="references.html#ref-Bhatia2013" role="doc-biblioref">Bhatia et al. 2013</a>)</span> also give a more formal evolutionary <em>definition</em> of <span class="math inline">\(F_\text{ST}\)</span>, developed in turn by <span class="citation" data-cites="Weir2002">(<a href="references.html#ref-Weir2002" role="doc-biblioref">Weir and Hill 2002</a>)</span>, in terms of covariance between derived and ancestral populations. Specifically, for a given SNP, the definition involves the conditional probability of allele frequency <span class="math inline">\(p_i\)</span> in population <span class="math inline">\(i\)</span>, given an ancestral allele frequency <span class="math inline">\(p_\text{anc}\)</span>, which is defined as a random process with the expectation</p>
-<p><span class="math display">\[E(p_i|p_\text{anc}) = p_\text{anc}\]</span></p>
+<div class="no-row-height column-margin column-container"><div id="ref-Weir2002" class="csl-entry" role="doc-biblioentry">
+Weir, B S, and W G Hill. 2002. <span>“Estimating f-Statistics.”</span> <em>Annual Review of Genetics</em> 36: 721–50. <a href="https://doi.org/10.1146/annurev.genet.36.050802.093940">https://doi.org/10.1146/annurev.genet.36.050802.093940</a>.
+</div></div><p><span class="math display">\[E(p_i|p_\text{anc}) = p_\text{anc}\]</span></p>
 <p>and variance <span class="math display">\[Var(p_i|p_\text{anc}) = F_\text{ST}^i p_\text{anc}(1-p_\text{anc}).\]</span></p>
 <p>This form of the conditional variance can be understood by analysing the equation for the two boundary cases: For <span class="math inline">\(F_\text{ST}^i=0\)</span>, there is no variance, so the conditional probability of the derived frequency will be completely determined by the ancestral frequency with no random change. In contrast <span class="math inline">\(F_\text{ST}^i=1\)</span> means that the variance in the derived allele frequency is that of a binomial distribution with variance <span class="math inline">\(p_\text{anc}(1-p_\text{anc}\)</span>, indicating random but complete fixation of the frequency to 0 or 1.</p>
 <p><span class="math inline">\(F_\text{ST}\)</span> between two populations A and B is then defined as <span class="math display">\[F_\text{ST}(A,B) = \frac{F_\text{ST}^A+F_\text{ST}^B}{2}\]</span>,</p>
 <p>so the average of the two drift processes.</p>
 </div>
 </div>
-<div class="no-row-height column-margin column-container"><div id="ref-Weir2002" class="csl-entry" role="listitem">
-Weir, B S, and W G Hill. 2002. <span>“Estimating f-Statistics.”</span> <em>Annual Review of Genetics</em> 36: 721–50. <a href="https://doi.org/10.1146/annurev.genet.36.050802.093940">https://doi.org/10.1146/annurev.genet.36.050802.093940</a>.
-</div></div><div class="no-row-height column-margin column-container"><div id="ref-Bhatia2013" class="csl-entry" role="listitem">
+<p>It is fairly straight forward to see (and shown in <span class="citation" data-cites="Bhatia2013">(<a href="references.html#ref-Bhatia2013" role="doc-biblioref">Bhatia et al. 2013</a>)</span>) that the Hudson-estimator above can be recast as</p>
+<div class="no-row-height column-margin column-container"><div id="ref-Bhatia2013" class="csl-entry" role="doc-biblioentry">
 Bhatia, G, N Patterson, S Sankararaman, and A L Price. 2013. <span>“Estimating and Interpreting <span>FST</span>: The Impact of Rare Variants.”</span> <em>Genome Research</em> 23 (9): 1514–21. <a href="http://genome.cshlp.org/cgi/doi/10.1101/gr.154831.113">http://genome.cshlp.org/cgi/doi/10.1101/gr.154831.113</a>.
-</div></div><p>It is fairly straight forward to see (and shown in <span class="citation" data-cites="Bhatia2013">(<a href="references.html#ref-Bhatia2013" role="doc-biblioref">Bhatia et al. 2013</a>)</span>) that the Hudson-estimator above can be recast as</p>
-<p><span class="math display">\[F_\text{ST}(A,B)=\frac{(a-b)^2}{a(1-b)+b(1-a)}\]</span></p>
+</div></div><p><span class="math display">\[F_\text{ST}(A,B)=\frac{(a-b)^2}{a(1-b)+b(1-a)}\]</span></p>
 <p>Here, <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> denote <em>population allele frequencies</em>, which are in principle unobserved, but can be approximated by <em>sample allele frequencies</em>. This approximation is biased, and <span class="citation" data-cites="Patterson2012">(<a href="references.html#ref-Patterson2012" role="doc-biblioref">Patterson et al. 2012</a>)</span> gives additional formulae for an (asympotically) unbiased estimator.</p>
 <div class="no-row-height column-margin column-container"></div><p>From this definition, you can see that <span class="math inline">\(F_\text{ST}(A,B)\)</span> is closely related to F2-statistics, introduced in <span class="citation" data-cites="Patterson2012">(<a href="references.html#ref-Patterson2012" role="doc-biblioref">Patterson et al. 2012</a>)</span>:</p>
 <p><span class="math display">\[F_2(A,B)=(a-b)^2\]</span>.</p>
-<p>In some sense, <span class="math inline">\(F_\text{ST}(A,B)\)</span> can be considered a normalised version of <span class="math inline">\(F_2(A,B)\)</span>. While both statistics range mathematically from 0 to 1, the upper bound 1 has very different meanings in both. A theoretical value of <span class="math inline">\(F_2=1\)</span> would mean that both populations are fixed at different alleles in all studied SNPs, which is practically not possible (even completely random fixations would suggest that 1/4 of them would agree given that there are only four nucleotides, let alone the fact that such deeply diverged populations/species would not be alignable anymore). One can say that the time-scale on which <span class="math inline">\(F_2\)</span> approaches 1 is the time scale of nucleotide substitutions (i.e.&nbsp;mutations plus fixation) along species branches, which in neutral evolution is given by the inverse mutation rate <span class="math inline">\(1/\mu\)</span>. This would mean something on the order of <span class="math inline">\(10^8\)</span> generations, which is arguably as deep as the tree of live itself. In contrast, <span class="math inline">\(F_\text{ST}\)</span> approaches 1 on the time-scale of fixation of standing variation, which is <span class="math inline">\(2N\)</span> generations, which for humans is on the order of 10000 generations, so around the depth of modern-human diversity from its origins in Africa several hundred thousand years ago. Arguably, this time scale is much more useful for data analyses and thus easier to interpret.</p>
+<p>In some sense, <span class="math inline">\(F_\text{ST}(A,B)\)</span> can be considered a normalised version of <span class="math inline">\(F_2(A,B)\)</span>. While both statistics range mathematically from 0 to 1, the upper bound 1 has very different meanings in both. A theoretical value of <span class="math inline">\(F_2=1\)</span> would mean that both populations are fixed at different alleles in all studied SNPs, which is practically not possible (even completely random fixations would suggest that 1/4 of them would agree given that there are only four nucleotides, let alone the fact that such deeply diverged populations/species would not be alignable anymore). One can say that the time-scale on which <span class="math inline">\(F_2\)</span> approaches 1, for non-ascertained SNPs, so the entire genome, is the time scale of nucleotide substitutions (i.e.&nbsp;mutations plus fixation) along species branches, which in neutral evolution is given by the inverse mutation rate <span class="math inline">\(1/\mu\)</span>. This would mean something on the order of <span class="math inline">\(10^8\)</span> generations, which is arguably as deep as the tree of live itself. In contrast, <span class="math inline">\(F_\text{ST}\)</span> approaches 1 on the time-scale of fixation of standing variation, which is <span class="math inline">\(2N\)</span> generations, which for humans is on the order of 10000 generations, so around the depth of modern-human diversity from its origins in Africa several hundred thousand years ago. Arguably, this time scale is much more useful for data analyses and thus easier to interpret.</p>
+<p>Of course, in practice, one uses some ascertained SNP set, as also here in our examples below, in which case values are much higher because we consider only variants that are segregating in human populations within a relatively high allele frequency.</p>
 <p>If you’ve gone through our <a href="./fstats.html">chapter on F3 and F4 statistics</a>, you will have already encountered our software <a href="https://www.poseidon-adna.org/#/xerxes?id=xerxes-cli-software">xerxes</a>. You can compute both the biased and the approximately unbiased estimators for <span class="math inline">\(F_\text{ST}(A,B)\)</span>, using the <code>FST</code> or <code>FSTvanilla</code> statistics, as defined in the <a href="https://github.com/poseidon-framework/poseidon-analysis-hs/blob/main/docs/xerxes_whitepaper.pdf">whitepaper</a>.</p>
 <p>For what follows, we will use the approximately unbiased form <code>FST</code>.</p>
 <p><span class="math inline">\(F_\text{ST}(A,B)\)</span> has a convenient and untuitive scale: It ranges from 0 to 1, where <span class="math inline">\(F_\text{ST}(A,B)=0\)</span> denotes that <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are the <em>same</em> population, with no differentiation whatsoever. On the other hand of the spectrum we have <span class="math inline">\(F_\text{ST}(A,B)=1\)</span>, which would mean that two populations are fully separated.</p>
@@ -289,7 +303,7 @@ Bhatia, G, N Patterson, S Sankararaman, and A L Price. 2013. <span>“Estimating
 <h2 data-number="5.2" class="anchored" data-anchor-id="computing-fst-using-xerxes"><span class="header-section-number">5.2</span> Computing FST using xerxes</h2>
 <p>For human present-day populations, we can compute pairwise FSt using <a href="https://www.poseidon-adna.org/#/xerxes?id=xerxes-cli-software">xerxes</a>.</p>
 <p>We here chose a number of populations from <span class="citation" data-cites="Patterson2012">(<a href="references.html#ref-Patterson2012" role="doc-biblioref">Patterson et al. 2012</a>)</span> with more than 10 samples per population, and prepare the following config file for xerxes:</p>
-<div class="no-row-height column-margin column-container"><div id="ref-Patterson2012" class="csl-entry" role="listitem">
+<div class="no-row-height column-margin column-container"><div id="ref-Patterson2012" class="csl-entry" role="doc-biblioentry">
 Patterson, Nick, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin Rohland, Yiping Zhan, Teri Genschoreck, Teresa Webster, and David Reich. 2012. <span>“Ancient Admixture in Human History.”</span> <em>Genetics</em> 192 (3): 1065–93. <a href="https://doi.org/10.1534/genetics.112.145037">https://doi.org/10.1534/genetics.112.145037</a>.
 </div></div><div class="sourceCode" id="cb1"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fstats</span><span class="kw">:</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> FST</span></span>
@@ -299,12 +313,12 @@ Patterson, Nick, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin Rohland, Yipi
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">a</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"Adygei"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Balochi"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Basque"</span><span class="kw">,</span><span class="at"> </span><span class="st">"BedouinA"</span><span class="kw">,</span><span class="at"> </span><span class="st">"BedouinB"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Biaka"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Brahui"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Burusho"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Druze"</span><span class="kw">,</span><span class="at"> </span><span class="st">"French"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Han"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Hazara"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Italian_North"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Japanese"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Kalash"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Karitiana"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Makrani"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Mandenka"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Mayan"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Mozabite"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Orcadian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Palestinian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Papuan"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Pathan"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Pima"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Russian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Sardinian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Sindhi_Pakistan"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Yakut"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Yoruba"</span><span class="kw">]</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">b</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"Adygei"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Balochi"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Basque"</span><span class="kw">,</span><span class="at"> </span><span class="st">"BedouinA"</span><span class="kw">,</span><span class="at"> </span><span class="st">"BedouinB"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Biaka"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Brahui"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Burusho"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Druze"</span><span class="kw">,</span><span class="at"> </span><span class="st">"French"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Han"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Hazara"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Italian_North"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Japanese"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Kalash"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Karitiana"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Makrani"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Mandenka"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Mayan"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Mozabite"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Orcadian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Palestinian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Papuan"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Pathan"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Pima"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Russian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Sardinian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Sindhi_Pakistan"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Yakut"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Yoruba"</span><span class="kw">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This will then produce all combinations of <span class="math inline">\(FST(A, B)\)</span> and <span class="math inline">\(F_2(A, B)\)</span> as indicated in the population lists.</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Note
 </div>
 </div>
@@ -336,22 +350,79 @@ Note
 </code></pre>
 <p>but of course has many more lines (&gt;1800 in this case). We also used the <code>-f</code> flag to output a tab-separated file, here named <code>fstat_world_output.tsv</code>, which is easier to read into R.</p>
 </section>
-<section id="plotting-results" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="plotting-results"><span class="header-section-number">5.3</span> Plotting results</h2>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
+<section id="plotting-results-in-r" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="plotting-results-in-r"><span class="header-section-number">5.3</span> Plotting results in R</h2>
+<p>We first load the data</p>
+<div class="cell" data-errors="false">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_tsv</span>(<span class="st">"fst_working/fstat_world_output.tsv"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(c, d, Z_score_Jackknife))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>datFST <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(Statistic <span class="sc">==</span> <span class="st">"FST"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>datF2 <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(Statistic <span class="sc">==</span> <span class="st">"F2"</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>datFST</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 900 × 7
+   Statistic a      b        NrSites Estimate_Total Estimate_Jackknife
+   &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;      &lt;dbl&gt;          &lt;dbl&gt;              &lt;dbl&gt;
+ 1 FST       Adygei Adygei    593124        0                  0      
+ 2 FST       Adygei Balochi   593124        0.0128             0.0128 
+ 3 FST       Adygei Basque    593124        0.0188             0.0188 
+ 4 FST       Adygei BedouinA  593124        0.0130             0.0130 
+ 5 FST       Adygei BedouinB  593124        0.0335             0.0335 
+ 6 FST       Adygei Biaka     593124        0.172              0.172  
+ 7 FST       Adygei Brahui    593124        0.0146             0.0146 
+ 8 FST       Adygei Burusho   593124        0.0186             0.0186 
+ 9 FST       Adygei Druze     593124        0.0122             0.0122 
+10 FST       Adygei French    593124        0.00977            0.00977
+# ℹ 890 more rows
+# ℹ 1 more variable: StdErr_Jackknife &lt;dbl&gt;</code></pre>
 </div>
-<div class="callout-title-container flex-fill">
-Note
+</div>
+<p>Ok, this looks good. Let’s check out the largest values</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="sc">-</span>Estimate_Total)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,800 × 7
+   Statistic a         b         NrSites Estimate_Total Estimate_Jackknife
+   &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt;          &lt;dbl&gt;              &lt;dbl&gt;
+ 1 FST       Biaka     Karitiana  593124          0.302              0.302
+ 2 FST       Karitiana Biaka      593124          0.302              0.302
+ 3 FST       Karitiana Papuan     593124          0.301              0.301
+ 4 FST       Papuan    Karitiana  593124          0.301              0.301
+ 5 FST       Karitiana Mandenka   593124          0.280              0.280
+ 6 FST       Mandenka  Karitiana  593124          0.280              0.280
+ 7 FST       Karitiana Yoruba     593124          0.279              0.279
+ 8 FST       Yoruba    Karitiana  593124          0.279              0.279
+ 9 FST       Biaka     Pima       593124          0.267              0.267
+10 FST       Pima      Biaka      593124          0.267              0.267
+# ℹ 1,790 more rows
+# ℹ 1 more variable: StdErr_Jackknife &lt;dbl&gt;</code></pre>
 </div>
 </div>
-<div class="callout-body-container callout-body">
-<p>TODO: WE will eventually replace these plots and their code with R for wider usefulness, but I would need help with that from other coauthors. For now I show plots generated with Mathematica, whose data-manipulation and plotting features I know much better. The notebook can be found within the <code>fst_working</code> directory on the <a href="https://github.com/MPI-EVA-Archaeogenetics/comp_human_adna_book/">github-repository</a> of this book.</p>
+<p>which shows that the largest FST values of around 0.3 are observed between Karitiana, from South America, and Biaka from Papua Neu Guinea (but note that these values are dependent on the ascertainment of SNPs, which here causes inflation)</p>
+<p>Here is a histogram of the values</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(datFST<span class="sc">$</span>Estimate_Total)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="fst_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>For the dataset</p>
+<p>So most values are in the range of a few percent and 20 percent, with a mean of</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(datFST<span class="sc">$</span>Estimate_Total)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.09015616</code></pre>
+</div>
+</div>
+<p>We can compare that to F2:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(datF2<span class="sc">$</span>Estimate_Total)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="fst_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>which is an order of magnitude smaller.</p>
+<p>So one of the key things to visualise is the pairwise matrix of FST:</p>
 
 
 
@@ -385,23 +456,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
-      }
-    }
-    return false;
-  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
+    target: function(trigger) {
+      return trigger.previousElementSibling;
     }
   });
   clipboard.on('success', function(e) {
@@ -413,24 +470,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
     setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -466,128 +506,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
       });
-    }
+      return popup.innerHTML;
+    });
   }
 });
 </script>

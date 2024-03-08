@@ -6,8 +6,6 @@ bibliography: references.bib
 toc: true
 reference-location: margin
 citation-location: margin
-execute:
-  eval: false
 ---
 
 ## Theory primer
