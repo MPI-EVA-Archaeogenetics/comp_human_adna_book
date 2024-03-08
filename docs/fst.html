@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Joscha Gretzinger and Stephan Schiffels">
+<meta name="author" content="Stephan Schiffels and Joscha Gretzinger">
 <meta name="dcterms.date" content="2023-11-23">
 
 <title>Computational Methods for human population genetics and ancient DNA - 5&nbsp; Measuring population structure using Fst</title>
@@ -243,7 +243,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Joscha Gretzinger and Stephan Schiffels </p>
+             <p>Stephan Schiffels and Joscha Gretzinger </p>
           </div>
   </div>
     
@@ -352,51 +352,49 @@ Note
 </section>
 <section id="plotting-results-in-r" class="level2" data-number="5.3">
 <h2 data-number="5.3" class="anchored" data-anchor-id="plotting-results-in-r"><span class="header-section-number">5.3</span> Plotting results in R</h2>
+<p>All of the following code uses strictly only base-R for maximum compatibility. The code should run on any R installation.</p>
 <p>We first load the data</p>
-<div class="cell" data-errors="false">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_tsv</span>(<span class="st">"fst_working/fstat_world_output.tsv"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(c, d, Z_score_Jackknife))</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>datFST <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(Statistic <span class="sc">==</span> <span class="st">"FST"</span>)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>datF2 <span class="ot">&lt;-</span> dat <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(Statistic <span class="sc">==</span> <span class="st">"F2"</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>datFST</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="ot">&lt;-</span> <span class="fu">subset</span>(<span class="fu">read.table</span>(<span class="st">"fst_working/fstat_world_output.tsv"</span>, <span class="at">sep=</span><span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">select=</span><span class="sc">-</span><span class="fu">c</span>(c, d, Z_score_Jackknife))</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>datFST <span class="ot">&lt;-</span> dat[dat<span class="sc">$</span>Statistic <span class="sc">==</span> <span class="st">"FST"</span>,]</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>datF2 <span class="ot">&lt;-</span> dat[dat<span class="sc">$</span>Statistic <span class="sc">==</span> <span class="st">"F2"</span>,]</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(datFST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 900 × 7
-   Statistic a      b        NrSites Estimate_Total Estimate_Jackknife
-   &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;      &lt;dbl&gt;          &lt;dbl&gt;              &lt;dbl&gt;
- 1 FST       Adygei Adygei    593124        0                  0      
- 2 FST       Adygei Balochi   593124        0.0128             0.0128 
- 3 FST       Adygei Basque    593124        0.0188             0.0188 
- 4 FST       Adygei BedouinA  593124        0.0130             0.0130 
- 5 FST       Adygei BedouinB  593124        0.0335             0.0335 
- 6 FST       Adygei Biaka     593124        0.172              0.172  
- 7 FST       Adygei Brahui    593124        0.0146             0.0146 
- 8 FST       Adygei Burusho   593124        0.0186             0.0186 
- 9 FST       Adygei Druze     593124        0.0122             0.0122 
-10 FST       Adygei French    593124        0.00977            0.00977
-# ℹ 890 more rows
-# ℹ 1 more variable: StdErr_Jackknife &lt;dbl&gt;</code></pre>
+<pre><code>  Statistic      a        b NrSites Estimate_Total Estimate_Jackknife
+1       FST Adygei   Adygei  593124       0.000000           0.000000
+2       FST Adygei  Balochi  593124       0.012789           0.012789
+3       FST Adygei   Basque  593124       0.018790           0.018790
+4       FST Adygei BedouinA  593124       0.013017           0.013017
+5       FST Adygei BedouinB  593124       0.033455           0.033454
+6       FST Adygei    Biaka  593124       0.171600           0.171600
+  StdErr_Jackknife
+1       0.00000000
+2       0.00033572
+3       0.00040141
+4       0.00029647
+5       0.00057648
+6       0.00121850</code></pre>
 </div>
 </div>
 <p>Ok, this looks good. Let’s check out the largest values</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="sc">-</span>Estimate_Total)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat[<span class="fu">order</span>(<span class="sc">-</span>dat<span class="sc">$</span>Estimate_Total),])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1,800 × 7
-   Statistic a         b         NrSites Estimate_Total Estimate_Jackknife
-   &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt;          &lt;dbl&gt;              &lt;dbl&gt;
- 1 FST       Biaka     Karitiana  593124          0.302              0.302
- 2 FST       Karitiana Biaka      593124          0.302              0.302
- 3 FST       Karitiana Papuan     593124          0.301              0.301
- 4 FST       Papuan    Karitiana  593124          0.301              0.301
- 5 FST       Karitiana Mandenka   593124          0.280              0.280
- 6 FST       Mandenka  Karitiana  593124          0.280              0.280
- 7 FST       Karitiana Yoruba     593124          0.279              0.279
- 8 FST       Yoruba    Karitiana  593124          0.279              0.279
- 9 FST       Biaka     Pima       593124          0.267              0.267
-10 FST       Pima      Biaka      593124          0.267              0.267
-# ℹ 1,790 more rows
-# ℹ 1 more variable: StdErr_Jackknife &lt;dbl&gt;</code></pre>
+<pre><code>    Statistic         a         b NrSites Estimate_Total Estimate_Jackknife
+166       FST     Biaka Karitiana  593124         0.3021             0.3021
+456       FST Karitiana     Biaka  593124         0.3021             0.3021
+473       FST Karitiana    Papuan  593124         0.3011             0.3011
+676       FST    Papuan Karitiana  593124         0.3011             0.3011
+468       FST Karitiana  Mandenka  593124         0.2798             0.2798
+526       FST  Mandenka Karitiana  593124         0.2798             0.2798
+    StdErr_Jackknife
+166        0.0016933
+456        0.0016933
+473        0.0026493
+676        0.0026493
+468        0.0017116
+526        0.0017116</code></pre>
 </div>
 </div>
 <p>which shows that the largest FST values of around 0.3 are observed between Karitiana, from South America, and Biaka from Papua Neu Guinea (but note that these values are dependent on the ascertainment of SNPs, which here causes inflation)</p>
@@ -422,7 +420,36 @@ Note
 </div>
 </div>
 <p>which is an order of magnitude smaller.</p>
-<p>So one of the key things to visualise is the pairwise matrix of FST:</p>
+<p>So one of the key things to visualise is the pairwise matrix of FST, which we can quickly compute using the <code>xtabs</code> function from the stats package (part of base R):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fstMat <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(Estimate_Total <span class="sc">~</span> a <span class="sc">+</span> b, datFST)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>f2Mat <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(Estimate_Total <span class="sc">~</span> a <span class="sc">+</span> b, datF2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>and plot a simple heatmap using the powerful <code>heatmap</code> function from the stats package:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap</span>(fstMat, <span class="at">symm =</span> <span class="cn">TRUE</span>, <span class="at">hclustfun =</span> <span class="cf">function</span>(m) <span class="fu">hclust</span>(m, <span class="at">method=</span><span class="st">"ward.D2"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="fst_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>which we can compare to the output using F2, which looks almost the same:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap</span>(f2Mat, <span class="at">symm =</span> <span class="cn">TRUE</span>, <span class="at">hclustfun =</span> <span class="cf">function</span>(m) <span class="fu">hclust</span>(m, <span class="at">method=</span><span class="st">"ward.D2"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="fst_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>OK, let’s look at the dendrogram a bit closer:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>fstDist <span class="ot">&lt;-</span> <span class="fu">as.dist</span>(fstMat)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>dendro <span class="ot">&lt;-</span> <span class="fu">hclust</span>(fstDist, <span class="at">method=</span><span class="st">"ward.D2"</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dendro, <span class="at">hang =</span> <span class="sc">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="fst_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>which again shows the strong drift that Native American populations (Karitiana) and Mayans experienced in their ancestral past.</p>
+<p>This nicely shows how FST is affected by total drift, which is inversely proportional to population size, and proportional to total divergence time. A long branch can be caused by either low population size (as in the ancestral population of indigenous Americans) or long divergence time (as between populations from Africa and those outside of Africa).</p>
 
 
 

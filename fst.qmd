@@ -1,6 +1,6 @@
 ---
 title: "Measuring population structure using Fst"
-author: "Joscha Gretzinger and Stephan Schiffels"
+author: "Stephan Schiffels and Joscha Gretzinger"
 date: "11/23/2023"
 bibliography: references.bib
 toc: true
@@ -110,21 +110,22 @@ but of course has many more lines (>1800 in this case). We also used the `-f` fl
 
 ## Plotting results in R
 
+All of the following code uses strictly only base-R for maximum compatibility. The code should run on any R installation.
+
 We first load the data
 
-```{r message=FALSE, warning=FALSE, errors=FALSE}
-library(magrittr)
-dat <- readr::read_tsv("fst_working/fstat_world_output.tsv") %>%
-  dplyr::select(-c(c, d, Z_score_Jackknife))
-datFST <- dat %>% dplyr::filter(Statistic == "FST")
-datF2 <- dat %>% dplyr::filter(Statistic == "F2")
-datFST
+```{r}
+dat <- dat <- subset(read.table("fst_working/fstat_world_output.tsv", sep="\t", header = TRUE),
+                     select=-c(c, d, Z_score_Jackknife))
+datFST <- dat[dat$Statistic == "FST",]
+datF2 <- dat[dat$Statistic == "F2",]
+head(datFST)
 ```
 
 Ok, this looks good. Let's check out the largest values
 
 ```{r}
-dat %>% dplyr::arrange(-Estimate_Total)
+head(dat[order(-dat$Estimate_Total),])
 ```
 
 which shows that the largest FST values of around 0.3 are observed between Karitiana, from South America, and Biaka from Papua Neu Guinea (but note that these values are dependent on the ascertainment of SNPs, which here causes inflation)
@@ -149,4 +150,37 @@ hist(datF2$Estimate_Total)
 
 which is an order of magnitude smaller.
 
-So one of the key things to visualise is the pairwise matrix of FST:
+So one of the key things to visualise is the pairwise matrix of FST, which we can quickly compute using the `xtabs` function from the stats package (part of base R):
+
+```{r}
+fstMat <- xtabs(Estimate_Total ~ a + b, datFST)
+f2Mat <- xtabs(Estimate_Total ~ a + b, datF2)
+```
+
+and plot a simple heatmap using the powerful `heatmap` function from the stats package:
+
+```{r}
+#| fig-height: 7
+#| fig-width: 7
+heatmap(fstMat, symm = TRUE, hclustfun = function(m) hclust(m, method="ward.D2"))
+```
+
+which we can compare to the output using F2, which looks almost the same:
+
+```{r}
+#| fig-height: 7
+#| fig-width: 7
+heatmap(f2Mat, symm = TRUE, hclustfun = function(m) hclust(m, method="ward.D2"))
+```
+OK, let's look at the dendrogram a bit closer:
+
+```{r}
+#| fig-height: 7
+#| fig-width: 7
+fstDist <- as.dist(fstMat)
+dendro <- hclust(fstDist, method="ward.D2")
+plot(dendro, hang = -1)
+```
+which again shows the strong drift that Native American populations (Karitiana) and Mayans experienced in their ancestral past. 
+
+This nicely shows how FST is affected by total drift, which is inversely proportional to population size, and proportional to total divergence time. A long branch can be caused by either low population size (as in the ancestral population of indigenous Americans) or long divergence time (as between populations from Africa and those outside of Africa).

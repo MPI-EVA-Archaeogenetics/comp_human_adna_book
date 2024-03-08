@@ -125,7 +125,7 @@ fstats:
 
 You can then run xerxes as
 
-```{basheval=FALSE}
+```{bash eval=FALSE}
 xerxes fstats -d ~/dev/poseidon-framework/community-archive --statConfig fstats_working/F3_finnish.config
 ```
 
