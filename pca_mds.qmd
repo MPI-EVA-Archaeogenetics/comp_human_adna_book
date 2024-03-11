@@ -10,10 +10,10 @@ execute:
   eval: false
 ---
 
-# Theory
+## Theory
 
 ::: {.callout-tip collapse="true"}
-## Comparison of PCA and MDS
+### Comparison of PCA and MDS
 
 |               | PCA                                      | MDS                                                                                       |
 |---------------|-----------------|----------------------------------------|
@@ -22,11 +22,11 @@ execute:
 | Missing data? | Fill-in OR projection                    | Not an issue if using summary statistics, but this hides the uncertainty of the statistic |
 :::
 
-## Rationale
+### Rationale
 
 The datasets used in human ancient DNA analysis are often extremely multidimensional, often including data from thousands of individuals, across hundreds of thousands (or millions!) of single nucleotide polymrphisms (SNPs) [@Mallick2023]. Even when choosing to summarise this genome-wide information to single statistics of genetic similarity (e.g. with Outgroup F3), a similarity matrix across individuals can become very large when comparing across hundreds of individuals. As the name implies, dimensionality reduction methods can reduce the number of dimensions in the underlying data, while also aiming to minimise the loss of information. The two such methods we will focus on in this tutorial are **Principal Component Analysis (PCA)** and **Multi-Dimensional Scaling (MDS)**. Both methods reveal structure within the dataset, and part of that structure is due to shared population history between individuals/populations. It is for that reason that both these methods are indispensible parts of an archaeogeneticist's toolkit.
 
-## Introduction to dimension reduction
+### Introduction to dimension reduction
 
 When using either of these methods, we are essentially representing the data on a new set of **orthogonal** axes, with its origin in the center of the data. In PCA we typically use the original data for this transformation (i.e. the genotype matrix), and attempt to find the axes that capture the most variation among the samples. A covariance matrix (i.e. a similarity matrix) is often calculated and used as a useful intermediate step in PCA. Instead, in MDS we start with a pairwise distance matrix (typically a matrix of 1-F3), and attempt to find a spatial representation that best captures the distances between points.
 
@@ -34,15 +34,15 @@ When using either of these methods, we are essentially representing the data on 
 
 The results of both of these methods are (usually) a 2 dimensional plot in which the distances between individual points roughly correlates to the genetic distance between these individuals. Therefore, genetically similar individuals will be plotted close to one another, and further away from individuals that are more genetically dissimilar.
 
-## The problem with missing data
+### The problem with missing data
 
 A recurring issue when analysing ancient DNA is the high degree of missing data (i.e. missingness). We often apply a minimum coverage filter to our datasets: A generally accepted rule-of-thumb for the 1240K dataset is a minimum of 15 000 covered (i.e. non-missing) SNPs. Another way to express this cutoff is to say that we will "happily" analyse data that is missing a genotype call in **98.8%** of all SNPs in the dataset! So how does this high rate of missingness affect MDS and PCA?
 
-### MDS
+#### MDS
 
 Missingness does not affect MDS as adversely as it does PCA, on account of the use of a pairwise distance matrix of 1-F3. This matrix will only have missing values in cases where there is no overlapping coverage between two individuals/populations used in an F3 statistic. Instead, the issue with MDS is that all F3 statistics are treated as equally reliable, regardless of their associated error bar.
 
-### PCA
+#### PCA
 
 Unlike MDS, PCA is severely affected by missing data. During the rescaling of the data around its own mean values, missing data is "filled-in" to the mean value (mean imputation). This can cause points to shift towards the origin by a distance relative to the degree of missingness.
 
@@ -52,7 +52,7 @@ Below is a plot of the results of PCA on a dataset of differnt worldwide populat
 
 As you can see, individuals whose genotypes were masked are shifted towards the plot's origin. So how can we use PCA with ancient samples that have high degrees of missingness? The answer is by using a **L**east **Sq**uares **Project**ion, a.k.a. `lsqproject`!
 
-## Projection
+### Projection
 
 The idea of projection is simple, and applies similarly to both PCA and MDS. In PCA, you use a subset of the dataset to calculate your axes of variation, and then apply the resulting transformation to additional data, thus projecting them onto those axes. The important detail is that the variation between projected individuals is not taken into account when deciding which the axes of maximal variation are. Similarly, in MDS you project points to the MDS space based on their distances to the points that constructed the space, disregarding the distances of the projected points to one another.
 
@@ -67,7 +67,7 @@ There are two things to note here:
 
 The degree of missingness in the Western European hunter-gatherers (WHG) is relatively low, and hence the shift in their placement between the two plots is not the result of mean imputation. Instead, when projected the WHG illustrate the effects of **shrinkage**.
 
-## Shrinkage
+### Shrinkage
 
 Shrinkage comes in two flavours:
 
@@ -85,9 +85,9 @@ Shrinkage can be corrected by scaling the eigenvectors of the projected and/or n
 
 As a note of caution, `shrinkmode: Yes` increases the runtime greatly. An alternative would be to identify specific present-day populations that are of interest for the ancient-to-modern comparison, and project those as well. So, for example, if we were to compare Iron Age individuals from Germany with present-day individuals from Germany, then we could decide to take out some or all present-day Germans and project those as well. That would make them fully comparable.
 
-# Practice
+## Practice
 
-## Preparation
+### Preparation
 
 #### Get trident
 
@@ -172,7 +172,7 @@ wc -l pca_mds_working/exampleData.forgeFile.txt
 
 The created repository comprises genomic data for: 111 modern Eurasian populations, 6 modern Native American populations, and 1 Upper Palaeolithic Siberian individual MA-1 ("Mal'ta").
 
-## Run PCA
+### Run PCA
 
 ```{bash}
 # Prepare parameter file for the smartpca run
@@ -256,7 +256,7 @@ ls scratch/smartpca_runs/all_pops/
 | PCA_poplist2 | Eurasians, Native Americans         | Mal'ta                   |
 | PCA_all_pops | Eurasians, Native Americans, Mal'ta |                          |
 
-## Plot PCA
+### Plot PCA
 
 ```{r}
 library(tidyverse)
@@ -404,7 +404,7 @@ ggsave("scratch/PCA_plot_ap.png")
 
 ![Practice plot C)  PCA estimated using modern Eurasian and Native American, and Mal'ta genomic data with no projection ("PCA_all_pops"](img/pca_mds/PCA_plot_ap.png)
 
-## PLINK MDS
+### PLINK MDS
 
 Now let's get an MDS plot for pairwise distances for the same dataset
 
@@ -535,7 +535,7 @@ ggsave("scratch/MDS_poplist1.png")
 
 ![Practice plot E)  MDS estimated using modern Eurasian and Native American, and Mal'ta genomic data ("MDS_poplist1")](img/pca_mds/MDS_poplist1.png)
 
-## Compare plots
+### Compare plots
 
 Let's now sum up, by directly comparing all the plots we have generated:
 
@@ -553,7 +553,7 @@ When Mal'ta is included in the estimation in plot C (not only projected, like in
 
 In MDS the missingness in Mal'ta's data does not affect its position as it does in PCA. Inclusion of the diverged Native American data in the estimation does cause the decrease of the distances with the Eurasian population along the C2, but the difference between plot E and plot D is not as pronounced as between B and A.
 
-# Conclusions
+## Conclusions
 
 In PCA it is important to estimate the Eigenvalues using high-coverage samples, hence usually modern datasets, such as the 1000 Genomes Project (1kGP) or Human Genome Diversty Project (HGDP), are used for the estimation and the ancient samples are then projected onto the estimated PCs. 
 Also, as mentioned above in the "Shrinkage" section, it is a good approach to project also some modern data if they are to be directly compared to the ancient samples.
