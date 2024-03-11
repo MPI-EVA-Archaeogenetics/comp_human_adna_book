@@ -13,6 +13,7 @@ book:
     - fstats.qmd
     - eager.qmd
     - fst.qmd
+    - pmrread.qmd
     - references.qmd
 
 bibliography: references.bib

@@ -1,0 +1,17 @@
+poseidonVersion: 2.7.1
+title: PCA_package_1
+description: Empty package template. Please add a description
+contributor:
+- name: Josiah Carberry
+  email: carberry@brown.edu
+  orcid: 0000-0002-1825-0097
+packageVersion: 0.1.0
+lastModified: 2023-12-06
+genotypeData:
+  format: EIGENSTRAT
+  genoFile: PCA_package_1.geno
+  snpFile: PCA_package_1.snp
+  indFile: PCA_package_1.ind
+  snpSet: 1240K
+jannoFile: PCA_package_1.janno
+bibFile: PCA_package_1.bib

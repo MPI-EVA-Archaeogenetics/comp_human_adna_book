@@ -1,0 +1,9 @@
+genotypename:   scratch/forged_package/PCA_package_1.geno   ## Genotype data
+snpname:    scratch/forged_package/PCA_package_1.snp        ## SNP information
+indivname:  scratch/forged_package/PCA_package_1.ind        ## Individual information
+
+evecoutname:    scratch/smartpca_runs/all_pops/PCA_all_pops.evec           ## Eigenvectors
+evaloutname:    scratch/smartpca_runs/all_pops/PCA_all_pops.eval           ## Eigenvalues
+
+maxpops: 200
+fastmode: YES
