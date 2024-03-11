@@ -337,7 +337,7 @@ PCA_plot_1 +
         aes(x=PC1, y=PC2),       ## Set the x and y axes for this set of points
         pch=17                   ## Change shape of point to solid triangle
     )
-ggsave("PCA_plot_1.png")
+ggsave("scratch/PCA_plot_1.png")
 ```
 
 PCA with Native American populations added to the analysis
@@ -367,7 +367,7 @@ PCA_plot_2 <-  ggplot() +
         pch=17                   ## Change shape of point to solid triangle
      )
 PCA_plot_2
-ggsave("PCA_plot_2.png")
+ggsave("scratch/PCA_plot_2.png")
 ```
 
 ![Practice plot B)  PCA estimated using modern Eurasian and Native American genomic data with Mal'ta projected ("PCA_poplist2")](img/pca_mds/PCA_plot_2.png)
@@ -399,7 +399,7 @@ PCA_plot_ap <-  ggplot() +
         pch=17                   ## Change shape of point to solid triangle
      )
 PCA_plot_ap
-ggsave("PCA_plot_ap.png")
+ggsave("scratch/PCA_plot_ap.png")
 ```
 
 ![Practice plot C)  PCA estimated using modern Eurasian and Native American, and Mal'ta genomic data with no projection ("PCA_all_pops"](img/pca_mds/PCA_plot_ap.png)
@@ -480,7 +480,7 @@ ggplot(mds_coords) +
         aes(x=C1, y=C2),       ## Set the x and y axes for this set of points
         pch=17                   ## Change shape of point to solid triangle
      )
-ggsave("MDS_plot_ap.png")
+ggsave("scratch/MDS_plot_ap.png")
 
 ```
 
@@ -529,7 +529,7 @@ ggplot(mds_coords_pl1) +
         pch=17                   ## Change shape of point to solid triangle
      )
 
-ggsave("MDS_poplist1.png")
+ggsave("scratch/MDS_poplist1.png")
 
 ```
 
