@@ -12,6 +12,7 @@ book:
     - poseidon.qmd
     - fstats.qmd
     - eager.qmd
+    - fst.qmd
     - pmrread.qmd
     - references.qmd
 
