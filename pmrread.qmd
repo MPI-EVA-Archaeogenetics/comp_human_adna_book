@@ -7,9 +7,9 @@ bibliography: references.bib
 toc: true
 ---
 
-## Background
+## Background: Measures of relatedness
 
-#### Measures of relatedness
+### Coefficient of relationship
 
 **Coefficient of relationship**, denoted $r_{ij}$ , defined by Sewall Wright in 1922 [@Wright1922-vm], is a measure of the degree of biological relationship between two individuals, commonly used in genetics and genealogy. It calculates the proportion of genes that two individuals have in common as a result of their genetic relationship. The coefficient of relationship is a derivative of the coefficient of inbreeding ($f_k$ or $C_{I_k}$) defined by Wright a year earlier. A coefficient of inbreeding for an individual is typically one-half the coefficient of relationship between the parents.
 
@@ -22,6 +22,8 @@ r_{ij} = \sum (^1/_2)^{L_{ij}}
 $$ where $L$ is the numbers of generation links between two individuals ($i$ and $j$). E.g. full siblings are linked by two links through the mother (siblingA - mother - siblingB) and two links through the father (siblingA - father - siblingB), therefore the coefficient of relationship between them is $r = (^1/_2)^2 + (^1/_2)^2 = (^1/_4) + (^1/_4) = (^1/_2)$ , while e.g. a person with their aunt are linked by three links through the shared grandmother/mother and three through the shared grandfather/father, so $r=(^1/_2)^3 + (^1/_2)^3 = (^1/_8) + (^1/_8) = (^1/_4)$ .
 
 Note that under such definition, the coefficient of relationship is a lower bound and an actual value that may be up to a few percent higher due to unaccounted for consanguinity within the pedigree. The value is accurate to within 1% if the full family tree of both individuals is known to a depth of seven generations.
+
+### Kinship coefficient
 
 **Kinship coefficient**, denoted $\phi_{ij}$ \[fa:i\], is the probability that one allele sampled from individual $i$ and one allele sampled from the same locus from individual $j$ are identical by descent.
 
@@ -45,7 +47,7 @@ The PMR can be used to estimate the kinship coefficient, which, assuming that we
 
 ![**Fig 1.** Pairwise mismatch rate calculation (PMR). A) Pseudohaploid genomes are compared within each pair of individuals. B) Only sites called in both individuals are considered (filled circles) and classified as match (green) or mismatch (red). Accounting for linkage disequilibrium: C) Estimation of PMR using sliding window (as implemented in READ) as well as genome-wide (optional in READv2). D) Estimation of PMR on thinned SNP data (as implemented in BREADR)](img/pmrread/PMRcalculation.jpg){fig-align="center" width="500"}
 
-**Accounting for pseudohaploidization:**
+### Accounting for pseudohaploidization
 
 Due to pseudohaploidisation (ie. drawing one allele randomly for each position) identical individuals will have an expected PMR of half of this between unrelated individuals.\
 The estimate of relatedness coefficient $r$ needs therefore be corrected using the expected mismatch rate in non-related individuals. In [@Kennett2017-qw] they chose correction based on the approximate maximum mismatch rates observed: $b = max(PMR_{observed})/2$ . The estimator they used is thus:\
@@ -55,10 +57,13 @@ $$
 
 PMR estimation in ancient-DNA-based inference of relatedness has first been implemented as separate software with READ [@Monroy_Kuhn2018-fb] and then by its successor - READv2 [@Alacamli2024-xq]. Other software used in relatedness estimation among ancient individuals, such as BREADR [@Rohrlach2023.04.17.537144], also build on PMR.
 
-**Accounting for linkage disequilibrium:**\
+### Accounting for linkage disequilibrium
+
 Linkage disequilibrium (LD, non-independent co-inheritance) of the loci included in the PMR estimation will bias the results towards falsely positive relatedness detection. To minimize this effect, different approaches can be employed. This is particularly crucial, when analyzing genome-wide (shotgun) data. In the 1240k SNP panel widely used in ancient genomics the analysed loci have already been selected taking LD into account. The approaches to minimize the LD bias that have been employed in PMR estimation comprise PMR estimation separately over consecutive genome fragments (sliding window) and obtaining median estimate among them (e.g., implemented in READv1, and as an option in READv2; **Figure 1C**), and decreasing the number of SNPs included in the analysis using a threshold of physical proximity of SNPs along the genome (thinning; e.g., implemented in BREADR; **Figure 1D**).
 
-**Good practice**: Only pairs with at least 10,000 overlapping SNPs of the 1240k SNP panel should be included in PMR estimation [@Furtwangler2020-ce]
+### Good practice
+
+Only pairs with at least 10,000 overlapping SNPs of the 1240k SNP panel should be included in PMR estimation [@Furtwangler2020-ce]
 
 ## READ (version 1)
 
@@ -75,14 +80,19 @@ Relationship Estimation from Ancient DNA [@Monroy_Kuhn2018-fb] - formalized impl
 
 ![**Figure 2.** Outline of the general READ workflow to estimate the degree of relationship between two individuals. From [@Monroy_Kuhn2018-fb]](img/pmrread/READ1.JPG){fig-align="center"}
 
-**Pluses:** The method has been shown to work quite well with as little as **0.1x shotgun coverage** per genome. It has very **simple assumptions** estimating the expected pairwise mismatch rate from the data **without the need for population allele frequencies**. It can thus be used as **part of initial QC procedures** (e.g. identifying duplicated individuals) or in populations (or species) for which little additional information is available.\
-**Minuses:** READ had been implemented as a **Python 2** script. The last version of Python 2 was released in 2020 and some systems have already stopped supporting the language. Furthermore, READ wrote a **large number of temporary files** to the hard disk which were then analyzed by a separate R script called from the Python script.
+### Pluses
+
+The method has been shown to work quite well with as little as **0.1x shotgun coverage** per genome. It has very **simple assumptions** estimating the expected pairwise mismatch rate from the data **without the need for population allele frequencies**. It can thus be used as **part of initial QC procedures** (e.g. identifying duplicated individuals) or in populations (or species) for which little additional information is available.\
+
+### Minuses
+
+READ had been implemented as a **Python 2** script. The last version of Python 2 was released in 2020 and some systems have already stopped supporting the language. Furthermore, READ wrote a **large number of temporary files** to the hard disk which were then analyzed by a separate R script called from the Python script.
 
 ## READv2
 
 New implementation of READ [@Alacamli2024-xq]
 
-##### Improvements over version 1
+### Improvements over version 1
 
 -   All analyses are carried out within a **single Python3 script** using NumPy [@Harris2020-vr] and pandas [@McKinney2010-zp] libraries.
 -   Major analysis **speed** improvement (although more memory-intensive)
@@ -96,7 +106,7 @@ New implementation of READ [@Alacamli2024-xq]
 
 ![**Figure 3.** READv2 flowchart. From [@Alacamli2024-xq]](img/pmrread/Alacamli.F5.Folwchart.jpg){fig-align="center"}
 
-##### Noteworthy properties
+### Noteworthy properties
 
 Overall, READv2 performs well down to at least **0.1X sequence data** in the simulated dataset. This corresponded to on average about 1,878 overlapping SNPs for each pair of individuals at an expected mismatch for unrelated individuals of ∼0.247.
 
@@ -104,11 +114,12 @@ In default settings, READv2 performs a genome-wide estimate of the pairwise mism
 If that proportion is less than 0.3, the pair is classified as **"parent-offspring"**; if it is between 0.35 and 0.6, the pair is classified as **"siblings"**. For other proportions, or when the number of effectively overlapping SNPs is below 10,000, the pair remains classified as "first-degree" without further specification.\
 The two types of relations are well separated down to 0.5X coverage in the simulated dataset (or ∼8,000 "effectively overlapping SNPs"), but they overlap at 0.2X and below. Hence, to avoid wrongly classifying parent-offspring pairs as siblings, READv2 applies a default cutoff of 10,000 effectively overlapping SNPs, below which classification is not performed. (In [@Rivollat2020-qq] a cutoff of 7000 effective SNP number cutoff was used.)
 
-**Warnings:** At low coverage (0.05x and 0.1x) there are high false positive rates for second- and third-degree relatedness; many unrelated pairs are classified into these categories. At 0.01X, unrelated individuals are even classified as first-degree or identical twins, resulting in a reduced false positive rate for second- and third-degree but an increased false positive rate for first-degree. To avoid false classifications in empirical data, READv2 applies a conservative threshold of 5000 "effectively overlapping SNPs", below which no attempt to classify third-degree relatives is taken.
+### Warnings
+At low coverage (0.05x and 0.1x) there are high false positive rates for second- and third-degree relatedness; many unrelated pairs are classified into these categories. At 0.01X, unrelated individuals are even classified as first-degree or identical twins, resulting in a reduced false positive rate for second- and third-degree but an increased false positive rate for first-degree. To avoid false classifications in empirical data, READv2 applies a conservative threshold of 5000 "effectively overlapping SNPs", below which no attempt to classify third-degree relatives is taken.
 
 According to the authors READv2 alone can lead to very similar results as the combination of READv1 and lcMLkin. output table by including information such as the number of overlapping SNPs, the number of effectively overlapping SNPs, and the kinship coefficient $μ$ (= 1 - normalized *P*0)
 
-##### Comparison with other methods
+### Comparison with other methods
 
 READv2 is very similar in its approach to BREADR [@Rohrlach2023.04.17.537144] and TKGWV2 [@Fernandes2021-ze], with each tool having its own unique features. READv2 has the functionality to separate the different first-degree relationships, BREADR has a better quantification of uncertainty, and TKGWV2 works well with lower amounts of input data.
 
@@ -258,6 +269,8 @@ conda activate readv2
 ## Run READv2
 python pathTo_Readv2.py -i myGenotypeFile
 ```
+
+#### Options
 
 READv2 options:
 
