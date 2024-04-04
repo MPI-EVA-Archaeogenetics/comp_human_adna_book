@@ -10,15 +10,14 @@ citation-location: margin
 
 ## Theory primer
 
-$F_\text{ST}$ is a measure for how differentiated two populations are, taking into account internal genetic variation. It sometimes called the ["Fixation Index"](https://en.wikipedia.org/wiki/Fixation_index). It is in spirit very similar to $F_2$, in that it becomes 0 if two populations are not differentiated at all (meaning they are effectively the same), and the more differentiated, the more positive is the measure. However, $F_\text{ST}$ is scaled very differently from $F_2$.
+$F_\text{ST}$ is a measure for how differentiated two populations are, taking into account internal genetic variation. It is sometimes called the ["Fixation Index"](https://en.wikipedia.org/wiki/Fixation_index). It is in spirit very similar to $F_2$, in that it becomes 0 if two populations are not differentiated at all (meaning they are effectively the same), and the more differentiated, the more positive is the measure. However, $F_\text{ST}$ is scaled very differently from $F_2$.
 
-While there are various mathematical definitions for both the theoretical definition and estimation for $F_\text{ST}$, which differ in subtle ways, we here follow the excellent paper by [@Bhatia2013], which proposes the following estimator, termed Hudson-estimator:
+While there are various mathematical definitions for both the theoretical definition and estimation for $F_\text{ST}$, which differ in subtle ways, we here follow the excellent paper by [@Bhatia2013], which proposes the following estimator, termed Hudson-estimator, which in turn is based on a proposal by [@Hudson1992]:
 
 $$F_\text{ST}=1-\frac{H_w}{H_b}$$
 
 Here, $H_w$ is the average heterozygosity within each population, and $H_b$ is the average heterozygosity between two populations. We can easily read off the two boundaries of the definition: At the lower end, we have $F_\text{ST}=0$ if and only if $H_w=H_b$, so there is no difference between heterozygosity measured within or between groups, which is equivalent to saying that the two populations are the same. On the upper end we have $F_\text{ST}=1$ if and only if $H_w=0$, so all observed variants are fully fixed in both populations (but not necessarily different between the populations).
 
-:::{.callout-note}
 [@Bhatia2013] also give a more formal evolutionary _definition_ of $F_\text{ST}$, developed in turn by [@Weir2002], in terms of covariance between derived and ancestral populations. Specifically, for a given SNP, the definition involves the conditional probability of allele frequency $p_i$ in population $i$, given an ancestral allele frequency $p_\text{anc}$, which is defined as a random process with the expectation
 
 $$E(p_i|p_\text{anc}) = p_\text{anc}$$
@@ -30,7 +29,6 @@ This form of the conditional variance can be understood by analysing the equatio
 $F_\text{ST}$ between two populations A and B is then defined as $$F_\text{ST}(A,B) = \frac{F_\text{ST}^A+F_\text{ST}^B}{2}$$,
 
 so the average of the two drift processes.
-::: 
 
 It is fairly straight forward to see (and shown in [@Bhatia2013]) that the Hudson-estimator above can be recast as
 
