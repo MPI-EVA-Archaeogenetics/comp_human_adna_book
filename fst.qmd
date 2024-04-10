@@ -42,7 +42,8 @@ So indeed the allele frequency changes randomly. We can visualise it for more ge
 
 ```{R}
 time_series <- wfsim(100, 100, 0.5)
-plot(time_series, type = "l", ylim = c(0, 1), xlab = "generation", ylab = "allele frequency")
+plot(time_series, type = "l", ylim = c(0, 1),
+     xlab = "generation", ylab = "allele frequency")
 ```
 
 We can better understand this random process, by simulating it many times and plotting the results together:
@@ -131,7 +132,7 @@ $$E(p_i|p_\text{anc}) = p_\text{anc}$$
 
 and variance $$Var(p_i|p_\text{anc}) = F_\text{ST}^i p_\text{anc}(1-p_\text{anc}).$$
 
-This form of the conditional variance can be understood by analysing the equation for the two boundary cases: For $F_\text{ST}^i=0$, there is no variance, so the conditional probability of the derived frequency will be completely determined by the ancestral frequency with no random change. In contrast $F_\text{ST}^i=1$ means that the variance in the derived allele frequency is that of a binomial distribution with variance $p_\text{anc}(1-p_\text{anc}$, indicating random but complete fixation of the frequency to 0 or 1.
+This form of the conditional variance can be understood by analysing the equation for the two boundary cases: For $F_\text{ST}^i=0$, there is no variance, so the conditional probability of the derived frequency will be completely determined by the ancestral frequency with no random change. In contrast $F_\text{ST}^i=1$ means that the variance in the derived allele frequency is that of a binomial distribution with variance $p_\text{anc}(1-p_\text{anc})$, indicating random but complete fixation of the frequency to 0 or 1.
 
 $F_\text{ST}$ between two populations A and B is then defined as $$F_\text{ST}(A,B) = \frac{F_\text{ST}^A+F_\text{ST}^B}{2}$$.
 
@@ -244,7 +245,8 @@ which shows that the largest FST values of around 0.3 are observed between Karit
 Here is a histogram of the values
 
 ```{r}
-hist(datFST$Estimate_Total)
+hist(datFST$Estimate_Total, xlab = "FST", ylab = "Nr of pairs",
+     main = "")
 ```
 
 So most values are in the range of a few percent and 20 percent, with a mean of
@@ -256,7 +258,8 @@ mean(datFST$Estimate_Total)
 We can compare that to F2:
 
 ```{r}
-hist(datF2$Estimate_Total)
+hist(datF2$Estimate_Total, xlab = "F2", ylab = "Nr of pairs",
+     main = "")
 ```
 
 which is an order of magnitude smaller.
@@ -290,7 +293,7 @@ OK, let's look at the dendrogram a bit closer:
 #| fig-width: 7
 fstDist <- as.dist(fstMat)
 dendro <- hclust(fstDist, method="ward.D2")
-plot(dendro, hang = -1)
+plot(dendro, hang = -1, ylab = "FST", xlab = "", main = "")
 ```
 which again shows the strong drift that Native American populations (Karitiana) and Mayans experienced in their ancestral past. 
 

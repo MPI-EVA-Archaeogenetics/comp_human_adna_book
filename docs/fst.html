@@ -293,7 +293,8 @@ div.csl-indent {
 <p>So indeed the allele frequency changes randomly. We can visualise it for more generations:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>time_series <span class="ot">&lt;-</span> <span class="fu">wfsim</span>(<span class="dv">100</span>, <span class="dv">100</span>, <span class="fl">0.5</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(time_series, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">xlab =</span> <span class="st">"generation"</span>, <span class="at">ylab =</span> <span class="st">"allele frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(time_series, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"generation"</span>, <span class="at">ylab =</span> <span class="st">"allele frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="fst_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -385,7 +386,7 @@ div.csl-indent {
 Weir, B S, and W G Hill. 2002. <span>“Estimating f-Statistics.”</span> <em>Annual Review of Genetics</em> 36: 721–50. <a href="https://doi.org/10.1146/annurev.genet.36.050802.093940">https://doi.org/10.1146/annurev.genet.36.050802.093940</a>.
 </div></div><p><span class="math display">\[E(p_i|p_\text{anc}) = p_\text{anc}\]</span></p>
 <p>and variance <span class="math display">\[Var(p_i|p_\text{anc}) = F_\text{ST}^i p_\text{anc}(1-p_\text{anc}).\]</span></p>
-<p>This form of the conditional variance can be understood by analysing the equation for the two boundary cases: For <span class="math inline">\(F_\text{ST}^i=0\)</span>, there is no variance, so the conditional probability of the derived frequency will be completely determined by the ancestral frequency with no random change. In contrast <span class="math inline">\(F_\text{ST}^i=1\)</span> means that the variance in the derived allele frequency is that of a binomial distribution with variance <span class="math inline">\(p_\text{anc}(1-p_\text{anc}\)</span>, indicating random but complete fixation of the frequency to 0 or 1.</p>
+<p>This form of the conditional variance can be understood by analysing the equation for the two boundary cases: For <span class="math inline">\(F_\text{ST}^i=0\)</span>, there is no variance, so the conditional probability of the derived frequency will be completely determined by the ancestral frequency with no random change. In contrast <span class="math inline">\(F_\text{ST}^i=1\)</span> means that the variance in the derived allele frequency is that of a binomial distribution with variance <span class="math inline">\(p_\text{anc}(1-p_\text{anc})\)</span>, indicating random but complete fixation of the frequency to 0 or 1.</p>
 <p><span class="math inline">\(F_\text{ST}\)</span> between two populations A and B is then defined as <span class="math display">\[F_\text{ST}(A,B) = \frac{F_\text{ST}^A+F_\text{ST}^B}{2}\]</span>.</p>
 </section>
 <section id="estimating-f_textst-from-genomic-data" class="level3 page-columns page-full" data-number="5.1.4">
@@ -511,7 +512,8 @@ Note
 <p>which shows that the largest FST values of around 0.3 are observed between Karitiana, from South America, and Biaka from Papua Neu Guinea (but note that these values are dependent on the ascertainment of SNPs, which here causes inflation)</p>
 <p>Here is a histogram of the values</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(datFST<span class="sc">$</span>Estimate_Total)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(datFST<span class="sc">$</span>Estimate_Total, <span class="at">xlab =</span> <span class="st">"FST"</span>, <span class="at">ylab =</span> <span class="st">"Nr of pairs"</span>,</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="fst_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -525,7 +527,8 @@ Note
 </div>
 <p>We can compare that to F2:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(datF2<span class="sc">$</span>Estimate_Total)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(datF2<span class="sc">$</span>Estimate_Total, <span class="at">xlab =</span> <span class="st">"F2"</span>, <span class="at">ylab =</span> <span class="st">"Nr of pairs"</span>,</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="fst_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -554,7 +557,7 @@ Note
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>fstDist <span class="ot">&lt;-</span> <span class="fu">as.dist</span>(fstMat)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>dendro <span class="ot">&lt;-</span> <span class="fu">hclust</span>(fstDist, <span class="at">method=</span><span class="st">"ward.D2"</span>)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dendro, <span class="at">hang =</span> <span class="sc">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dendro, <span class="at">hang =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">ylab =</span> <span class="st">"FST"</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="fst_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>

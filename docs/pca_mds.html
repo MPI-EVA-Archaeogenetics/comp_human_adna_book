@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.163">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,9 +19,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -48,48 +49,19 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -103,8 +75,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -141,7 +112,8 @@ div.csl-indent {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -152,11 +124,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pca_mds.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -164,90 +141,100 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Computational Methods for human population genetics and ancient DNA</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Quarto_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></a>
+  <a href="./Quarto_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./poseidon.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Genotype and context data management with Poseidon</span></a>
+  <a href="./poseidon.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Genotype and context data management with Poseidon</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fstats.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to F3- and F4-Statistics</span></a>
+  <a href="./fstats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to F3- and F4-Statistics</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./eager.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction to nf-core/eager</span></a>
+  <a href="./eager.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction to nf-core/eager</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fst.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></a>
+  <a href="./fst.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pca_mds.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></a>
+  <a href="./pca_mds.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pmrread.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Pairwise mismatch rate (PMR) and READ relatedness inference</span></a>
+  <a href="./pmrread.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Pairwise mismatch rate (PMR) and READ relatedness inference</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#theory" id="toc-theory" class="nav-link active" data-scroll-target="#theory"><span class="toc-section-number">6.1</span>  Theory</a>
+  <li><a href="#theory" id="toc-theory" class="nav-link active" data-scroll-target="#theory"><span class="header-section-number">6.1</span> Theory</a>
   <ul class="collapse">
-  <li><a href="#rationale" id="toc-rationale" class="nav-link" data-scroll-target="#rationale"><span class="toc-section-number">6.1.1</span>  Rationale</a></li>
-  <li><a href="#introduction-to-dimension-reduction" id="toc-introduction-to-dimension-reduction" class="nav-link" data-scroll-target="#introduction-to-dimension-reduction"><span class="toc-section-number">6.1.2</span>  Introduction to dimension reduction</a></li>
-  <li><a href="#the-problem-with-missing-data" id="toc-the-problem-with-missing-data" class="nav-link" data-scroll-target="#the-problem-with-missing-data"><span class="toc-section-number">6.1.3</span>  The problem with missing data</a></li>
-  <li><a href="#projection" id="toc-projection" class="nav-link" data-scroll-target="#projection"><span class="toc-section-number">6.1.4</span>  Projection</a></li>
-  <li><a href="#shrinkage" id="toc-shrinkage" class="nav-link" data-scroll-target="#shrinkage"><span class="toc-section-number">6.1.5</span>  Shrinkage</a></li>
+  <li><a href="#rationale" id="toc-rationale" class="nav-link" data-scroll-target="#rationale"><span class="header-section-number">6.1.1</span> Rationale</a></li>
+  <li><a href="#introduction-to-dimension-reduction" id="toc-introduction-to-dimension-reduction" class="nav-link" data-scroll-target="#introduction-to-dimension-reduction"><span class="header-section-number">6.1.2</span> Introduction to dimension reduction</a></li>
+  <li><a href="#the-problem-with-missing-data" id="toc-the-problem-with-missing-data" class="nav-link" data-scroll-target="#the-problem-with-missing-data"><span class="header-section-number">6.1.3</span> The problem with missing data</a></li>
+  <li><a href="#projection" id="toc-projection" class="nav-link" data-scroll-target="#projection"><span class="header-section-number">6.1.4</span> Projection</a></li>
+  <li><a href="#shrinkage" id="toc-shrinkage" class="nav-link" data-scroll-target="#shrinkage"><span class="header-section-number">6.1.5</span> Shrinkage</a></li>
   </ul></li>
-  <li><a href="#practice" id="toc-practice" class="nav-link" data-scroll-target="#practice"><span class="toc-section-number">6.2</span>  Practice</a>
+  <li><a href="#practice" id="toc-practice" class="nav-link" data-scroll-target="#practice"><span class="header-section-number">6.2</span> Practice</a>
   <ul class="collapse">
-  <li><a href="#preparation" id="toc-preparation" class="nav-link" data-scroll-target="#preparation"><span class="toc-section-number">6.2.1</span>  Preparation</a></li>
-  <li><a href="#run-pca" id="toc-run-pca" class="nav-link" data-scroll-target="#run-pca"><span class="toc-section-number">6.2.2</span>  Run PCA</a></li>
-  <li><a href="#plot-pca" id="toc-plot-pca" class="nav-link" data-scroll-target="#plot-pca"><span class="toc-section-number">6.2.3</span>  Plot PCA</a></li>
-  <li><a href="#plink-mds" id="toc-plink-mds" class="nav-link" data-scroll-target="#plink-mds"><span class="toc-section-number">6.2.4</span>  PLINK MDS</a></li>
-  <li><a href="#compare-plots" id="toc-compare-plots" class="nav-link" data-scroll-target="#compare-plots"><span class="toc-section-number">6.2.5</span>  Compare plots</a></li>
+  <li><a href="#preparation" id="toc-preparation" class="nav-link" data-scroll-target="#preparation"><span class="header-section-number">6.2.1</span> Preparation</a></li>
+  <li><a href="#run-pca" id="toc-run-pca" class="nav-link" data-scroll-target="#run-pca"><span class="header-section-number">6.2.2</span> Run PCA</a></li>
+  <li><a href="#plot-pca" id="toc-plot-pca" class="nav-link" data-scroll-target="#plot-pca"><span class="header-section-number">6.2.3</span> Plot PCA</a></li>
+  <li><a href="#plink-mds" id="toc-plink-mds" class="nav-link" data-scroll-target="#plink-mds"><span class="header-section-number">6.2.4</span> PLINK MDS</a></li>
+  <li><a href="#compare-plots" id="toc-compare-plots" class="nav-link" data-scroll-target="#compare-plots"><span class="header-section-number">6.2.5</span> Compare plots</a></li>
   </ul></li>
-  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="toc-section-number">6.3</span>  Conclusions</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">6.3</span> Conclusions</a></li>
   </ul>
 </nav>
     </div>
@@ -256,7 +243,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></h1>
 </div>
 
 
@@ -276,6 +263,7 @@ div.csl-indent {
       <p class="date">December 7, 2023</p>
     </div>
   </div>
+  
     
   </div>
   
@@ -284,12 +272,12 @@ div.csl-indent {
 
 <section id="theory" class="level2 page-columns page-full" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="theory"><span class="header-section-number">6.1</span> Theory</h2>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Comparison of PCA and MDS
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
@@ -333,7 +321,7 @@ Comparison of PCA and MDS
 <section id="rationale" class="level3 page-columns page-full" data-number="6.1.1">
 <h3 data-number="6.1.1" class="anchored" data-anchor-id="rationale"><span class="header-section-number">6.1.1</span> Rationale</h3>
 <p>The datasets used in human ancient DNA analysis are often extremely multidimensional, often including data from thousands of individuals, across hundreds of thousands (or millions!) of single nucleotide polymrphisms (SNPs) <span class="citation" data-cites="Mallick2023">(<a href="references.html#ref-Mallick2023" role="doc-biblioref">Mallick et al. 2023</a>)</span>. Even when choosing to summarise this genome-wide information to single statistics of genetic similarity (e.g.&nbsp;with Outgroup F3), a similarity matrix across individuals can become very large when comparing across hundreds of individuals. As the name implies, dimensionality reduction methods can reduce the number of dimensions in the underlying data, while also aiming to minimise the loss of information. The two such methods we will focus on in this tutorial are <strong>Principal Component Analysis (PCA)</strong> and <strong>Multi-Dimensional Scaling (MDS)</strong>. Both methods reveal structure within the dataset, and part of that structure is due to shared population history between individuals/populations. It is for that reason that both these methods are indispensible parts of an archaeogeneticist’s toolkit.</p>
-<div class="no-row-height column-margin column-container"><div id="ref-Mallick2023" class="csl-entry" role="doc-biblioentry">
+<div class="no-row-height column-margin column-container"><div id="ref-Mallick2023" class="csl-entry" role="listitem">
 Mallick, Swapan, Adam Micco, Matthew Mah, Harald Ringbauer, Iosif Lazaridis, Iñigo Olalde, Nick Patterson, and David Reich. 2023. <span>“The Allen Ancient <span>DNA</span> Resource (<span>AADR</span>): A Curated Compendium of Ancient Human Genomes,”</span> April. <a href="https://doi.org/10.1101/2023.04.06.535797">https://doi.org/10.1101/2023.04.06.535797</a>.
 </div></div></section>
 <section id="introduction-to-dimension-reduction" class="level3" data-number="6.1.2">
@@ -342,7 +330,7 @@ Mallick, Swapan, Adam Micco, Matthew Mah, Harald Ringbauer, Iosif Lazaridis, Iñ
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/pca_mds/pca.gif" class="img-fluid figure-img" style="width:40.0%"></p>
-<p></p><figcaption class="figure-caption">A visual representation of the transformation PCA applies to a cloud of points, the range of which is represented by the blue oval. First, the data is rescaled around its own mean value, effectively moving the origin to the center of the data cloud (here shown s a red point). Then, the axes of maximal variation are discovered using linear algebra. Finally, the data is transformed to represent it along the identified axes of variation.</figcaption><p></p>
+<figcaption class="figure-caption">A visual representation of the transformation PCA applies to a cloud of points, the range of which is represented by the blue oval. First, the data is rescaled around its own mean value, effectively moving the origin to the center of the data cloud (here shown s a red point). Then, the axes of maximal variation are discovered using linear algebra. Finally, the data is transformed to represent it along the identified axes of variation.</figcaption>
 </figure>
 </div>
 <p>The results of both of these methods are (usually) a 2 dimensional plot in which the distances between individual points roughly correlates to the genetic distance between these individuals. Therefore, genetically similar individuals will be plotted close to one another, and further away from individuals that are more genetically dissimilar.</p>
@@ -358,12 +346,12 @@ Mallick, Swapan, Adam Micco, Matthew Mah, Harald Ringbauer, Iosif Lazaridis, Iñ
 <h4 data-number="6.1.3.2" class="anchored" data-anchor-id="pca"><span class="header-section-number">6.1.3.2</span> PCA</h4>
 <p>Unlike MDS, PCA is severely affected by missing data. During the rescaling of the data around its own mean values, missing data is “filled-in” to the mean value (mean imputation). This can cause points to shift towards the origin by a distance relative to the degree of missingness.</p>
 <p>Below is a plot of the results of PCA on a dataset of differnt worldwide populations <span class="citation" data-cites="Reich2012">(<a href="references.html#ref-Reich2012" role="doc-biblioref">Reich et al. 2012</a>)</span>. In an attempt to limit the effects of colonial admixture on the studied Native American populations, the authors masked parts of the genomes of Native Americans that matched the European or African populations in their dataset, replacing those genotypes with missing data.</p>
-<div class="no-row-height column-margin column-container"><div id="ref-Reich2012" class="csl-entry" role="doc-biblioentry">
+<div class="no-row-height column-margin column-container"><div id="ref-Reich2012" class="csl-entry" role="listitem">
 Reich, David, Nick Patterson, Desmond Campbell, Arti Tandon, Stéphane Mazieres, Nicolas Ray, Maria V Parra, et al. 2012. <span>“Reconstructing Native American Population History.”</span> <em>Nature</em> 488 (7411): 370–74.
 </div></div><div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/pca_mds/missingness_in_PCA.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">PCA results on the same dataset based on the raw data (left), and after masking parts of the genome in Native American populations that match European populations. Due to mean imputation, masked individuals are attracted to the Origin.</figcaption><p></p>
+<figcaption class="figure-caption">PCA results on the same dataset based on the raw data (left), and after masking parts of the genome in Native American populations that match European populations. Due to mean imputation, masked individuals are attracted to the Origin.</figcaption>
 </figure>
 </div>
 <p>As you can see, individuals whose genotypes were masked are shifted towards the plot’s origin. So how can we use PCA with ancient samples that have high degrees of missingness? The answer is by using a <strong>L</strong>east <strong>Sq</strong>uares <strong>Project</strong>ion, a.k.a. <code>lsqproject</code>!</p>
@@ -376,7 +364,7 @@ Reich, David, Nick Patterson, Desmond Campbell, Arti Tandon, Stéphane Mazieres,
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/pca_mds/projection_comparison.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">PCA plot of ancient Mesolithic hunter-gatherers and present-day West Eurasian populations. On the right, the hunter gatherers are included in the principal component calculation, while on the left, they are projected on principal components calculated on the present-day populations only. The hunter-gatherers are part of three different groups: Eastern European hunter-gatherers (brown right-facing triangles), Scandinavian hunter-gatherers (brown diamonds), and Western European hunter-gatherers (brown half-filled circles).</figcaption><p></p>
+<figcaption class="figure-caption">PCA plot of ancient Mesolithic hunter-gatherers and present-day West Eurasian populations. On the right, the hunter gatherers are included in the principal component calculation, while on the left, they are projected on principal components calculated on the present-day populations only. The hunter-gatherers are part of three different groups: Eastern European hunter-gatherers (brown right-facing triangles), Scandinavian hunter-gatherers (brown diamonds), and Western European hunter-gatherers (brown half-filled circles).</figcaption>
 </figure>
 </div>
 <p>There are two things to note here:</p>
@@ -397,14 +385,14 @@ Reich, David, Nick Patterson, Desmond Campbell, Arti Tandon, Stéphane Mazieres,
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/pca_mds/shrinkage.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Using 10 individuals of each of the three tested populations (Yoruba, French, Han) to calculate PCs, and then projected another 10 individuals of each population reveals the effects of shrinkage on the positions of the projected individuals. In the absence of shrinkage, all points originating from the same population would be overlapping.</figcaption><p></p>
+<figcaption class="figure-caption">Using 10 individuals of each of the three tested populations (Yoruba, French, Han) to calculate PCs, and then projected another 10 individuals of each population reveals the effects of shrinkage on the positions of the projected individuals. In the absence of shrinkage, all points originating from the same population would be overlapping.</figcaption>
 </figure>
 </div>
 <p>Shrinkage can be corrected by scaling the eigenvectors of the projected and/or non-projected individuals to bring them more in line with one another. Below is the same dataset as above, but ran through smartpca with the parameter <code>shrinkmode: YES</code>:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/pca_mds/shrinkmode.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Using 10 individuals of each of the three tested populations (Yoruba, French, Han) to calculate PCs, and then projected another 10 individuals of each population. Shrinkage correction was done using ‘shrinkmode: YES’</figcaption><p></p>
+<figcaption class="figure-caption">Using 10 individuals of each of the three tested populations (Yoruba, French, Han) to calculate PCs, and then projected another 10 individuals of each population. Shrinkage correction was done using ‘shrinkmode: YES’</figcaption>
 </figure>
 </div>
 <p>As a note of caution, <code>shrinkmode: Yes</code> increases the runtime greatly. An alternative would be to identify specific present-day populations that are of interest for the ancient-to-modern comparison, and project those as well. So, for example, if we were to compare Iron Age individuals from Germany with present-day individuals from Germany, then we could decide to take out some or all present-day Germans and project those as well. That would make them fully comparable.</p>
@@ -652,7 +640,7 @@ Reich, David, Nick Patterson, Desmond Campbell, Arti Tandon, Stéphane Mazieres,
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/pca_mds/PCA_plot_1.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Practice plot A) PCA estimated using modern Eurasian genomic data with Mal’ta projected (“PCA_poplist1”)</figcaption><p></p>
+<figcaption class="figure-caption">Practice plot A) PCA estimated using modern Eurasian genomic data with Mal’ta projected (“PCA_poplist1”)</figcaption>
 </figure>
 </div>
 <div class="cell">
@@ -696,7 +684,7 @@ Reich, David, Nick Patterson, Desmond Campbell, Arti Tandon, Stéphane Mazieres,
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/pca_mds/PCA_plot_2.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Practice plot B) PCA estimated using modern Eurasian and Native American genomic data with Mal’ta projected (“PCA_poplist2”)</figcaption><p></p>
+<figcaption class="figure-caption">Practice plot B) PCA estimated using modern Eurasian and Native American genomic data with Mal’ta projected (“PCA_poplist2”)</figcaption>
 </figure>
 </div>
 <p>And a PCA with all populations, including Mal’ta, used or estimation (no projection)</p>
@@ -730,7 +718,7 @@ Reich, David, Nick Patterson, Desmond Campbell, Arti Tandon, Stéphane Mazieres,
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/pca_mds/PCA_plot_ap.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Practice plot C) PCA estimated using modern Eurasian and Native American, and Mal’ta genomic data with no projection (“PCA_all_pops”</figcaption><p></p>
+<figcaption class="figure-caption">Practice plot C) PCA estimated using modern Eurasian and Native American, and Mal’ta genomic data with no projection (“PCA_all_pops”</figcaption>
 </figure>
 </div>
 </section>
@@ -807,7 +795,7 @@ Reich, David, Nick Patterson, Desmond Campbell, Arti Tandon, Stéphane Mazieres,
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/pca_mds/MDS_plot_ap.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Practice plot D) MDS estimated using modern Eurasian and Mal’ta genomic data (“MDS_plot_ap”)</figcaption><p></p>
+<figcaption class="figure-caption">Practice plot D) MDS estimated using modern Eurasian and Mal’ta genomic data (“MDS_plot_ap”)</figcaption>
 </figure>
 </div>
 <div class="cell">
@@ -857,7 +845,7 @@ Reich, David, Nick Patterson, Desmond Campbell, Arti Tandon, Stéphane Mazieres,
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/pca_mds/MDS_poplist1.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Practice plot E) MDS estimated using modern Eurasian and Native American, and Mal’ta genomic data (“MDS_poplist1”)</figcaption><p></p>
+<figcaption class="figure-caption">Practice plot E) MDS estimated using modern Eurasian and Native American, and Mal’ta genomic data (“MDS_poplist1”)</figcaption>
 </figure>
 </div>
 </section>
@@ -918,9 +906,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -932,7 +934,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -968,24 +987,128 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
