@@ -10,15 +10,122 @@ citation-location: margin
 
 ## Theory primer
 
-$F_\text{ST}$ is a measure for how differentiated two populations are, taking into account internal genetic variation. It is sometimes called the ["Fixation Index"](https://en.wikipedia.org/wiki/Fixation_index). It is in spirit very similar to $F_2$, in that it becomes 0 if two populations are not differentiated at all (meaning they are effectively the same), and the more differentiated, the more positive is the measure. However, $F_\text{ST}$ is scaled very differently from $F_2$.
+### Genetic drift
 
-While there are various mathematical definitions for both the theoretical definition and estimation for $F_\text{ST}$, which differ in subtle ways, we here follow the excellent paper by [@Bhatia2013], which proposes the following estimator, termed Hudson-estimator, which in turn is based on a proposal by [@Hudson1992]:
+Genetic drift is the process by which allele frequencies change randomly due to random fluctuations. Various models exist to model such fluctuations, but the most widely used one is the Wright-Fisher model. In that model, a parent generation of N individuals produces exactly N individuals as offspring, which make up the next generation. To model the fluctuations, every "child" gets assigned a random "parent" from the previous generation.
 
-$$F_\text{ST}=1-\frac{H_w}{H_b}$$
+Example: With $N=100$ (haploid individuals), we might consider a genetic locus with two alleles $A$ and $B$, and in the parent generation, say, 50 individuals carried allele B, and 50 carried allele B. Then, the number of individuals carrying B in the next generation is the number of children who get assigned a parent with allele B. These will be close to 50, but not exactly, due to noise. 
 
-Here, $H_w$ is the average heterozygosity within each population, and $H_b$ is the average heterozygosity between two populations. We can easily read off the two boundaries of the definition: At the lower end, we have $F_\text{ST}=0$ if and only if $H_w=H_b$, so there is no difference between heterozygosity measured within or between groups, which is equivalent to saying that the two populations are the same. On the upper end we have $F_\text{ST}=1$ if and only if $H_w=0$, so all observed variants are fully fixed in both populations (but not necessarily different between the populations).
+As a statistical process, this amounts to a binomial process, where the N offspring individuals are drawn, each carrying a 50% probability to have A vs. B. In the third generation, this probability may then have already shifted away from 50.
 
-[@Bhatia2013] also give a more formal evolutionary _definition_ of $F_\text{ST}$, developed in turn by [@Weir2002], in terms of covariance between derived and ancestral populations. Specifically, for a given SNP, the definition involves the conditional probability of allele frequency $p_i$ in population $i$, given an ancestral allele frequency $p_\text{anc}$, which is defined as a random process with the expectation
+Here is a simple function in R to model the allele frequency in a number of $g$ successive generations, given a (haploid) population size $n$ and a starting frequency $x0$:
+
+```{R}
+wfsim <- function(n, g, x0) {
+  res <- numeric(g + 1)
+  res[1] <- x0
+  for (i in 2:(g + 1)) {
+    res[i] <- (rbinom(1, n, res[i - 1])) / n
+  }
+  return(res)
+}
+```
+
+We can test it:
+
+```{R}
+set.seed(1)
+wfsim(100, 10, 0.5)
+```
+
+So indeed the allele frequency changes randomly. We can visualise it for more generations:
+
+```{R}
+time_series <- wfsim(100, 100, 0.5)
+plot(time_series, type = "l", ylim = c(0, 1), xlab = "generation", ylab = "allele frequency")
+```
+
+We can better understand this random process, by simulating it many times and plotting the results together:
+
+```{R}
+gens <- 100
+sims100 <- replicate(50, wfsim(100, gens, 0.5))
+matplot(sims100, type = "l", lty = 1, col = "black",
+        ylim = c(0, 1),
+        xlab = "generation", ylab = "allele frequency")
+```
+
+This shows how the variance increases with time, and eventually more and more of these curves get absorbed at either $x=0$ or $x=1$, a process called "fixation".
+
+How does this process depend on the population size? We can take a look. Here are three families of simulations, with three different population sizes:
+
+```{R fig.height=4, fig.width=9}
+gens <- 1000
+sims100 <- replicate(50, wfsim(100, gens, 0.5))
+par(mfrow = c(1, 3))
+matplot(sims100, type = "l", lty = 1, col = "black",
+        xlim = c(0, 100), ylim = c(0, 1),
+        xlab = "generation", ylab = "allele frequency", main = "N = 100")
+
+sims1000 <- replicate(50, wfsim(1000, gens, 0.5))
+matplot(sims1000, type = "l", lty = 1, col = "black",
+        xlim = c(0, 100), ylim = c(0, 1),
+        xlab = "generation", ylab = "allele frequency", main = "N = 1000")
+
+sims10000 <- replicate(50, wfsim(10000, gens, 0.5))
+matplot(sims10000, type = "l", lty = 1, col = "black",
+        xlim = c(0, 100), ylim = c(0, 1),
+        xlab = "generation", ylab = "allele frequency", main = "N = 10000")
+```
+
+This shows that larger populations have weaker fluctuations than small populations.
+
+### $F_\text{ST}$ quantifies genetic drift
+
+To quantify genetic drift, we can measure the variance of this process over time. The following plot uses the same data as shown above and estimates the variance:
+
+```{R fig.height=4, fig.width=9}
+par(mfrow = c(1, 3))
+plot(apply(sims100,   1, var), type = "l", ylim = c(0, 0.25),
+     xlab = "generations", ylab = "Variance", main = "N = 100")
+plot(apply(sims1000,  1, var), type = "l", ylim = c(0, 0.25),
+     xlab = "generations", ylab = "Variance", main = "N = 1000")
+plot(apply(sims10000, 1, var), type = "l", ylim = c(0, 0.25),
+     xlab = "generations", ylab = "Variance", main = "N = 10000")
+
+```
+
+so an increasing variance. But it doesn't go up forever, but reaches a plateau. This is because of fixation: Once all curves reach fixaton at either $x=0$ or $x=1$, variance does no longer increase. In fact, the maximum variance corresponds to the state where all curves have been fixed. The variance to that state corresponds to the variance of a Bernoulli-process, which is $x_0(1-x_0)$, so it depends on the starting frequency.
+
+It is this plateau of the variance that defines $F_\text{ST}=1$! Here is an illustration using again three families of simulations, but this time with the same population size but different starting frequencies:
+
+```{R}
+sims_x05 <- replicate(1000, wfsim(100, gens, 0.5))
+sims_x03 <- replicate(1000, wfsim(100, gens, 0.3))
+sims_x02 <- replicate(1000, wfsim(100, gens, 0.2))
+
+plot_dat <- cbind(
+  apply(sims_x05, 1, var),
+  apply(sims_x03, 1, var),
+  apply(sims_x02, 1, var)
+)
+
+par(mfrow = c(1, 1))
+
+cols <- c("blue", "red", "green")
+matplot(plot_dat, type = "l", ylim = c(0, 0.25), lty = 1,
+             xlab = "generations", ylab = "Variance", col = cols)
+legend(x = "bottomright",
+       legend = c("x = 0.5", "x = 0.3", "x = 0.2", "FST = 1"),
+       lty = c(1, 1, 1, 2), col = c(cols, "black"))
+
+theory_values <- sapply(c(0.5, 0.3, 0.2), function(x) x * (1 - x))
+abline(h = theory_values, lty = 2, col = cols)
+```
+
+### Formal definition of $F_\text{ST}$
+
+[@Weir2002] (explained and summarised in [@Bhatia2013]) give a more formal evolutionary definition of $F_\text{ST}$, in terms of covariance between derived and ancestral populations. Specifically, for a given SNP, the definition involves the conditional probability of allele frequency $p_i$ in population $i$, given an ancestral allele frequency $p_\text{anc}$, which is defined as a random process with the expectation
 
 $$E(p_i|p_\text{anc}) = p_\text{anc}$$
 
@@ -26,21 +133,27 @@ and variance $$Var(p_i|p_\text{anc}) = F_\text{ST}^i p_\text{anc}(1-p_\text{anc}
 
 This form of the conditional variance can be understood by analysing the equation for the two boundary cases: For $F_\text{ST}^i=0$, there is no variance, so the conditional probability of the derived frequency will be completely determined by the ancestral frequency with no random change. In contrast $F_\text{ST}^i=1$ means that the variance in the derived allele frequency is that of a binomial distribution with variance $p_\text{anc}(1-p_\text{anc}$, indicating random but complete fixation of the frequency to 0 or 1.
 
-$F_\text{ST}$ between two populations A and B is then defined as $$F_\text{ST}(A,B) = \frac{F_\text{ST}^A+F_\text{ST}^B}{2}$$,
+$F_\text{ST}$ between two populations A and B is then defined as $$F_\text{ST}(A,B) = \frac{F_\text{ST}^A+F_\text{ST}^B}{2}$$.
 
-so the average of the two drift processes.
+### Estimating $F_\text{ST}$ from genomic data
+
+While there are various mathematical definitions for both the theoretical definition and estimation for $F_\text{ST}$, which differ in subtle ways, we here follow the excellent paper by [@Bhatia2013], which proposes the following estimator, termed Hudson-estimator, which in turn is based on a proposal by [@Hudson1992] and has been implemented in the ADMIXTOOLS package [@Patterson2012]:
+
+$$F_\text{ST}=1-\frac{H_w}{H_b}$$
+
+Here, $H_w$ is the average heterozygosity within each population, and $H_b$ is the average heterozygosity between two populations. We can easily read off the two boundaries of the definition: At the lower end, we have $F_\text{ST}=0$ if and only if $H_w=H_b$, so there is no difference between heterozygosity measured within or between groups, which is equivalent to saying that the two populations are the same. On the upper end we have $F_\text{ST}=1$ if and only if $H_w=0$, so all observed variants are fully fixed in both populations (but not necessarily different between the populations).
 
 It is fairly straight forward to see (and shown in [@Bhatia2013]) that the Hudson-estimator above can be recast as
 
 $$F_\text{ST}(A,B)=\frac{(a-b)^2}{a(1-b)+b(1-a)}$$
 
-Here, $a$ and $b$ denote _population allele frequencies_, which are in principle unobserved, but can be approximated by _sample allele frequencies_. This approximation is biased, and [@Patterson2012] gives additional formulae for an (asympotically) unbiased estimator.
+Here, $a$ and $b$ denote _population allele frequencies_, which are in principle unobserved, but can be approximated by _sample allele frequencies_. This approximation is biased, and [@Patterson2012] gives additional formulae for an (asympotically) unbiased estimator (which is for example also used in Poseidon's tool xerxes, as detailed in the [whitepaper](https://github.com/poseidon-framework/poseidon-analysis-hs/blob/main/docs/xerxes_whitepaper.pdf)).
 
 From this definition, you can see that $F_\text{ST}(A,B)$ is closely related to F2-statistics, introduced in [@Patterson2012]:
 
 $$F_2(A,B)=(a-b)^2$$.
 
-In some sense, $F_\text{ST}(A,B)$ can be considered a normalised version of $F_2(A,B)$. While both statistics range mathematically from 0 to 1, the upper bound 1 has very different meanings in both. A theoretical value of $F_2=1$ would mean that both populations are fixed at different alleles in all studied SNPs, which is practically not possible (even completely random fixations would suggest that 1/4 of them would agree given that there are only four nucleotides, let alone the fact that such deeply diverged populations/species would not be alignable anymore). One can say that the time-scale on which $F_2$ approaches 1, for non-ascertained SNPs, so the entire genome, is the time scale of nucleotide substitutions (i.e. mutations plus fixation) along species branches, which in neutral evolution is given by the inverse mutation rate $1/\mu$. This would mean something on the order of $10^8$ generations, which is arguably as deep as the tree of live itself. In contrast, $F_\text{ST}$ approaches 1 on the time-scale of fixation of standing variation, which is $2N$ generations, which for humans is on the order of 10000 generations, so around the depth of modern-human diversity from its origins in Africa several hundred thousand years ago. Arguably, this time scale is much more useful for data analyses and thus easier to interpret.
+In some sense, $F_\text{ST}(A,B)$ can be considered a normalised version of $F_2(A,B)$. While both statistics range mathematically from 0 to 1, the upper bound 1 has very different meanings in both. A theoretical value of $F_2=1$ would mean that both populations are fixed at different alleles in all studied SNPs, which is practically not possible (even completely random fixations would suggest that 1/4 of them would agree given that there are only four nucleotides, let alone the fact that such deeply diverged populations/species would not be alignable anymore). One can say that the time-scale on which $F_2$ approaches 1, for non-ascertained SNPs, so the entire genome, is the time scale of nucleotide substitutions (i.e. mutations plus fixation) along species branches, which in neutral evolution is given by the inverse mutation rate $1/\mu$. This would mean something on the order of $10^8$ generations, which is arguably of the same order of magnitude as the depth of the entire tree of life. In contrast, $F_\text{ST}$ approaches 1 on the time-scale of fixation of standing variation, which is $2N$ generations, which for humans is on the order of 10000 generations, so around the depth of modern-human diversity from its origins in Africa several hundred thousand years ago. Arguably, this time scale is much more useful for data analyses and thus easier to interpret.
 
 Of course, in practice, one uses some ascertained SNP set, as also here in our examples below, in which case values are much higher because we consider only variants that are segregating in human populations within a relatively high allele frequency.
 
