@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Nada Salem &amp; Eleni Seferidou">
+<meta name="dcterms.date" content="2023-11-09">
+
+<title>Contamination estimation with AuthentiCT</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="authentiCT_files/libs/clipboard/clipboard.min.js"></script>
+<script src="authentiCT_files/libs/quarto-html/quarto.js"></script>
+<script src="authentiCT_files/libs/quarto-html/popper.min.js"></script>
+<script src="authentiCT_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="authentiCT_files/libs/quarto-html/anchor.min.js"></script>
+<link href="authentiCT_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="authentiCT_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="authentiCT_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="authentiCT_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="authentiCT_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#contamination-estimation-methods" id="toc-contamination-estimation-methods" class="nav-link active" data-scroll-target="#contamination-estimation-methods">Contamination Estimation Methods</a>
+  <ul class="collapse">
+  <li><a href="#adna-properties-quick-recap" id="toc-adna-properties-quick-recap" class="nav-link" data-scroll-target="#adna-properties-quick-recap">aDNA properties: Quick recap</a></li>
+  <li><a href="#adna-common-damage-models" id="toc-adna-common-damage-models" class="nav-link" data-scroll-target="#adna-common-damage-models">aDNA Common Damage Models</a></li>
+  </ul></li>
+  <li><a href="#authentict-tool" id="toc-authentict-tool" class="nav-link" data-scroll-target="#authentict-tool">AuthentiCT tool</a>
+  <ul class="collapse">
+  <li><a href="#theory" id="toc-theory" class="nav-link" data-scroll-target="#theory">Theory</a></li>
+  <li><a href="#applicability" id="toc-applicability" class="nav-link" data-scroll-target="#applicability">Applicability</a></li>
+  <li><a href="#method-parameters" id="toc-method-parameters" class="nav-link" data-scroll-target="#method-parameters">Method parameters</a></li>
+  <li><a href="#running-output" id="toc-running-output" class="nav-link" data-scroll-target="#running-output">Running &amp; Output</a></li>
+  </ul></li>
+  <li><a href="#practical-examples" id="toc-practical-examples" class="nav-link" data-scroll-target="#practical-examples">Practical examples</a>
+  <ul class="collapse">
+  <li><a href="#consistency-between-shotgun-sg-vs-capture-1240k-data" id="toc-consistency-between-shotgun-sg-vs-capture-1240k-data" class="nav-link" data-scroll-target="#consistency-between-shotgun-sg-vs-capture-1240k-data">Consistency between Shotgun (SG) vs capture (1240k) data</a></li>
+  <li><a href="#impact-of-sequence-count-used-on-authentict-estimates" id="toc-impact-of-sequence-count-used-on-authentict-estimates" class="nav-link" data-scroll-target="#impact-of-sequence-count-used-on-authentict-estimates">Impact of sequence count used on AuthentiCT estimates</a></li>
+  <li><a href="#impact-of-sequencing-setup-used-on-authentict-estimates" id="toc-impact-of-sequencing-setup-used-on-authentict-estimates" class="nav-link" data-scroll-target="#impact-of-sequencing-setup-used-on-authentict-estimates">Impact of sequencing setup used on AuthentiCT estimates</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Contamination estimation with AuthentiCT</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Nada Salem &amp; Eleni Seferidou </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 9, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="contamination-estimation-methods" class="level2">
+<h2 class="anchored" data-anchor-id="contamination-estimation-methods">Contamination Estimation Methods</h2>
+<p>A number of methods are available to estimate contamination which use a variety of signals and are appropriate for different types of data. <em>Here,</em> we will focus on the case of ancient human samples with present-day human DNA contamination.</p>
+<p>Three main signals are informative about the presence of contamination in aDNA datasets:</p>
+<p><span style="color: #29805b;"><strong>1.</strong> <strong>Differences in the DNA Sequence</strong>:</span> Sites that differ between the genome of interest and likely contaminants can be identified when their genome sequences are known in advance. Contamination can be estimated by measuring the proportion of sequences that present differences at specific sites (Box A).<br>
+<br>
+<em>Example tool:</em> <a href="https://github.com/plfjohnson/contamMix">contamMix</a></p>
+<p><span style="color: #29805b;"><strong>2.</strong> <strong>Deviation from the expected ploidy</strong>:</span> Contamination can cause a sample to show unusual patterns of ploidy. For instance, heterozygous sites on the X or Y-chromosomes in males, or Y-chromosome sequences in females, are signs of contamination (Box B).&nbsp;</p>
+<p><em>Example tools:</em> X/Autosome coverage ratio, <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-014-0356-4">ANGSD</a>, <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-015-0776-0">Schmutzi</a></p>
+<p><span style="color: #29805b;"><strong>3.</strong> <strong>Ancient DNA degradation patterns</strong>:</span> The degradation of DNA leaves characteristic patterns that can be used to distinguish aDNA sequences from those from present-day DNA contamination. The most common damage in aDNA originates from cytosine-deamination (Box C).</p>
+<p><em>Example tool:</em> <a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-020-02123-y">AuthentiCT</a></p>
+<p>The figure below summarizes the classification of signals used to estimate contamination, as presented by <span class="citation" data-cites="Peyregne2020">Peyrégné (<a href="#ref-Peyregne2020" role="doc-biblioref">2020</a>)</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-1717067101.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Box A shows the genealogical relationship of present-day and ancient individuals, including two derived variants that are informative for either group. The presence of a red variant indicates a contaminant sequence, whereas a blue variant indicates endogenous sequences. Box B shows the expected ploidy for the autosomes (A), the X- and Y-chromosomes (X, Y), and the mitochondrial genome (MT). Deviations from these expectations indicate contamination from the opposite sex. The illustration below shows sequences aligned to a reference genome. These sequences carry two different alleles represented by dots. However, one allele (white) is rare compared to the other allele (blue). This observation is not compatible with the 50:50 ratio expected for a heterozygous site; therefore the discordant allele may originate from contamination. Box C illustrates aDNA damage. Left: aDNA fragments often contain U caused by aDNA damage whereas U are typically absent from present-day DNA. Right: When no repair enzymes are used, U will be misread as T and their presence will result in high rates of C-to-T substitutions that occur primarily at the ends of sequences. Note that this signal depends on the library preparation protocol, and that high rates of G-to-A toward the 3ʹ-end. Neither pattern is expected for present-day DNA sequences .</figcaption><p></p>
+</figure>
+</div>
+<section id="adna-properties-quick-recap" class="level3">
+<h3 class="anchored" data-anchor-id="adna-properties-quick-recap">aDNA properties: Quick recap</h3>
+<p>Ancient DNA is typically fragmented into pieces shorter than 100 bp and exhibits miscoding base modifications that accumulate over time.</p>
+<p>The most common miscoding lesions observed in aDNA are the results of cytosine deamination that converts cytosine (C) into uracil (U), which is then misread as thymine (T), or 5- methylcytosine into thymine. This leads to C-to-T substitutions in the sequence data.<br>
+<br>
+<img src="images/image-326643966.png" class="img-fluid" width="476"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-55127020.png" class="img-fluid figure-img" width="492"></p>
+</figure>
+</div>
+<p>The deamination rate is higher for <span style="color: #29805b;"><strong>single-stranded DNA</strong></span> than for double-stranded DNA <span class="citation" data-cites="lindahl1974">(<a href="#ref-lindahl1974" role="doc-biblioref">Lindahl and Nyberg 1974</a>)</span>. The prevalence of deamination-induced C-T substitutions increases with the age of the sample, and it is climate dependent <span class="citation" data-cites="kistler2017 sawyer2012">(<a href="#ref-kistler2017" role="doc-biblioref">Kistler et al. 2017</a>; <a href="#ref-sawyer2012" role="doc-biblioref">Sawyer et al. 2012</a>)</span> .<br><br></p>
+<p><span style="color: #4568a1; text-align: center; font-size: 20px">💡 <strong>To estimate present-day DNA contamination, these properties need to be formalised in a model of aDNA damage.</strong></span>.<br><br></p>
+</section>
+<section id="adna-common-damage-models" class="level3">
+<h3 class="anchored" data-anchor-id="adna-common-damage-models">aDNA Common Damage Models</h3>
+<p><strong>1. Conditional substitution model (based on last positions)</strong></p>
+<p>Assumes independence between C-to-T substitutions at both ends (no correlation)<strong>.</strong></p>
+<p>Cytosine deamination is used to filter out present-day human contaminant DNA, as this type of deamination occurs less frequently in such DNA. To estimate contamination, patterns of <span style="color: #29805b;"><strong>‘regular’</strong></span> substitution are compared with <span style="color: #29805b;"><strong>‘conditional’</strong></span> substitution patterns. The frequency of conditional substitutions is calculated by identifying fragments that show a C-T change at either the 5’ or 3’ end and then determining the C-T substitution rate at the opposite end. Frequencies derived from conditional substitution are presumed to be higher than those from ‘regular’ substitution. This method is used as a ‘conservative’ proxy to estimate the expected deamination in endogenous DNA. It was introduced by <span class="citation" data-cites="meyer2016">Meyer et al. (<a href="#ref-meyer2016" role="doc-biblioref">2016</a>)</span></p>
+<p>Let’s say we have sample X with damage rate of 30% at the 5’ end and 25% on the 3’ end, as illustrated below:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-1111760292.png" class="img-fluid figure-img" width="514"></p>
+</figure>
+</div>
+<p>To calculate the conditional substitution rate at the 5’ end, we start by selecting only those reads that have a deamination signal at the 3’ end. hence maximizing it to a 100% rate. Similarly, to find the substitution rate at the 3’ end, we pick out reads that show a deamination signal at the 5’ end, aiming for the same 100% rate. The process is depicted in the figure below.</p>
+<p><img src="images/image-191426708.png" class="img-fluid"></p>
+<p>The table below summarizes the output of the calculation:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th></th>
+<th>regular substitution</th>
+<th>conditional substitution</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>5’ end</td>
+<td>30</td>
+<td>30</td>
+</tr>
+<tr class="even">
+<td>3’ end</td>
+<td>25</td>
+<td>28</td>
+</tr>
+</tbody>
+</table>
+<p>If conditional substitution rate is <span style="color: #9c2a46;"><strong>larger than</strong></span> regular substitution rate at both ends, this could indicate presence of contamination. This is due to the background of present-day contamination that <span style="color: #9c2a46;"><strong>dilutes</strong></span> the deamination signal.</p>
+<p><span style="color: #29805b;"><u><strong>Example</strong></u></span></p>
+<p>In <a href="https://www.nature.com/articles/nature17405">Meyer et al.&nbsp;2016</a>, nuclear DNA sequences from femur XIII, a sample of the Sima de los Huesos (SH femur XIII) Middle Pleistocene hominins, showed regular C to T substitution frequencies of 12% and 17% at the 5’ and 3’ ends, respectively. When conditioned on C to T substitutions at the opposite ends of fragments, these frequencies dramatically increased to 55% and 62%, indicating the specimen contains a mixture of highly deaminated endogenous nuclear DNA and less deaminated human contamination. The output is outlined in the table below:</p>
+<table class="table">
+<caption>A custom script to calculate the conditional substitution rate can be requested from Matthias Meyer.</caption>
+<thead>
+<tr class="header">
+<th></th>
+<th>regular substitution</th>
+<th>conditional substitution</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>5’ end</td>
+<td>17</td>
+<td>62</td>
+</tr>
+<tr class="even">
+<td>3’ end</td>
+<td>12</td>
+<td>55</td>
+</tr>
+</tbody>
+</table>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The conditional substitution rate does not provide a <code>robust estimate</code>; instead, it offers an <code>indication</code> of contamination. Therefore, it is considered as qualitative rather than quantitative method.</p>
+</div>
+</div>
+<p><strong>2. Non-conditional substitution model (based on pattern)</strong></p>
+<p>Unlike the conditional substitution method, which looks at two point estimates, the non-conditional substitution model—on which the AuthentiCT tool is based—relies on a complex model that learns the patterns of post-mortem damage.</p>
+<p><strong><em>AuthentiCT</em></strong> follows that model ⤵️</p>
+</section>
+</section>
+<section id="authentict-tool" class="level2">
+<h2 class="anchored" data-anchor-id="authentict-tool">AuthentiCT tool</h2>
+<p>AuthentiCT is based on model that learns the patterns of post-mortem damage. It models all C-T substitutions, irrespective of their position in the sequence, and accounts for clusters of C-T substitutions in the internal parts of sequences.</p>
+<section id="theory" class="level3">
+<h3 class="anchored" data-anchor-id="theory">Theory</h3>
+<p><span style="color: #29805b;"><u><strong>How it works?</strong></u></span></p>
+<p><span style="color: #29805b;">- <strong>Modeling C-to-T Substitutions:</strong></span> AuthentiCT models all C-T substitutions across the DNA sequence. It does not limit this analysis to substitutions near the ends of DNA sequences, where such changes are most expected, but also considers them throughout the sequence.</p>
+<p><span style="color: #29805b;">- <strong>Accounting for Clusters:</strong></span> While C-T substitutions occur predominantly at the ends of DNA fragments, they are also found in the internal parts. These internal clusters are not independent from each other.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-1943746165.png" class="img-fluid figure-img" width="424"></p>
+<p></p><figcaption class="figure-caption">Excluding the first and last five bases to mask potential overhangs, C-to-Ts are found to particularly common in adjacent positions in many samples, with a significant deviation from the geometric distribution expected from independent events [Peyrégne and Peter 2020]</figcaption><p></p>
+</figure>
+</div>
+<p>AuthentiCT uses a a <span style="color: #29805b;"><strong>hidden Markov model (HMM)</strong></span>—a statistical model for predicting a sequence of unseen state changes based on observed sequences—to jointly model all C-T substitutions.</p>
+<p><span style="color: #29805b;">- <strong>Observation:</strong></span> This refers to matches and mismatches to the reference, including deaminations, errors, and polymorphisms.</p>
+<p><span style="color: #29805b;">- <strong>Unobserved states</strong>:</span> These are the DNA conditions not directly observed, such as single-stranded areas (including 3’ or 5’ overhangs, haplotypes) and double-stranded regions.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-96701690.png" class="img-fluid figure-img" width="311"></p>
+</figure>
+</div>
+<p>After evaluating each position within the DNA sequence, the model identifies three distinct single-stranded (ss) regions: inside the molecule, at the 5’ end, or at the 3’ end. It then calculates the probability for each model (contaminant vs.&nbsp;ancient) at the sequence’s end.</p>
+<p>The model distinguishes between single-stranded and double-stranded parts of the DNA molecule using four hidden states to represent either double-stranded (ds) or single-stranded stretches. By compiling these probabilities across all sequences, AuthentiCT efficiently estimates the proportion of contamination.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-2022766876.png" class="img-fluid figure-img" width="466"></p>
+<p></p><figcaption class="figure-caption">States are depicted by nodes and transitions by edges. Each state emits a match to the reference M (blue) or a mismatch, which can either be compatible with cytosine deamination, D (red), or an error (or polymorphism), E (yellow). Single-stranded states (5’o, 3’o and ss) and the double-stranded state (ds) are in light and dark green, respectively. b The posterior probability for each state is shown with different colours [Peyrégne &amp; Peter 2020]</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="applicability" class="level3">
+<h3 class="anchored" data-anchor-id="applicability">Applicability</h3>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body" title="Tip with Title">
+<ul>
+<li><p>AuthentiCT is applicable to any species, if suitable reference genome is available for alignment.</p></li>
+<li><p>Limited to single-stranded libraries</p></li>
+<li><p>Performs well for datasets of 10,000 or more sequences (less reliable for &lt;1000) - bias decreases with longer sequences or higher GC contents.</p></li>
+<li><p>Not applicable to libraries generated after treatments that alter deamination patterns, e.g., UDG.</p></li>
+<li><p>It is not possible to run it with PMD-filtered data, since such data lacks the non-deaminated reads.</p></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="method-parameters" class="level3">
+<h3 class="anchored" data-anchor-id="method-parameters">Method parameters</h3>
+<ul>
+<li><p>AuthentiCT overestimates contamination for low contamination rates.</p></li>
+<li><p>Consistency between Shotgun (SG) vs capture (1240k) data.</p></li>
+</ul>
+<!-- -->
+<ul>
+<li><p>Assumes the absence of significant levels of deamination in the contaminating DNA, which can lead to underestimating the proportion of contamination.</p></li>
+<li><p>DNA fragments with different rates of damaged bases (differences in preservation, different treatments), may lead to an overestimate of present-day DNA contamination.</p></li>
+</ul>
+</section>
+<section id="running-output" class="level3">
+<h3 class="anchored" data-anchor-id="running-output">Running &amp; Output</h3>
+<p>To install AuthentiCT, follow the instructions available at <a href="https://github.com/StephanePeyregne/AuthentiCT">AuthentiCT GitHub Repository</a>.</p>
+<ul>
+<li><strong>Python Version:</strong> Requires Python 3.6 or higher.</li>
+</ul>
+<p>Ensure the following dependencies are installed:</p>
+<ul>
+<li><code>numpy</code> (version 1.17.3)</li>
+<li><code>numdifftools</code> (version 0.9.39)</li>
+<li><code>pandas</code> (version 0.25.2)</li>
+<li><code>scipy</code> (version 1.3.1)</li>
+</ul>
+<p><strong>Main commands:</strong></p>
+<ul>
+<li><code>deam2cont</code>: Estimates the level of contamination from deamination patterns.</li>
+<li><code>deamination</code>: Prints C-to-T substitution frequencies.</li>
+</ul>
+<p><strong>Script</strong></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="va">BAM</span><span class="op">=</span>LGJ001_ss.A0101_rmdup <span class="co">#file name (deduplicated bam)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view <span class="va">$BAM</span>.bam <span class="kw">|</span> <span class="ex">AuthentiCT</span> deam2cont <span class="at">-o</span> <span class="va">$BAM</span>.deam2cont.out <span class="at">-m</span> 25 <span class="at">-b</span> 30 <span class="at">-</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># -m  mapping quality cutoff</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># -b  base quality cutoff</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>or for multiple bam files</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Directory containing BAM files</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="va">BAM_DIR</span><span class="op">=</span><span class="st">"/path/to/your/deduplicated_bam/directory"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Iterate over all BAM files in the directory</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> BAM_FILE <span class="kw">in</span> <span class="st">"</span><span class="va">$BAM_DIR</span><span class="st">"</span>/<span class="pp">*</span>.bam<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the file name without the extension</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="va">BAM_BASE</span><span class="op">=</span><span class="va">$(</span><span class="fu">basename</span> <span class="st">"</span><span class="va">${BAM_FILE</span><span class="op">%</span>.bam<span class="va">}</span><span class="st">"</span><span class="va">)</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the samtools view and AuthentiCT commands for each BAM file</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="ex">samtools</span> view <span class="st">"</span><span class="va">$BAM_FILE</span><span class="st">"</span> <span class="kw">|</span> <span class="ex">AuthentiCT</span> deam2cont <span class="at">-o</span> <span class="st">"</span><span class="va">$BAM_BASE</span><span class="st">.deam2cont.out"</span> <span class="at">-m</span> 25 <span class="at">-b</span> 30 <span class="at">-</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># -m    mapping quality cutoff</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># -b    base quality cutoff</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Output example</strong></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>|       | Parameter    | Std.Err      | Output Explanation                                                                              |</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>|------------------|------------------|------------------|-------------------|</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>| e     | 0.003659     | 0.000079     | Error rate: we expect around 1 or 2 mismatches every 1000                                       |</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>| rss   | 0.663170     | 0.016033     | Rate of C-to-T substitutions in single-stranded regions <span class="sc">\&gt;</span> damage rate                          |</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>| lo    | 0.732971     | 0.003014     | Parameter of the geometric distribution modeling the length of single-stranded overhang         |</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>| lss   | 0.727519     | 0.036484     | Parameter of the geometric distribution modeling the length of internal single-stranded regions |</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>| lds   | 0.001000     | 0.000091     | Parameter of the geometric distribution modeling the length of double-stranded regions          |</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>| contm | 0.098113    | 0.011459 | Contamination estimate (rate from 0 to 1)                                                   |</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>| o     | 0.626460     | 0.018110     | Frequency of 5' single-stranded overhangs                                                       |</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>| o2    | 0.657778     | 0.020543     | o2 is proportional to the frequency of 3' single-stranded overhangs                             |</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="practical-examples" class="level2">
+<h2 class="anchored" data-anchor-id="practical-examples">Practical examples</h2>
+<section id="consistency-between-shotgun-sg-vs-capture-1240k-data" class="level3">
+<h3 class="anchored" data-anchor-id="consistency-between-shotgun-sg-vs-capture-1240k-data">Consistency between Shotgun (SG) vs capture (1240k) data</h3>
+<p><strong>Aim:</strong> We evaluated the consistency of AuthentiCT estimates between shotgun and 1240k-captured data derived from the same samples.</p>
+<p><strong>Dataset:</strong> consists of 1240k-captured sequences from individuals dating back to 3000 BP, showing low levels of contamination.</p>
+<p><strong>Outcome:</strong> We did not observe high discrepancies when comparing samples with high number of input reads and C-T damage (&gt;30%). However, we observed higher SE for samples with low number of input reads (less than 10.000), mainly for SG data. The table below outlines the coverage and the C-T substitution rates for each samples.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-163130435.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Plot comparing AuthentiCT output for SG and capture (1240k) data, showing 2x standard error. We did not observe high discrepancies when comparing samples with high number of input reads and C-T damage (&gt;30%). However, we observed higher SE for samples with low number of input reads (less than 10.000), mainly for SG data. Data used are shown in table below.</figcaption><p></p>
+</figure>
+</div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>| Seq ID | SG_Nr. Mapped Reads Passed Post-Filter | SG_Endogenous DNA Post (%) | SG_5 Prime C&gt;T 1st base | TF_Nr. Mapped Reads Passed Post-Filter | TF_Endogenous DNA Post (%) | TF_5 Prime C&gt;T 1st base |</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>|--------|-----------------------------------------|----------------------------|-------------------------|-----------------------------------------|----------------------------|-------------------------|</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>| 002.A  | 1,173,469                               | 21.38                       | 31.60%                  | 19,718,426                              | 65.53                      | 32.80%                  |</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>| 003.A  | 85,840                                  | 1.58                        | 40.10%                  | 13,387,538                              | 40.04                      | 40.90%                  |</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>| 005.B  | 67,131                                  | 1.51                        | 56.40%                  | 16,556,830                              | 3.52                       | 55.40%                  |</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>| 006.B  | 1,896                                   | 0.05                        | 47.80%                  | 33,820                                  | 0.09                       | 51.00%                  |</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>| 007.B  | 916,024                                 | 20.49                       | 41.40%                  | 13,232,270                              | 36.93                      | 39.90%                  |</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>| 008.B  | 5,595                                   | 0.13                        | 57.00%                  | 74,134                                  | 0.24                       | 59.20%                  |</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>| 010.A  | 36,098                                  | 1.06                        | 43.60%                  | 12,425,284                              | 34.83                      | 45.30%                  |</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>| 012.A  | 522,067                                 | 10.01                       | 42.00%                  | 17,379,143                              | 52.79                      | 41.90%                  |</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>| A001.A | 2,626                                   | 0.05                        | 39.40%                  | 43,414                                  | 0.11                       | 41.00%                  |</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>| A005.B | 72,628                                  | 1.69                        | 38.50%                  | 3,624,986                               | 8.99                       | 38.50%                  |</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>| A008.C | 80,062                                  | 1.74                        | 36.40%                  | 2,958,958                               | 7.87                       | 35.40%                  |</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>| A010.A | 12,212                                  | 0.28                        | 52.00%                  | 198,887                                 | 0.63                       | 50.70%                  |</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>| A015.A | 3,440                                   | 0.06                        | 38.00%                  | 64,418                                  | 0.16                       | 45.60%                  |</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="impact-of-sequence-count-used-on-authentict-estimates" class="level3">
+<h3 class="anchored" data-anchor-id="impact-of-sequence-count-used-on-authentict-estimates">Impact of sequence count used on AuthentiCT estimates</h3>
+<p><strong>Aim:</strong> We evaluated whether lowering the sequence count for the deamination model in AuthentiCT’s <code>-s</code> option from the default 100,000 to 10,000 sequences—which speeds up the process—alters contamination estimates.</p>
+<p><strong>Dataset:</strong> Our analysis used 1240k-captured sequences from individuals dating back to the first millennium BC, varying in contamination levels.</p>
+<p><strong>Outcome:</strong> Our results indicate that a reduced sequence count speeds up analysis but may broaden standard errors and slightly alter contamination estimates.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-970640075.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</section>
+<section id="impact-of-sequencing-setup-used-on-authentict-estimates" class="level3">
+<h3 class="anchored" data-anchor-id="impact-of-sequencing-setup-used-on-authentict-estimates">Impact of sequencing setup used on AuthentiCT estimates</h3>
+<p><strong>Aim and dataset:</strong> We explored AuthentiCT estimates in samples that were single-end (SE) sequenced and paired-end (PE) sequenced. The mean read length for all the samples was between 45 to 50 bp (insert size), and the sequencing read length was 75 bp in both the SE and PE setups. The adapters were trimmed using AdpaterRemoval tool.</p>
+<p><strong>Outcome:</strong> The results indicate that AuthentiCT estimate ovaerall does not change with changing the sequencing setup.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image-1437595134.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+<p>💡 <strong>Terminal end damage discrepancies in single-stranded libraries</strong></p>
+<p>During the preparation of single-stranded libraries, an adapter is ligated to the 3’ ends of the molecules. This step tends to introduce a small to moderate bias against the ligation of uracils, leading to a common observation: the terminal 3’ C-to-T substitution rates are typically 10-20% lower compared to those at the 5’ terminal ends.This bias is amplified in the presence of inhibitory substances in the DNA extracts, or if the library prep is saturated with large amounts of input DNA.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>AuthentiCT compensates for these variances by accounting for the differences in the length of the single-stranded end and the frequency of this occurrence.</p>
+</div>
+</div>
+
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-kistler2017" class="csl-entry" role="doc-biblioentry">
+Kistler, Logan, Roselyn Ware, Oliver Smith, Matthew Collins, and Robin G. Allaby. 2017. <span>“A New Model for Ancient DNA Decay Based on Paleogenomic Meta-Analysis.”</span> <em>Nucleic Acids Research</em> 45 (11): 6310–20. <a href="https://doi.org/10.1093/nar/gkx361">https://doi.org/10.1093/nar/gkx361</a>.
+</div>
+<div id="ref-lindahl1974" class="csl-entry" role="doc-biblioentry">
+Lindahl, Tomas, and Barbro Nyberg. 1974. <span>“Heat-Induced Deamination of Cytosine Residues in Deoxyribonucleic Acid.”</span> <em>Biochemistry</em> 13 (16): 3405–10. <a href="https://doi.org/10.1021/bi00713a035">https://doi.org/10.1021/bi00713a035</a>.
+</div>
+<div id="ref-meyer2016" class="csl-entry" role="doc-biblioentry">
+Meyer, Matthias, Juan-Luis Arsuaga, Cesare de Filippo, Sarah Nagel, Ayinuer Aximu-Petri, Birgit Nickel, Ignacio Martínez, et al. 2016. <span>“Nuclear DNA Sequences from the Middle Pleistocene Sima de Los Huesos Hominins.”</span> <em>Nature</em> 531 (7595): 504–7. <a href="https://doi.org/10.1038/nature17405">https://doi.org/10.1038/nature17405</a>.
+</div>
+<div id="ref-Peyregne2020" class="csl-entry" role="doc-biblioentry">
+Peyrégné, Someone. 2020. <span>“Title of the Article.”</span> <em>Journal Name</em> 10: 100–110. <a href="https://doi.org/10.1000/j.journal.2020.01.001">https://doi.org/10.1000/j.journal.2020.01.001</a>.
+</div>
+<div id="ref-sawyer2012" class="csl-entry" role="doc-biblioentry">
+Sawyer, Susanna, Johannes Krause, Katerina Guschanski, Vincent Savolainen, and Svante Pääbo. 2012. <span>“Temporal Patterns of Nucleotide Misincorporations and DNA Fragmentation in Ancient DNA.”</span> Edited by Carles Lalueza-Fox. <em>PLoS ONE</em> 7 (3): e34131. <a href="https://doi.org/10.1371/journal.pone.0034131">https://doi.org/10.1371/journal.pone.0034131</a>.
+</div>
+</div></section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
