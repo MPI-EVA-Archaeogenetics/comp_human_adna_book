@@ -12,20 +12,20 @@ shift-heading-level-by: 1
 ---
 
 ::: {.callout-note}
-The practical parts @sec-install and @sec-basic of the following introduction are a condensed version of two sections of the **mobest documentation** available at **<https://nevrome.de/mobest>**. More advanced topics beyond the most basic usecase are also introduced there.
+The practical parts @sec-install and @sec-basic of the following introduction are a slightly adjusted version of two sections of the mobest documentation available at **<https://nevrome.de/mobest>**. More advanced topics beyond the most basic usecase are also introduced there.
 :::
 
 # Overview
 
-mobest is an **R package** providing types and functions for **spatiotemporal interpolation of human genetic ancestry components**, **probabilistic similarity search** and the calculation of a derived measure of ancestry relocation and mobility. The workflow in mobest version 1.0.0 was specifically developed for @Schmid2023.
+mobest is an R package providing types and functions for spatiotemporal interpolation of human genetic ancestry components, probabilistic similarity search and the calculation of a derived measure of ancestry relocation and mobility. The workflow in mobest version 1.0.0 was specifically developed for @Schmid2023.
 
-mobest assumes you have a set of **genetic samples** with **spatial** (two coordinates in a projected reference system) and **temporal** positions (years BC/AD) for which you calculated a derived, numeric measure of **genetic ancestry** (e.g. coordinates in a PCA or MDS space).
+mobest assumes you have a set of genetic samples with spatial (two coordinates in a projected reference system) and temporal positions (years BC/AD) for which you calculated a derived, numeric measure of genetic ancestry (e.g. coordinates in a PCA or MDS space).
 
 ![Spatiotemporal distribution of the archaeogenetic samples in @Schmid2023.](img/mobest/overview_spacetime.png)
 
-![Distribution of the archaeogenetic samples in a genetic space constructed via multidimensional scaling.](img/mobest/overview_mds.png){width=60%}
+![Distribution of the archaeogenetic samples in a genetic space constructed via multidimensional scaling.](img/mobest/overview_mds.png){width=55%}
 
-The package then provides a framework to perform spatiotemporal interpolation using **Gaussian process regression** (GPR, "kriging") with the **laGP package** to reconstruct an ancestry field based on the ancestry measure you provided.
+The package then provides a framework to perform spatiotemporal interpolation using Gaussian process regression (GPR, "kriging") with the laGP package (@Gramacy2016) to reconstruct an ancestry field based on the ancestry measure you provided.
 
 ::: {layout-nrow=2}
 ![Sparse point cloud in space and time.](img/mobest/overview_3D_1.png)
@@ -37,11 +37,15 @@ The package then provides a framework to perform spatiotemporal interpolation us
 ![Interpolated C1 mean and error for this timeslice.](img/mobest/overview_3D_4.png)
 :::
 
-mobest finally allows to derive a **similarity probability** for samples of interest within the interpolated field, which – under certain circumstances – can be interpreted as an **origin probability**.
+mobest finally allows to derive a similarity probability for samples of interest within the interpolated field, which – under certain circumstances – can be interpreted as an origin probability.
 
+::: {layout-nrow=1}
 !["Cutting the field", so measuring the probabilities for a specific ancestry profile (C1 value) for every search point in space.](img/mobest/overview_3D_5.png)
 
-![Similarity probability for the Stuttgart sample (@Lazaridis2014) calculated for the time slice at 5600 BC with two MDS-based ancestry components C1 and C2.](img/mobest/search_map_Stuttgart.png)
+![Similarity probability for the *Stuttgart* sample calculated for the time slice at 5600 BC with two MDS-based ancestry components C1 and C2.](img/mobest/search_map_Stuttgart.png)
+:::
+
+The *Stuttgart* sample was taken from an Early Neolithic individual from Southern Germany and first published in @Lazaridis2014.
 
 # Installing mobest {#sec-install}
 
