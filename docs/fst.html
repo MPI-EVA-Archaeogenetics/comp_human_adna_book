@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Stephan Schiffels and Joscha Gretzinger">
+<meta name="dcterms.date" content="2023-11-23">
+
+<title>Computational Methods for human population genetics and ancient DNA - 5&nbsp; Measuring population structure using Fst</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./pca_mds.html" rel="next">
+<link href="./eager.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fst.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Computational Methods for human population genetics and ancient DNA</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Quarto_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./poseidon.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Genotype and context data management with Poseidon</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fstats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to F3- and F4-Statistics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eager.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction to nf-core/eager</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fst.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pca_mds.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pmrread.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Pairwise mismatch rate (PMR) and READ relatedness inference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#theory-primer" id="toc-theory-primer" class="nav-link active" data-scroll-target="#theory-primer"><span class="header-section-number">5.1</span> Theory primer</a>
+  <ul class="collapse">
+  <li><a href="#genetic-drift" id="toc-genetic-drift" class="nav-link" data-scroll-target="#genetic-drift"><span class="header-section-number">5.1.1</span> Genetic drift</a></li>
+  <li><a href="#f_textst-quantifies-genetic-drift" id="toc-f_textst-quantifies-genetic-drift" class="nav-link" data-scroll-target="#f_textst-quantifies-genetic-drift"><span class="header-section-number">5.1.2</span> <span class="math inline">\(F_\text{ST}\)</span> quantifies genetic drift</a></li>
+  <li><a href="#formal-definition-of-f_textst" id="toc-formal-definition-of-f_textst" class="nav-link" data-scroll-target="#formal-definition-of-f_textst"><span class="header-section-number">5.1.3</span> Formal definition of <span class="math inline">\(F_\text{ST}\)</span></a></li>
+  <li><a href="#estimating-f_textst-from-genomic-data" id="toc-estimating-f_textst-from-genomic-data" class="nav-link" data-scroll-target="#estimating-f_textst-from-genomic-data"><span class="header-section-number">5.1.4</span> Estimating <span class="math inline">\(F_\text{ST}\)</span> from genomic data</a></li>
+  </ul></li>
+  <li><a href="#computing-fst-using-xerxes" id="toc-computing-fst-using-xerxes" class="nav-link" data-scroll-target="#computing-fst-using-xerxes"><span class="header-section-number">5.2</span> Computing FST using xerxes</a></li>
+  <li><a href="#plotting-results-in-r" id="toc-plotting-results-in-r" class="nav-link" data-scroll-target="#plotting-results-in-r"><span class="header-section-number">5.3</span> Plotting results in R</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Stephan Schiffels and Joscha Gretzinger </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 23, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="theory-primer" class="level2 page-columns page-full" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="theory-primer"><span class="header-section-number">5.1</span> Theory primer</h2>
+<section id="genetic-drift" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="genetic-drift"><span class="header-section-number">5.1.1</span> Genetic drift</h3>
+<p>Genetic drift is the process by which allele frequencies change randomly due to random fluctuations. Various models exist to model such fluctuations, but the most widely used one is the Wright-Fisher model. In that model, a parent generation of N individuals produces exactly N individuals as offspring, which make up the next generation. To model the fluctuations, every “child” gets assigned a random “parent” from the previous generation.</p>
+<p>Example: With <span class="math inline">\(N=100\)</span> (haploid individuals), we might consider a genetic locus with two alleles <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, and in the parent generation, say, 50 individuals carried allele B, and 50 carried allele B. Then, the number of individuals carrying B in the next generation is the number of children who get assigned a parent with allele B. These will be close to 50, but not exactly, due to noise.</p>
+<p>As a statistical process, this amounts to a binomial process, where the N offspring individuals are drawn, each carrying a 50% probability to have A vs.&nbsp;B. In the third generation, this probability may then have already shifted away from 50.</p>
+<p>Here is a simple function in R to model the allele frequency in a number of <span class="math inline">\(g\)</span> successive generations, given a (haploid) population size <span class="math inline">\(n\)</span> and a starting frequency <span class="math inline">\(x0\)</span>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>wfsim <span class="ot">&lt;-</span> <span class="cf">function</span>(n, g, x0) {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">numeric</span>(g <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  res[<span class="dv">1</span>] <span class="ot">&lt;-</span> x0</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>(g <span class="sc">+</span> <span class="dv">1</span>)) {</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    res[i] <span class="ot">&lt;-</span> (<span class="fu">rbinom</span>(<span class="dv">1</span>, n, res[i <span class="sc">-</span> <span class="dv">1</span>])) <span class="sc">/</span> n</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(res)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can test it:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wfsim</span>(<span class="dv">100</span>, <span class="dv">10</span>, <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 0.50 0.52 0.56 0.46 0.45 0.47 0.48 0.61 0.60 0.58 0.61</code></pre>
+</div>
+</div>
+<p>So indeed the allele frequency changes randomly. We can visualise it for more generations:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>time_series <span class="ot">&lt;-</span> <span class="fu">wfsim</span>(<span class="dv">100</span>, <span class="dv">100</span>, <span class="fl">0.5</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(time_series, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"generation"</span>, <span class="at">ylab =</span> <span class="st">"allele frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="fst_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We can better understand this random process, by simulating it many times and plotting the results together:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>gens <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sims100 <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">50</span>, <span class="fu">wfsim</span>(<span class="dv">100</span>, gens, <span class="fl">0.5</span>))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(sims100, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">"black"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"generation"</span>, <span class="at">ylab =</span> <span class="st">"allele frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="fst_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This shows how the variance increases with time, and eventually more and more of these curves get absorbed at either <span class="math inline">\(x=0\)</span> or <span class="math inline">\(x=1\)</span>, a process called “fixation”.</p>
+<p>How does this process depend on the population size? We can take a look. Here are three families of simulations, with three different population sizes:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>gens <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sims100 <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">50</span>, <span class="fu">wfsim</span>(<span class="dv">100</span>, gens, <span class="fl">0.5</span>))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(sims100, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">"black"</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"generation"</span>, <span class="at">ylab =</span> <span class="st">"allele frequency"</span>, <span class="at">main =</span> <span class="st">"N = 100"</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>sims1000 <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">50</span>, <span class="fu">wfsim</span>(<span class="dv">1000</span>, gens, <span class="fl">0.5</span>))</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(sims1000, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">"black"</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"generation"</span>, <span class="at">ylab =</span> <span class="st">"allele frequency"</span>, <span class="at">main =</span> <span class="st">"N = 1000"</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>sims10000 <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">50</span>, <span class="fu">wfsim</span>(<span class="dv">10000</span>, gens, <span class="fl">0.5</span>))</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(sims10000, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">"black"</span>,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">"generation"</span>, <span class="at">ylab =</span> <span class="st">"allele frequency"</span>, <span class="at">main =</span> <span class="st">"N = 10000"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="fst_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="864"></p>
+</div>
+</div>
+<p>This shows that larger populations have weaker fluctuations than small populations.</p>
+</section>
+<section id="f_textst-quantifies-genetic-drift" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="f_textst-quantifies-genetic-drift"><span class="header-section-number">5.1.2</span> <span class="math inline">\(F_\text{ST}\)</span> quantifies genetic drift</h3>
+<p>To quantify genetic drift, we can measure the variance of this process over time. The following plot uses the same data as shown above and estimates the variance:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">apply</span>(sims100,   <span class="dv">1</span>, var), <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.25</span>),</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"generations"</span>, <span class="at">ylab =</span> <span class="st">"Variance"</span>, <span class="at">main =</span> <span class="st">"N = 100"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">apply</span>(sims1000,  <span class="dv">1</span>, var), <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.25</span>),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"generations"</span>, <span class="at">ylab =</span> <span class="st">"Variance"</span>, <span class="at">main =</span> <span class="st">"N = 1000"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">apply</span>(sims10000, <span class="dv">1</span>, var), <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.25</span>),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"generations"</span>, <span class="at">ylab =</span> <span class="st">"Variance"</span>, <span class="at">main =</span> <span class="st">"N = 10000"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="fst_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="864"></p>
+</div>
+</div>
+<p>so an increasing variance. But it doesn’t go up forever, but reaches a plateau. This is because of fixation: Once all curves reach fixaton at either <span class="math inline">\(x=0\)</span> or <span class="math inline">\(x=1\)</span>, variance does no longer increase. In fact, the maximum variance corresponds to the state where all curves have been fixed. The variance to that state corresponds to the variance of a Bernoulli-process, which is <span class="math inline">\(x_0(1-x_0)\)</span>, so it depends on the starting frequency.</p>
+<p>It is this plateau of the variance that defines <span class="math inline">\(F_\text{ST}=1\)</span>! Here is an illustration using again three families of simulations, but this time with the same population size but different starting frequencies:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sims_x05 <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">1000</span>, <span class="fu">wfsim</span>(<span class="dv">100</span>, gens, <span class="fl">0.5</span>))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>sims_x03 <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">1000</span>, <span class="fu">wfsim</span>(<span class="dv">100</span>, gens, <span class="fl">0.3</span>))</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>sims_x02 <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">1000</span>, <span class="fu">wfsim</span>(<span class="dv">100</span>, gens, <span class="fl">0.2</span>))</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plot_dat <span class="ot">&lt;-</span> <span class="fu">cbind</span>(</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">apply</span>(sims_x05, <span class="dv">1</span>, var),</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">apply</span>(sims_x03, <span class="dv">1</span>, var),</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">apply</span>(sims_x02, <span class="dv">1</span>, var)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>, <span class="st">"green"</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="fu">matplot</span>(plot_dat, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.25</span>), <span class="at">lty =</span> <span class="dv">1</span>,</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>             <span class="at">xlab =</span> <span class="st">"generations"</span>, <span class="at">ylab =</span> <span class="st">"Variance"</span>, <span class="at">col =</span> cols)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="at">x =</span> <span class="st">"bottomright"</span>,</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"x = 0.5"</span>, <span class="st">"x = 0.3"</span>, <span class="st">"x = 0.2"</span>, <span class="st">"FST = 1"</span>),</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">col =</span> <span class="fu">c</span>(cols, <span class="st">"black"</span>))</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>theory_values <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.3</span>, <span class="fl">0.2</span>), <span class="cf">function</span>(x) x <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> x))</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> theory_values, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">col =</span> cols)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="fst_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="formal-definition-of-f_textst" class="level3 page-columns page-full" data-number="5.1.3">
+<h3 data-number="5.1.3" class="anchored" data-anchor-id="formal-definition-of-f_textst"><span class="header-section-number">5.1.3</span> Formal definition of <span class="math inline">\(F_\text{ST}\)</span></h3>
+<p><span class="citation" data-cites="Weir2002">(<a href="references.html#ref-Weir2002" role="doc-biblioref">Weir and Hill 2002</a>)</span> (explained and summarised in <span class="citation" data-cites="Bhatia2013">(<a href="references.html#ref-Bhatia2013" role="doc-biblioref">Bhatia et al. 2013</a>)</span>) give a more formal evolutionary definition of <span class="math inline">\(F_\text{ST}\)</span>, in terms of covariance between derived and ancestral populations. Specifically, for a given SNP, the definition involves the conditional probability of allele frequency <span class="math inline">\(p_i\)</span> in population <span class="math inline">\(i\)</span>, given an ancestral allele frequency <span class="math inline">\(p_\text{anc}\)</span>, which is defined as a random process with the expectation</p>
+<div class="no-row-height column-margin column-container"><div id="ref-Weir2002" class="csl-entry" role="listitem">
+Weir, B S, and W G Hill. 2002. <span>“Estimating f-Statistics.”</span> <em>Annual Review of Genetics</em> 36: 721–50. <a href="https://doi.org/10.1146/annurev.genet.36.050802.093940">https://doi.org/10.1146/annurev.genet.36.050802.093940</a>.
+</div></div><p><span class="math display">\[E(p_i|p_\text{anc}) = p_\text{anc}\]</span></p>
+<p>and variance <span class="math display">\[Var(p_i|p_\text{anc}) = F_\text{ST}^i p_\text{anc}(1-p_\text{anc}).\]</span></p>
+<p>This form of the conditional variance can be understood by analysing the equation for the two boundary cases: For <span class="math inline">\(F_\text{ST}^i=0\)</span>, there is no variance, so the conditional probability of the derived frequency will be completely determined by the ancestral frequency with no random change. In contrast <span class="math inline">\(F_\text{ST}^i=1\)</span> means that the variance in the derived allele frequency is that of a binomial distribution with variance <span class="math inline">\(p_\text{anc}(1-p_\text{anc})\)</span>, indicating random but complete fixation of the frequency to 0 or 1.</p>
+<p><span class="math inline">\(F_\text{ST}\)</span> between two populations A and B is then defined as <span class="math display">\[F_\text{ST}(A,B) = \frac{F_\text{ST}^A+F_\text{ST}^B}{2}\]</span>.</p>
+</section>
+<section id="estimating-f_textst-from-genomic-data" class="level3 page-columns page-full" data-number="5.1.4">
+<h3 data-number="5.1.4" class="anchored" data-anchor-id="estimating-f_textst-from-genomic-data"><span class="header-section-number">5.1.4</span> Estimating <span class="math inline">\(F_\text{ST}\)</span> from genomic data</h3>
+<p>While there are various mathematical definitions for both the theoretical definition and estimation for <span class="math inline">\(F_\text{ST}\)</span>, which differ in subtle ways, we here follow the excellent paper by <span class="citation" data-cites="Bhatia2013">(<a href="references.html#ref-Bhatia2013" role="doc-biblioref">Bhatia et al. 2013</a>)</span>, which proposes the following estimator, termed Hudson-estimator, which in turn is based on a proposal by <span class="citation" data-cites="Hudson1992">(<a href="references.html#ref-Hudson1992" role="doc-biblioref">Hudson, Slatkin, and Maddison 1992</a>)</span> and has been implemented in the ADMIXTOOLS package <span class="citation" data-cites="Patterson2012">(<a href="references.html#ref-Patterson2012" role="doc-biblioref">Patterson et al. 2012</a>)</span>:</p>
+<div class="no-row-height column-margin column-container"><div id="ref-Hudson1992" class="csl-entry" role="listitem">
+Hudson, R R, M Slatkin, and W P Maddison. 1992. <span>“Estimation of Levels of Gene Flow from <span>DNA</span> Sequence Data.”</span> <em>Genetics</em> 132 (2): 583–89. <a href="https://doi.org/10.1093/genetics/132.2.583">https://doi.org/10.1093/genetics/132.2.583</a>.
+</div></div><p><span class="math display">\[F_\text{ST}=1-\frac{H_w}{H_b}\]</span></p>
+<p>Here, <span class="math inline">\(H_w\)</span> is the average heterozygosity within each population, and <span class="math inline">\(H_b\)</span> is the average heterozygosity between two populations. We can easily read off the two boundaries of the definition: At the lower end, we have <span class="math inline">\(F_\text{ST}=0\)</span> if and only if <span class="math inline">\(H_w=H_b\)</span>, so there is no difference between heterozygosity measured within or between groups, which is equivalent to saying that the two populations are the same. On the upper end we have <span class="math inline">\(F_\text{ST}=1\)</span> if and only if <span class="math inline">\(H_w=0\)</span>, so all observed variants are fully fixed in both populations (but not necessarily different between the populations).</p>
+<p>It is fairly straight forward to see (and shown in <span class="citation" data-cites="Bhatia2013">(<a href="references.html#ref-Bhatia2013" role="doc-biblioref">Bhatia et al. 2013</a>)</span>) that the Hudson-estimator above can be recast as</p>
+<div class="no-row-height column-margin column-container"><div id="ref-Bhatia2013" class="csl-entry" role="listitem">
+Bhatia, G, N Patterson, S Sankararaman, and A L Price. 2013. <span>“Estimating and Interpreting <span>FST</span>: The Impact of Rare Variants.”</span> <em>Genome Research</em> 23 (9): 1514–21. <a href="http://genome.cshlp.org/cgi/doi/10.1101/gr.154831.113">http://genome.cshlp.org/cgi/doi/10.1101/gr.154831.113</a>.
+</div></div><p><span class="math display">\[F_\text{ST}(A,B)=\frac{(a-b)^2}{a(1-b)+b(1-a)}\]</span></p>
+<p>Here, <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> denote <em>population allele frequencies</em>, which are in principle unobserved, but can be approximated by <em>sample allele frequencies</em>. This approximation is biased, and <span class="citation" data-cites="Patterson2012">(<a href="references.html#ref-Patterson2012" role="doc-biblioref">Patterson et al. 2012</a>)</span> gives additional formulae for an (asympotically) unbiased estimator (which is for example also used in Poseidon’s tool xerxes, as detailed in the <a href="https://github.com/poseidon-framework/poseidon-analysis-hs/blob/main/docs/xerxes_whitepaper.pdf">whitepaper</a>).</p>
+<div class="no-row-height column-margin column-container"></div><p>From this definition, you can see that <span class="math inline">\(F_\text{ST}(A,B)\)</span> is closely related to F2-statistics, introduced in <span class="citation" data-cites="Patterson2012">(<a href="references.html#ref-Patterson2012" role="doc-biblioref">Patterson et al. 2012</a>)</span>:</p>
+<p><span class="math display">\[F_2(A,B)=(a-b)^2\]</span>.</p>
+<p>In some sense, <span class="math inline">\(F_\text{ST}(A,B)\)</span> can be considered a normalised version of <span class="math inline">\(F_2(A,B)\)</span>. While both statistics range mathematically from 0 to 1, the upper bound 1 has very different meanings in both. A theoretical value of <span class="math inline">\(F_2=1\)</span> would mean that both populations are fixed at different alleles in all studied SNPs, which is practically not possible (even completely random fixations would suggest that 1/4 of them would agree given that there are only four nucleotides, let alone the fact that such deeply diverged populations/species would not be alignable anymore). One can say that the time-scale on which <span class="math inline">\(F_2\)</span> approaches 1, for non-ascertained SNPs, so the entire genome, is the time scale of nucleotide substitutions (i.e.&nbsp;mutations plus fixation) along species branches, which in neutral evolution is given by the inverse mutation rate <span class="math inline">\(1/\mu\)</span>. This would mean something on the order of <span class="math inline">\(10^8\)</span> generations, which is arguably of the same order of magnitude as the depth of the entire tree of life. In contrast, <span class="math inline">\(F_\text{ST}\)</span> approaches 1 on the time-scale of fixation of standing variation, which is <span class="math inline">\(2N\)</span> generations, which for humans is on the order of 10000 generations, so around the depth of modern-human diversity from its origins in Africa several hundred thousand years ago. Arguably, this time scale is much more useful for data analyses and thus easier to interpret.</p>
+<p>Of course, in practice, one uses some ascertained SNP set, as also here in our examples below, in which case values are much higher because we consider only variants that are segregating in human populations within a relatively high allele frequency.</p>
+<p>If you’ve gone through our <a href="./fstats.html">chapter on F3 and F4 statistics</a>, you will have already encountered our software <a href="https://www.poseidon-adna.org/#/xerxes?id=xerxes-cli-software">xerxes</a>. You can compute both the biased and the approximately unbiased estimators for <span class="math inline">\(F_\text{ST}(A,B)\)</span>, using the <code>FST</code> or <code>FSTvanilla</code> statistics, as defined in the <a href="https://github.com/poseidon-framework/poseidon-analysis-hs/blob/main/docs/xerxes_whitepaper.pdf">whitepaper</a>.</p>
+<p>For what follows, we will use the approximately unbiased form <code>FST</code>.</p>
+<p><span class="math inline">\(F_\text{ST}(A,B)\)</span> has a convenient and untuitive scale: It ranges from 0 to 1, where <span class="math inline">\(F_\text{ST}(A,B)=0\)</span> denotes that <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are the <em>same</em> population, with no differentiation whatsoever. On the other hand of the spectrum we have <span class="math inline">\(F_\text{ST}(A,B)=1\)</span>, which would mean that two populations are fully separated.</p>
+<p>Another way to see this measure is to consider it as <em>relative shared variance</em>: If you consider genetic variation <em>between</em> <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, and <em>within</em> each of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, then <span class="math inline">\(F_\text{ST}(A,B)\)</span> can be considered to measure the average variance <em>between</em> populations relative to the average variance <em>within</em> populations, again with intuitive boundaries 0 and 1.</p>
+</section>
+</section>
+<section id="computing-fst-using-xerxes" class="level2 page-columns page-full" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="computing-fst-using-xerxes"><span class="header-section-number">5.2</span> Computing FST using xerxes</h2>
+<p>For human present-day populations, we can compute pairwise FSt using <a href="https://www.poseidon-adna.org/#/xerxes?id=xerxes-cli-software">xerxes</a>.</p>
+<p>We here chose a number of populations from <span class="citation" data-cites="Patterson2012">(<a href="references.html#ref-Patterson2012" role="doc-biblioref">Patterson et al. 2012</a>)</span> with more than 10 samples per population, and prepare the following config file for xerxes:</p>
+<div class="no-row-height column-margin column-container"><div id="ref-Patterson2012" class="csl-entry" role="listitem">
+Patterson, Nick, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin Rohland, Yiping Zhan, Teri Genschoreck, Teresa Webster, and David Reich. 2012. <span>“Ancient Admixture in Human History.”</span> <em>Genetics</em> 192 (3): 1065–93. <a href="https://doi.org/10.1534/genetics.112.145037">https://doi.org/10.1534/genetics.112.145037</a>.
+</div></div><div class="sourceCode" id="cb9"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fstats</span><span class="kw">:</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> FST</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">a</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"Adygei"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Balochi"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Basque"</span><span class="kw">,</span><span class="at"> </span><span class="st">"BedouinA"</span><span class="kw">,</span><span class="at"> </span><span class="st">"BedouinB"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Biaka"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Brahui"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Burusho"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Druze"</span><span class="kw">,</span><span class="at"> </span><span class="st">"French"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Han"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Hazara"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Italian_North"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Japanese"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Kalash"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Karitiana"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Makrani"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Mandenka"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Mayan"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Mozabite"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Orcadian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Palestinian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Papuan"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Pathan"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Pima"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Russian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Sardinian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Sindhi_Pakistan"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Yakut"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Yoruba"</span><span class="kw">]</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">b</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"Adygei"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Balochi"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Basque"</span><span class="kw">,</span><span class="at"> </span><span class="st">"BedouinA"</span><span class="kw">,</span><span class="at"> </span><span class="st">"BedouinB"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Biaka"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Brahui"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Burusho"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Druze"</span><span class="kw">,</span><span class="at"> </span><span class="st">"French"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Han"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Hazara"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Italian_North"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Japanese"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Kalash"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Karitiana"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Makrani"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Mandenka"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Mayan"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Mozabite"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Orcadian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Palestinian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Papuan"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Pathan"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Pima"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Russian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Sardinian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Sindhi_Pakistan"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Yakut"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Yoruba"</span><span class="kw">]</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">type</span><span class="kw">:</span><span class="at"> F2</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">a</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"Adygei"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Balochi"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Basque"</span><span class="kw">,</span><span class="at"> </span><span class="st">"BedouinA"</span><span class="kw">,</span><span class="at"> </span><span class="st">"BedouinB"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Biaka"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Brahui"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Burusho"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Druze"</span><span class="kw">,</span><span class="at"> </span><span class="st">"French"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Han"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Hazara"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Italian_North"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Japanese"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Kalash"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Karitiana"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Makrani"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Mandenka"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Mayan"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Mozabite"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Orcadian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Palestinian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Papuan"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Pathan"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Pima"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Russian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Sardinian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Sindhi_Pakistan"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Yakut"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Yoruba"</span><span class="kw">]</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">b</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">"Adygei"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Balochi"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Basque"</span><span class="kw">,</span><span class="at"> </span><span class="st">"BedouinA"</span><span class="kw">,</span><span class="at"> </span><span class="st">"BedouinB"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Biaka"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Brahui"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Burusho"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Druze"</span><span class="kw">,</span><span class="at"> </span><span class="st">"French"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Han"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Hazara"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Italian_North"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Japanese"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Kalash"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Karitiana"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Makrani"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Mandenka"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Mayan"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Mozabite"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Orcadian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Palestinian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Papuan"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Pathan"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Pima"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Russian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Sardinian"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Sindhi_Pakistan"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Yakut"</span><span class="kw">,</span><span class="at"> </span><span class="st">"Yoruba"</span><span class="kw">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This will then produce all combinations of <span class="math inline">\(FST(A, B)\)</span> and <span class="math inline">\(F_2(A, B)\)</span> as indicated in the population lists.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that the config-file engine in xerxes always computes <em>all</em> the combinations of populations, even for cases of <span class="math inline">\(A=B\)</span>. It also doesn’t know about symmetry, so will happily compute the redundant statistics <span class="math inline">\(FST(\text{Adygei}, \text{Adygei})\)</span> and <span class="math inline">\(FST(\text{Adygei}, \text{Adygei})\)</span>. While this could be possibly improved, there is no big harm done, as this runs fairly quickly.</p>
+</div>
+</div>
+<p>We run this config file using the command line</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="va">REPO</span><span class="op">=</span>/path/to/community-archive/2012_PattersonGenetics</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">xerxes</span> fstats <span class="at">-d</span> <span class="va">$REPO</span> <span class="at">--statConfig</span> fstat_world_config.yaml <span class="at">-f</span> fstat_world_output.tsv <span class="op">&gt;</span> fstat_world_table.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The standard output, is a nicely layouted ASCII Table, which looks like this in the beginning:</p>
+<pre><code>.-----------.-----------------.-----------------.---.---.---------.----------------.--------------------.------------------.--------------------.
+| Statistic |        a        |        b        | c | d | NrSites | Estimate_Total | Estimate_Jackknife | StdErr_Jackknife | Z_score_Jackknife  |
+:===========:=================:=================:===:===:=========:================:====================:==================:====================:
+| FST       | Adygei          | Adygei          |   |   | 593124  | 0.0000         | 0.0000             | 0.0000           | NaN                |
+| FST       | Adygei          | Balochi         |   |   | 593124  | 1.2789e-2      | 1.2789e-2          | 3.3572e-4        | 38.09517110646904  |
+| FST       | Adygei          | Basque          |   |   | 593124  | 1.8790e-2      | 1.8790e-2          | 4.0141e-4        | 46.810358341103225 |
+| FST       | Adygei          | BedouinA        |   |   | 593124  | 1.3017e-2      | 1.3017e-2          | 2.9647e-4        | 43.90737238689979  |
+| FST       | Adygei          | BedouinB        |   |   | 593124  | 3.3455e-2      | 3.3454e-2          | 5.7648e-4        | 58.03217592610529  |
+| FST       | Adygei          | Biaka           |   |   | 593124  | 0.1716         | 0.1716             | 1.2185e-3        | 140.85275693678508 |
+| FST       | Adygei          | Brahui          |   |   | 593124  | 1.4644e-2      | 1.4644e-2          | 3.4481e-4        | 42.46989237781921  |
+| FST       | Adygei          | Burusho         |   |   | 593124  | 1.8566e-2      | 1.8566e-2          | 3.8156e-4        | 48.6573908240317   |
+| FST       | Adygei          | Druze           |   |   | 593124  | 1.2173e-2      | 1.2173e-2          | 2.6659e-4        | 45.65975464203526  |
+| FST       | Adygei          | French          |   |   | 593124  | 9.7730e-3      | 9.7730e-3          | 3.1627e-4        | 30.9006924987833   |
+| FST       | Adygei          | Han             |   |   | 593124  | 9.8759e-2      | 9.8759e-2          | 1.1973e-3        | 82.48660429503893  |
+| FST       | Adygei          | Hazara          |   |   | 593124  | 3.0725e-2      | 3.0726e-2          | 7.1478e-4        | 42.98629834431124  |
+| FST       | Adygei          | Italian_North   |   |   | 593124  | 8.6600e-3      | 8.6601e-3          | 2.7883e-4        | 31.058813893781032 |
+</code></pre>
+<p>but of course has many more lines (&gt;1800 in this case). We also used the <code>-f</code> flag to output a tab-separated file, here named <code>fstat_world_output.tsv</code>, which is easier to read into R.</p>
+</section>
+<section id="plotting-results-in-r" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="plotting-results-in-r"><span class="header-section-number">5.3</span> Plotting results in R</h2>
+<p>All of the following code uses strictly only base-R for maximum compatibility. The code should run on any R installation.</p>
+<p>We first load the data</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="ot">&lt;-</span> <span class="fu">subset</span>(<span class="fu">read.table</span>(<span class="st">"fst_working/fstat_world_output.tsv"</span>, <span class="at">sep=</span><span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">select=</span><span class="sc">-</span><span class="fu">c</span>(c, d, Z_score_Jackknife))</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>datFST <span class="ot">&lt;-</span> dat[dat<span class="sc">$</span>Statistic <span class="sc">==</span> <span class="st">"FST"</span>,]</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>datF2 <span class="ot">&lt;-</span> dat[dat<span class="sc">$</span>Statistic <span class="sc">==</span> <span class="st">"F2"</span>,]</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(datFST)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Statistic      a        b NrSites Estimate_Total Estimate_Jackknife
+1       FST Adygei   Adygei  593124       0.000000           0.000000
+2       FST Adygei  Balochi  593124       0.012789           0.012789
+3       FST Adygei   Basque  593124       0.018790           0.018790
+4       FST Adygei BedouinA  593124       0.013017           0.013017
+5       FST Adygei BedouinB  593124       0.033455           0.033454
+6       FST Adygei    Biaka  593124       0.171600           0.171600
+  StdErr_Jackknife
+1       0.00000000
+2       0.00033572
+3       0.00040141
+4       0.00029647
+5       0.00057648
+6       0.00121850</code></pre>
+</div>
+</div>
+<p>Ok, this looks good. Let’s check out the largest values</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat[<span class="fu">order</span>(<span class="sc">-</span>dat<span class="sc">$</span>Estimate_Total),])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    Statistic         a         b NrSites Estimate_Total Estimate_Jackknife
+166       FST     Biaka Karitiana  593124         0.3021             0.3021
+456       FST Karitiana     Biaka  593124         0.3021             0.3021
+473       FST Karitiana    Papuan  593124         0.3011             0.3011
+676       FST    Papuan Karitiana  593124         0.3011             0.3011
+468       FST Karitiana  Mandenka  593124         0.2798             0.2798
+526       FST  Mandenka Karitiana  593124         0.2798             0.2798
+    StdErr_Jackknife
+166        0.0016933
+456        0.0016933
+473        0.0026493
+676        0.0026493
+468        0.0017116
+526        0.0017116</code></pre>
+</div>
+</div>
+<p>which shows that the largest FST values of around 0.3 are observed between Karitiana, from South America, and Biaka from Papua Neu Guinea (but note that these values are dependent on the ascertainment of SNPs, which here causes inflation)</p>
+<p>Here is a histogram of the values</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(datFST<span class="sc">$</span>Estimate_Total, <span class="at">xlab =</span> <span class="st">"FST"</span>, <span class="at">ylab =</span> <span class="st">"Nr of pairs"</span>,</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="fst_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>So most values are in the range of a few percent and 20 percent, with a mean of</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(datFST<span class="sc">$</span>Estimate_Total)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.09015616</code></pre>
+</div>
+</div>
+<p>We can compare that to F2:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(datF2<span class="sc">$</span>Estimate_Total, <span class="at">xlab =</span> <span class="st">"F2"</span>, <span class="at">ylab =</span> <span class="st">"Nr of pairs"</span>,</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="fst_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>which is an order of magnitude smaller.</p>
+<p>So one of the key things to visualise is the pairwise matrix of FST, which we can quickly compute using the <code>xtabs</code> function from the stats package (part of base R):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fstMat <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(Estimate_Total <span class="sc">~</span> a <span class="sc">+</span> b, datFST)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>f2Mat <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(Estimate_Total <span class="sc">~</span> a <span class="sc">+</span> b, datF2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>and plot a simple heatmap using the powerful <code>heatmap</code> function from the stats package:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap</span>(fstMat, <span class="at">symm =</span> <span class="cn">TRUE</span>, <span class="at">hclustfun =</span> <span class="cf">function</span>(m) <span class="fu">hclust</span>(m, <span class="at">method=</span><span class="st">"ward.D2"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="fst_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>which we can compare to the output using F2, which looks almost the same:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap</span>(f2Mat, <span class="at">symm =</span> <span class="cn">TRUE</span>, <span class="at">hclustfun =</span> <span class="cf">function</span>(m) <span class="fu">hclust</span>(m, <span class="at">method=</span><span class="st">"ward.D2"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="fst_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>OK, let’s look at the dendrogram a bit closer:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>fstDist <span class="ot">&lt;-</span> <span class="fu">as.dist</span>(fstMat)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>dendro <span class="ot">&lt;-</span> <span class="fu">hclust</span>(fstDist, <span class="at">method=</span><span class="st">"ward.D2"</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dendro, <span class="at">hang =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">ylab =</span> <span class="st">"FST"</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="fst_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>which again shows the strong drift that Native American populations (Karitiana) and Mayans experienced in their ancestral past.</p>
+<p>This nicely shows how FST is affected by total drift, which is inversely proportional to population size, and proportional to total divergence time. A long branch can be caused by either low population size (as in the ancestral population of indigenous Americans) or long divergence time (as between populations from Africa and those outside of Africa).</p>
+
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./eager.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction to nf-core/eager</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./pca_mds.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

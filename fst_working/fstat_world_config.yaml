@@ -1,0 +1,7 @@
+fstats:
+- type: FST
+  a: ["Adygei", "Balochi", "Basque", "BedouinA", "BedouinB", "Biaka", "Brahui", "Burusho", "Druze", "French", "Han", "Hazara", "Italian_North", "Japanese", "Kalash", "Karitiana", "Makrani", "Mandenka", "Mayan", "Mozabite", "Orcadian", "Palestinian", "Papuan", "Pathan", "Pima", "Russian", "Sardinian", "Sindhi_Pakistan", "Yakut", "Yoruba"]
+  b: ["Adygei", "Balochi", "Basque", "BedouinA", "BedouinB", "Biaka", "Brahui", "Burusho", "Druze", "French", "Han", "Hazara", "Italian_North", "Japanese", "Kalash", "Karitiana", "Makrani", "Mandenka", "Mayan", "Mozabite", "Orcadian", "Palestinian", "Papuan", "Pathan", "Pima", "Russian", "Sardinian", "Sindhi_Pakistan", "Yakut", "Yoruba"]
+- type: F2
+  a: ["Adygei", "Balochi", "Basque", "BedouinA", "BedouinB", "Biaka", "Brahui", "Burusho", "Druze", "French", "Han", "Hazara", "Italian_North", "Japanese", "Kalash", "Karitiana", "Makrani", "Mandenka", "Mayan", "Mozabite", "Orcadian", "Palestinian", "Papuan", "Pathan", "Pima", "Russian", "Sardinian", "Sindhi_Pakistan", "Yakut", "Yoruba"]
+  b: ["Adygei", "Balochi", "Basque", "BedouinA", "BedouinB", "Biaka", "Brahui", "Burusho", "Druze", "French", "Han", "Hazara", "Italian_North", "Japanese", "Kalash", "Karitiana", "Makrani", "Mandenka", "Mayan", "Mozabite", "Orcadian", "Palestinian", "Papuan", "Pathan", "Pima", "Russian", "Sardinian", "Sindhi_Pakistan", "Yakut", "Yoruba"]

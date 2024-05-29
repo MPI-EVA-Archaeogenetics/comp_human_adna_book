@@ -13,6 +13,9 @@ book:
     - fstats.qmd
     - eager.qmd
     - mobest.qmd
+    - fst.qmd
+    - pca_mds.qmd
+    - pmrread.qmd
     - references.qmd
 
 bibliography: references.bib
