@@ -25,7 +25,7 @@ mobest assumes you have a set of genetic samples with spatial (two coordinates i
 
 ![Distribution of the archaeogenetic samples in a genetic space constructed via multidimensional scaling.](img/mobest/overview_mds.png){width=55%}
 
-The package then provides a framework to perform spatiotemporal interpolation using Gaussian process regression (GPR, "kriging") with the laGP package (@Gramacy2016) to reconstruct an ancestry field based on the ancestry measure you provided.
+The package then provides functions to perform spatiotemporal interpolation using Gaussian process regression (GPR, "kriging") with the laGP R package (@Gramacy2016) to reconstruct an ancestry field based on the ancestry measure you provided.
 
 ::: {layout-nrow=2}
 ![Sparse point cloud in space and time.](img/mobest/overview_3D_1.png)
@@ -37,15 +37,15 @@ The package then provides a framework to perform spatiotemporal interpolation us
 ![Interpolated C1 mean and error for this timeslice.](img/mobest/overview_3D_4.png)
 :::
 
-mobest finally allows to derive a similarity probability for samples of interest within the interpolated field, which – under certain circumstances – can be interpreted as an origin probability.
+mobest finally allows to derive a similarity likelihood for samples of interest within the interpolated field, which – under certain circumstances – can be interpreted as an origin probability.
 
 ::: {layout-nrow=1}
-!["Cutting the field", so measuring the probabilities for a specific ancestry profile (C1 value) for every search point in space.](img/mobest/overview_3D_5.png)
+!["Cutting the field", so measuring the likelihoods for a specific ancestry profile (C1 value) for every grid point in space.](img/mobest/overview_3D_5.png)
 
 ![Similarity probability for the *Stuttgart* sample calculated for the time slice at 5600 BC with two MDS-based ancestry components C1 and C2.](img/mobest/search_map_Stuttgart.png)
 :::
 
-The *Stuttgart* sample was taken from an Early Neolithic individual from Southern Germany and first published in @Lazaridis2014.
+The *Stuttgart* sample used for illustrative purposes here was taken from an Early Neolithic individual from Southern Germany and first published in @Lazaridis2014.
 
 # Installing mobest {#sec-install}
 
@@ -58,7 +58,7 @@ remotes::install_github('nevrome/mobest')
 
 You can also install specific/older versions of mobest with the following syntax: `nevrome/mobest[@ref|#pull|@*release]`. For example to install the publication release version you can run `remotes::install_github('nevrome/mobest@1.0.0')`.
 
-For any of this to work a number of system libraries (mostly for processing geospatial data) have to be installed on your system, primarily for one particular dependency of mobest: the `sf` R package. The following table includes the libraries and the names of the relevant packages in the package management systems of various Linux distributions and MacOS.
+For any of this to work a number of system libraries (mostly for processing geospatial data) have to be installed on your system, primarily for one particular dependency of mobest: the `sf` R package (@Pebesma2018). The following table includes the libraries and the names of the relevant packages in the package management systems of various Linux distributions and MacOS.
 
 | System library                                                        | deb package<br>(Ubuntu/Debian) | rpm package<br>(Fedora/CentOS) | pkgbuild package<br>(Arch) | brew package<br>(MacOS) |
 |-----------------------------------------------------------------------|----------------------------------|---------------------------------|-------------------------|----------------------|
@@ -87,12 +87,12 @@ For this script we use various packages beyond base R, among which the following
 - `readr` for loading .csv input data
 - `magrittr` for the pipe operator `%>%`
 - `sf` for loading and manipulating spatial data
-- `rnaturalearth` for downloading spatial reference data
-- `ggplot2` (and `cowplot`) to visualize intermediate and final results
+- `rnaturalearth` for downloading spatial reference data (@Massicotte2024)
+- `ggplot2` (and `cowplot`) to visualize intermediate and final results (@Wilke2024)
 - `dplyr` for data manipulation of `data.frame`s
 - `mobest` (obviously)
 
-`readr`, `magrittr`, `ggplot2` and `dplyr` are all in the [tidyverse](https://www.tidyverse.org) and can be installed in one go with `install.packages("tidyverse")` on the R console. For the installation of `sf` and `mobest` please see the instructions in {doc}`Installing mobest <install>`.
+`readr`, `magrittr`, `ggplot2` and `dplyr` are all in the [tidyverse](https://www.tidyverse.org) (@Wickham2019) and can be installed in one go with `install.packages("tidyverse")` on the R console. For the installation of `sf` and `mobest` please see the instructions above.
 
 We will generally call functions explicitly with their namespace using `::` (so e.g. `readr::read_csv()`). The only exceptions are `magrittr` and `ggplot2`, because we will use their functions so often that it becomes tedious to type them out. Instead we load them at the beginning.
 
@@ -126,7 +126,7 @@ research_area_4326 <- sf::st_polygon(
 
 Spatial coordinates require a coordinate references system (CRS). For lat-lon coordinates we typically use [WGS84](https://en.wikipedia.org/wiki/World_Geodetic_System#WGS84) with the [EPSG code](https://en.wikipedia.org/wiki/EPSG_Geodetic_Parameter_Dataset) 4326. `st_polygon()` creates a simple polygon as a clockwise arrangement of individual coordinates and `st_sfc()` properly defines this polygon as a geographic area on Earth.
 
-A simple way to interactively inspect this polygon on a world map in R is provided by the `mapview` package: `mapview::mapview(research_area_4326)`.
+A simple way to interactively inspect this polygon on a world map in R is provided by the `mapview` package (@Appelhans2023): `mapview::mapview(research_area_4326)`.
 
 ![The defined research area plotted on top of a map.](img/mobest/mapview_research_area.png)
 
@@ -380,9 +380,8 @@ search_dep <- mobest::create_obs(
 
 The `locest()` argument `kernel` takes an object of the class `mobest_kernelsetting`. This type encodes kernel configurations for each dependent variable, so the parameters for the Gaussian process regression (GPR) interpolation that should be used for this variable. These include mostly the lengthscale parameters in space (x and y) and time, as well as the nugget parameter (@Gramacy2020, specifically [here](https://bookdown.org/rbg/surrogates/chap5.html#chap5hyper)). In very simple terms:
 
-Lengthscale parameters: How far in space and time should an individual sample's genetic position inform the interpolated field.
-
-Nugget: Error term to model local variability, so for observations from the same position in space and time.
+- *Lengthscale parameters*: How far in space and time should an individual sample's genetic position inform the interpolated field.
+- *Nugget*: Error term to model local variability of the dependent variable, so for observations from the same position in space and time.
 
 Here is a possible kernel configuration for our example. We construct two kernel settings, one for each ancestry component, with `mobest::create_kernel()` in `mobest::create_kernset()`.
 
@@ -415,7 +414,7 @@ mobest is primarily a visualization method and adjusting its parameters to ones 
 
 With input data and settings out of the way we can now specify the points in space and time where we actually want to perform the search. For these positions the GPR model is queried to return a mean and error, which are in turn used to calculate the probability density of a specific dependent variable space position, e.g. a specific coordinate on the first coordinate of an MDS analysis.
 
-We already performed all necessary work for the `search_space_grid` argument, so the **spatial positions** of the prediction grid. We can just enter `spatial_pred_grid` here.
+We already performed all necessary work for the `search_space_grid` argument, so the spatial positions of the prediction grid. We can just enter `spatial_pred_grid` here.
 
 The search time can be specified as an integer vector of years: e.g. `search_time = c(-500, -200, 100)`. This vector gets interpreted by `mobest::locate()` in two different ways, which can be selected with the switch argument `search_time_mode`. `search_time_mode` can either be `"relative"` (which is the default!) or `absolute`.
 
@@ -437,7 +436,7 @@ The last relevant option of `locate()`, `normalize`, concerns the normalization 
 
 We assume users generally want to use mobest, specifically `locate()`, to calculate similarity probability density maps for individual samples, time slices and parameter settings. The most natural normalization for this case is to unify the scaling of these maps. This renders them comparable. `normalize` should therefore be set to `TRUE` for basic applications. This is also encoded as the the default setting.
 
-### Calling mobest::locate()
+### Calling `mobest::locate()`
 
 In the previous sections we have thoroughly prepared the input for a first, simple run of `mobest::locate()`. We can now finally call the function.
 
@@ -462,7 +461,7 @@ This typically runs for a couple of seconds, uses every available processor core
 
 ### The mobest_locateoverview table
 
-The output data type `mobest_locateoverview` is derived from `tibble` and has a large set of columns, many not immediately relevant to the basic example here. This applies especially for the variables documenting the excessive permutation mechanics hidden behind the relatively simple interface of `mobest::locate()`. `locate()` is, in fact, a wrapper function for the more flexible function `mobest::locate_multi()`, which can handle permutations in various additional input parameters.
+`mobest_locateoverview` is derived from `tibble` and has a large set of columns, many not immediately relevant to the basic example here. This applies especially for the variables documenting the excessive permutation mechanics hidden behind the relatively simple interface of `mobest::locate()`. `locate()` is, in fact, a wrapper function for the more flexible function `mobest::locate_multi()`, which can handle permutations in various additional input parameters.
 
 Each row of the `mobest_locateoverview` table stores the calculated interpolated mean, error and similarity probability (`field_mean`, `field_sd`, `probability`) for one permutation of the input point positions in independent and dependent variable space (`independent_table_id` and `dependent_setting_id`), one dependent variable `dependent_var_id`, one iteration of the kernel settings (`kernel_setting_id`: `dsx`, `dsy`, `dt`, `g`), one prediction grid point emerging as a combination of spatial grid and search timeslice (`pred_grid_id`: `field_id`, `field_geo_id`, `field_x`, `field_y`, `field_z`, `search_time`) and finally one search sample (`search_id`, `search_x`, `search_y`, `search_z`, `search_measured`).
  
