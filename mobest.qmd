@@ -49,14 +49,16 @@ The *Stuttgart* sample was taken from an Early Neolithic individual from Souther
 
 # Installing mobest {#sec-install}
 
-mobest is an R package and can be **installed directly from GitHub** with the following code on the R console:
+mobest is an R package and can be installed directly from GitHub with the following code on the R console:
 
 ```r
 if(!require('remotes')) install.packages('remotes')
 remotes::install_github('nevrome/mobest')
 ```
 
-For this to work a number of **system libraries** (mostly for processing geospatial data) have to be installed on your system, primarily for one particular dependency of mobest: the **`sf` R package**.
+You can also install specific/older versions of mobest with the following syntax: `nevrome/mobest[@ref|#pull|@*release]`. For example to install the publication release version you can run `remotes::install_github('nevrome/mobest@1.0.0')`.
+
+For any of this to work a number of system libraries (mostly for processing geospatial data) have to be installed on your system, primarily for one particular dependency of mobest: the `sf` R package. The following table includes the libraries and the names of the relevant packages in the package management systems of various Linux distributions and MacOS.
 
 | System library                                                        | deb package<br>(Ubuntu/Debian) | rpm package<br>(Fedora/CentOS) | pkgbuild package<br>(Arch) | brew package<br>(MacOS) |
 |-----------------------------------------------------------------------|----------------------------------|---------------------------------|-------------------------|----------------------|
@@ -69,7 +71,9 @@ The `sf` package maintainers provide a good explanation how to install these: <h
 
 # A basic similarity search workflow {#sec-basic}
 
-For didactic purposes we use a **simplified version of the data and code** generated for the publication that introduced mobest: @Schmid2023.
+This section explains the setup for a basic ancestry similarity search with mobest in R. 
+
+For didactic purposes we use a simplified version of the data and code generated for the publication that introduced mobest: @Schmid2023 . This is a fairly generic setup you can adjust to the needs of other and more specific projects.
 
 The script explained in the following sections as well as the data required for it can be downloaded in its entirety here:
 
@@ -78,7 +82,7 @@ The script explained in the following sections as well as the data required for 
 
 ## Preparing the computational environment
 
-For this script we use **various packages** beyond base R, among which the following ones are required:
+For this script we use various packages beyond base R, among which the following ones are required:
 
 - `readr` for loading .csv input data
 - `magrittr` for the pipe operator `%>%`
@@ -88,7 +92,7 @@ For this script we use **various packages** beyond base R, among which the follo
 - `dplyr` for data manipulation of `data.frame`s
 - `mobest` (obviously)
 
-`readr`, `magrittr`, `ggplot2` and `dplyr` are all in the **[tidyverse](https://www.tidyverse.org)** and can be installed in one go with `install.packages("tidyverse")` on the R console.
+`readr`, `magrittr`, `ggplot2` and `dplyr` are all in the [tidyverse](https://www.tidyverse.org) and can be installed in one go with `install.packages("tidyverse")` on the R console. For the installation of `sf` and `mobest` please see the instructions in {doc}`Installing mobest <install>`.
 
 We will generally call functions explicitly with their namespace using `::` (so e.g. `readr::read_csv()`). The only exceptions are `magrittr` and `ggplot2`, because we will use their functions so often that it becomes tedious to type them out. Instead we load them at the beginning.
 
@@ -101,11 +105,11 @@ library(ggplot2)
 
 ### Generating the the spatial prediction grid
 
-mobest's similarity search is typically run for a **regular grid** of spatial positions in the area of interest. It provides a function, `mobest::create_prediction_grid()`, to create such a grid, given a specification of the desired area.
+mobest's similarity search is typically run for a regular grid of spatial positions in the area of interest. It provides a function, `mobest::create_prediction_grid()`, to create such a grid, given a specification of the desired area. This area is typically the land area in a certain part of planet Earth.
 
 #### Defining the research area
 
-In a first step we therefore have to define the **research area** for our analysis as a polygon in space. One way of doing so is to provide a list of latitude and longitude coordinates (extracted e.g. from [Google Maps](https://support.google.com/maps/answer/18539)). The following code defines a simple research area covering large parts of Western Eurasia.
+In a first step we therefore have to define the research area for our analysis as a polygon in space. One way of doing so is to provide a list of latitude and longitude coordinates (extracted e.g. from [Google Maps](https://support.google.com/maps/answer/18539)). The following code defines a simple research area covering large parts of Western Eurasia.
 
 ```r
 research_area_4326 <- sf::st_polygon(
@@ -120,19 +124,15 @@ research_area_4326 <- sf::st_polygon(
 ) %>% sf::st_sfc(crs = 4326)
 ```
 
-Spatial coordinates require a **coordinate references system (CRS)**.
+Spatial coordinates require a coordinate references system (CRS). For lat-lon coordinates we typically use [WGS84](https://en.wikipedia.org/wiki/World_Geodetic_System#WGS84) with the [EPSG code](https://en.wikipedia.org/wiki/EPSG_Geodetic_Parameter_Dataset) 4326. `st_polygon()` creates a simple polygon as a clockwise arrangement of individual coordinates and `st_sfc()` properly defines this polygon as a geographic area on Earth.
 
-For **lat-lon coordinates** we typically use [WGS84](https://en.wikipedia.org/wiki/World_Geodetic_System#WGS84) with the [EPSG code](https://en.wikipedia.org/wiki/EPSG_Geodetic_Parameter_Dataset) 4326. `st_polygon()` creates a simple polygon as a clockwise arrangement of individual coordinates and `st_sfc()` properly defines this polygon as a geographic area on Earth.
-
-A simple way to interactively inspect this polygon on a world map in R is provided by the **`mapview` package**: `mapview::mapview(research_area_4326)`.
+A simple way to interactively inspect this polygon on a world map in R is provided by the `mapview` package: `mapview::mapview(research_area_4326)`.
 
 ![The defined research area plotted on top of a map.](img/mobest/mapview_research_area.png)
 
-With the research area properly defined we can move to the next challenge and **extract the land area in the research area**.
+With the research area properly defined we can move to the next challenge and extract the land area in the research area. For that we have to obtain a dataset with polygons that trace the world's coastlines. The [naturalearthdata](https://www.naturalearthdata.com) project provides open worldwide geodata in different resolutions and in easy to use data formats.
 
-For that we have to obtain a dataset with polygons that trace the world's **coastlines**. The **[naturalearthdata](https://www.naturalearthdata.com) project** provides open worldwide geodata in different resolutions and in easy to use data formats.
-
-The **`rnaturalearth` package** makes it easy to download this data right into `sf` objects in R.
+The `rnaturalearth` package makes it easy to download this data right into `sf` objects in R.
 
 ```r
 worldwide_land_outline_4326 <- rnaturalearth::ne_download(
@@ -141,7 +141,7 @@ worldwide_land_outline_4326 <- rnaturalearth::ne_download(
 )
 ```
 
-We can then **crop the land outline to the research area** to obtain the land area we are interested in.
+We can then crop the land outline to the research area to obtain the land area we are interested in.
 
 ```r
 research_land_outline_4326 <- sf::st_intersection(
@@ -160,19 +160,19 @@ ggplot() + geom_sf(data = research_land_outline_4326)
 
 #### Projecting the spatial data
 
-At this point we run into a specific issue of mobest: It requires its "independent" spatial and temporal coordinates to be **coordinates in a [Cartesian system](https://en.wikipedia.org/wiki/Cartesian_coordinate_system) describing [Euclidean space](https://en.wikipedia.org/wiki/Euclidean_space)**.
+At this point we run into a specific issue of mobest: It requires its "independent" spatial and temporal coordinates to be coordinates in a [Cartesian system](https://en.wikipedia.org/wiki/Cartesian_coordinate_system) describing [Euclidean space](https://en.wikipedia.org/wiki/Euclidean_space).
 
-For the spatial coordinates that means we can **not work with latitude and longitude** coordinates on a sphere, but have to transform them. We have to apply **[map projection](https://en.wikipedia.org/wiki/Map_projection)** to represent the curved, two dimensional surface of our planet on a simple plane.
+For the spatial coordinates that means we can not work with latitude and longitude coordinates on a sphere, but have to transform them. We have to apply [map projection](https://en.wikipedia.org/wiki/Map_projection) to represent the curved, two dimensional surface of our planet on a simple plane.
 
 ::: {.callout-note}
-The question how exactly this should be done and which **CRS** to choose depends on the **position, size and shape of the research area**. Each map projection algorithm has different properties regarding whether they manage to preserve or **distort size, shape, distances and directions of areas and lines** compared to the actual circumstances on Earth. Generally the larger the research area the bigger the distortion of these properties becomes.
+The question how exactly this should be done and which CRS to choose depends on the position, size and shape of the research area. Each map projection algorithm has different properties regarding whether they manage to preserve or distort size, shape, distances and directions of areas and lines compared to the actual circumstances on Earth. Generally the larger the research area the bigger the distortion of these properties becomes.
 
-But for mobest we ideally want to represent all them accurately. mobest is therefore **unfit for origin search on a global scale**, but can usually be well applied for individual countries with the projections recommended by their cartographic agencies. For an intermediate, continental scale, as in this example, we have to choose our CRS wisely.
+But for mobest we ideally want to represent all them accurately. mobest is therefore unfit for origin search on a global scale, but can usually be well applied for individual countries with the projections recommended by their cartographic agencies. For an intermediate, continental scale, as in this example, we have to choose our CRS wisely. 
 :::
 
-We decided to follow the recommendation of @Annoni2003 and chose **ETRS89 Lambert Azimuthal Equal Area coordinate reference system** as in EPSG code [3035](https://epsg.io/3035).
+We decided to follow the recommendation of @Annoni2003 and chose ETRS89 Lambert Azimuthal Equal Area coordinate reference system as in EPSG code [3035](https://epsg.io/3035).
 
-Our decision comes at the price of **increased inaccuracy especially in the North- and South-East of the research area** where we get very far away from the specified centre for EPSG:3035 at 52° latitude and 10° longitude (see @Tsoulos2003 p.53 for a visualization of the deformative effects).
+Our decision comes at the price of increased inaccuracy especially in the North- and South-East of the research area where we get very far away from the specified centre for EPSG:3035 at 52° latitude and 10° longitude (see @Tsoulos2003 p.53 for a visualization of the deformative effects).
 
 To transform the land outline in the research area from EPSG:4326 to EPSG:3035 we can apply `sf::st_transform()`.
 
@@ -191,7 +191,9 @@ ggplot() + geom_sf(data = research_land_outline_3035)
 
 #### Creating the prediction grid
 
-To finally create the prediction grid we can use `mobest::create_prediction_grid()`. The **resolution parameter `spatial_cell_size`** uses the unit of the CRS, so in our case for EPSG:3035 *meters*. That means a value of 50000 translates to one point every 50km.
+To finally create the prediction grid we can use `mobest::create_prediction_grid()`. It takes the land outline polygon and overlays its bounding box with a regular grid (using `sf::st_make_grid()`), where each cell has the size corresponding to the `spatial_cell_size` parameter. It then determines the centres of each grid cell and crops the resulting, regular point cloud with the land area.
+
+Note that `spatial_cell_size` uses the unit of the CRS, so in our case for EPSG:3035 *meters*. That means a value of 50000 translates to one point every 50km.
 
 ```r
 spatial_pred_grid <- mobest::create_prediction_grid(
@@ -200,9 +202,9 @@ spatial_pred_grid <- mobest::create_prediction_grid(
 )
 ```
 
-The total number of resulting **spatial prediction positions** is **4738** in this example.
+The total number of resulting spatial prediction positions is 4738 in this example.
 
-`create_prediction_grid` returns an object of class `mobest_spatialpositions`, which is **derived from `tibble::tibble()`** and works seamlessly as an input for `ggplot2`.
+`create_prediction_grid` returns an object of class `mobest_spatialpositions`, which is derived from `tibble::tibble()`. That means we can print it on the R console and it will behave as a [`tibble`](https://tibble.tidyverse.org). It will also work seamlessly as an input for `ggplot2`, which we can now use to visualize the point cloud.
 
 ```r
 ggplot() +
@@ -219,12 +221,12 @@ ggplot() +
 
 ### Reading the input samples
 
-mobest requires a set of data points, **archaeogenetic samples**, to inform the ancestry field interpolation. For each sample the position in **space, time and a dependent variable space** (e.g. the coordinates in a PCA analysis) must be known.
+mobest requires a set of data points, archaeogenetic samples, to inform the ancestry field interpolation. For each sample the position in space, time and a dependent variable space (e.g. the coordinates in a PCA analysis) must be known. This information must be provided in a specific format. A typical mobest workflow involves preparing a sample list in a .xlsx or .csv table, which could then be read into R and transformed to the correct format.
 
-For this tutorial we rely on the **data used and published in @Schmid2023**. You can download a simplified version of this dataset here ([`samples_basic.csv`](https://nevrome.de/mobest/html/master/_downloads/6993cd8a8dddf005e4d1d25c41e7c8ad/samples_basic.csv)) and load it into R.
+For this tutorial we rely on the data used and published in @Schmid2023. You can download a simplified version of this dataset here ([`samples_basic.csv`](https://nevrome.de/mobest/html/master/_downloads/6993cd8a8dddf005e4d1d25c41e7c8ad/samples_basic.csv)) and load it into R.
 
 ```r
-samples_basic <- readr::read_csv("path/to/your/samples_basic.csv")
+samples_basic <- readr::read_csv("path/to/your/downloaded/samples_basic.csv")
 ```
 
 `samples_basic` includes the following columns/variables:
@@ -239,9 +241,9 @@ samples_basic <- readr::read_csv("path/to/your/samples_basic.csv")
 | MDS_C2            | dbl  | The coordinate of this sample on MDS dimension 2 |
 : {tbl-colwidths="[20,10,70]"}
 
-These variables are a minimum for a meaningful mobest run and **must be known for all samples**. Samples with missing information in any of these columns have to excluded from the input.
+These variables are a minimum for a meaningful mobest run and must be known for all samples. Samples with missing information in any of these columns have to excluded from the input.
 
-Just as for the research area we have to **transform the coordinates** from longitude and latitude coordinates to a projected system, specifically the same as the one we selected above.
+Just as for the research area we have to transform the coordinates from longitude and latitude coordinates to a projected system, specifically the same as the one we selected above. To do this we can construct an `sf` object from the sample table, apply `sf::st_transform()` and then transform this result back to a `tibble` with the x and y coordinates of EPSG:3035 in extra columns. This last step makes the code a bit awkward.
 
 ```r
 samples_projected <- samples_basic %>%
@@ -275,13 +277,15 @@ ggplot() +
 
 ![The spatial distribution of the informative samples.](img/mobest/samples_map.png)
 
+A number of samples are outside of the area we want to predict here. That is no problem. They will inform the field in the north-eastern fringes of the area and do no harm. It is much more problematic that some zones within our research area are severely under-sampled. We have to keep sampling gaps like this in mind when we interpret the results of the similarity search.
+
 ## Specifying the search sample
 
-mobest's similarity search usually takes the perspective of an **individual sample for which we want to determine similarity probabilities** for a spatial prediction grid at a specific point in time.
+mobest's similarity search usually takes the perspective of an individual sample for which we want to determine similarity probabilities for a spatial prediction grid at a specific point in time. For this sample, the "search sample", we require the same information as for the input samples: The position in space, time and the dependent variable space (e.g. PCA or MDS space).
 
-For this sample, the "search sample", we require the same information as for the input samples: The position in **space, time and the dependent variable space** (e.g. PCA or MDS space).
+Technically this is only a requirement of the mobest interface. Conceptually such a similarity search only really requires the dependent variable space position of interest. The added benefit of having all information there is the `relative` time search setting (see below) and a very comprehensive output table for the most common use-case.
 
-In this example we will locate one specific sample with a pretty well studied ancestry history: The sample named **`Stuttgart` published in @Lazaridis2014**. We can select it as a subset of our sample table:
+In this example we will locate one specific sample with a pretty well studied ancestry history: The sample named `Stuttgart` published in @Lazaridis2014. We can select it as a subset of our sample table:
 
 ```r
 search_samples <- samples_projected %>%
@@ -290,13 +294,15 @@ search_samples <- samples_projected %>%
   )
 ```
 
+With this setup the search sample itself will be part of the samples used to inform the ancestry field interpolation (`samples_projected`). This is no problem - the search sample is a known data point in space and time that can very well be employed to build a better model of the past ancestry distribution. There may be research questions for which this might not be desired, though. Then it can just as well be excluded from the `samples_projected` table.
+
 ## Running mobest's interpolation and search function
 
-With the **input data**, both the spatial prediction grid and the samples to inform the ancestry field interpolation, **prepared and ready**, we can now run `mobest::locate()`. For that we first have to split and transform the input into the required data structures.
+With the input data, both the spatial prediction grid and the samples to inform the ancestry field interpolation, prepared and ready, we can now run `mobest::locate()`. For that we first have to split and transform the input into the required data structures.
 
 ### Building the input data for the interpolation
 
-Here is how the **interface of `mobest::locate()`** looks:
+Here is how the interface of `mobest::locate()` looks:
 
 ```r
 mobest::locate(
@@ -325,11 +331,13 @@ mobest::locate(
 )
 ```
 
+Each of these arguments requires specific input.
+
 #### Independent and dependent positions
 
-The `locest()` arguments **`independent` and `dependent` take the spatiotemporal and genetic** (as for example derived from MDS/PCA) **positions of the interpolation-informing samples**.
+The `locest()` arguments `independent` and `dependent` take the spatiotemporal and genetic (as for example derived from MDS/PCA) positions of the interpolation-informing samples. The terms *independent* and *dependent* allude to the notion and terminology of a statistical model, where positions in dependent, genetic space are predicted based on positions in independent, spatiotemporal space.
 
-**Spatiotemporal positions** are encoded in mobest with a custom data type: `mobest_spatiotemporalpositions`. For the `independent` argument of `locest()` we have to construct an object of this type with `mobest::create_spatpos()` to represent the positions of the input samples in `samples_projected`.
+Spatiotemporal positions are encoded in mobest with a custom data type: `mobest_spatiotemporalpositions`. For the `independent` argument of `locest()` we have to construct an object of this type with `mobest::create_spatpos()` to represent the positions of the input samples in `samples_projected`.
 
 ```r
 ind <- mobest::create_spatpos(
@@ -340,7 +348,7 @@ ind <- mobest::create_spatpos(
 )
 ```
 
-The **dependent, genetic variables** are also encoded in a custom, tabular type: `mobest_observations` with the constructor function `mobest::create_observations()`.
+The dependent, genetic variables are also encoded in a custom, tabular type: `mobest_observations` with the constructor function `mobest::create_observations()`.
 
 ```r
 dep <- mobest::create_obs(
@@ -349,11 +357,11 @@ dep <- mobest::create_obs(
 )
 ```
 
-Note that you can have an **arbitrary number of these components** with arbitrary names.
+Note that you can have an arbitrary number of these components with arbitrary names. The only condition is, that the very same set and names are used below for the search samples and for the kernel parameter settings of each dependent variable.
 
-The **length** and **order** of these vectors (`samples_projected$...`) used for `create_spatpos()` and `create_obs()` all have to be identical.
+The lengths of the vectors (`samples_projected$...`) used for `create_spatpos()` and `create_obs()` all have to be identical. And their order has to be the same as well: Although the input is distributed over two constructors they describe the same samples.
 
-For the **search sample** in `search_samples`, finally, we have to construct objects of the same type and structure:
+For the search sample in `search_samples`, finally, we have to construct objects of the same type and structure:
 
 ```r
 search_ind <- mobest::create_spatpos(
@@ -370,15 +378,13 @@ search_dep <- mobest::create_obs(
 
 #### Kernel parameter settings
 
-The `locest()` argument `kernel` takes an object of the class `mobest_kernelsetting`. This type encodes **kernel configurations for each dependent variable**, so the parameters for the **Gaussian process regression (GPR)** interpolation that should be used for this variable.
+The `locest()` argument `kernel` takes an object of the class `mobest_kernelsetting`. This type encodes kernel configurations for each dependent variable, so the parameters for the Gaussian process regression (GPR) interpolation that should be used for this variable. These include mostly the lengthscale parameters in space (x and y) and time, as well as the nugget parameter (@Gramacy2020, specifically [here](https://bookdown.org/rbg/surrogates/chap5.html#chap5hyper)). In very simple terms:
 
-These include mostly the **lengthscale parameters in space (x and y) and time**, as well as the **nugget parameter** (@Gramacy2020, specifically [here](https://bookdown.org/rbg/surrogates/chap5.html#chap5hyper)). In very simple terms:
+Lengthscale parameters: How far in space and time should an individual sample's genetic position inform the interpolated field.
 
-**Lengthscale parameters**: How far in space and time should an individual sample's genetic position inform the interpolated field.
+Nugget: Error term to model local variability, so for observations from the same position in space and time.
 
-**Nugget**: Error term to model local variability, so for observations from the same position in space and time.
-
-Here is a possible kernel configuration for our example. We construct **two kernel settings, one for each ancestry component**, with `mobest::create_kernel()` in `mobest::create_kernset()`. 
+Here is a possible kernel configuration for our example. We construct two kernel settings, one for each ancestry component, with `mobest::create_kernel()` in `mobest::create_kernset()`.
 
 ```
 kernset <- mobest::create_kernset(
@@ -393,16 +399,16 @@ kernset <- mobest::create_kernset(
 )
 ```
 
-`dsx` and `dsy` are set in meters (800 * 1000m = 800km) and `dt` in years (800y).
+Note how we scale the lengthscale parameters: `dsx` and `dsy` are set in meters (800 * 1000m = 800km) and `dt` in years (800y). `g` is dimensionless. With the setting specified here both dependent variables will be interpolated with the same, very smooth (several hundred kilometres and years in diameter) kernel.
 
-The main question naturally arising from this, is **how to set these parameters for a given dataset and research question**. There are various empirical ways to find optimal values through numerical optimization. See Supplementary Text 2 of @Schmid2023 for the approaches we applied.
+The main question naturally arising from this, is how to set these parameters for a given dataset and research question. There are various empirical ways to find optimal values through numerical optimization. See Supplementary Text 2 of @Schmid2023 and the [mobest documentation](https://nevrome.de/mobest/html/master/estimation.html) for the approaches we applied.
 
 ::: {.callout-note}
-We would argue, that the computationally expensive crossvalidation workflow to estimate the lengthscale parameters is **not always necessary** for basic applications of mobest.
+While estimating the nugget is generally advisable, we would argue, that the computationally expensive crossvalidation workflow to estimate the lengthscale parameters is not always necessary for basic applications of mobest.
 
 The analysis in @Schmid2023 showed that Gaussian process regression returns reasonably accurate interpolation results for a large range of kernel parameter settings, as long as they reflect a plausible intuition about the mobility behaviour of human ancestry, which generally operates on a scale of hundreds of kilometres and years.
 
-mobest is primarily a **visualization method** and **adjusting its parameters to ones liking is legitimate** if the choices are communicated transparently.
+mobest is primarily a visualization method and adjusting its parameters to ones liking is legitimate if the choices are communicated transparently.
 :::
 
 #### Search positions
