@@ -413,16 +413,14 @@ mobest is primarily a visualization method and adjusting its parameters to ones 
 
 #### Search positions
 
-With input data and settings out of the way we can now specify the **points in space and time** where we want to perform the search.
+With input data and settings out of the way we can now specify the points in space and time where we actually want to perform the search. For these positions the GPR model is queried to return a mean and error, which are in turn used to calculate the probability density of a specific dependent variable space position, e.g. a specific coordinate on the first coordinate of an MDS analysis.
 
 We already performed all necessary work for the `search_space_grid` argument, so the **spatial positions** of the prediction grid. We can just enter `spatial_pred_grid` here.
 
-The **search time** can be specified as an integer vector of years: e.g. `search_time = c(-500, -200, 100)`.
+The search time can be specified as an integer vector of years: e.g. `search_time = c(-500, -200, 100)`. This vector gets interpreted by `mobest::locate()` in two different ways, which can be selected with the switch argument `search_time_mode`. `search_time_mode` can either be `"relative"` (which is the default!) or `absolute`.
 
-This vector gets interpreted by `mobest::locate()` in two different ways, which can be selected with the switch argument **`search_time_mode`**.
-
-- **`"relative"`**: The `search_time` is interpreted as a $\Delta t$ relative to the age of the search sample(s). Negative values point to ages that are older then the sample age, so in their relative past, and positive ones to younger ages in their relative future.
-- **`"absolute"`** The values in `search_time` are interpreted as absolute ages in years BC/AD.
+- `"relative"`: The `search_time` is interpreted as a $\Delta t$ relative to the age of the search sample(s). Negative values point to ages that are older then the sample age, so in their relative past, and positive ones to younger ages in their relative future. In this example `-500` would be interpreted as 500 years prior to the year the Stuttgart sample presumably died (so -5242-500 = -5742 BC/AD), and 100 as an age 100 years after their death (so -5242+100 = -5142 BC/AD).
+- `"absolute"`: The values in `search_time` are simply interpreted as absolute ages in years BC/AD.
 
 For this example we will set the search time to an `"absolute"` value.
 
@@ -431,15 +429,17 @@ search_time = -6800
 search_time_mode = "absolute"
 ```
 
-This will search at **exactly one point in time**; a single timeslice 6800 BC.
+This will search at exactly one point in time; a single timeslice 6800 BC.
 
 #### Normalization
 
-The last relevant option of `locate()`, `normalize`, concerns the **normalization of the output**. mobest's search calculates probability densities for each search point. This is a dimensionless measure that is hard to compare across multiple runs with different parameter settings. If `normalize` is set to `TRUE`, then the densities for sets of spatial points that share all other parameters (including the timeslice) are rescaled to a sum of one.
+The last relevant option of `locate()`, `normalize`, concerns the normalization of the output. mobest's search calculates likelihoods for each search point. This is a dimensionless measure that is hard to compare across multiple runs with different parameter settings. If `normalize` is set to `TRUE`, then the densities for sets of spatial points that share all other parameters (including the timeslice) are rescaled to a sum of one, so to proper probabilities.
+
+We assume users generally want to use mobest, specifically `locate()`, to calculate similarity probability density maps for individual samples, time slices and parameter settings. The most natural normalization for this case is to unify the scaling of these maps. This renders them comparable. `normalize` should therefore be set to `TRUE` for basic applications. This is also encoded as the the default setting.
 
 ### Calling mobest::locate()
 
-In the previous sections we have thoroughly prepared the input for a first, simple run of `mobest::locate()`. We can now **finally call the function**.
+In the previous sections we have thoroughly prepared the input for a first, simple run of `mobest::locate()`. We can now finally call the function.
 
 ```r
 search_result <- mobest::locate(
@@ -458,13 +458,13 @@ This typically runs for a couple of seconds, uses every available processor core
 
 ## Inspecting the computed results
 
-`mobest::locate()` returns an object of class `mobest_locateoverview`. It includes the **relevant information for visualization and further processing** of the analysis results.
+`mobest::locate()` returns an object of class `mobest_locateoverview`. It includes the relevant information for visualization and further processing of the analysis results.
 
 ### The mobest_locateoverview table
 
-The output data type `mobest_locateoverview` has a **large set of columns, many not immediately relevant** to the basic example here. This applies especially for the variables documenting the **excessive permutation mechanics** hidden behind the relatively simple interface of `mobest::locate()`.
+The output data type `mobest_locateoverview` is derived from `tibble` and has a large set of columns, many not immediately relevant to the basic example here. This applies especially for the variables documenting the excessive permutation mechanics hidden behind the relatively simple interface of `mobest::locate()`. `locate()` is, in fact, a wrapper function for the more flexible function `mobest::locate_multi()`, which can handle permutations in various additional input parameters.
 
-Each row of the `mobest_locateoverview` table stores the calculated **interpolated mean, error and similarity probability** (`field_mean`, `field_sd`, `probability`) **for one permutation** of the input point positions in independent and dependent variable space (`independent_table_id` and `dependent_setting_id`), one dependent variable `dependent_var_id`, one iteration of the kernel settings (`kernel_setting_id`: `dsx`, `dsy`, `dt`, `g`), one prediction grid point emerging as a combination of spatial grid and search timeslice (`pred_grid_id`: `field_id`, `field_geo_id`, `field_x`, `field_y`, `field_z`, `search_time`) and finally one search sample (`search_id`, `search_x`, `search_y`, `search_z`, `search_measured`).
+Each row of the `mobest_locateoverview` table stores the calculated interpolated mean, error and similarity probability (`field_mean`, `field_sd`, `probability`) for one permutation of the input point positions in independent and dependent variable space (`independent_table_id` and `dependent_setting_id`), one dependent variable `dependent_var_id`, one iteration of the kernel settings (`kernel_setting_id`: `dsx`, `dsy`, `dt`, `g`), one prediction grid point emerging as a combination of spatial grid and search timeslice (`pred_grid_id`: `field_id`, `field_geo_id`, `field_x`, `field_y`, `field_z`, `search_time`) and finally one search sample (`search_id`, `search_x`, `search_y`, `search_z`, `search_measured`).
  
 Here is a list of the variables returned in `mobest_locateoverview` for each of these result iterations.
 
@@ -495,7 +495,7 @@ Here is a list of the variables returned in `mobest_locateoverview` for each of 
 |probability          |Probability density for `search_measured` given all other parameters|
 : {tbl-colwidths="[20,80]"}
 
-The number of rows in a `mobest_locateoverview` table can be calculated as a **product of the individual permutations**. For our example this calculation is fairly simple:
+As a result of the permutation of parameters, the size of the prediction grid and the number of search points, the number of rows in a `mobest_locateoverview` table can be calculated as a product of the individual counts of all relevant entities. One way to quickly validate the output of `locate()` and `locate_multi()` is to calculate the number of expected results based on the input and compare it with the actual number of rows in the output. For our example this calculation is fairly simple:
 
 We have:
 
@@ -507,7 +507,7 @@ We have:
 - $1$ time slice of interest
 - $1$ search sample
 
-This means **we expect exactly $2 * 4738 = 9476$ rows** in `search_result`, which we can confirm with `nrow(search_result)`. 
+This means we expect exactly $2 * 4738 = 9476$ rows in `search_result`, which we can confirm with `nrow(search_result)`. 
 
 ### Creating similarity probability maps for individual dependent variables
 
