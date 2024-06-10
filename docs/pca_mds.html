@@ -9,7 +9,7 @@
 <meta name="author" content="Martyna Molak &amp; Thiseas C. Lamnidis">
 <meta name="dcterms.date" content="2023-12-07">
 
-<title>Computational Methods for human population genetics and ancient DNA - 6&nbsp; Dimensionality reduction using PCA and MDS</title>
+<title>Computational Methods for human population genetics and ancient DNA - 7&nbsp; Dimensionality reduction using PCA and MDS</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -129,7 +129,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pca_mds.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./pca_mds.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -186,20 +186,26 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./mobest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">mobest - Spatiotemporal Ancestry Interpolation and Search</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./fst.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pca_mds.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pmrread.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Pairwise mismatch rate (PMR) and READ relatedness inference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Pairwise mismatch rate (PMR) and READ relatedness inference</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -218,23 +224,23 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#theory" id="toc-theory" class="nav-link active" data-scroll-target="#theory"><span class="header-section-number">6.1</span> Theory</a>
+  <li><a href="#theory" id="toc-theory" class="nav-link active" data-scroll-target="#theory"><span class="header-section-number">7.1</span> Theory</a>
   <ul class="collapse">
-  <li><a href="#rationale" id="toc-rationale" class="nav-link" data-scroll-target="#rationale"><span class="header-section-number">6.1.1</span> Rationale</a></li>
-  <li><a href="#introduction-to-dimension-reduction" id="toc-introduction-to-dimension-reduction" class="nav-link" data-scroll-target="#introduction-to-dimension-reduction"><span class="header-section-number">6.1.2</span> Introduction to dimension reduction</a></li>
-  <li><a href="#the-problem-with-missing-data" id="toc-the-problem-with-missing-data" class="nav-link" data-scroll-target="#the-problem-with-missing-data"><span class="header-section-number">6.1.3</span> The problem with missing data</a></li>
-  <li><a href="#projection" id="toc-projection" class="nav-link" data-scroll-target="#projection"><span class="header-section-number">6.1.4</span> Projection</a></li>
-  <li><a href="#shrinkage" id="toc-shrinkage" class="nav-link" data-scroll-target="#shrinkage"><span class="header-section-number">6.1.5</span> Shrinkage</a></li>
+  <li><a href="#rationale" id="toc-rationale" class="nav-link" data-scroll-target="#rationale"><span class="header-section-number">7.1.1</span> Rationale</a></li>
+  <li><a href="#introduction-to-dimension-reduction" id="toc-introduction-to-dimension-reduction" class="nav-link" data-scroll-target="#introduction-to-dimension-reduction"><span class="header-section-number">7.1.2</span> Introduction to dimension reduction</a></li>
+  <li><a href="#the-problem-with-missing-data" id="toc-the-problem-with-missing-data" class="nav-link" data-scroll-target="#the-problem-with-missing-data"><span class="header-section-number">7.1.3</span> The problem with missing data</a></li>
+  <li><a href="#projection" id="toc-projection" class="nav-link" data-scroll-target="#projection"><span class="header-section-number">7.1.4</span> Projection</a></li>
+  <li><a href="#shrinkage" id="toc-shrinkage" class="nav-link" data-scroll-target="#shrinkage"><span class="header-section-number">7.1.5</span> Shrinkage</a></li>
   </ul></li>
-  <li><a href="#practice" id="toc-practice" class="nav-link" data-scroll-target="#practice"><span class="header-section-number">6.2</span> Practice</a>
+  <li><a href="#practice" id="toc-practice" class="nav-link" data-scroll-target="#practice"><span class="header-section-number">7.2</span> Practice</a>
   <ul class="collapse">
-  <li><a href="#preparation" id="toc-preparation" class="nav-link" data-scroll-target="#preparation"><span class="header-section-number">6.2.1</span> Preparation</a></li>
-  <li><a href="#run-pca" id="toc-run-pca" class="nav-link" data-scroll-target="#run-pca"><span class="header-section-number">6.2.2</span> Run PCA</a></li>
-  <li><a href="#plot-pca" id="toc-plot-pca" class="nav-link" data-scroll-target="#plot-pca"><span class="header-section-number">6.2.3</span> Plot PCA</a></li>
-  <li><a href="#plink-mds" id="toc-plink-mds" class="nav-link" data-scroll-target="#plink-mds"><span class="header-section-number">6.2.4</span> PLINK MDS</a></li>
-  <li><a href="#compare-plots" id="toc-compare-plots" class="nav-link" data-scroll-target="#compare-plots"><span class="header-section-number">6.2.5</span> Compare plots</a></li>
+  <li><a href="#preparation" id="toc-preparation" class="nav-link" data-scroll-target="#preparation"><span class="header-section-number">7.2.1</span> Preparation</a></li>
+  <li><a href="#run-pca" id="toc-run-pca" class="nav-link" data-scroll-target="#run-pca"><span class="header-section-number">7.2.2</span> Run PCA</a></li>
+  <li><a href="#plot-pca" id="toc-plot-pca" class="nav-link" data-scroll-target="#plot-pca"><span class="header-section-number">7.2.3</span> Plot PCA</a></li>
+  <li><a href="#plink-mds" id="toc-plink-mds" class="nav-link" data-scroll-target="#plink-mds"><span class="header-section-number">7.2.4</span> PLINK MDS</a></li>
+  <li><a href="#compare-plots" id="toc-compare-plots" class="nav-link" data-scroll-target="#compare-plots"><span class="header-section-number">7.2.5</span> Compare plots</a></li>
   </ul></li>
-  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">6.3</span> Conclusions</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">7.3</span> Conclusions</a></li>
   </ul>
 </nav>
     </div>
@@ -243,7 +249,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></h1>
 </div>
 
 
@@ -270,8 +276,8 @@ div.csl-indent {
 
 </header>
 
-<section id="theory" class="level2 page-columns page-full" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="theory"><span class="header-section-number">6.1</span> Theory</h2>
+<section id="theory" class="level2 page-columns page-full" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="theory"><span class="header-section-number">7.1</span> Theory</h2>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -318,14 +324,14 @@ Comparison of PCA and MDS
 </div>
 </div>
 </div>
-<section id="rationale" class="level3 page-columns page-full" data-number="6.1.1">
-<h3 data-number="6.1.1" class="anchored" data-anchor-id="rationale"><span class="header-section-number">6.1.1</span> Rationale</h3>
+<section id="rationale" class="level3 page-columns page-full" data-number="7.1.1">
+<h3 data-number="7.1.1" class="anchored" data-anchor-id="rationale"><span class="header-section-number">7.1.1</span> Rationale</h3>
 <p>The datasets used in human ancient DNA analysis are often extremely multidimensional, often including data from thousands of individuals, across hundreds of thousands (or millions!) of single nucleotide polymrphisms (SNPs) <span class="citation" data-cites="Mallick2023">(<a href="references.html#ref-Mallick2023" role="doc-biblioref">Mallick et al. 2023</a>)</span>. Even when choosing to summarise this genome-wide information to single statistics of genetic similarity (e.g.&nbsp;with Outgroup F3), a similarity matrix across individuals can become very large when comparing across hundreds of individuals. As the name implies, dimensionality reduction methods can reduce the number of dimensions in the underlying data, while also aiming to minimise the loss of information. The two such methods we will focus on in this tutorial are <strong>Principal Component Analysis (PCA)</strong> and <strong>Multi-Dimensional Scaling (MDS)</strong>. Both methods reveal structure within the dataset, and part of that structure is due to shared population history between individuals/populations. It is for that reason that both these methods are indispensible parts of an archaeogeneticist’s toolkit.</p>
 <div class="no-row-height column-margin column-container"><div id="ref-Mallick2023" class="csl-entry" role="listitem">
 Mallick, Swapan, Adam Micco, Matthew Mah, Harald Ringbauer, Iosif Lazaridis, Iñigo Olalde, Nick Patterson, and David Reich. 2023. <span>“The Allen Ancient <span>DNA</span> Resource (<span>AADR</span>): A Curated Compendium of Ancient Human Genomes,”</span> April. <a href="https://doi.org/10.1101/2023.04.06.535797">https://doi.org/10.1101/2023.04.06.535797</a>.
 </div></div></section>
-<section id="introduction-to-dimension-reduction" class="level3" data-number="6.1.2">
-<h3 data-number="6.1.2" class="anchored" data-anchor-id="introduction-to-dimension-reduction"><span class="header-section-number">6.1.2</span> Introduction to dimension reduction</h3>
+<section id="introduction-to-dimension-reduction" class="level3" data-number="7.1.2">
+<h3 data-number="7.1.2" class="anchored" data-anchor-id="introduction-to-dimension-reduction"><span class="header-section-number">7.1.2</span> Introduction to dimension reduction</h3>
 <p>When using either of these methods, we are essentially representing the data on a new set of <strong>orthogonal</strong> axes, with its origin in the center of the data. In PCA we typically use the original data for this transformation (i.e.&nbsp;the genotype matrix), and attempt to find the axes that capture the most variation among the samples. A covariance matrix (i.e.&nbsp;a similarity matrix) is often calculated and used as a useful intermediate step in PCA. Instead, in MDS we start with a pairwise distance matrix (typically a matrix of 1-F3), and attempt to find a spatial representation that best captures the distances between points.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -335,15 +341,15 @@ Mallick, Swapan, Adam Micco, Matthew Mah, Harald Ringbauer, Iosif Lazaridis, Iñ
 </div>
 <p>The results of both of these methods are (usually) a 2 dimensional plot in which the distances between individual points roughly correlates to the genetic distance between these individuals. Therefore, genetically similar individuals will be plotted close to one another, and further away from individuals that are more genetically dissimilar.</p>
 </section>
-<section id="the-problem-with-missing-data" class="level3 page-columns page-full" data-number="6.1.3">
-<h3 data-number="6.1.3" class="anchored" data-anchor-id="the-problem-with-missing-data"><span class="header-section-number">6.1.3</span> The problem with missing data</h3>
+<section id="the-problem-with-missing-data" class="level3 page-columns page-full" data-number="7.1.3">
+<h3 data-number="7.1.3" class="anchored" data-anchor-id="the-problem-with-missing-data"><span class="header-section-number">7.1.3</span> The problem with missing data</h3>
 <p>A recurring issue when analysing ancient DNA is the high degree of missing data (i.e.&nbsp;missingness). We often apply a minimum coverage filter to our datasets: A generally accepted rule-of-thumb for the 1240K dataset is a minimum of 15 000 covered (i.e.&nbsp;non-missing) SNPs. Another way to express this cutoff is to say that we will “happily” analyse data that is missing a genotype call in <strong>98.8%</strong> of all SNPs in the dataset! So how does this high rate of missingness affect MDS and PCA?</p>
-<section id="mds" class="level4" data-number="6.1.3.1">
-<h4 data-number="6.1.3.1" class="anchored" data-anchor-id="mds"><span class="header-section-number">6.1.3.1</span> MDS</h4>
+<section id="mds" class="level4" data-number="7.1.3.1">
+<h4 data-number="7.1.3.1" class="anchored" data-anchor-id="mds"><span class="header-section-number">7.1.3.1</span> MDS</h4>
 <p>Missingness does not affect MDS as adversely as it does PCA, on account of the use of a pairwise distance matrix of 1-F3. This matrix will only have missing values in cases where there is no overlapping coverage between two individuals/populations used in an F3 statistic. Instead, the issue with MDS is that all F3 statistics are treated as equally reliable, regardless of their associated error bar.</p>
 </section>
-<section id="pca" class="level4 page-columns page-full" data-number="6.1.3.2">
-<h4 data-number="6.1.3.2" class="anchored" data-anchor-id="pca"><span class="header-section-number">6.1.3.2</span> PCA</h4>
+<section id="pca" class="level4 page-columns page-full" data-number="7.1.3.2">
+<h4 data-number="7.1.3.2" class="anchored" data-anchor-id="pca"><span class="header-section-number">7.1.3.2</span> PCA</h4>
 <p>Unlike MDS, PCA is severely affected by missing data. During the rescaling of the data around its own mean values, missing data is “filled-in” to the mean value (mean imputation). This can cause points to shift towards the origin by a distance relative to the degree of missingness.</p>
 <p>Below is a plot of the results of PCA on a dataset of differnt worldwide populations <span class="citation" data-cites="Reich2012">(<a href="references.html#ref-Reich2012" role="doc-biblioref">Reich et al. 2012</a>)</span>. In an attempt to limit the effects of colonial admixture on the studied Native American populations, the authors masked parts of the genomes of Native Americans that matched the European or African populations in their dataset, replacing those genotypes with missing data.</p>
 <div class="no-row-height column-margin column-container"><div id="ref-Reich2012" class="csl-entry" role="listitem">
@@ -357,8 +363,8 @@ Reich, David, Nick Patterson, Desmond Campbell, Arti Tandon, Stéphane Mazieres,
 <p>As you can see, individuals whose genotypes were masked are shifted towards the plot’s origin. So how can we use PCA with ancient samples that have high degrees of missingness? The answer is by using a <strong>L</strong>east <strong>Sq</strong>uares <strong>Project</strong>ion, a.k.a. <code>lsqproject</code>!</p>
 </section>
 </section>
-<section id="projection" class="level3" data-number="6.1.4">
-<h3 data-number="6.1.4" class="anchored" data-anchor-id="projection"><span class="header-section-number">6.1.4</span> Projection</h3>
+<section id="projection" class="level3" data-number="7.1.4">
+<h3 data-number="7.1.4" class="anchored" data-anchor-id="projection"><span class="header-section-number">7.1.4</span> Projection</h3>
 <p>The idea of projection is simple, and applies similarly to both PCA and MDS. In PCA, you use a subset of the dataset to calculate your axes of variation, and then apply the resulting transformation to additional data, thus projecting them onto those axes. The important detail is that the variation between projected individuals is not taken into account when deciding which the axes of maximal variation are. Similarly, in MDS you project points to the MDS space based on their distances to the points that constructed the space, disregarding the distances of the projected points to one another.</p>
 <p>Below is a PCA plot calculated on present-day West Eurasian populations together with some Mesolithic hunter-gatherer individuals (in light brown). In the right side plot, the ancient individuals have been included in the calculation of the principal components, while in the left side they are projected on the principal components of the present-day West Eurasians.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -374,8 +380,8 @@ Reich, David, Nick Patterson, Desmond Campbell, Arti Tandon, Stéphane Mazieres,
 </ul>
 <p>The degree of missingness in the Western European hunter-gatherers (WHG) is relatively low, and hence the shift in their placement between the two plots is not the result of mean imputation. Instead, when projected the WHG illustrate the effects of <strong>shrinkage</strong>.</p>
 </section>
-<section id="shrinkage" class="level3" data-number="6.1.5">
-<h3 data-number="6.1.5" class="anchored" data-anchor-id="shrinkage"><span class="header-section-number">6.1.5</span> Shrinkage</h3>
+<section id="shrinkage" class="level3" data-number="7.1.5">
+<h3 data-number="7.1.5" class="anchored" data-anchor-id="shrinkage"><span class="header-section-number">7.1.5</span> Shrinkage</h3>
 <p>Shrinkage comes in two flavours:</p>
 <ul>
 <li><p>The kind of shrinkage you saw with the WHGs above, is pretty intuitive. When projecting populations on axes of variation that do not capture all the variation of the projected populations, they will appear as if they have less variation than reality. This translates to the points “shrinking” towards the origin slightly. that is to say, because the WHG individuals come from a population that harboured far more genetic variation than is present within present-day West Eurasian populations, much of their true variation is “hidden” when projecting them.</p></li>
@@ -398,12 +404,12 @@ Reich, David, Nick Patterson, Desmond Campbell, Arti Tandon, Stéphane Mazieres,
 <p>As a note of caution, <code>shrinkmode: Yes</code> increases the runtime greatly. An alternative would be to identify specific present-day populations that are of interest for the ancient-to-modern comparison, and project those as well. So, for example, if we were to compare Iron Age individuals from Germany with present-day individuals from Germany, then we could decide to take out some or all present-day Germans and project those as well. That would make them fully comparable.</p>
 </section>
 </section>
-<section id="practice" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="practice"><span class="header-section-number">6.2</span> Practice</h2>
-<section id="preparation" class="level3" data-number="6.2.1">
-<h3 data-number="6.2.1" class="anchored" data-anchor-id="preparation"><span class="header-section-number">6.2.1</span> Preparation</h3>
-<section id="get-trident" class="level4" data-number="6.2.1.1">
-<h4 data-number="6.2.1.1" class="anchored" data-anchor-id="get-trident"><span class="header-section-number">6.2.1.1</span> Get trident</h4>
+<section id="practice" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="practice"><span class="header-section-number">7.2</span> Practice</h2>
+<section id="preparation" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="preparation"><span class="header-section-number">7.2.1</span> Preparation</h3>
+<section id="get-trident" class="level4" data-number="7.2.1.1">
+<h4 data-number="7.2.1.1" class="anchored" data-anchor-id="get-trident"><span class="header-section-number">7.2.1.1</span> Get trident</h4>
 <p><a href="https://www.poseidon-adna.org/#/trident">Trident</a> is a <a href="https://www.poseidon-adna.org/#/">Poseidon framework</a> data management tool. It enables downloading Poseidon packages (genomic datasets, usually including ancient individuals, comprising genome-wide SNP data) from the Poseidon server, as well as creating and manipulating such packages.</p>
 <p>trident for Linux:</p>
 <div class="cell">
@@ -433,8 +439,8 @@ Reich, David, Nick Patterson, Desmond Campbell, Arti Tandon, Stéphane Mazieres,
 </p>
 <p>Download <a href="https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Windows.exe">trident-Windows.exe</a> file</p>
 </section>
-<section id="prepare-practise-dataset" class="level4" data-number="6.2.1.2">
-<h4 data-number="6.2.1.2" class="anchored" data-anchor-id="prepare-practise-dataset"><span class="header-section-number">6.2.1.2</span> Prepare practise dataset:</h4>
+<section id="prepare-practise-dataset" class="level4" data-number="7.2.1.2">
+<h4 data-number="7.2.1.2" class="anchored" data-anchor-id="prepare-practise-dataset"><span class="header-section-number">7.2.1.2</span> Prepare practise dataset:</h4>
 <p>Here, we are downloading packages (listed in pca_mds_working/exampleData.fetchFile.txt) file from the Poseidon server into the scratch/poseidon-repository directory. The datasets come from the following publications: <a href="@Patterson2012">Patterson et al.&nbsp;2012</a>, <a href="@Lazaridis2014">Lazaridis et al.&nbsp;2014</a>, <a href="@Raghavan2014">Raghavan et al.&nbsp;2014</a>, and <a href="@JeongNatureEcologyEvolution2019">Jeong et al.&nbsp;2019</a></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> scratch/poseidon-repository</span>
@@ -473,8 +479,8 @@ Reich, David, Nick Patterson, Desmond Campbell, Arti Tandon, Stéphane Mazieres,
 <p>The created repository comprises genomic data for: 111 modern Eurasian populations, 6 modern Native American populations, and 1 Upper Palaeolithic Siberian individual MA-1 (“Mal’ta”).</p>
 </section>
 </section>
-<section id="run-pca" class="level3" data-number="6.2.2">
-<h3 data-number="6.2.2" class="anchored" data-anchor-id="run-pca"><span class="header-section-number">6.2.2</span> Run PCA</h3>
+<section id="run-pca" class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="run-pca"><span class="header-section-number">7.2.2</span> Run PCA</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare parameter file for the smartpca run</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> scratch/smartpca_runs/poplist1 scratch/smartpca_runs/poplist2/</span>
@@ -570,8 +576,8 @@ Reich, David, Nick Patterson, Desmond Campbell, Arti Tandon, Stéphane Mazieres,
 </tbody>
 </table>
 </section>
-<section id="plot-pca" class="level3" data-number="6.2.3">
-<h3 data-number="6.2.3" class="anchored" data-anchor-id="plot-pca"><span class="header-section-number">6.2.3</span> Plot PCA</h3>
+<section id="plot-pca" class="level3" data-number="7.2.3">
+<h3 data-number="7.2.3" class="anchored" data-anchor-id="plot-pca"><span class="header-section-number">7.2.3</span> Plot PCA</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -722,8 +728,8 @@ Reich, David, Nick Patterson, Desmond Campbell, Arti Tandon, Stéphane Mazieres,
 </figure>
 </div>
 </section>
-<section id="plink-mds" class="level3" data-number="6.2.4">
-<h3 data-number="6.2.4" class="anchored" data-anchor-id="plink-mds"><span class="header-section-number">6.2.4</span> PLINK MDS</h3>
+<section id="plink-mds" class="level3" data-number="7.2.4">
+<h3 data-number="7.2.4" class="anchored" data-anchor-id="plink-mds"><span class="header-section-number">7.2.4</span> PLINK MDS</h3>
 <p>Now let’s get an MDS plot for pairwise distances for the same dataset</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">##Convert package to PLINK format</span></span>
@@ -849,8 +855,8 @@ Reich, David, Nick Patterson, Desmond Campbell, Arti Tandon, Stéphane Mazieres,
 </figure>
 </div>
 </section>
-<section id="compare-plots" class="level3" data-number="6.2.5">
-<h3 data-number="6.2.5" class="anchored" data-anchor-id="compare-plots"><span class="header-section-number">6.2.5</span> Compare plots</h3>
+<section id="compare-plots" class="level3" data-number="7.2.5">
+<h3 data-number="7.2.5" class="anchored" data-anchor-id="compare-plots"><span class="header-section-number">7.2.5</span> Compare plots</h3>
 <p>Let’s now sum up, by directly comparing all the plots we have generated:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -868,8 +874,8 @@ Reich, David, Nick Patterson, Desmond Campbell, Arti Tandon, Stéphane Mazieres,
 <p>In MDS the missingness in Mal’ta’s data does not affect its position as it does in PCA. Inclusion of the diverged Native American data in the estimation does cause the decrease of the distances with the Eurasian population along the C2, but the difference between plot E and plot D is not as pronounced as between B and A.</p>
 </section>
 </section>
-<section id="conclusions" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="conclusions"><span class="header-section-number">6.3</span> Conclusions</h2>
+<section id="conclusions" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="conclusions"><span class="header-section-number">7.3</span> Conclusions</h2>
 <p>In PCA it is important to estimate the Eigenvalues using high-coverage samples, hence usually modern datasets, such as the 1000 Genomes Project (1kGP) or Human Genome Diversty Project (HGDP), are used for the estimation and the ancient samples are then projected onto the estimated PCs. Also, as mentioned above in the “Shrinkage” section, it is a good approach to project also some modern data if they are to be directly compared to the ancient samples.</p>
 <p>While MDS will be less sensitive to the effects of missing data, it disregards the uncertainty of the underlying pairwise distance estimates.</p>
 <p>It is thus the best practice to perform both analyses and compare them taking the shortcomings of each into account when interpreting the relative positions of the studied individuals/populations obtained using these methods.</p>
@@ -1115,12 +1121,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./fst.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./pmrread.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Pairwise mismatch rate (PMR) and READ relatedness inference</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Pairwise mismatch rate (PMR) and READ relatedness inference</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

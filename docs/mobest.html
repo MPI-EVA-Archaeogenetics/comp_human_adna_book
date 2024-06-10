@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Clemens Schmid">
+<meta name="dcterms.date" content="2024-03-07">
+
+<title>Computational Methods for human population genetics and ancient DNA - 5&nbsp; mobest - Spatiotemporal Ancestry Interpolation and Search</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./fst.html" rel="next">
+<link href="./eager.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./mobest.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">mobest - Spatiotemporal Ancestry Interpolation and Search</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Computational Methods for human population genetics and ancient DNA</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Quarto_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./poseidon.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Genotype and context data management with Poseidon</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fstats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to F3- and F4-Statistics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eager.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction to nf-core/eager</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mobest.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">mobest - Spatiotemporal Ancestry Interpolation and Search</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fst.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pca_mds.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pmrread.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Pairwise mismatch rate (PMR) and READ relatedness inference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">5.1</span> Overview</a></li>
+  <li><a href="#sec-install" id="toc-sec-install" class="nav-link" data-scroll-target="#sec-install"><span class="header-section-number">5.2</span> Installing mobest</a></li>
+  <li><a href="#sec-basic" id="toc-sec-basic" class="nav-link" data-scroll-target="#sec-basic"><span class="header-section-number">5.3</span> A basic similarity search workflow</a>
+  <ul class="collapse">
+  <li><a href="#preparing-the-computational-environment" id="toc-preparing-the-computational-environment" class="nav-link" data-scroll-target="#preparing-the-computational-environment"><span class="header-section-number">5.3.1</span> Preparing the computational environment</a></li>
+  <li><a href="#preparing-the-input-data" id="toc-preparing-the-input-data" class="nav-link" data-scroll-target="#preparing-the-input-data"><span class="header-section-number">5.3.2</span> Preparing the input data</a></li>
+  <li><a href="#specifying-the-search-sample" id="toc-specifying-the-search-sample" class="nav-link" data-scroll-target="#specifying-the-search-sample"><span class="header-section-number">5.3.3</span> Specifying the search sample</a></li>
+  <li><a href="#running-mobests-interpolation-and-search-function" id="toc-running-mobests-interpolation-and-search-function" class="nav-link" data-scroll-target="#running-mobests-interpolation-and-search-function"><span class="header-section-number">5.3.4</span> Running mobest’s interpolation and search function</a></li>
+  <li><a href="#inspecting-the-computed-results" id="toc-inspecting-the-computed-results" class="nav-link" data-scroll-target="#inspecting-the-computed-results"><span class="header-section-number">5.3.5</span> Inspecting the computed results</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">mobest - Spatiotemporal Ancestry Interpolation and Search</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Clemens Schmid </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 7, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The practical parts <a href="#sec-install"><span>Section&nbsp;5.2</span></a> and <a href="#sec-basic"><span>Section&nbsp;5.3</span></a> of the following introduction are a slightly adjusted version of two sections of the mobest documentation available at <strong><a href="https://nevrome.de/mobest" class="uri">https://nevrome.de/mobest</a></strong>. More advanced topics beyond the most basic usecase are also introduced there.</p>
+</div>
+</div>
+<section id="overview" class="level2 page-columns page-full" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">5.1</span> Overview</h2>
+<p>mobest is an R package providing types and functions for spatiotemporal interpolation of human genetic ancestry components, probabilistic similarity search and the calculation of a derived measure of ancestry relocation and mobility. The workflow in mobest version 1.0.0 was specifically developed for <span class="citation" data-cites="Schmid2023">Schmid and Schiffels (<a href="references.html#ref-Schmid2023" role="doc-biblioref">2023</a>)</span>.</p>
+<div class="no-row-height column-margin column-container"></div><p>mobest assumes you have a set of genetic samples with spatial (two coordinates in a projected reference system) and temporal positions (years BC/AD) for which you calculated a derived, numeric measure of genetic ancestry (e.g.&nbsp;coordinates in a PCA or MDS space).</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="img/mobest/overview_spacetime.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Spatiotemporal distribution of the archaeogenetic samples in <span class="citation" data-cites="Schmid2023">Schmid and Schiffels (<a href="references.html#ref-Schmid2023" role="doc-biblioref">2023</a>)</span>.</figcaption>
+<div class="no-row-height column-margin column-container"></div></figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/mobest/overview_mds.png" class="img-fluid figure-img" style="width:55.0%"></p>
+<figcaption class="figure-caption">Distribution of the archaeogenetic samples in a genetic space constructed via multidimensional scaling.</figcaption>
+</figure>
+</div>
+<p>The package then provides functions to perform spatiotemporal interpolation using Gaussian process regression (GPR, “kriging”) with the laGP R package (<span class="citation" data-cites="Gramacy2016">Gramacy (<a href="references.html#ref-Gramacy2016" role="doc-biblioref">2016</a>)</span>) to reconstruct an ancestry field based on the ancestry measure you provided.</p>
+<div class="no-row-height column-margin column-container"><div id="ref-Gramacy2016" class="csl-entry" role="listitem">
+Gramacy, Robert B. 2016. <span>“<span class="nocase">laGP</span>: Large-Scale Spatial Modeling via Local Approximate Gaussian Processes in <span>R</span>.”</span> <em>Journal of Statistical Software</em> 72 (1): 1–46. <a href="https://doi.org/10.18637/jss.v072.i01">https://doi.org/10.18637/jss.v072.i01</a>.
+</div></div><div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/mobest/overview_3D_1.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Sparse point cloud in space and time.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/mobest/overview_3D_2.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Dense cloud after interpolation.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/mobest/overview_3D_3.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">One timeslice of the interpolated field.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/mobest/overview_3D_4.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Interpolated C1 mean and error for this timeslice.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>mobest finally allows to derive a similarity likelihood for samples of interest within the interpolated field, which – under certain circumstances – can be interpreted as an origin probability.</p>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/mobest/overview_3D_5.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">“Cutting the field”, so measuring the likelihoods for a specific ancestry profile (C1 value) for every grid point in space.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/mobest/search_map_Stuttgart.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Similarity probability for the <em>Stuttgart</em> sample calculated for the time slice at 5600 BC with two MDS-based ancestry components C1 and C2.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>The <em>Stuttgart</em> sample used for illustrative purposes here was taken from an Early Neolithic individual from Southern Germany and first published in <span class="citation" data-cites="Lazaridis2014">Lazaridis et al. (<a href="references.html#ref-Lazaridis2014" role="doc-biblioref">2014</a>)</span>.</p>
+<div class="no-row-height column-margin column-container"></div></section>
+<section id="sec-install" class="level2 page-columns page-full" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="sec-install"><span class="header-section-number">5.2</span> Installing mobest</h2>
+<p>mobest is an R package and can be installed directly from GitHub with the following code on the R console:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">require</span>(<span class="st">'remotes'</span>)) <span class="fu">install.packages</span>(<span class="st">'remotes'</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">'nevrome/mobest'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can also install specific/older versions of mobest with the following syntax: <code>nevrome/mobest[@ref|#pull|@*release]</code>. For example to install the publication release version you can run <code>remotes::install_github('nevrome/mobest@1.0.0')</code>.</p>
+<p>For any of this to work a number of system libraries (mostly for processing geospatial data) have to be installed on your system, primarily for one particular dependency of mobest: the <code>sf</code> R package (<span class="citation" data-cites="Pebesma2018">Pebesma (<a href="references.html#ref-Pebesma2018" role="doc-biblioref">2018</a>)</span>). The following table includes the libraries and the names of the relevant packages in the package management systems of various Linux distributions and MacOS.</p>
+<div class="no-row-height column-margin column-container"><div id="ref-Pebesma2018" class="csl-entry" role="listitem">
+Pebesma, Edzer. 2018. <span>“<span class="nocase">Simple Features for R: Standardized Support for Spatial Vector Data</span>.”</span> <em><span>The R Journal</span></em> 10 (1): 439–46. <a href="https://doi.org/10.32614/RJ-2018-009">https://doi.org/10.32614/RJ-2018-009</a>.
+</div></div><table class="table">
+<thead>
+<tr class="header">
+<th>System library</th>
+<th>deb package<br>(Ubuntu/Debian)</th>
+<th>rpm package<br>(Fedora/CentOS)</th>
+<th>pkgbuild package<br>(Arch)</th>
+<th>brew package<br>(MacOS)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="https://gdal.org">GDAL</a></td>
+<td>libgdal-dev</td>
+<td>gdal</td>
+<td>gdal</td>
+<td>gdal</td>
+</tr>
+<tr class="even">
+<td><a href="https://libgeos.org/">GEOS</a></td>
+<td>libgeos-dev<br>libgeos++-dev</td>
+<td>geos-devel</td>
+<td>geos</td>
+<td>geos</td>
+</tr>
+<tr class="odd">
+<td><a href="https://proj.org">PROJ</a></td>
+<td>libproj-dev</td>
+<td>proj-devel<br>sqlite-devel</td>
+<td>proj</td>
+<td>proj</td>
+</tr>
+<tr class="even">
+<td><a href="https://www.unidata.ucar.edu/software/udunits/">UDUNITS-2</a></td>
+<td>libudunits2-dev</td>
+<td>udunits</td>
+<td>udunits</td>
+<td>udunits</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>sf</code> package maintainers provide a good explanation how to install these: <a href="https://r-spatial.github.io/sf/#installing" class="uri">https://r-spatial.github.io/sf/#installing</a></p>
+</section>
+<section id="sec-basic" class="level2 page-columns page-full" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="sec-basic"><span class="header-section-number">5.3</span> A basic similarity search workflow</h2>
+<p>This section explains the setup for a basic ancestry similarity search with mobest in R.</p>
+<p>For didactic purposes we use a simplified version of the data and code generated for the publication that introduced mobest: <span class="citation" data-cites="Schmid2023">Schmid and Schiffels (<a href="references.html#ref-Schmid2023" role="doc-biblioref">2023</a>)</span> . This is a fairly generic setup you can adjust to the needs of other and more specific projects.</p>
+<div class="no-row-height column-margin column-container"></div><p>The script explained in the following sections as well as the data required for it can be downloaded in its entirety here:</p>
+<ul>
+<li><a href="https://nevrome.de/mobest/html/master/_downloads/bd4196d81560314ca988325dbbf9e8ca/similarity_search.R">similarity_search.R</a></li>
+<li><a href="https://nevrome.de/mobest/html/master/_downloads/6993cd8a8dddf005e4d1d25c41e7c8ad/samples_basic.csv">samples_basic.csv</a></li>
+</ul>
+<section id="preparing-the-computational-environment" class="level3 page-columns page-full" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="preparing-the-computational-environment"><span class="header-section-number">5.3.1</span> Preparing the computational environment</h3>
+<p>For this script we use various packages beyond base R, among which the following ones are required:</p>
+<ul>
+<li><code>readr</code> for loading .csv input data</li>
+<li><code>magrittr</code> for the pipe operator <code>%&gt;%</code></li>
+<li><code>sf</code> for loading and manipulating spatial data</li>
+<li><code>rnaturalearth</code> for downloading spatial reference data (<span class="citation" data-cites="Massicotte2024">Massicotte and South (<a href="references.html#ref-Massicotte2024" role="doc-biblioref">2024</a>)</span>)</li>
+<li><code>ggplot2</code> (and <code>cowplot</code>) to visualize intermediate and final results (<span class="citation" data-cites="Wilke2024">Wilke (<a href="references.html#ref-Wilke2024" role="doc-biblioref">2024</a>)</span>)</li>
+<li><code>dplyr</code> for data manipulation of <code>data.frame</code>s</li>
+<li><code>mobest</code> (obviously)</li>
+</ul>
+<div class="no-row-height column-margin column-container"><div id="ref-Massicotte2024" class="csl-entry" role="listitem">
+Massicotte, Philippe, and Andy South. 2024. <em>Rnaturalearth: World Map Data from Natural Earth</em>. <a href="https://docs.ropensci.org/rnaturalearth/">https://docs.ropensci.org/rnaturalearth/</a>.
+</div><div id="ref-Wilke2024" class="csl-entry" role="listitem">
+Wilke, Claus O. 2024. <em>Cowplot: Streamlined Plot Theme and Plot Annotations for ’Ggplot2’</em>. <a href="https://wilkelab.org/cowplot/">https://wilkelab.org/cowplot/</a>.
+</div><div id="ref-Wickham2019" class="csl-entry" role="listitem">
+Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019. <span>“Welcome to the <span class="nocase">tidyverse</span>.”</span> <em>Journal of Open Source Software</em> 4 (43): 1686. <a href="https://doi.org/10.21105/joss.01686">https://doi.org/10.21105/joss.01686</a>.
+</div></div><p><code>readr</code>, <code>magrittr</code>, <code>ggplot2</code> and <code>dplyr</code> are all in the <a href="https://www.tidyverse.org">tidyverse</a> (<span class="citation" data-cites="Wickham2019">Wickham et al. (<a href="references.html#ref-Wickham2019" role="doc-biblioref">2019</a>)</span>) and can be installed in one go with <code>install.packages("tidyverse")</code> on the R console. For the installation of <code>sf</code> and <code>mobest</code> please see the instructions above.</p>
+<p>We will generally call functions explicitly with their namespace using <code>::</code> (so e.g.&nbsp;<code>readr::read_csv()</code>). The only exceptions are <code>magrittr</code> and <code>ggplot2</code>, because we will use their functions so often that it becomes tedious to type them out. Instead we load them at the beginning.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="preparing-the-input-data" class="level3 page-columns page-full" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="preparing-the-input-data"><span class="header-section-number">5.3.2</span> Preparing the input data</h3>
+<section id="generating-the-the-spatial-prediction-grid" class="level4 page-columns page-full" data-number="5.3.2.1">
+<h4 data-number="5.3.2.1" class="anchored" data-anchor-id="generating-the-the-spatial-prediction-grid"><span class="header-section-number">5.3.2.1</span> Generating the the spatial prediction grid</h4>
+<p>mobest’s similarity search is typically run for a regular grid of spatial positions in the area of interest. It provides a function, <code>mobest::create_prediction_grid()</code>, to create such a grid, given a specification of the desired area. This area is typically the land area in a certain part of planet Earth.</p>
+<section id="defining-the-research-area" class="level5 page-columns page-full" data-number="5.3.2.1.1">
+<h5 data-number="5.3.2.1.1" class="anchored" data-anchor-id="defining-the-research-area"><span class="header-section-number">5.3.2.1.1</span> Defining the research area</h5>
+<p>In a first step we therefore have to define the research area for our analysis as a polygon in space. One way of doing so is to provide a list of latitude and longitude coordinates (extracted e.g.&nbsp;from <a href="https://support.google.com/maps/answer/18539">Google Maps</a>). The following code defines a simple research area covering large parts of Western Eurasia.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>research_area_4326 <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_polygon</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cbind</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="fl">35.91</span>,<span class="fl">11.73</span>,<span class="sc">-</span><span class="fl">11.74</span>,<span class="sc">-</span><span class="fl">15.47</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="fl">37.06</span>,<span class="fl">49.26</span>,<span class="fl">49.56</span>,<span class="fl">35.91</span>), <span class="co"># longitudes</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">c</span>(<span class="fl">25.61</span>,<span class="fl">28.94</span>,<span class="fl">31.77</span>, <span class="fl">62.73</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="fl">65.67</span>,<span class="fl">44.56</span>,<span class="fl">28.55</span>,<span class="fl">25.61</span>)  <span class="co"># latitudes</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> sf<span class="sc">::</span><span class="fu">st_sfc</span>(<span class="at">crs =</span> <span class="dv">4326</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Spatial coordinates require a coordinate references system (CRS). For lat-lon coordinates we typically use <a href="https://en.wikipedia.org/wiki/World_Geodetic_System#WGS84">WGS84</a> with the <a href="https://en.wikipedia.org/wiki/EPSG_Geodetic_Parameter_Dataset">EPSG code</a> 4326. <code>st_polygon()</code> creates a simple polygon as a clockwise arrangement of individual coordinates and <code>st_sfc()</code> properly defines this polygon as a geographic area on Earth.</p>
+<p>A simple way to interactively inspect this polygon on a world map in R is provided by the <code>mapview</code> package (<span class="citation" data-cites="Appelhans2023">Appelhans et al. (<a href="references.html#ref-Appelhans2023" role="doc-biblioref">2023</a>)</span>): <code>mapview::mapview(research_area_4326)</code>.</p>
+<div class="no-row-height column-margin column-container"><div id="ref-Appelhans2023" class="csl-entry" role="listitem">
+Appelhans, Tim, Florian Detsch, Christoph Reudenbach, and Stefan Woellauer. 2023. <em>Mapview: Interactive Viewing of Spatial Data in r</em>. <a href="https://github.com/r-spatial/mapview">https://github.com/r-spatial/mapview</a>.
+</div></div><div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/mobest/mapview_research_area.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">The defined research area plotted on top of a map.</figcaption>
+</figure>
+</div>
+<p>With the research area properly defined we can move to the next challenge and extract the land area in the research area. For that we have to obtain a dataset with polygons that trace the world’s coastlines. The <a href="https://www.naturalearthdata.com">naturalearthdata</a> project provides open worldwide geodata in different resolutions and in easy to use data formats.</p>
+<p>The <code>rnaturalearth</code> package makes it easy to download this data right into <code>sf</code> objects in R.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>worldwide_land_outline_4326 <span class="ot">&lt;-</span> rnaturalearth<span class="sc">::</span><span class="fu">ne_download</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">scale =</span> <span class="dv">50</span>, <span class="at">type =</span> <span class="st">'land'</span>, <span class="at">category =</span> <span class="st">'physical'</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">returnclass =</span> <span class="st">"sf"</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We can then crop the land outline to the research area to obtain the land area we are interested in.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>research_land_outline_4326 <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_intersection</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  worldwide_land_outline_4326,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  research_area_4326</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Using <code>ggplot2</code>, we can finally plot the resulting spatial multi-polygon.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data =</span> research_land_outline_4326)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/mobest/research_area_land_outline_4326.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">The land area within the research area.</figcaption>
+</figure>
+</div>
+</section>
+<section id="projecting-the-spatial-data" class="level5 page-columns page-full" data-number="5.3.2.1.2">
+<h5 data-number="5.3.2.1.2" class="anchored" data-anchor-id="projecting-the-spatial-data"><span class="header-section-number">5.3.2.1.2</span> Projecting the spatial data</h5>
+<p>At this point we run into a specific issue of mobest: It requires its “independent” spatial and temporal coordinates to be coordinates in a <a href="https://en.wikipedia.org/wiki/Cartesian_coordinate_system">Cartesian system</a> describing <a href="https://en.wikipedia.org/wiki/Euclidean_space">Euclidean space</a>.</p>
+<p>For the spatial coordinates that means we can not work with latitude and longitude coordinates on a sphere, but have to transform them. We have to apply <a href="https://en.wikipedia.org/wiki/Map_projection">map projection</a> to represent the curved, two dimensional surface of our planet on a simple plane.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The question how exactly this should be done and which CRS to choose depends on the position, size and shape of the research area. Each map projection algorithm has different properties regarding whether they manage to preserve or distort size, shape, distances and directions of areas and lines compared to the actual circumstances on Earth. Generally the larger the research area the bigger the distortion of these properties becomes.</p>
+<p>But for mobest we ideally want to represent all them accurately. mobest is therefore unfit for origin search on a global scale, but can usually be well applied for individual countries with the projections recommended by their cartographic agencies. For an intermediate, continental scale, as in this example, we have to choose our CRS wisely.</p>
+</div>
+</div>
+<p>We decided to follow the recommendation of <span class="citation" data-cites="Annoni2003">Annoni et al. (<a href="references.html#ref-Annoni2003" role="doc-biblioref">2003</a>)</span> and chose ETRS89 Lambert Azimuthal Equal Area coordinate reference system as in EPSG code <a href="https://epsg.io/3035">3035</a>.</p>
+<div class="no-row-height column-margin column-container"><div id="ref-Annoni2003" class="csl-entry" role="listitem">
+Annoni, A. et al. 2003. <span>“Map Projections for Europe.”</span> Technical Report EUR 20120 EN. European Commission Joint Research Centre. <a href="http://mapref.org/LinkedDocuments/MapProjectionsForEurope-EUR-20120.pdf">http://mapref.org/LinkedDocuments/MapProjectionsForEurope-EUR-20120.pdf</a>.
+</div><div id="ref-Tsoulos2003" class="csl-entry" role="listitem">
+Tsoulos, Lysandros. 2003. <span>“An Equal Area Projection for Statistical Mapping in the EU.”</span> In <em>Map Projections for Europe</em>, edited by A. Annoni et al., 50–55. European Commission Joint Research Centre. <a href="http://mapref.org/LinkedDocuments/MapProjectionsForEurope-EUR-20120.pdf">http://mapref.org/LinkedDocuments/MapProjectionsForEurope-EUR-20120.pdf</a>.
+</div></div><p>Our decision comes at the price of increased inaccuracy especially in the North- and South-East of the research area where we get very far away from the specified centre for EPSG:3035 at 52° latitude and 10° longitude (see <span class="citation" data-cites="Tsoulos2003">Tsoulos (<a href="references.html#ref-Tsoulos2003" role="doc-biblioref">2003</a>)</span> p.53 for a visualization of the deformative effects).</p>
+<p>To transform the land outline in the research area from EPSG:4326 to EPSG:3035 we can apply <code>sf::st_transform()</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>research_land_outline_3035 <span class="ot">&lt;-</span> research_land_outline_4326 <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  sf<span class="sc">::</span><span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="dv">3035</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note how the change in the coordinate system affects the map plot.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">geom_sf</span>(<span class="at">data =</span> research_land_outline_3035)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/mobest/research_area_land_outline_3035.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">The research area land polygon now transformed to EPSG:3035.</figcaption>
+</figure>
+</div>
+</section>
+<section id="creating-the-prediction-grid" class="level5" data-number="5.3.2.1.3">
+<h5 data-number="5.3.2.1.3" class="anchored" data-anchor-id="creating-the-prediction-grid"><span class="header-section-number">5.3.2.1.3</span> Creating the prediction grid</h5>
+<p>To finally create the prediction grid we can use <code>mobest::create_prediction_grid()</code>. It takes the land outline polygon and overlays its bounding box with a regular grid (using <code>sf::st_make_grid()</code>), where each cell has the size corresponding to the <code>spatial_cell_size</code> parameter. It then determines the centres of each grid cell and crops the resulting, regular point cloud with the land area.</p>
+<p>Note that <code>spatial_cell_size</code> uses the unit of the CRS, so in our case for EPSG:3035 <em>meters</em>. That means a value of 50000 translates to one point every 50km.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>spatial_pred_grid <span class="ot">&lt;-</span> mobest<span class="sc">::</span><span class="fu">create_prediction_grid</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  research_land_outline_3035,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">spatial_cell_size =</span> <span class="dv">50000</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The total number of resulting spatial prediction positions is 4738 in this example.</p>
+<p><code>create_prediction_grid</code> returns an object of class <code>mobest_spatialpositions</code>, which is derived from <code>tibble::tibble()</code>. That means we can print it on the R console and it will behave as a <a href="https://tibble.tidyverse.org"><code>tibble</code></a>. It will also work seamlessly as an input for <code>ggplot2</code>, which we can now use to visualize the point cloud.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> research_land_outline_3035) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> spatial_pred_grid,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(x, y),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"red"</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.25</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/mobest/spatial_prediction_grid.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">The 4738 spatial prediction grid points plotted on top of the land area.</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="reading-the-input-samples" class="level4 page-columns page-full" data-number="5.3.2.2">
+<h4 data-number="5.3.2.2" class="anchored" data-anchor-id="reading-the-input-samples"><span class="header-section-number">5.3.2.2</span> Reading the input samples</h4>
+<p>mobest requires a set of data points, archaeogenetic samples, to inform the ancestry field interpolation. For each sample the position in space, time and a dependent variable space (e.g.&nbsp;the coordinates in a PCA analysis) must be known. This information must be provided in a specific format. A typical mobest workflow involves preparing a sample list in a .xlsx or .csv table, which could then be read into R and transformed to the correct format.</p>
+<p>For this tutorial we rely on the data used and published in <span class="citation" data-cites="Schmid2023">Schmid and Schiffels (<a href="references.html#ref-Schmid2023" role="doc-biblioref">2023</a>)</span>. You can download a simplified version of this dataset here (<a href="https://nevrome.de/mobest/html/master/_downloads/6993cd8a8dddf005e4d1d25c41e7c8ad/samples_basic.csv"><code>samples_basic.csv</code></a>) and load it into R.</p>
+<div class="no-row-height column-margin column-container"></div><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>samples_basic <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"path/to/your/downloaded/samples_basic.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>samples_basic</code> includes the following columns/variables:</p>
+<table class="table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 10%">
+<col style="width: 70%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sample_ID</td>
+<td>chr</td>
+<td>A sample identifier</td>
+</tr>
+<tr class="even">
+<td>Latitude</td>
+<td>dbl</td>
+<td>The latitude coordinate where this sample was recovered</td>
+</tr>
+<tr class="odd">
+<td>Longitude</td>
+<td>dbl</td>
+<td>The longitude coordinate</td>
+</tr>
+<tr class="even">
+<td>Date_BC_AD_Median</td>
+<td>int</td>
+<td>The median age of this sample in years BC/AD<br>(negative numbers for BC, positive ones for AD)</td>
+</tr>
+<tr class="odd">
+<td>MDS_C1</td>
+<td>dbl</td>
+<td>The coordinate of this sample on dimension 1 of an MDS analysis.<br>See <span class="citation" data-cites="Schmid2023">Schmid and Schiffels (<a href="references.html#ref-Schmid2023" role="doc-biblioref">2023</a>)</span> for more details on how this was obtained</td>
+</tr>
+<tr class="even">
+<td>MDS_C2</td>
+<td>dbl</td>
+<td>The coordinate of this sample on MDS dimension 2</td>
+</tr>
+</tbody>
+</table>
+<div class="no-row-height column-margin column-container"></div><p>These variables are a minimum for a meaningful mobest run and must be known for all samples. Samples with missing information in any of these columns have to excluded from the input.</p>
+<p>Just as for the research area we have to transform the coordinates from longitude and latitude coordinates to a projected system, specifically the same as the one we selected above. To do this we can construct an <code>sf</code> object from the sample table, apply <code>sf::st_transform()</code> and then transform this result back to a <code>tibble</code> with the x and y coordinates of EPSG:3035 in extra columns. This last step makes the code a bit awkward.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>samples_projected <span class="ot">&lt;-</span> samples_basic <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># make the tibble an sf object</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  sf<span class="sc">::</span><span class="fu">st_as_sf</span>(</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"Longitude"</span>, <span class="st">"Latitude"</span>),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">crs =</span> <span class="dv">4326</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># transform the coordinates</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  sf<span class="sc">::</span><span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="dv">3035</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># reshape the sf object back into a simple tibble</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> sf<span class="sc">::</span><span class="fu">st_coordinates</span>(.)[,<span class="dv">1</span>],</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> sf<span class="sc">::</span><span class="fu">st_coordinates</span>(.)[,<span class="dv">2</span>]</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  sf<span class="sc">::</span><span class="fu">st_drop_geometry</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>With the coordinates in the same reference system as the landmass polygons we prepared above we can now combine both in a single figure:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> research_land_outline_3035) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> samples_projected,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(x, y),</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"darkgreen"</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">0.25</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/mobest/samples_map.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">The spatial distribution of the informative samples.</figcaption>
+</figure>
+</div>
+<p>A number of samples are outside of the area we want to predict here. That is no problem. They will inform the field in the north-eastern fringes of the area and do no harm. It is much more problematic that some zones within our research area are severely under-sampled. We have to keep sampling gaps like this in mind when we interpret the results of the similarity search.</p>
+</section>
+</section>
+<section id="specifying-the-search-sample" class="level3 page-columns page-full" data-number="5.3.3">
+<h3 data-number="5.3.3" class="anchored" data-anchor-id="specifying-the-search-sample"><span class="header-section-number">5.3.3</span> Specifying the search sample</h3>
+<p>mobest’s similarity search usually takes the perspective of an individual sample for which we want to determine similarity probabilities for a spatial prediction grid at a specific point in time. For this sample, the “search sample”, we require the same information as for the input samples: The position in space, time and the dependent variable space (e.g.&nbsp;PCA or MDS space).</p>
+<p>Technically this is only a requirement of the mobest interface. Conceptually such a similarity search only really requires the dependent variable space position of interest. The added benefit of having all information there is the <code>relative</code> time search setting (see below) and a very comprehensive output table for the most common use-case.</p>
+<p>In this example we will locate one specific sample with a pretty well studied ancestry history: The sample named <code>Stuttgart</code> published in <span class="citation" data-cites="Lazaridis2014">Lazaridis et al. (<a href="references.html#ref-Lazaridis2014" role="doc-biblioref">2014</a>)</span>. We can select it as a subset of our sample table:</p>
+<div class="no-row-height column-margin column-container"><div id="ref-Lazaridis2014" class="csl-entry" role="listitem">
+Lazaridis, Iosif, Nick Patterson, Alissa Mittnik, Gabriel Renaud, Swapan Mallick, Karola Kirsanow, Peter H Sudmant, et al. 2014. <span>“Ancient Human Genomes Suggest Three Ancestral Populations for Present-Day Europeans.”</span> <em>Nature</em> 513 (7518): 409–13. <a href="https://doi.org/10.1038/nature13673">https://doi.org/10.1038/nature13673</a>.
+</div></div><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>search_samples <span class="ot">&lt;-</span> samples_projected <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    Sample_ID <span class="sc">==</span> <span class="st">"Stuttgart_published.DG"</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>With this setup the search sample itself will be part of the samples used to inform the ancestry field interpolation (<code>samples_projected</code>). This is no problem - the search sample is a known data point in space and time that can very well be employed to build a better model of the past ancestry distribution. There may be research questions for which this might not be desired, though. Then it can just as well be excluded from the <code>samples_projected</code> table.</p>
+</section>
+<section id="running-mobests-interpolation-and-search-function" class="level3 page-columns page-full" data-number="5.3.4">
+<h3 data-number="5.3.4" class="anchored" data-anchor-id="running-mobests-interpolation-and-search-function"><span class="header-section-number">5.3.4</span> Running mobest’s interpolation and search function</h3>
+<p>With the input data, both the spatial prediction grid and the samples to inform the ancestry field interpolation, prepared and ready, we can now run <code>mobest::locate()</code>. For that we first have to split and transform the input into the required data structures.</p>
+<section id="building-the-input-data-for-the-interpolation" class="level4 page-columns page-full" data-number="5.3.4.1">
+<h4 data-number="5.3.4.1" class="anchored" data-anchor-id="building-the-input-data-for-the-interpolation"><span class="header-section-number">5.3.4.1</span> Building the input data for the interpolation</h4>
+<p>Here is how the interface of <code>mobest::locate()</code> looks:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>mobest<span class="sc">::</span><span class="fu">locate</span>(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># spatiotemporal coordinates of the reference samples</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># informing the ancestry field</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">independent =</span> ...,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># genetic coordinates of the reference samples</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">dependent   =</span> ...,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ---</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># interpolation settings for each ancestry component</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">kernel =</span> ...,</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ---</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># spatiotemporal coordinates of the sample of interest</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">search_independent =</span> ...,</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># genetic coordinates of the sample of interest</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">search_dependent   =</span> ...,</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ---</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># spatial search grid: where to search</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">search_space_grid  =</span> ...,</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># search time: when to search</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">search_time      =</span> ...,</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">search_time_mode =</span> ...,</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ---</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># should the result be normalized</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">normalize =</span> ...</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Each of these arguments requires specific input.</p>
+<section id="independent-and-dependent-positions" class="level5" data-number="5.3.4.1.1">
+<h5 data-number="5.3.4.1.1" class="anchored" data-anchor-id="independent-and-dependent-positions"><span class="header-section-number">5.3.4.1.1</span> Independent and dependent positions</h5>
+<p>The <code>locest()</code> arguments <code>independent</code> and <code>dependent</code> take the spatiotemporal and genetic (as for example derived from MDS/PCA) positions of the interpolation-informing samples. The terms <em>independent</em> and <em>dependent</em> allude to the notion and terminology of a statistical model, where positions in dependent, genetic space are predicted based on positions in independent, spatiotemporal space.</p>
+<p>Spatiotemporal positions are encoded in mobest with a custom data type: <code>mobest_spatiotemporalpositions</code>. For the <code>independent</code> argument of <code>locest()</code> we have to construct an object of this type with <code>mobest::create_spatpos()</code> to represent the positions of the input samples in <code>samples_projected</code>.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ind <span class="ot">&lt;-</span> mobest<span class="sc">::</span><span class="fu">create_spatpos</span>(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> samples_projected<span class="sc">$</span>Sample_ID,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x  =</span> samples_projected<span class="sc">$</span>x,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y  =</span> samples_projected<span class="sc">$</span>y,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">z  =</span> samples_projected<span class="sc">$</span>Date_BC_AD_Median</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The dependent, genetic variables are also encoded in a custom, tabular type: <code>mobest_observations</code> with the constructor function <code>mobest::create_observations()</code>.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>dep <span class="ot">&lt;-</span> mobest<span class="sc">::</span><span class="fu">create_obs</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">C1 =</span> samples_projected<span class="sc">$</span>MDS_C1,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">C2 =</span> samples_projected<span class="sc">$</span>MDS_C2</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Note that you can have an arbitrary number of these components with arbitrary names. The only condition is, that the very same set and names are used below for the search samples and for the kernel parameter settings of each dependent variable.</p>
+<p>The lengths of the vectors (<code>samples_projected$...</code>) used for <code>create_spatpos()</code> and <code>create_obs()</code> all have to be identical. And their order has to be the same as well: Although the input is distributed over two constructors they describe the same samples.</p>
+<p>For the search sample in <code>search_samples</code>, finally, we have to construct objects of the same type and structure:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>search_ind <span class="ot">&lt;-</span> mobest<span class="sc">::</span><span class="fu">create_spatpos</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> search_samples<span class="sc">$</span>Sample_ID,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x  =</span> search_samples<span class="sc">$</span>x,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y  =</span> search_samples<span class="sc">$</span>y,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">z  =</span> search_samples<span class="sc">$</span>Date_BC_AD_Median</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>search_dep <span class="ot">&lt;-</span> mobest<span class="sc">::</span><span class="fu">create_obs</span>(</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">C1 =</span> search_samples<span class="sc">$</span>MDS_C1,</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">C2 =</span> search_samples<span class="sc">$</span>MDS_C2</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="kernel-parameter-settings" class="level5 page-columns page-full" data-number="5.3.4.1.2">
+<h5 data-number="5.3.4.1.2" class="anchored" data-anchor-id="kernel-parameter-settings"><span class="header-section-number">5.3.4.1.2</span> Kernel parameter settings</h5>
+<p>The <code>locest()</code> argument <code>kernel</code> takes an object of the class <code>mobest_kernelsetting</code>. This type encodes kernel configurations for each dependent variable, so the parameters for the Gaussian process regression (GPR) interpolation that should be used for this variable. These include mostly the lengthscale parameters in space (x and y) and time, as well as the nugget parameter (<span class="citation" data-cites="Gramacy2020">Gramacy (<a href="references.html#ref-Gramacy2020" role="doc-biblioref">2020</a>)</span>, specifically <a href="https://bookdown.org/rbg/surrogates/chap5.html#chap5hyper">here</a>). In very simple terms:</p>
+<div class="no-row-height column-margin column-container"><div id="ref-Gramacy2020" class="csl-entry" role="listitem">
+———. 2020. <em>Surrogates: <span>G</span>aussian Process Modeling, Design and &nbsp;Optimization for the Applied Sciences</em>. Boca Raton, Florida: Chapman Hall/CRC.
+</div></div><ul>
+<li><em>Lengthscale parameters</em>: How far in space and time should an individual sample’s genetic position inform the interpolated field.</li>
+<li><em>Nugget</em>: Error term to model local variability of the dependent variable, so for observations from the same position in space and time.</li>
+</ul>
+<p>Here is a possible kernel configuration for our example. We construct two kernel settings, one for each ancestry component, with <code>mobest::create_kernel()</code> in <code>mobest::create_kernset()</code>.</p>
+<pre><code>kernset &lt;- mobest::create_kernset(
+  C1 = mobest::create_kernel(
+    dsx = 800 * 1000, dsy = 800 * 1000, dt = 800,
+    g = 0.1
+  ),
+  C2 = mobest::create_kernel(
+    dsx = 800 * 1000, dsy = 800 * 1000, dt = 800,
+    g = 0.1
+  )
+)</code></pre>
+<p>Note how we scale the lengthscale parameters: <code>dsx</code> and <code>dsy</code> are set in meters (800 * 1000m = 800km) and <code>dt</code> in years (800y). <code>g</code> is dimensionless. With the setting specified here both dependent variables will be interpolated with the same, very smooth (several hundred kilometres and years in diameter) kernel.</p>
+<p>The main question naturally arising from this, is how to set these parameters for a given dataset and research question. There are various empirical ways to find optimal values through numerical optimization. See Supplementary Text 2 of <span class="citation" data-cites="Schmid2023">Schmid and Schiffels (<a href="references.html#ref-Schmid2023" role="doc-biblioref">2023</a>)</span> and the <a href="https://nevrome.de/mobest/html/master/estimation.html">mobest documentation</a> for the approaches we applied.</p>
+<div class="no-row-height column-margin column-container"></div><div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>While estimating the nugget is generally advisable, we would argue, that the computationally expensive crossvalidation workflow to estimate the lengthscale parameters is not always necessary for basic applications of mobest.</p>
+<p>The analysis in <span class="citation" data-cites="Schmid2023">Schmid and Schiffels (<a href="references.html#ref-Schmid2023" role="doc-biblioref">2023</a>)</span> showed that Gaussian process regression returns reasonably accurate interpolation results for a large range of kernel parameter settings, as long as they reflect a plausible intuition about the mobility behaviour of human ancestry, which generally operates on a scale of hundreds of kilometres and years.</p>
+<p>mobest is primarily a visualization method and adjusting its parameters to ones liking is legitimate if the choices are communicated transparently.</p>
+</div>
+</div>
+<div class="no-row-height column-margin column-container"><div id="ref-Schmid2023" class="csl-entry" role="listitem">
+Schmid, Clemens, and Stephan Schiffels. 2023. <span>“Estimating Human Mobility in Holocene Western Eurasia with Large-Scale Ancient Genomic Data.”</span> <em>Proceedings of the National Academy of Sciences</em> 120 (9). <a href="https://doi.org/10.1073/pnas.2218375120">https://doi.org/10.1073/pnas.2218375120</a>.
+</div></div></section>
+<section id="search-positions" class="level5" data-number="5.3.4.1.3">
+<h5 data-number="5.3.4.1.3" class="anchored" data-anchor-id="search-positions"><span class="header-section-number">5.3.4.1.3</span> Search positions</h5>
+<p>With input data and settings out of the way we can now specify the points in space and time where we actually want to perform the search. For these positions the GPR model is queried to return a mean and error, which are in turn used to calculate the probability density of a specific dependent variable space position, e.g.&nbsp;a specific coordinate on the first coordinate of an MDS analysis.</p>
+<p>We already performed all necessary work for the <code>search_space_grid</code> argument, so the spatial positions of the prediction grid. We can just enter <code>spatial_pred_grid</code> here.</p>
+<p>The search time can be specified as an integer vector of years: e.g.&nbsp;<code>search_time = c(-500, -200, 100)</code>. This vector gets interpreted by <code>mobest::locate()</code> in two different ways, which can be selected with the switch argument <code>search_time_mode</code>. <code>search_time_mode</code> can either be <code>"relative"</code> (which is the default!) or <code>absolute</code>.</p>
+<ul>
+<li><code>"relative"</code>: The <code>search_time</code> is interpreted as a <span class="math inline">\(\Delta t\)</span> relative to the age of the search sample(s). Negative values point to ages that are older then the sample age, so in their relative past, and positive ones to younger ages in their relative future. In this example <code>-500</code> would be interpreted as 500 years prior to the year the Stuttgart sample presumably died (so -5242-500 = -5742 BC/AD), and 100 as an age 100 years after their death (so -5242+100 = -5142 BC/AD).</li>
+<li><code>"absolute"</code>: The values in <code>search_time</code> are simply interpreted as absolute ages in years BC/AD.</li>
+</ul>
+<p>For this example we will set the search time to an <code>"absolute"</code> value.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>search_time <span class="ot">=</span> <span class="sc">-</span><span class="dv">6800</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>search_time_mode <span class="ot">=</span> <span class="st">"absolute"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This will search at exactly one point in time; a single timeslice 6800 BC.</p>
+</section>
+<section id="normalization" class="level5" data-number="5.3.4.1.4">
+<h5 data-number="5.3.4.1.4" class="anchored" data-anchor-id="normalization"><span class="header-section-number">5.3.4.1.4</span> Normalization</h5>
+<p>The last relevant option of <code>locate()</code>, <code>normalize</code>, concerns the normalization of the output. mobest’s search calculates likelihoods for each search point. This is a dimensionless measure that is hard to compare across multiple runs with different parameter settings. If <code>normalize</code> is set to <code>TRUE</code>, then the densities for sets of spatial points that share all other parameters (including the timeslice) are rescaled to a sum of one, so to proper probabilities.</p>
+<p>We assume users generally want to use mobest, specifically <code>locate()</code>, to calculate similarity probability density maps for individual samples, time slices and parameter settings. The most natural normalization for this case is to unify the scaling of these maps. This renders them comparable. <code>normalize</code> should therefore be set to <code>TRUE</code> for basic applications. This is also encoded as the the default setting.</p>
+</section>
+</section>
+<section id="calling-mobestlocate" class="level4" data-number="5.3.4.2">
+<h4 data-number="5.3.4.2" class="anchored" data-anchor-id="calling-mobestlocate"><span class="header-section-number">5.3.4.2</span> Calling <code>mobest::locate()</code></h4>
+<p>In the previous sections we have thoroughly prepared the input for a first, simple run of <code>mobest::locate()</code>. We can now finally call the function.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>search_result <span class="ot">&lt;-</span> mobest<span class="sc">::</span><span class="fu">locate</span>(</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">independent        =</span> ind,</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">dependent          =</span> dep,</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">kernel             =</span> kernset,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">search_independent =</span> search_ind,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">search_dependent   =</span> search_dep,</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">search_space_grid  =</span> spatial_pred_grid,</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">search_time        =</span> <span class="sc">-</span><span class="dv">6800</span>,</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">search_time_mode   =</span> <span class="st">"absolute"</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This typically runs for a couple of seconds, uses every available processor core and returns an object <code>search_result</code>, which we will inspect below.</p>
+</section>
+</section>
+<section id="inspecting-the-computed-results" class="level3" data-number="5.3.5">
+<h3 data-number="5.3.5" class="anchored" data-anchor-id="inspecting-the-computed-results"><span class="header-section-number">5.3.5</span> Inspecting the computed results</h3>
+<p><code>mobest::locate()</code> returns an object of class <code>mobest_locateoverview</code>. It includes the relevant information for visualization and further processing of the analysis results.</p>
+<section id="the-mobest_locateoverview-table" class="level4" data-number="5.3.5.1">
+<h4 data-number="5.3.5.1" class="anchored" data-anchor-id="the-mobest_locateoverview-table"><span class="header-section-number">5.3.5.1</span> The mobest_locateoverview table</h4>
+<p><code>mobest_locateoverview</code> is derived from <code>tibble</code> and has a large set of columns, many not immediately relevant to the basic example here. This applies especially for the variables documenting the excessive permutation mechanics hidden behind the relatively simple interface of <code>mobest::locate()</code>. <code>locate()</code> is, in fact, a wrapper function for the more flexible function <code>mobest::locate_multi()</code>, which can handle permutations in various additional input parameters.</p>
+<p>Each row of the <code>mobest_locateoverview</code> table stores the calculated interpolated mean, error and similarity probability (<code>field_mean</code>, <code>field_sd</code>, <code>probability</code>) for one permutation of the input point positions in independent and dependent variable space (<code>independent_table_id</code> and <code>dependent_setting_id</code>), one dependent variable <code>dependent_var_id</code>, one iteration of the kernel settings (<code>kernel_setting_id</code>: <code>dsx</code>, <code>dsy</code>, <code>dt</code>, <code>g</code>), one prediction grid point emerging as a combination of spatial grid and search timeslice (<code>pred_grid_id</code>: <code>field_id</code>, <code>field_geo_id</code>, <code>field_x</code>, <code>field_y</code>, <code>field_z</code>, <code>search_time</code>) and finally one search sample (<code>search_id</code>, <code>search_x</code>, <code>search_y</code>, <code>search_z</code>, <code>search_measured</code>).</p>
+<p>Here is a list of the variables returned in <code>mobest_locateoverview</code> for each of these result iterations.</p>
+<table class="table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 80%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Column</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">independent_table_id</td>
+<td style="text-align: left;">Identifier of the spatiotemporal position permutation</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">dependent_setting_id</td>
+<td style="text-align: left;">Identifier of the dependent variable space position permutation</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">dependent_var_id</td>
+<td style="text-align: left;">Identifier of the dependent variable</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">kernel_setting_id</td>
+<td style="text-align: left;">Identifier of the kernel setting permutation</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">pred_grid_id</td>
+<td style="text-align: left;">Identifier of the spatiotemporal prediction grid</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">dsx</td>
+<td style="text-align: left;">Kernel lengthscale parameter on the spatial x axis</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">dsy</td>
+<td style="text-align: left;">Kernel lengthscale parameter on the spatial y axis</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">dt</td>
+<td style="text-align: left;">Kernel lengthscale parameter on the temporal axis</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">g</td>
+<td style="text-align: left;">Kernel nugget parameter</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">field_id</td>
+<td style="text-align: left;">Identifier of the spatiotemporal prediction point</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">field_x</td>
+<td style="text-align: left;">Spatial x axis coordinate of the prediction point</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">field_y</td>
+<td style="text-align: left;">Spatial y axis coordinate of the prediction point</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">field_z</td>
+<td style="text-align: left;">Temporal coordinate (age) of the prediction point</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">field_geo_id</td>
+<td style="text-align: left;">Identifier of the spatial prediction point</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">field_mean</td>
+<td style="text-align: left;">Mean value predicted by the GPR model for the dependent variable</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">field_sd</td>
+<td style="text-align: left;">Error term predicted by the GPR model for the dependent variable</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">search_id</td>
+<td style="text-align: left;">Identifier of the search sample</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">search_x</td>
+<td style="text-align: left;">Spatial x axis coordinate of the search sample</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">search_y</td>
+<td style="text-align: left;">Spatial y axis coordinate of the search sample</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">search_z</td>
+<td style="text-align: left;">Temporal coordinate (age) of the search sample</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">search_time</td>
+<td style="text-align: left;">Search time as provided by the user in <code>locate()</code>’s <code>search_time</code> argument</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">search_measured</td>
+<td style="text-align: left;">Genetic coordinate of the search sample in the dependent variable space</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">probability</td>
+<td style="text-align: left;">Probability density for <code>search_measured</code> given all other parameters</td>
+</tr>
+</tbody>
+</table>
+<p>As a result of the permutation of parameters, the size of the prediction grid and the number of search points, the number of rows in a <code>mobest_locateoverview</code> table can be calculated as a product of the individual counts of all relevant entities. One way to quickly validate the output of <code>locate()</code> and <code>locate_multi()</code> is to calculate the number of expected results based on the input and compare it with the actual number of rows in the output. For our example this calculation is fairly simple:</p>
+<p>We have:</p>
+<ul>
+<li><span class="math inline">\(1\)</span> set of input point positions in independent variable space (<code>independent_table_id</code>)</li>
+<li><span class="math inline">\(1\)</span> set of input point positions in dependent variable space (<code>dependent_setting_id</code>)</li>
+<li><span class="math inline">\(2\)</span> dependent variables (<code>dependent_var_id</code>)</li>
+<li><span class="math inline">\(1\)</span> set of kernel parameter settings (<code>kernel_setting_id</code>)</li>
+<li><span class="math inline">\(4738\)</span> spatial prediction grid positions</li>
+<li><span class="math inline">\(1\)</span> time slice of interest</li>
+<li><span class="math inline">\(1\)</span> search sample</li>
+</ul>
+<p>This means we expect exactly <span class="math inline">\(2 * 4738 = 9476\)</span> rows in <code>search_result</code>, which we can confirm with <code>nrow(search_result)</code>.</p>
+</section>
+<section id="creating-similarity-probability-maps-for-individual-dependent-variables" class="level4" data-number="5.3.5.2">
+<h4 data-number="5.3.5.2" class="anchored" data-anchor-id="creating-similarity-probability-maps-for-individual-dependent-variables"><span class="header-section-number">5.3.5.2</span> Creating similarity probability maps for individual dependent variables</h4>
+<p>The most basic similarity probability map we can create with <code>search_result</code> is a map for just one parameter permutation, including only one dependent variable. In this case the relevant similarity probability observations are easy to obtain. We can just filter by <code>dependent_var_id</code> to only include either <code>C1</code> or <code>C2</code>.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>result_C1 <span class="ot">&lt;-</span> search_result <span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(dependent_var_id <span class="sc">==</span> <span class="st">"C1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And this is then easy to plot with <code>geom_raster()</code>. We can then plot C1 and C2 together using <code>cowplot::plot_grid()</code>.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>p_C1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>(</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> result_C1,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> field_x, <span class="at">y =</span> field_y, <span class="at">fill =</span> probability)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co"># for C2</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>result_C2 <span class="ot">&lt;-</span> search_result <span class="sc">%&gt;%</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(dependent_var_id <span class="sc">==</span> <span class="st">"C2"</span>)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>p_C2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>(</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> result_C2,</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> field_x, <span class="at">y =</span> field_y, <span class="at">fill =</span> probability)</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="co"># arrange both plots together</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>cowplot<span class="sc">::</span><span class="fu">plot_grid</span>(p_C1, p_C2, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"C1"</span>, <span class="st">"C2"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/mobest/search_map_simple_C1_C2.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">The similarity probability search results for the sample Stuttgart for 6800 BC.</figcaption>
+</figure>
+</div>
+</section>
+<section id="combining-the-information-from-multiple-dependent-variables" class="level4" data-number="5.3.5.3">
+<h4 data-number="5.3.5.3" class="anchored" data-anchor-id="combining-the-information-from-multiple-dependent-variables"><span class="header-section-number">5.3.5.3</span> Combining the information from multiple dependent variables</h4>
+<p>The results for individual dependent variables, so ancestry components like MDS or PCA dimensions, can be informative, but are usually under-powered to exclude highly improbable search results. Generally combining multiple ancestry components improves the accuracy of the results for individual samples, and we think this is best done by multiplying the results for the different dependent variables. This way spatial areas with high similarity probability for all dependent variables are naturally up-weighted, whereas areas that are unlikely similar for some dependent variables are down-weighted.</p>
+<p>To perform the multiplication (and the re-normalization afterwards), mobest includes a function <code>mobest::multiply_dependent_probabilities()</code>. It works on objects of type <code>mobest_locateoverview</code> and yields tabular objects of type <code>mobest_locateproduct</code>. <code>multiply_dependent_probabilities()</code> is aware of the parameter permutations potentially encoded in the <code>mobest_locateoverview</code> table. It only combines the probabilities for dependent variables that share all other parameters. The number of rows in <code>mobest_locateproduct</code> will therefore be <span class="math inline">\(\frac{\text{Number of rows in mobest\_locateoverview}}{\text{Number of dependent variables}}\)</span>.</p>
+<p>If we call it for <code>search_result</code> the output will thus have <span class="math inline">\(9476/2=4738\)</span> rows.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>search_product <span class="ot">&lt;-</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  mobest<span class="sc">::</span><span class="fu">multiply_dependent_probabilities</span>(search_result)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>mobest_locateproduct</code> tables feature a perfect subset of the columns in <code>mobest_locateoverview</code>. We can plot the combined similarity probability map with the code already applied for the individual dependent variables.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_raster</span>(</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> search_product,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> field_x, <span class="at">y =</span> field_y, <span class="at">fill =</span> probability)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/mobest/search_map_simple_combined.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">The combined (<span class="math inline">\(\text{C1}*\text{C2}\)</span>) similarity probability search results for the sample Stuttgart for 6800 BC.</figcaption>
+</figure>
+</div>
+<p>This concludes a very basic similarity search workflow. Please see the <strong>documentation at <a href="https://nevrome.de/mobest" class="uri">https://nevrome.de/mobest</a></strong> for various other tutorials describing more advanced applications of mobest, starting with <a href="https://nevrome.de/mobest/html/master/plot.html">better map plotting</a>.</p>
+
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./eager.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction to nf-core/eager</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./fst.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

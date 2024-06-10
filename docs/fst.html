@@ -9,7 +9,7 @@
 <meta name="author" content="Stephan Schiffels and Joscha Gretzinger">
 <meta name="dcterms.date" content="2023-11-23">
 
-<title>Computational Methods for human population genetics and ancient DNA - 5&nbsp; Measuring population structure using Fst</title>
+<title>Computational Methods for human population genetics and ancient DNA - 6&nbsp; Measuring population structure using Fst</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -86,7 +86,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./pca_mds.html" rel="next">
-<link href="./eager.html" rel="prev">
+<link href="./mobest.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -131,7 +131,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fst.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fst.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -188,20 +188,26 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./mobest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">mobest - Spatiotemporal Ancestry Interpolation and Search</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./fst.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pca_mds.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pmrread.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Pairwise mismatch rate (PMR) and READ relatedness inference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Pairwise mismatch rate (PMR) and READ relatedness inference</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -220,15 +226,15 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#theory-primer" id="toc-theory-primer" class="nav-link active" data-scroll-target="#theory-primer"><span class="header-section-number">5.1</span> Theory primer</a>
+  <li><a href="#theory-primer" id="toc-theory-primer" class="nav-link active" data-scroll-target="#theory-primer"><span class="header-section-number">6.1</span> Theory primer</a>
   <ul class="collapse">
-  <li><a href="#genetic-drift" id="toc-genetic-drift" class="nav-link" data-scroll-target="#genetic-drift"><span class="header-section-number">5.1.1</span> Genetic drift</a></li>
-  <li><a href="#f_textst-quantifies-genetic-drift" id="toc-f_textst-quantifies-genetic-drift" class="nav-link" data-scroll-target="#f_textst-quantifies-genetic-drift"><span class="header-section-number">5.1.2</span> <span class="math inline">\(F_\text{ST}\)</span> quantifies genetic drift</a></li>
-  <li><a href="#formal-definition-of-f_textst" id="toc-formal-definition-of-f_textst" class="nav-link" data-scroll-target="#formal-definition-of-f_textst"><span class="header-section-number">5.1.3</span> Formal definition of <span class="math inline">\(F_\text{ST}\)</span></a></li>
-  <li><a href="#estimating-f_textst-from-genomic-data" id="toc-estimating-f_textst-from-genomic-data" class="nav-link" data-scroll-target="#estimating-f_textst-from-genomic-data"><span class="header-section-number">5.1.4</span> Estimating <span class="math inline">\(F_\text{ST}\)</span> from genomic data</a></li>
+  <li><a href="#genetic-drift" id="toc-genetic-drift" class="nav-link" data-scroll-target="#genetic-drift"><span class="header-section-number">6.1.1</span> Genetic drift</a></li>
+  <li><a href="#f_textst-quantifies-genetic-drift" id="toc-f_textst-quantifies-genetic-drift" class="nav-link" data-scroll-target="#f_textst-quantifies-genetic-drift"><span class="header-section-number">6.1.2</span> <span class="math inline">\(F_\text{ST}\)</span> quantifies genetic drift</a></li>
+  <li><a href="#formal-definition-of-f_textst" id="toc-formal-definition-of-f_textst" class="nav-link" data-scroll-target="#formal-definition-of-f_textst"><span class="header-section-number">6.1.3</span> Formal definition of <span class="math inline">\(F_\text{ST}\)</span></a></li>
+  <li><a href="#estimating-f_textst-from-genomic-data" id="toc-estimating-f_textst-from-genomic-data" class="nav-link" data-scroll-target="#estimating-f_textst-from-genomic-data"><span class="header-section-number">6.1.4</span> Estimating <span class="math inline">\(F_\text{ST}\)</span> from genomic data</a></li>
   </ul></li>
-  <li><a href="#computing-fst-using-xerxes" id="toc-computing-fst-using-xerxes" class="nav-link" data-scroll-target="#computing-fst-using-xerxes"><span class="header-section-number">5.2</span> Computing FST using xerxes</a></li>
-  <li><a href="#plotting-results-in-r" id="toc-plotting-results-in-r" class="nav-link" data-scroll-target="#plotting-results-in-r"><span class="header-section-number">5.3</span> Plotting results in R</a></li>
+  <li><a href="#computing-fst-using-xerxes" id="toc-computing-fst-using-xerxes" class="nav-link" data-scroll-target="#computing-fst-using-xerxes"><span class="header-section-number">6.2</span> Computing FST using xerxes</a></li>
+  <li><a href="#plotting-results-in-r" id="toc-plotting-results-in-r" class="nav-link" data-scroll-target="#plotting-results-in-r"><span class="header-section-number">6.3</span> Plotting results in R</a></li>
   </ul>
 </nav>
     </div>
@@ -237,7 +243,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></h1>
 </div>
 
 
@@ -264,10 +270,10 @@ div.csl-indent {
 
 </header>
 
-<section id="theory-primer" class="level2 page-columns page-full" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="theory-primer"><span class="header-section-number">5.1</span> Theory primer</h2>
-<section id="genetic-drift" class="level3" data-number="5.1.1">
-<h3 data-number="5.1.1" class="anchored" data-anchor-id="genetic-drift"><span class="header-section-number">5.1.1</span> Genetic drift</h3>
+<section id="theory-primer" class="level2 page-columns page-full" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="theory-primer"><span class="header-section-number">6.1</span> Theory primer</h2>
+<section id="genetic-drift" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" class="anchored" data-anchor-id="genetic-drift"><span class="header-section-number">6.1.1</span> Genetic drift</h3>
 <p>Genetic drift is the process by which allele frequencies change randomly due to random fluctuations. Various models exist to model such fluctuations, but the most widely used one is the Wright-Fisher model. In that model, a parent generation of N individuals produces exactly N individuals as offspring, which make up the next generation. To model the fluctuations, every “child” gets assigned a random “parent” from the previous generation.</p>
 <p>Example: With <span class="math inline">\(N=100\)</span> (haploid individuals), we might consider a genetic locus with two alleles <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, and in the parent generation, say, 50 individuals carried allele B, and 50 carried allele B. Then, the number of individuals carrying B in the next generation is the number of children who get assigned a parent with allele B. These will be close to 50, but not exactly, due to noise.</p>
 <p>As a statistical process, this amounts to a binomial process, where the N offspring individuals are drawn, each carrying a 50% probability to have A vs.&nbsp;B. In the third generation, this probability may then have already shifted away from 50.</p>
@@ -335,8 +341,8 @@ div.csl-indent {
 </div>
 <p>This shows that larger populations have weaker fluctuations than small populations.</p>
 </section>
-<section id="f_textst-quantifies-genetic-drift" class="level3" data-number="5.1.2">
-<h3 data-number="5.1.2" class="anchored" data-anchor-id="f_textst-quantifies-genetic-drift"><span class="header-section-number">5.1.2</span> <span class="math inline">\(F_\text{ST}\)</span> quantifies genetic drift</h3>
+<section id="f_textst-quantifies-genetic-drift" class="level3" data-number="6.1.2">
+<h3 data-number="6.1.2" class="anchored" data-anchor-id="f_textst-quantifies-genetic-drift"><span class="header-section-number">6.1.2</span> <span class="math inline">\(F_\text{ST}\)</span> quantifies genetic drift</h3>
 <p>To quantify genetic drift, we can measure the variance of this process over time. The following plot uses the same data as shown above and estimates the variance:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
@@ -379,8 +385,8 @@ div.csl-indent {
 </div>
 </div>
 </section>
-<section id="formal-definition-of-f_textst" class="level3 page-columns page-full" data-number="5.1.3">
-<h3 data-number="5.1.3" class="anchored" data-anchor-id="formal-definition-of-f_textst"><span class="header-section-number">5.1.3</span> Formal definition of <span class="math inline">\(F_\text{ST}\)</span></h3>
+<section id="formal-definition-of-f_textst" class="level3 page-columns page-full" data-number="6.1.3">
+<h3 data-number="6.1.3" class="anchored" data-anchor-id="formal-definition-of-f_textst"><span class="header-section-number">6.1.3</span> Formal definition of <span class="math inline">\(F_\text{ST}\)</span></h3>
 <p><span class="citation" data-cites="Weir2002">(<a href="references.html#ref-Weir2002" role="doc-biblioref">Weir and Hill 2002</a>)</span> (explained and summarised in <span class="citation" data-cites="Bhatia2013">(<a href="references.html#ref-Bhatia2013" role="doc-biblioref">Bhatia et al. 2013</a>)</span>) give a more formal evolutionary definition of <span class="math inline">\(F_\text{ST}\)</span>, in terms of covariance between derived and ancestral populations. Specifically, for a given SNP, the definition involves the conditional probability of allele frequency <span class="math inline">\(p_i\)</span> in population <span class="math inline">\(i\)</span>, given an ancestral allele frequency <span class="math inline">\(p_\text{anc}\)</span>, which is defined as a random process with the expectation</p>
 <div class="no-row-height column-margin column-container"><div id="ref-Weir2002" class="csl-entry" role="listitem">
 Weir, B S, and W G Hill. 2002. <span>“Estimating f-Statistics.”</span> <em>Annual Review of Genetics</em> 36: 721–50. <a href="https://doi.org/10.1146/annurev.genet.36.050802.093940">https://doi.org/10.1146/annurev.genet.36.050802.093940</a>.
@@ -389,8 +395,8 @@ Weir, B S, and W G Hill. 2002. <span>“Estimating f-Statistics.”</span> <em>A
 <p>This form of the conditional variance can be understood by analysing the equation for the two boundary cases: For <span class="math inline">\(F_\text{ST}^i=0\)</span>, there is no variance, so the conditional probability of the derived frequency will be completely determined by the ancestral frequency with no random change. In contrast <span class="math inline">\(F_\text{ST}^i=1\)</span> means that the variance in the derived allele frequency is that of a binomial distribution with variance <span class="math inline">\(p_\text{anc}(1-p_\text{anc})\)</span>, indicating random but complete fixation of the frequency to 0 or 1.</p>
 <p><span class="math inline">\(F_\text{ST}\)</span> between two populations A and B is then defined as <span class="math display">\[F_\text{ST}(A,B) = \frac{F_\text{ST}^A+F_\text{ST}^B}{2}\]</span>.</p>
 </section>
-<section id="estimating-f_textst-from-genomic-data" class="level3 page-columns page-full" data-number="5.1.4">
-<h3 data-number="5.1.4" class="anchored" data-anchor-id="estimating-f_textst-from-genomic-data"><span class="header-section-number">5.1.4</span> Estimating <span class="math inline">\(F_\text{ST}\)</span> from genomic data</h3>
+<section id="estimating-f_textst-from-genomic-data" class="level3 page-columns page-full" data-number="6.1.4">
+<h3 data-number="6.1.4" class="anchored" data-anchor-id="estimating-f_textst-from-genomic-data"><span class="header-section-number">6.1.4</span> Estimating <span class="math inline">\(F_\text{ST}\)</span> from genomic data</h3>
 <p>While there are various mathematical definitions for both the theoretical definition and estimation for <span class="math inline">\(F_\text{ST}\)</span>, which differ in subtle ways, we here follow the excellent paper by <span class="citation" data-cites="Bhatia2013">(<a href="references.html#ref-Bhatia2013" role="doc-biblioref">Bhatia et al. 2013</a>)</span>, which proposes the following estimator, termed Hudson-estimator, which in turn is based on a proposal by <span class="citation" data-cites="Hudson1992">(<a href="references.html#ref-Hudson1992" role="doc-biblioref">Hudson, Slatkin, and Maddison 1992</a>)</span> and has been implemented in the ADMIXTOOLS package <span class="citation" data-cites="Patterson2012">(<a href="references.html#ref-Patterson2012" role="doc-biblioref">Patterson et al. 2012</a>)</span>:</p>
 <div class="no-row-height column-margin column-container"><div id="ref-Hudson1992" class="csl-entry" role="listitem">
 Hudson, R R, M Slatkin, and W P Maddison. 1992. <span>“Estimation of Levels of Gene Flow from <span>DNA</span> Sequence Data.”</span> <em>Genetics</em> 132 (2): 583–89. <a href="https://doi.org/10.1093/genetics/132.2.583">https://doi.org/10.1093/genetics/132.2.583</a>.
@@ -411,8 +417,8 @@ Bhatia, G, N Patterson, S Sankararaman, and A L Price. 2013. <span>“Estimating
 <p>Another way to see this measure is to consider it as <em>relative shared variance</em>: If you consider genetic variation <em>between</em> <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, and <em>within</em> each of <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, then <span class="math inline">\(F_\text{ST}(A,B)\)</span> can be considered to measure the average variance <em>between</em> populations relative to the average variance <em>within</em> populations, again with intuitive boundaries 0 and 1.</p>
 </section>
 </section>
-<section id="computing-fst-using-xerxes" class="level2 page-columns page-full" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="computing-fst-using-xerxes"><span class="header-section-number">5.2</span> Computing FST using xerxes</h2>
+<section id="computing-fst-using-xerxes" class="level2 page-columns page-full" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="computing-fst-using-xerxes"><span class="header-section-number">6.2</span> Computing FST using xerxes</h2>
 <p>For human present-day populations, we can compute pairwise FSt using <a href="https://www.poseidon-adna.org/#/xerxes?id=xerxes-cli-software">xerxes</a>.</p>
 <p>We here chose a number of populations from <span class="citation" data-cites="Patterson2012">(<a href="references.html#ref-Patterson2012" role="doc-biblioref">Patterson et al. 2012</a>)</span> with more than 10 samples per population, and prepare the following config file for xerxes:</p>
 <div class="no-row-height column-margin column-container"><div id="ref-Patterson2012" class="csl-entry" role="listitem">
@@ -462,8 +468,8 @@ Note
 </code></pre>
 <p>but of course has many more lines (&gt;1800 in this case). We also used the <code>-f</code> flag to output a tab-separated file, here named <code>fstat_world_output.tsv</code>, which is easier to read into R.</p>
 </section>
-<section id="plotting-results-in-r" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="plotting-results-in-r"><span class="header-section-number">5.3</span> Plotting results in R</h2>
+<section id="plotting-results-in-r" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="plotting-results-in-r"><span class="header-section-number">6.3</span> Plotting results in R</h2>
 <p>All of the following code uses strictly only base-R for maximum compatibility. The code should run on any R installation.</p>
 <p>We first load the data</p>
 <div class="cell">
@@ -805,13 +811,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./eager.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction to nf-core/eager</span></span>
+      <a href="./mobest.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">mobest - Spatiotemporal Ancestry Interpolation and Search</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./pca_mds.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
