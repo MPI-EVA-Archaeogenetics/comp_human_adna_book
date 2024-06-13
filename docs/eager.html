@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.1.163">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Selina Carlhoff">
 <meta name="dcterms.date" content="2023-11-16">
 
-<title>Computational Methods for human population genetics and ancient DNA - 4&nbsp; Introduction to nf-core/eager</title>
+<title>Computational Methods for human population genetics and ancient DNA - 5&nbsp; Introduction to nf-core/eager</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,10 +19,9 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -49,19 +48,48 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
+    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-/* CSS for citations */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging-indent div.csl-entry {
+.hanging div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -75,7 +103,8 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}</style>
+}
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -86,7 +115,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./fst.html" rel="next">
-<link href="./fstats.html" rel="prev">
+<link href="./authentiCT.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -112,8 +141,7 @@ div.csl-indent {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-submit-button-title": "Submit"
   }
 }</script>
 
@@ -124,16 +152,11 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./eager.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction to nf-core/eager</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Introduction to nf-core/eager</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
       </button>
     </div>
   </nav>
@@ -141,98 +164,93 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Computational Methods for human population genetics and ancient DNA</a> 
     </div>
       </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
+      <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-        </div>
+      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Preface</span></a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Quarto_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></span></a>
+  <a href="./Quarto_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./poseidon.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Genotype and context data management with Poseidon</span></span></a>
+  <a href="./poseidon.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Genotype and context data management with Poseidon</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fstats.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to F3- and F4-Statistics</span></span></a>
+  <a href="./fstats.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to F3- and F4-Statistics</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./eager.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction to nf-core/eager</span></span></a>
+  <a href="./authentiCT.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contamination estimation with AuthentiCT</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fst.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></span></a>
+  <a href="./eager.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Introduction to nf-core/eager</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pca_mds.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></span></a>
+  <a href="./fst.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pmrread.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Pairwise mismatch rate (PMR) and READ relatedness inference</span></span></a>
+  <a href="./pca_mds.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">References</span></a>
+  <a href="./pmrread.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Pairwise mismatch rate (PMR) and READ relatedness inference</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#why-do-we-need-nf-coreeager" id="toc-why-do-we-need-nf-coreeager" class="nav-link active" data-scroll-target="#why-do-we-need-nf-coreeager"><span class="header-section-number">4.1</span> Why do we need nf-core/eager?</a></li>
-  <li><a href="#what-can-nf-coreeager-do" id="toc-what-can-nf-coreeager-do" class="nav-link" data-scroll-target="#what-can-nf-coreeager-do"><span class="header-section-number">4.2</span> What can nf-core/eager do?</a></li>
-  <li><a href="#how-do-i-use-nf-coreeager" id="toc-how-do-i-use-nf-coreeager" class="nav-link" data-scroll-target="#how-do-i-use-nf-coreeager"><span class="header-section-number">4.3</span> How do I use nf-core/eager?</a>
+  <li><a href="#why-do-we-need-nf-coreeager" id="toc-why-do-we-need-nf-coreeager" class="nav-link active" data-scroll-target="#why-do-we-need-nf-coreeager"><span class="toc-section-number">5.1</span>  Why do we need nf-core/eager?</a></li>
+  <li><a href="#what-can-nf-coreeager-do" id="toc-what-can-nf-coreeager-do" class="nav-link" data-scroll-target="#what-can-nf-coreeager-do"><span class="toc-section-number">5.2</span>  What can nf-core/eager do?</a></li>
+  <li><a href="#how-do-i-use-nf-coreeager" id="toc-how-do-i-use-nf-coreeager" class="nav-link" data-scroll-target="#how-do-i-use-nf-coreeager"><span class="toc-section-number">5.3</span>  How do I use nf-core/eager?</a>
   <ul class="collapse">
-  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation"><span class="header-section-number">4.3.1</span> Installation</a></li>
-  <li><a href="#input-preparation" id="toc-input-preparation" class="nav-link" data-scroll-target="#input-preparation"><span class="header-section-number">4.3.2</span> Input preparation</a></li>
-  <li><a href="#parameter-customization" id="toc-parameter-customization" class="nav-link" data-scroll-target="#parameter-customization"><span class="header-section-number">4.3.3</span> Parameter customization</a></li>
-  <li><a href="#run-submission" id="toc-run-submission" class="nav-link" data-scroll-target="#run-submission"><span class="header-section-number">4.3.4</span> Run submission</a></li>
-  <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output"><span class="header-section-number">4.3.5</span> Output</a></li>
-  <li><a href="#trouble-shooting" id="toc-trouble-shooting" class="nav-link" data-scroll-target="#trouble-shooting"><span class="header-section-number">4.3.6</span> Trouble shooting</a></li>
+  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation"><span class="toc-section-number">5.3.1</span>  Installation</a></li>
+  <li><a href="#input-preparation" id="toc-input-preparation" class="nav-link" data-scroll-target="#input-preparation"><span class="toc-section-number">5.3.2</span>  Input preparation</a></li>
+  <li><a href="#parameter-customization" id="toc-parameter-customization" class="nav-link" data-scroll-target="#parameter-customization"><span class="toc-section-number">5.3.3</span>  Parameter customization</a></li>
+  <li><a href="#run-submission" id="toc-run-submission" class="nav-link" data-scroll-target="#run-submission"><span class="toc-section-number">5.3.4</span>  Run submission</a></li>
+  <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output"><span class="toc-section-number">5.3.5</span>  Output</a></li>
+  <li><a href="#trouble-shooting" id="toc-trouble-shooting" class="nav-link" data-scroll-target="#trouble-shooting"><span class="toc-section-number">5.3.6</span>  Trouble shooting</a></li>
   </ul></li>
-  <li><a href="#how-do-i-report-the-usage-of-nf-coreeager" id="toc-how-do-i-report-the-usage-of-nf-coreeager" class="nav-link" data-scroll-target="#how-do-i-report-the-usage-of-nf-coreeager"><span class="header-section-number">4.4</span> How do I report the usage of nf-core/eager?</a></li>
-  <li><a href="#how-do-i-update-nf-coreeager" id="toc-how-do-i-update-nf-coreeager" class="nav-link" data-scroll-target="#how-do-i-update-nf-coreeager"><span class="header-section-number">4.5</span> How do I update nf-core/eager?</a></li>
-  <li><a href="#whats-next-for-nf-coreeager" id="toc-whats-next-for-nf-coreeager" class="nav-link" data-scroll-target="#whats-next-for-nf-coreeager"><span class="header-section-number">4.6</span> What’s next for nf-core/eager?</a></li>
-  <li><a href="#how-can-i-get-help-with-problems-or-questions" id="toc-how-can-i-get-help-with-problems-or-questions" class="nav-link" data-scroll-target="#how-can-i-get-help-with-problems-or-questions"><span class="header-section-number">4.7</span> How can I get help with problems or questions?</a></li>
+  <li><a href="#how-do-i-report-the-usage-of-nf-coreeager" id="toc-how-do-i-report-the-usage-of-nf-coreeager" class="nav-link" data-scroll-target="#how-do-i-report-the-usage-of-nf-coreeager"><span class="toc-section-number">5.4</span>  How do I report the usage of nf-core/eager?</a></li>
+  <li><a href="#how-do-i-update-nf-coreeager" id="toc-how-do-i-update-nf-coreeager" class="nav-link" data-scroll-target="#how-do-i-update-nf-coreeager"><span class="toc-section-number">5.5</span>  How do I update nf-core/eager?</a></li>
+  <li><a href="#whats-next-for-nf-coreeager" id="toc-whats-next-for-nf-coreeager" class="nav-link" data-scroll-target="#whats-next-for-nf-coreeager"><span class="toc-section-number">5.6</span>  What’s next for nf-core/eager?</a></li>
+  <li><a href="#how-can-i-get-help-with-problems-or-questions" id="toc-how-can-i-get-help-with-problems-or-questions" class="nav-link" data-scroll-target="#how-can-i-get-help-with-problems-or-questions"><span class="toc-section-number">5.7</span>  How can I get help with problems or questions?</a></li>
   </ul>
 </nav>
     </div>
@@ -241,7 +259,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Introduction to nf-core/eager</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Introduction to nf-core/eager</span></h1>
 </div>
 
 
@@ -261,7 +279,6 @@ div.csl-indent {
       <p class="date">November 16, 2023</p>
     </div>
   </div>
-  
     
   </div>
   
@@ -273,16 +290,16 @@ div.csl-indent {
 <p><img src="img/eager/nf-core_eager_logo_outline_drop.png" class="img-fluid figure-img" width="339"></p>
 </figure>
 </div>
-<section id="why-do-we-need-nf-coreeager" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="why-do-we-need-nf-coreeager"><span class="header-section-number">4.1</span> Why do we need nf-core/eager?</h2>
+<section id="why-do-we-need-nf-coreeager" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="why-do-we-need-nf-coreeager"><span class="header-section-number">5.1</span> Why do we need nf-core/eager?</h2>
 <ol type="1">
 <li>Compared to other Next-Generation Sequencing data, the chemical structure and increased risk of present-day contamination require <strong>methods specialized for ancient DNA</strong> in both the wet and the dry lab.</li>
 <li>Ensuring the authenticity of ancient genomic data is one of the main focuses of bioinformatic tools developed for the study of ancient DNA and underlines the necessity of <strong>reproducibility</strong> of results.</li>
 <li>With an increasing number of laboratories contributing to the field, the available computational resources and previous bioinformatic experience varies greatly. To increase <strong>accessibility</strong>, newly developed tools should be adaptable to different environments, efficient, consistently maintained and well-documented.</li>
 </ol>
 </section>
-<section id="what-can-nf-coreeager-do" class="level2 page-columns page-full" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="what-can-nf-coreeager-do"><span class="header-section-number">4.2</span> What can nf-core/eager do?</h2>
+<section id="what-can-nf-coreeager-do" class="level2 page-columns page-full" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="what-can-nf-coreeager-do"><span class="header-section-number">5.2</span> What can nf-core/eager do?</h2>
 <p>nf-core/eager streamlines the initial steps of ancient DNA analysis from FASTQ files after sequencing to variant calling <span class="citation" data-cites="FellowsYates2021">(<a href="references.html#ref-FellowsYates2021" role="doc-biblioref">Fellows Yates et al. 2021</a>)</span>.</p>
 <div class="no-row-height column-margin column-container"></div><ol type="1">
 <li>Preprocessing:
@@ -314,10 +331,10 @@ div.csl-indent {
 </figure>
 </div>
 </section>
-<section id="how-do-i-use-nf-coreeager" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="how-do-i-use-nf-coreeager"><span class="header-section-number">4.3</span> How do I use nf-core/eager?</h2>
-<section id="installation" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1" class="anchored" data-anchor-id="installation"><span class="header-section-number">4.3.1</span> Installation</h3>
+<section id="how-do-i-use-nf-coreeager" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="how-do-i-use-nf-coreeager"><span class="header-section-number">5.3</span> How do I use nf-core/eager?</h2>
+<section id="installation" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="installation"><span class="header-section-number">5.3.1</span> Installation</h3>
 <p>You need:</p>
 <ul>
 <li><p>a Unix machine (HPC-cluster or a computer running Linux or MacOS)</p></li>
@@ -333,13 +350,13 @@ div.csl-indent {
 <p>To optimize the use of available clusters, queues and resources, check if a Nextflow <a href="https://nf-co.re/configs">pipeline configuration</a> is already available for your institution or computing environment. If not, prepare a custom profile tailored to your computational resources and setup. These are then added as a profile.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/eager <span class="at">-r</span> 2.5.0 <span class="at">-profile</span> test_tsv,eva <span class="co">#for MPI-EVA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="input-preparation" class="level3" data-number="4.3.2">
-<h3 data-number="4.3.2" class="anchored" data-anchor-id="input-preparation"><span class="header-section-number">4.3.2</span> Input preparation</h3>
+<section id="input-preparation" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="input-preparation"><span class="header-section-number">5.3.2</span> Input preparation</h3>
 <p>You can run nf-core/eager by providing either a path to fastq or bam files or a path to a tab-separated table of input data to <code>--input</code>. For a large number of samples and convenience, a tsv is usually the preferred option. Using a tsv input also allows for merging of different files (e.g.&nbsp;different libraries, different UDG treatments, etc.) at different stages of the pipeline.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/eager/merging_files.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Pipeline stages and merging steps performed for a single sample with different libraries and different UDG treatments.</figcaption>
+<p></p><figcaption class="figure-caption">Pipeline stages and merging steps performed for a single sample with different libraries and different UDG treatments.</figcaption><p></p>
 </figure>
 </div>
 <p>A tsv input file contains the following columns, detailing the name of the sample, library, sequencing lane, colour chemistry depending on the sequencer used, target organism, library strandedness, UDG treatment, path to fastq with forward reads (SE and PE), path to reverse reads (only PE), path to bam (optional). nf-core/eager will treat the data according to the provided information, e.g.&nbsp;only trim UDG half data and genotype single-stranded libraries using single-stranded mode.</p>
@@ -348,12 +365,12 @@ JK2782      JK2782     1    4                PE      Mammoth  single       half 
 JK2802      JK2802     2    2                SE      Mammoth  double       full          NA                                                                                                                                  NA                                                                                                                                  https://github.com/nf-core/test-datasets/raw/eager/testdata/Mammoth/fastq/JK2802_AGAATAACCTACCA_L008_R1_001.fastq.gz.tengrand.bam</code></pre>
 <p>Collecting and double-checking this information is time consuming, but crucial!</p>
 <p>If you realize you have different libraries from same individual, you should enter the same Sample_Name for all respective libraries. nf-core/eager will then produce all steps for the independent libraries (e.g.&nbsp;endogenous DNA, sequencing quality control, contamination estimation, etc.), but merge the deduplicated bam files before genotyping, genetic sex estimation and coverage calculation. To avoid re-mapping the whole dataset and conserve computing resources, also consider providing the mapped bam files to nf-core/eager directly.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Tip
 </div>
 </div>
@@ -362,8 +379,8 @@ Tip
 </div>
 </div>
 </section>
-<section id="parameter-customization" class="level3" data-number="4.3.3">
-<h3 data-number="4.3.3" class="anchored" data-anchor-id="parameter-customization"><span class="header-section-number">4.3.3</span> Parameter customization</h3>
+<section id="parameter-customization" class="level3" data-number="5.3.3">
+<h3 data-number="5.3.3" class="anchored" data-anchor-id="parameter-customization"><span class="header-section-number">5.3.3</span> Parameter customization</h3>
 <p>By default nf-core/eager runs the following, when you only provide input data and a reference genome:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/eager <span class="at">--input</span> <span class="op">&lt;</span>INPUT<span class="op">&gt;</span>.tsv <span class="at">--fasta</span> <span class="st">'&lt;REFERENCE&gt;.fasta'</span> <span class="at">-profile</span> eva</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol type="1">
@@ -437,12 +454,12 @@ Tip
 <p>The configuration file is then provided to nf-core/eager via the <code>-profile</code> and <code>-c</code> flag.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/eager <span class="at">-–input</span> <span class="op">&lt;</span>INPUT<span class="op">&gt;</span>.tsv <span class="at">-profile</span> TF_hs37,eva,archgen <span class="at">-c</span> /<span class="op">&lt;</span>PATH<span class="op">&gt;</span>/eager2.config</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Full documentation of all parameters is available on the <a href="https://nf-co.re/eager/2.5.0/parameters">nf-core/eager website</a>.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
+<div class="callout-caption-container flex-fill">
 Tip
 </div>
 </div>
@@ -451,8 +468,8 @@ Tip
 </div>
 </div>
 </section>
-<section id="run-submission" class="level3" data-number="4.3.4">
-<h3 data-number="4.3.4" class="anchored" data-anchor-id="run-submission"><span class="header-section-number">4.3.4</span> Run submission</h3>
+<section id="run-submission" class="level3" data-number="5.3.4">
+<h3 data-number="5.3.4" class="anchored" data-anchor-id="run-submission"><span class="header-section-number">5.3.4</span> Run submission</h3>
 <p>Once all input files and parameters are prepared, you are ready for submission. To make sure that the workflow continues running when you disconnect from the cluster or shut down your computer, nf-core/eager should be run in a screen session.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create a screen session</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">screen</span> <span class="at">-R</span> eager</span>
@@ -465,8 +482,8 @@ Tip
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="bu">exit</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>After submitting a command specifying all the parameters you would like to use, Nextflow generates the corresponding shell scripts and submits each job to your scheduler according to your requested computational resources. You can track the execution status live in the terminal or on <a href="https://cloud.tower.nf/">Nextflow Tower</a>. For use with tower, you should assign the run an identifiable name with <code>-name</code> and activate tracking using <code>-with-tower</code>.</p>
 </section>
-<section id="output" class="level3" data-number="4.3.5">
-<h3 data-number="4.3.5" class="anchored" data-anchor-id="output"><span class="header-section-number">4.3.5</span> Output</h3>
+<section id="output" class="level3" data-number="5.3.5">
+<h3 data-number="5.3.5" class="anchored" data-anchor-id="output"><span class="header-section-number">5.3.5</span> Output</h3>
 <p>During the progression of the run, the results of each pipeline steps are collected in separate output directories. These contain the raw outputs of each tool, including any generated files (e.g.&nbsp;deduplicated bam files or genotypes).</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>RUNNAME<span class="op">&gt;</span>/</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> results/</span>
@@ -493,19 +510,19 @@ Tip
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/eager/multiqc_report.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Screenshot of the top section of a MultiQC report</figcaption>
+<p></p><figcaption class="figure-caption">Screenshot of the top section of a MultiQC report</figcaption><p></p>
 </figure>
 </div>
 <p>This table collects the output from all tools, so you can get an overview of sequenced reads per sequencing run, endogenous DNA per library, covered SNPs per sample and much more. You can also inspect and export crucial plots, such as read length distribution and damage profile. The end of the report also contains a list of all software versions and an overview of which profiles were used.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/eager/fiveprime_misinc_plot-1.png" class="img-fluid figure-img" width="1200"></p>
-<figcaption class="figure-caption">Ancient DNA damage plot as generated by MultiQC</figcaption>
+<p></p><figcaption class="figure-caption">Ancient DNA damage plot as generated by MultiQC</figcaption><p></p>
 </figure>
 </div>
 </section>
-<section id="trouble-shooting" class="level3" data-number="4.3.6">
-<h3 data-number="4.3.6" class="anchored" data-anchor-id="trouble-shooting"><span class="header-section-number">4.3.6</span> Trouble shooting</h3>
+<section id="trouble-shooting" class="level3" data-number="5.3.6">
+<h3 data-number="5.3.6" class="anchored" data-anchor-id="trouble-shooting"><span class="header-section-number">5.3.6</span> Trouble shooting</h3>
 <p>A common issue with nf-core/eager, especially when used in combination with the SGE scheduler, are memory issues with java-driven tools, e.g.&nbsp;MarkDuplicates. Sometimes the pipeline does not catch cases properly, where the allocated memory is exceeded, and the job keeps running instead of being re-submitted with larger memory allocation. Therefore, if you notice jobs running much longer than expected, it is worth checking the <code>work/</code> directory, where all information about each submitted job is recorded. Each job is assigned a randomly generated name using numbers and letter which you can identify from the log printed in to your screen, the <code>&lt;RUNNAME&gt;/.nextflow.log</code> or Nextflow tower. Each work directory contains files tracing the execution of the job.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>RUNNAME<span class="op">&gt;</span>/</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span> work/</span>
@@ -520,12 +537,12 @@ Tip
 <p>If you’ve had an issue with a run or want to restart the pipeline, you can do so using <code>-resume</code>. Nextflow will used cached results from any pipeline steps where the inputs are the same, continuing from where it got to previously. You can also supply a run name to resume a specific run: <code>-resume [run-name]</code>. Use the <code>nextflow log</code> command to show previous run names.</p>
 </section>
 </section>
-<section id="how-do-i-report-the-usage-of-nf-coreeager" class="level2 page-columns page-full" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="how-do-i-report-the-usage-of-nf-coreeager"><span class="header-section-number">4.4</span> How do I report the usage of nf-core/eager?</h2>
+<section id="how-do-i-report-the-usage-of-nf-coreeager" class="level2 page-columns page-full" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="how-do-i-report-the-usage-of-nf-coreeager"><span class="header-section-number">5.4</span> How do I report the usage of nf-core/eager?</h2>
 <p>If you use nf-core/eager for your analysis, please cite Fellows Yates et al. <span class="citation" data-cites="FellowsYates2021">(<a href="references.html#ref-FellowsYates2021" role="doc-biblioref">2021</a>)</span> and the release of nf-core/eager on <a href="https://zenodo.org/records/10078633">zenodo</a>, as well as the nf-core publication <span class="citation" data-cites="ewels2020">(<a href="references.html#ref-ewels2020" role="doc-biblioref">Ewels et al. 2020</a>)</span>. As nf-core/eager is only the pipeline connecting multiple tools, please also cite the version of each used tool, the respective individual publications and add the full command for easy reproducibility.</p>
-<div class="no-row-height column-margin column-container"><div id="ref-FellowsYates2021" class="csl-entry" role="listitem">
+<div class="no-row-height column-margin column-container"><div id="ref-FellowsYates2021" class="csl-entry" role="doc-biblioentry">
 Fellows Yates, James A., Thiseas C. Lamnidis, Maxime Borry, Aida Andrades Valtueña, Zandra Fagernäs, Stephen Clayton, Maxime U. Garcia, Judith Neukamm, and Alexander Peltzer. 2021. <span>“Reproducible, Portable, and Efficient Ancient Genome Reconstruction with Nf-Core/Eager.”</span> <em><span>PeerJ</span></em> 9 (March): e10947. <a href="https://doi.org/10.7717/peerj.10947">https://doi.org/10.7717/peerj.10947</a>.
-</div><div id="ref-ewels2020" class="csl-entry" role="listitem">
+</div><div id="ref-ewels2020" class="csl-entry" role="doc-biblioentry">
 Ewels, Philip A., Alexander Peltzer, Sven Fillinger, Harshil Patel, Johannes Alneberg, Andreas Wilm, Maxime Ulysse Garcia, Paolo Di Tommaso, and Sven Nahnsen. 2020. <span>“The Nf-Core Framework for Community-Curated Bioinformatics Pipelines.”</span> <em>Nature Biotechnology</em> 38 (3): 276–78. <a href="https://doi.org/10.1038/s41587-020-0439-x">https://doi.org/10.1038/s41587-020-0439-x</a>.
 </div></div><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> run nf-core/eager</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>        <span class="ex">-profile</span> eva,archgen</span>
@@ -547,24 +564,24 @@ Ewels, Philip A., Alexander Peltzer, Sven Fillinger, Harshil Patel, Johannes Aln
 <span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>        <span class="ex">--damageprofiler_threshold</span> 15</span>
 <span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>        <span class="ex">--damageprofiler_yaxis</span> 0.3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="how-do-i-update-nf-coreeager" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="how-do-i-update-nf-coreeager"><span class="header-section-number">4.5</span> How do I update nf-core/eager?</h2>
+<section id="how-do-i-update-nf-coreeager" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="how-do-i-update-nf-coreeager"><span class="header-section-number">5.5</span> How do I update nf-core/eager?</h2>
 <div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> pull nf-core/eager</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#or for a specific version</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">nextflow</span> pull nf-core/eager <span class="at">-r</span> 2.5.0</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="whats-next-for-nf-coreeager" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="whats-next-for-nf-coreeager"><span class="header-section-number">4.6</span> What’s next for nf-core/eager?</h2>
+<section id="whats-next-for-nf-coreeager" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="whats-next-for-nf-coreeager"><span class="header-section-number">5.6</span> What’s next for nf-core/eager?</h2>
 <p>While nf-core/eager 2.5.0 has only been released recently, behind the scenes the development team has been very busy re-writing nf-core/eager to be more efficient and include even more functionality. So look out for nf-core/eager 3.0 release sometime soon!</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/eager/eager3_metromap_complex_developmentupdate_20231020.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Overview of the development status of nf-core/eager 3.0 as of October 2023, new functionality marked in purple.</figcaption>
+<p></p><figcaption class="figure-caption">Overview of the development status of nf-core/eager 3.0 as of October 2023, new functionality marked in purple.</figcaption><p></p>
 </figure>
 </div>
 </section>
-<section id="how-can-i-get-help-with-problems-or-questions" class="level2" data-number="4.7">
-<h2 data-number="4.7" class="anchored" data-anchor-id="how-can-i-get-help-with-problems-or-questions"><span class="header-section-number">4.7</span> How can I get help with problems or questions?</h2>
+<section id="how-can-i-get-help-with-problems-or-questions" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="how-can-i-get-help-with-problems-or-questions"><span class="header-section-number">5.7</span> How can I get help with problems or questions?</h2>
 <p><img src="img/eager/nf-core.png" class="img-fluid" width="20">Check the website for in-depth documentation of <a href="https://nf-co.re/eager/2.5.0">nf-core/eager</a>.</p>
 <p><img src="img/eager/github.png" class="img-fluid" width="20"> Raise your issue on <a href="https://github.com/nf-core/eager/">GitHub</a>.</p>
 <p><img src="img/eager/slack.jpg" class="img-fluid" width="20">Join the #eager channel on the nf-core <a href="https://nf-co.re/join#slack">Slack</a>.</p>
@@ -601,23 +618,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
-      }
-    }
-    return false;
-  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
+    target: function(trigger) {
+      return trigger.previousElementSibling;
     }
   });
   clipboard.on('success', function(e) {
@@ -629,24 +632,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
     setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -682,140 +668,36 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
       });
-    }
+      return popup.innerHTML;
+    });
   }
 });
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./fstats.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to F3- and F4-Statistics</span></span>
+      <a href="./authentiCT.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contamination estimation with AuthentiCT</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./fst.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
