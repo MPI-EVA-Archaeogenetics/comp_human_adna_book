@@ -11,6 +11,7 @@ book:
     - Quarto_intro.qmd
     - poseidon.qmd
     - fstats.qmd
+    - authentiCT.qmd
     - eager.qmd
     - fst.qmd
     - pca_mds.qmd

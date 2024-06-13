@@ -27,7 +27,7 @@ Three main signals are informative about the presence of contamination in aDNA d
 
 The figure below summarizes the classification of signals used to estimate contamination, as presented by @Peyregne2020
 
-![Box A shows the genealogical relationship of present-day and ancient individuals, including two derived variants that are informative for either group. The presence of a red variant indicates a contaminant sequence, whereas a blue variant indicates endogenous sequences. Box B shows the expected ploidy for the autosomes (A), the X- and Y-chromosomes (X, Y), and the mitochondrial genome (MT). Deviations from these expectations indicate contamination from the opposite sex. The illustration below shows sequences aligned to a reference genome. These sequences carry two different alleles represented by dots. However, one allele (white) is rare compared to the other allele (blue). This observation is not compatible with the 50:50 ratio expected for a heterozygous site; therefore the discordant allele may originate from contamination. Box C illustrates aDNA damage. Left: aDNA fragments often contain U caused by aDNA damage whereas U are typically absent from present-day DNA. Right: When no repair enzymes are used, U will be misread as T and their presence will result in high rates of C-to-T substitutions that occur primarily at the ends of sequences. Note that this signal depends on the library preparation protocol, and that high rates of G-to-A toward the 3ʹ-end. Neither pattern is expected for present-day DNA sequences .](images/image-1717067101.png){fig-align="center"}
+![Box A shows the genealogical relationship of present-day and ancient individuals, including two derived variants that are informative for either group. The presence of a red variant indicates a contaminant sequence, whereas a blue variant indicates endogenous sequences. Box B shows the expected ploidy for the autosomes (A), the X- and Y-chromosomes (X, Y), and the mitochondrial genome (MT). Deviations from these expectations indicate contamination from the opposite sex. The illustration below shows sequences aligned to a reference genome. These sequences carry two different alleles represented by dots. However, one allele (white) is rare compared to the other allele (blue). This observation is not compatible with the 50:50 ratio expected for a heterozygous site; therefore the discordant allele may originate from contamination. Box C illustrates aDNA damage. Left: aDNA fragments often contain U caused by aDNA damage whereas U are typically absent from present-day DNA. Right: When no repair enzymes are used, U will be misread as T and their presence will result in high rates of C-to-T substitutions that occur primarily at the ends of sequences. Note that this signal depends on the library preparation protocol, and that high rates of G-to-A toward the 3ʹ-end. Neither pattern is expected for present-day DNA sequences .](img/authentiCT/image-1717067101.png){fig-align="center"}
 
 ### aDNA properties: Quick recap
 
@@ -35,9 +35,9 @@ Ancient DNA is typically fragmented into pieces shorter than 100 bp and exhibits
 
 The most common miscoding lesions observed in aDNA are the results of cytosine deamination that converts cytosine (C) into uracil (U), which is then misread as thymine (T), or 5- methylcytosine into thymine. This leads to C-to-T substitutions in the sequence data.\
 \
-![](images/image-326643966.png){width="476"}
+![](img/authentiCT/image-326643966.png){width="476"}
 
-![](images/image-55127020.png){fig-align="center" width="492"}
+![](img/authentiCT/image-55127020.png){fig-align="center" width="492"}
 
 The deamination rate is higher for [**single-stranded DNA**]{style="color: #29805b;"} than for double-stranded DNA [@lindahl1974]. The prevalence of deamination-induced C-T substitutions increases with the age of the sample, and it is climate dependent [@kistler2017; @sawyer2012] .<br><br>
 
@@ -53,11 +53,11 @@ Cytosine deamination is used to filter out present-day human contaminant DNA, as
 
 Let's say we have sample X with damage rate of 30% at the 5' end and 25% on the 3' end, as illustrated below:
 
-![](images/image-1111760292.png){fig-align="center" width="514"}
+![](img/authentiCT/image-1111760292.png){fig-align="center" width="514"}
 
 To calculate the conditional substitution rate at the 5' end, we start by selecting only those reads that have a deamination signal at the 3' end. hence maximizing it to a 100% rate. Similarly, to find the substitution rate at the 3' end, we pick out reads that show a deamination signal at the 5' end, aiming for the same 100% rate. The process is depicted in the figure below.
 
-![](images/image-191426708.png)
+![](img/authentiCT/image-191426708.png)
 
 The table below summarizes the output of the calculation:
 
@@ -101,7 +101,7 @@ AuthentiCT is based on model that learns the patterns of post-mortem damage. It 
 
 [- **Accounting for Clusters:**]{style="color: #29805b;"} While C-T substitutions occur predominantly at the ends of DNA fragments, they are also found in the internal parts. These internal clusters are not independent from each other.
 
-![Excluding the first and last five bases to mask potential overhangs, C-to-Ts are found to particularly common in adjacent positions in many samples, with a significant deviation from the geometric distribution expected from independent events \[Peyrégne and Peter 2020\]](images/image-1943746165.png){fig-align="center" width="424"}
+![Excluding the first and last five bases to mask potential overhangs, C-to-Ts are found to particularly common in adjacent positions in many samples, with a significant deviation from the geometric distribution expected from independent events \[Peyrégne and Peter 2020\]](img/authentiCT/image-1943746165.png){fig-align="center" width="424"}
 
 AuthentiCT uses a a [**hidden Markov model (HMM)**]{style="color: #29805b;"}---a statistical model for predicting a sequence of unseen state changes based on observed sequences---to jointly model all C-T substitutions.
 
@@ -109,13 +109,13 @@ AuthentiCT uses a a [**hidden Markov model (HMM)**]{style="color: #29805b;"}---a
 
 [- **Unobserved states**:]{style="color: #29805b;"} These are the DNA conditions not directly observed, such as single-stranded areas (including 3' or 5' overhangs, haplotypes) and double-stranded regions.
 
-![](images/image-96701690.png){fig-align="center" width="311"}
+![](img/authentiCT/image-96701690.png){fig-align="center" width="311"}
 
 After evaluating each position within the DNA sequence, the model identifies three distinct single-stranded (ss) regions: inside the molecule, at the 5' end, or at the 3' end. It then calculates the probability for each model (contaminant vs. ancient) at the sequence's end.
 
 The model distinguishes between single-stranded and double-stranded parts of the DNA molecule using four hidden states to represent either double-stranded (ds) or single-stranded stretches. By compiling these probabilities across all sequences, AuthentiCT efficiently estimates the proportion of contamination.
 
-![States are depicted by nodes and transitions by edges. Each state emits a match to the reference M (blue) or a mismatch, which can either be compatible with cytosine deamination, D (red), or an error (or polymorphism), E (yellow). Single-stranded states (5'o, 3'o and ss) and the double-stranded state (ds) are in light and dark green, respectively. b The posterior probability for each state is shown with different colours \[Peyrégne & Peter 2020\]](images/image-2022766876.png){fig-align="center" width="466"}
+![States are depicted by nodes and transitions by edges. Each state emits a match to the reference M (blue) or a mismatch, which can either be compatible with cytosine deamination, D (red), or an error (or polymorphism), E (yellow). Single-stranded states (5'o, 3'o and ss) and the double-stranded state (ds) are in light and dark green, respectively. b The posterior probability for each state is shown with different colours \[Peyrégne & Peter 2020\]](img/authentiCT/image-2022766876.png){fig-align="center" width="466"}
 
 ### Applicability
 
@@ -219,7 +219,7 @@ done
 
 **Outcome:** We did not observe high discrepancies when comparing samples with high number of input reads and C-T damage (\>30%). However, we observed higher SE for samples with low number of input reads (less than 10.000), mainly for SG data. The table below outlines the coverage and the C-T substitution rates for each samples.
 
-![Plot comparing AuthentiCT output for SG and capture (1240k) data, showing 2x standard error. We did not observe high discrepancies when comparing samples with high number of input reads and C-T damage (\>30%). However, we observed higher SE for samples with low number of input reads (less than 10.000), mainly for SG data. Data used are shown in table below.](images/image-163130435.png)
+![Plot comparing AuthentiCT output for SG and capture (1240k) data, showing 2x standard error. We did not observe high discrepancies when comparing samples with high number of input reads and C-T damage (\>30%). However, we observed higher SE for samples with low number of input reads (less than 10.000), mainly for SG data. Data used are shown in table below.](img/authentiCT/image-163130435.png)
 
 ``` markdown
 
@@ -248,7 +248,7 @@ done
 
 **Outcome:** Our results indicate that a reduced sequence count speeds up analysis but may broaden standard errors and slightly alter contamination estimates.
 
-![](images/image-970640075.png){fig-align="center"}
+![](img/authentiCT/image-970640075.png){fig-align="center"}
 
 ### Impact of sequencing setup used on AuthentiCT estimates
 
@@ -256,7 +256,7 @@ done
 
 **Outcome:** The results indicate that AuthentiCT estimate ovaerall does not change with changing the sequencing setup.
 
-![](images/image-1437595134.png){fig-align="center"}
+![](img/authentiCT/image-1437595134.png){fig-align="center"}
 
 💡 **Terminal end damage discrepancies in single-stranded libraries**
 
