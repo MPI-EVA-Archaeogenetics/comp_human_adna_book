@@ -138,7 +138,7 @@ $F_\text{ST}$ between two populations A and B is then defined as $$F_\text{ST}(A
 
 ### Estimating $F_\text{ST}$ from genomic data
 
-While there are various mathematical definitions for both the theoretical definition and estimation for $F_\text{ST}$, which differ in subtle ways, we here follow the excellent paper by [@Bhatia2013], which proposes the following estimator, termed Hudson-estimator, which in turn is based on a proposal by [@Hudson1992] and has been implemented in the ADMIXTOOLS package [@Patterson2012]:
+All of the above considerations were made using only a single population. But when we usually _measure_ $F_\text{ST}$, we measure it _between_ two populations. While there are various mathematical definitions for both the theoretical definition and estimation for $F_\text{ST}$, which differ in subtle ways, we here follow the excellent paper by [@Bhatia2013], which proposes the following estimator, termed Hudson-estimator, which in turn is based on a proposal by [@Hudson1992] and has been implemented in the ADMIXTOOLS package [@Patterson2012]:
 
 $$F_\text{ST}=1-\frac{H_w}{H_b}$$
 
