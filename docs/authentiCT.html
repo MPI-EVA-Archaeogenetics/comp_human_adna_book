@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.163">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,9 +19,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -48,48 +49,19 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -103,8 +75,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -141,7 +112,8 @@ div.csl-indent {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -152,11 +124,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contamination estimation with AuthentiCT</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./authentiCT.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contamination estimation with AuthentiCT</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -164,95 +141,112 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Computational Methods for human population genetics and ancient DNA</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Quarto_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></a>
+  <a href="./Quarto_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./poseidon.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Genotype and context data management with Poseidon</span></a>
+  <a href="./poseidon.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Genotype and context data management with Poseidon</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fstats.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to F3- and F4-Statistics</span></a>
+  <a href="./fstats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to F3- and F4-Statistics</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./authentiCT.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contamination estimation with AuthentiCT</span></a>
+  <a href="./authentiCT.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contamination estimation with AuthentiCT</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./eager.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Introduction to nf-core/eager</span></a>
+  <a href="./eager.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Introduction to nf-core/eager</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fst.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></a>
+  <a href="./mobest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">mobest - Spatiotemporal Ancestry Interpolation and Search</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pca_mds.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></a>
+  <a href="./fst.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pmrread.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Pairwise mismatch rate (PMR) and READ relatedness inference</span></a>
+  <a href="./pca_mds.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link">References</a>
+  <a href="./pmrread.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pairwise mismatch rate (PMR) and READ relatedness inference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#contamination-estimation-methods" id="toc-contamination-estimation-methods" class="nav-link active" data-scroll-target="#contamination-estimation-methods"><span class="toc-section-number">4.1</span>  Contamination Estimation Methods</a>
+  <li><a href="#contamination-estimation-methods" id="toc-contamination-estimation-methods" class="nav-link active" data-scroll-target="#contamination-estimation-methods"><span class="header-section-number">4.1</span> Contamination Estimation Methods</a>
   <ul class="collapse">
-  <li><a href="#adna-properties-quick-recap" id="toc-adna-properties-quick-recap" class="nav-link" data-scroll-target="#adna-properties-quick-recap"><span class="toc-section-number">4.1.1</span>  aDNA properties: Quick recap</a></li>
-  <li><a href="#adna-common-damage-models" id="toc-adna-common-damage-models" class="nav-link" data-scroll-target="#adna-common-damage-models"><span class="toc-section-number">4.1.2</span>  aDNA Common Damage Models</a></li>
+  <li><a href="#adna-properties-quick-recap" id="toc-adna-properties-quick-recap" class="nav-link" data-scroll-target="#adna-properties-quick-recap"><span class="header-section-number">4.1.1</span> aDNA properties: Quick recap</a></li>
+  <li><a href="#adna-common-damage-models" id="toc-adna-common-damage-models" class="nav-link" data-scroll-target="#adna-common-damage-models"><span class="header-section-number">4.1.2</span> aDNA Common Damage Models</a></li>
   </ul></li>
-  <li><a href="#authentict-tool" id="toc-authentict-tool" class="nav-link" data-scroll-target="#authentict-tool"><span class="toc-section-number">4.2</span>  AuthentiCT tool</a>
+  <li><a href="#authentict-tool" id="toc-authentict-tool" class="nav-link" data-scroll-target="#authentict-tool"><span class="header-section-number">4.2</span> AuthentiCT tool</a>
   <ul class="collapse">
-  <li><a href="#theory" id="toc-theory" class="nav-link" data-scroll-target="#theory"><span class="toc-section-number">4.2.1</span>  Theory</a></li>
-  <li><a href="#applicability" id="toc-applicability" class="nav-link" data-scroll-target="#applicability"><span class="toc-section-number">4.2.2</span>  Applicability</a></li>
-  <li><a href="#method-parameters" id="toc-method-parameters" class="nav-link" data-scroll-target="#method-parameters"><span class="toc-section-number">4.2.3</span>  Method parameters</a></li>
-  <li><a href="#running-output" id="toc-running-output" class="nav-link" data-scroll-target="#running-output"><span class="toc-section-number">4.2.4</span>  Running &amp; Output</a></li>
+  <li><a href="#theory" id="toc-theory" class="nav-link" data-scroll-target="#theory"><span class="header-section-number">4.2.1</span> Theory</a></li>
+  <li><a href="#applicability" id="toc-applicability" class="nav-link" data-scroll-target="#applicability"><span class="header-section-number">4.2.2</span> Applicability</a></li>
+  <li><a href="#method-parameters" id="toc-method-parameters" class="nav-link" data-scroll-target="#method-parameters"><span class="header-section-number">4.2.3</span> Method parameters</a></li>
+  <li><a href="#running-output" id="toc-running-output" class="nav-link" data-scroll-target="#running-output"><span class="header-section-number">4.2.4</span> Running &amp; Output</a></li>
   </ul></li>
-  <li><a href="#practical-examples" id="toc-practical-examples" class="nav-link" data-scroll-target="#practical-examples"><span class="toc-section-number">4.3</span>  Practical examples</a>
+  <li><a href="#practical-examples" id="toc-practical-examples" class="nav-link" data-scroll-target="#practical-examples"><span class="header-section-number">4.3</span> Practical examples</a>
   <ul class="collapse">
-  <li><a href="#consistency-between-shotgun-sg-vs-capture-1240k-data" id="toc-consistency-between-shotgun-sg-vs-capture-1240k-data" class="nav-link" data-scroll-target="#consistency-between-shotgun-sg-vs-capture-1240k-data"><span class="toc-section-number">4.3.1</span>  Consistency between Shotgun (SG) vs capture (1240k) data</a></li>
-  <li><a href="#impact-of-sequence-count-used-on-authentict-estimates" id="toc-impact-of-sequence-count-used-on-authentict-estimates" class="nav-link" data-scroll-target="#impact-of-sequence-count-used-on-authentict-estimates"><span class="toc-section-number">4.3.2</span>  Impact of sequence count used on AuthentiCT estimates</a></li>
-  <li><a href="#impact-of-sequencing-setup-used-on-authentict-estimates" id="toc-impact-of-sequencing-setup-used-on-authentict-estimates" class="nav-link" data-scroll-target="#impact-of-sequencing-setup-used-on-authentict-estimates"><span class="toc-section-number">4.3.3</span>  Impact of sequencing setup used on AuthentiCT estimates</a></li>
+  <li><a href="#consistency-between-shotgun-sg-vs-capture-1240k-data" id="toc-consistency-between-shotgun-sg-vs-capture-1240k-data" class="nav-link" data-scroll-target="#consistency-between-shotgun-sg-vs-capture-1240k-data"><span class="header-section-number">4.3.1</span> Consistency between Shotgun (SG) vs capture (1240k) data</a></li>
+  <li><a href="#impact-of-sequence-count-used-on-authentict-estimates" id="toc-impact-of-sequence-count-used-on-authentict-estimates" class="nav-link" data-scroll-target="#impact-of-sequence-count-used-on-authentict-estimates"><span class="header-section-number">4.3.2</span> Impact of sequence count used on AuthentiCT estimates</a></li>
+  <li><a href="#impact-of-sequencing-setup-used-on-authentict-estimates" id="toc-impact-of-sequencing-setup-used-on-authentict-estimates" class="nav-link" data-scroll-target="#impact-of-sequencing-setup-used-on-authentict-estimates"><span class="header-section-number">4.3.3</span> Impact of sequencing setup used on AuthentiCT estimates</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -262,7 +256,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contamination estimation with AuthentiCT</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contamination estimation with AuthentiCT</span></h1>
 </div>
 
 
@@ -282,6 +276,7 @@ div.csl-indent {
       <p class="date">November 9, 2023</p>
     </div>
   </div>
+  
     
   </div>
   
@@ -303,7 +298,7 @@ div.csl-indent {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/authentiCT/image-1717067101.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Box A shows the genealogical relationship of present-day and ancient individuals, including two derived variants that are informative for either group. The presence of a red variant indicates a contaminant sequence, whereas a blue variant indicates endogenous sequences. Box B shows the expected ploidy for the autosomes (A), the X- and Y-chromosomes (X, Y), and the mitochondrial genome (MT). Deviations from these expectations indicate contamination from the opposite sex. The illustration below shows sequences aligned to a reference genome. These sequences carry two different alleles represented by dots. However, one allele (white) is rare compared to the other allele (blue). This observation is not compatible with the 50:50 ratio expected for a heterozygous site; therefore the discordant allele may originate from contamination. Box C illustrates aDNA damage. Left: aDNA fragments often contain U caused by aDNA damage whereas U are typically absent from present-day DNA. Right: When no repair enzymes are used, U will be misread as T and their presence will result in high rates of C-to-T substitutions that occur primarily at the ends of sequences. Note that this signal depends on the library preparation protocol, and that high rates of G-to-A toward the 3ʹ-end. Neither pattern is expected for present-day DNA sequences .</figcaption><p></p>
+<figcaption class="figure-caption">Box A shows the genealogical relationship of present-day and ancient individuals, including two derived variants that are informative for either group. The presence of a red variant indicates a contaminant sequence, whereas a blue variant indicates endogenous sequences. Box B shows the expected ploidy for the autosomes (A), the X- and Y-chromosomes (X, Y), and the mitochondrial genome (MT). Deviations from these expectations indicate contamination from the opposite sex. The illustration below shows sequences aligned to a reference genome. These sequences carry two different alleles represented by dots. However, one allele (white) is rare compared to the other allele (blue). This observation is not compatible with the 50:50 ratio expected for a heterozygous site; therefore the discordant allele may originate from contamination. Box C illustrates aDNA damage. Left: aDNA fragments often contain U caused by aDNA damage whereas U are typically absent from present-day DNA. Right: When no repair enzymes are used, U will be misread as T and their presence will result in high rates of C-to-T substitutions that occur primarily at the ends of sequences. Note that this signal depends on the library preparation protocol, and that high rates of G-to-A toward the 3ʹ-end. Neither pattern is expected for present-day DNA sequences .</figcaption>
 </figure>
 </div>
 <section id="adna-properties-quick-recap" class="level3" data-number="4.1.1">
@@ -380,12 +375,12 @@ div.csl-indent {
 </tr>
 </tbody>
 </table>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Note
 </div>
 </div>
@@ -409,7 +404,7 @@ Note
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/authentiCT/image-1943746165.png" class="img-fluid figure-img" width="424"></p>
-<p></p><figcaption class="figure-caption">Excluding the first and last five bases to mask potential overhangs, C-to-Ts are found to particularly common in adjacent positions in many samples, with a significant deviation from the geometric distribution expected from independent events [Peyrégne and Peter 2020]</figcaption><p></p>
+<figcaption class="figure-caption">Excluding the first and last five bases to mask potential overhangs, C-to-Ts are found to particularly common in adjacent positions in many samples, with a significant deviation from the geometric distribution expected from independent events [Peyrégne and Peter 2020]</figcaption>
 </figure>
 </div>
 <p>AuthentiCT uses a a <span style="color: #29805b;"><strong>hidden Markov model (HMM)</strong></span>—a statistical model for predicting a sequence of unseen state changes based on observed sequences—to jointly model all C-T substitutions.</p>
@@ -425,22 +420,22 @@ Note
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/authentiCT/image-2022766876.png" class="img-fluid figure-img" width="466"></p>
-<p></p><figcaption class="figure-caption">States are depicted by nodes and transitions by edges. Each state emits a match to the reference M (blue) or a mismatch, which can either be compatible with cytosine deamination, D (red), or an error (or polymorphism), E (yellow). Single-stranded states (5’o, 3’o and ss) and the double-stranded state (ds) are in light and dark green, respectively. b The posterior probability for each state is shown with different colours [Peyrégne &amp; Peter 2020]</figcaption><p></p>
+<figcaption class="figure-caption">States are depicted by nodes and transitions by edges. Each state emits a match to the reference M (blue) or a mismatch, which can either be compatible with cytosine deamination, D (red), or an error (or polymorphism), E (yellow). Single-stranded states (5’o, 3’o and ss) and the double-stranded state (ds) are in light and dark green, respectively. b The posterior probability for each state is shown with different colours [Peyrégne &amp; Peter 2020]</figcaption>
 </figure>
 </div>
 </section>
 <section id="applicability" class="level3" data-number="4.2.2">
 <h3 data-number="4.2.2" class="anchored" data-anchor-id="applicability"><span class="header-section-number">4.2.2</span> Applicability</h3>
-<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-tip callout-titled" title="Tip with Title">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
-Tip
+<div class="callout-title-container flex-fill">
+Tip with Title
 </div>
 </div>
-<div class="callout-body-container callout-body" title="Tip with Title">
+<div class="callout-body-container callout-body">
 <ul>
 <li><p>AuthentiCT is applicable to any species, if suitable reference genome is available for alignment.</p></li>
 <li><p>Limited to single-stranded libraries</p></li>
@@ -529,7 +524,7 @@ Tip
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="img/authentiCT/image-163130435.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Plot comparing AuthentiCT output for SG and capture (1240k) data, showing 2x standard error. We did not observe high discrepancies when comparing samples with high number of input reads and C-T damage (&gt;30%). However, we observed higher SE for samples with low number of input reads (less than 10.000), mainly for SG data. Data used are shown in table below.</figcaption><p></p>
+<figcaption class="figure-caption">Plot comparing AuthentiCT output for SG and capture (1240k) data, showing 2x standard error. We did not observe high discrepancies when comparing samples with high number of input reads and C-T damage (&gt;30%). However, we observed higher SE for samples with low number of input reads (less than 10.000), mainly for SG data. Data used are shown in table below.</figcaption>
 </figure>
 </div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -571,12 +566,12 @@ Tip
 </div>
 <p>💡 <strong>Terminal end damage discrepancies in single-stranded libraries</strong></p>
 <p>During the preparation of single-stranded libraries, an adapter is ligated to the 3’ ends of the molecules. This step tends to introduce a small to moderate bias against the ligation of uracils, leading to a common observation: the terminal 3’ C-to-T substitution rates are typically 10-20% lower compared to those at the 5’ terminal ends.This bias is amplified in the presence of inhibitory substances in the DNA extracts, or if the library prep is saturated with large amounts of input DNA.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Note
 </div>
 </div>
@@ -586,20 +581,20 @@ Note
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
-<div id="ref-kistler2017" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-kistler2017" class="csl-entry" role="listitem">
 Kistler, Logan, Roselyn Ware, Oliver Smith, Matthew Collins, and Robin G. Allaby. 2017. <span>“A New Model for Ancient DNA Decay Based on Paleogenomic Meta-Analysis.”</span> <em>Nucleic Acids Research</em> 45 (11): 6310–20. <a href="https://doi.org/10.1093/nar/gkx361">https://doi.org/10.1093/nar/gkx361</a>.
 </div>
-<div id="ref-lindahl1974" class="csl-entry" role="doc-biblioentry">
+<div id="ref-lindahl1974" class="csl-entry" role="listitem">
 Lindahl, Tomas, and Barbro Nyberg. 1974. <span>“Heat-Induced Deamination of Cytosine Residues in Deoxyribonucleic Acid.”</span> <em>Biochemistry</em> 13 (16): 3405–10. <a href="https://doi.org/10.1021/bi00713a035">https://doi.org/10.1021/bi00713a035</a>.
 </div>
-<div id="ref-meyer2016" class="csl-entry" role="doc-biblioentry">
+<div id="ref-meyer2016" class="csl-entry" role="listitem">
 Meyer, Matthias, Juan-Luis Arsuaga, Cesare de Filippo, Sarah Nagel, Ayinuer Aximu-Petri, Birgit Nickel, Ignacio Martínez, et al. 2016. <span>“Nuclear DNA Sequences from the Middle Pleistocene Sima de Los Huesos Hominins.”</span> <em>Nature</em> 531 (7595): 504–7. <a href="https://doi.org/10.1038/nature17405">https://doi.org/10.1038/nature17405</a>.
 </div>
-<div id="ref-Peyregne2020" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Peyregne2020" class="csl-entry" role="listitem">
 Peyrégné, Someone. 2020. <span>“Title of the Article.”</span> <em>Journal Name</em> 10: 100–110. <a href="https://doi.org/10.1000/j.journal.2020.01.001">https://doi.org/10.1000/j.journal.2020.01.001</a>.
 </div>
-<div id="ref-sawyer2012" class="csl-entry" role="doc-biblioentry">
+<div id="ref-sawyer2012" class="csl-entry" role="listitem">
 Sawyer, Susanna, Johannes Krause, Katerina Guschanski, Vincent Savolainen, and Svante Pääbo. 2012. <span>“Temporal Patterns of Nucleotide Misincorporations and DNA Fragmentation in Ancient DNA.”</span> Edited by Carles Lalueza-Fox. <em>PLoS ONE</em> 7 (3): e34131. <a href="https://doi.org/10.1371/journal.pone.0034131">https://doi.org/10.1371/journal.pone.0034131</a>.
 </div>
 </div>
@@ -634,9 +629,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -648,7 +657,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -684,24 +710,128 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
