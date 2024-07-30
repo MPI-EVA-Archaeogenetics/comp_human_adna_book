@@ -204,7 +204,7 @@ It is helpful to again consider an example using a SNP list, this time assuming 
 
 You can see that the only SNPs that contribute positively to this statistics are SNPs where the alleles are distributed as `1010` and `0101`, and the only SNPs that contribute negatively are `1001` and `0110`. In the literature, the two patterns have been dubbed "ABBA" and "BABA", which is why the statistical test behind this statistic (see below) was sometimes called the ABBA-BABA test (see for example [@Martin2015]).
 
-The intuition here is straight-forward: In positions that are polymorphic in both $(A,B)$ and $(C,D)$, this statistic asks whether B is genetically more similar to C than it is to D. This is most useful as a test for "treeness": If A, B, C, D are related to each other as indicated in the above tree, then C should be equally closely related to C as to D. But if we actually find evidence that B is closer to C than to D, or vice versa, then this means that the tree above cannot be correct, but that there must be a closer connection between B and C or B and D, depending on the sign of the statistic.
+The intuition here is straight-forward: In positions that are polymorphic in both $(A,B)$ and $(C,D)$, this statistic asks whether B is genetically more similar to C than it is to D. This is most useful as a test for "treeness": If A, B, C, D are related to each other as indicated in the above tree, then B should be equally closely related to C as to D. But if we actually find evidence that B is closer to C than to D, or vice versa, then this means that the tree above cannot be correct, but that there must be a closer connection between B and C or B and D, depending on the sign of the statistic.
 
 ### From single samples to allele frequencies
 
