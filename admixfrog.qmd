@@ -40,7 +40,7 @@ $P(O_r|G, c_r, n_r, e_r, p^c) ~ Binom(O_r; n_r, p)$
 
 where $p = (1-e_r)p'+e_r(1-p')$ and $p'=c_rp_c + (1-c_r)G$.
 
-![Figure 1: Admixfrog segment calling and genotype likelihood models.](figure1.png){fig-align="center"}
+![Figure 1: Admixfrog segment calling and genotype likelihood models.](img/admixfrog/figure1.png){fig-align="center"}
 
 The contamination is estimated from the observed allele on the reads ($O_r$). The reads are clustered into read groups ($r$ with $n_r$ reads in the read group) which stem from a certain sequence library, with a given length and presence or absence of contamination. From this the proportion of contamination ($c_r$) and error ($e_r$) is estimated. The basic idea here is that if there is no contamination $,p$ the probability of seeing a derived allele, should be the same across all read groups for a certain SNP. If there is, however, contamination and error it will lead to variation between read groups from, which the error and contamination parameter can be estimated.
 
@@ -164,7 +164,7 @@ Value provided after the parameter **--max-iter** specifies the maximum number o
 
 Run penalty value provided after **--run-penalty** determines how likely nearby segments are joined or broken up. If 0.1, next bin should have at least \> 0.9 posterior probability to continue an archaic segment. 0.25 expects at least \> 0.75 posterior probability etc.
 
-![Figure 2: Run penalty example.](figure2.png){fig-align="center"}
+![Figure 2: Run penalty example.](img/admixfrog/figure2.png){fig-align="center"}
 
 #### Output files
 
@@ -230,7 +230,7 @@ snp_id  tref  talt  chrom  pos        map         G0          G1         G2     
 
 -   **\${output}.rle.xz** : called runs of ancestry. This is the output file we usually use for plotting the called segments, and it includes the start and end position (in bp or cM) of a segment of a certain ancestry. The "type" column could have het, homo, or state as values. This indicates either the segment is homozygous or heterozygous, or irrelevant from the ploidy, the state of the segment is what it is given in the column before. One should use either the het/homo, or state, as state will include the previous two.
 
-    ![Figure 3: Naming of the called segments in the type column.](figure3.png){width="614"}
+    ![Figure 3: Naming of the called segments in the type column.](img/admixfrog/figure3.png){width="614"}
 
 ``` bash
 chrom  start   end     score        target  type   map         pos        id      map_end     pos_end    id_end  len    map_len     pos_len    nscore
