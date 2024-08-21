@@ -17,6 +17,7 @@ book:
     - fst.qmd
     - pca_mds.qmd
     - pmrread.qmd
+    - admixfrog.qmd
     - references.qmd
 
 bibliography: references.bib
