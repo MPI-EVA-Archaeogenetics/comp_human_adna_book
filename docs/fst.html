@@ -293,8 +293,8 @@ div.csl-indent {
 <section id="genetic-drift" class="level3" data-number="7.1.1">
 <h3 data-number="7.1.1" class="anchored" data-anchor-id="genetic-drift"><span class="header-section-number">7.1.1</span> Genetic drift</h3>
 <p>Genetic drift is the process by which allele frequencies change randomly due to random fluctuations. Various models exist to model such fluctuations, but the most widely used one is the Wright-Fisher model. In that model, a parent generation of N individuals produces exactly N individuals as offspring, which make up the next generation. To model the fluctuations, every “child” gets assigned a random “parent” from the previous generation.</p>
-<p>Example: With <span class="math inline">\(N=100\)</span> (haploid individuals), we might consider a genetic locus with two alleles <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, and in the parent generation, say, 50 individuals carried allele B, and 50 carried allele B. Then, the number of individuals carrying B in the next generation is the number of children who get assigned a parent with allele B. These will be close to 50, but not exactly, due to noise.</p>
-<p>As a statistical process, this amounts to a binomial process, where the N offspring individuals are drawn, each carrying a 50% probability to have A vs.&nbsp;B. In the third generation, this probability may then have already shifted away from 50.</p>
+<p>Example: With <span class="math inline">\(N=100\)</span> (haploid individuals), we might consider a genetic locus with two alleles <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, and in the parent generation, say, 50 individuals carried allele A, and 50 carried allele B. Then, the number of individuals carrying B in the next generation is the number of children who get assigned a parent with allele B. These will be close to 50, but not exactly, due to noise.</p>
+<p>As a statistical process, this amounts to a binomial process, where the N offspring individuals are drawn with replacement, each carrying a 50% probability to have A vs.&nbsp;B. In the third generation, this probability may then have already shifted away from 50.</p>
 <p>Here is a simple function in R to model the allele frequency in a number of <span class="math inline">\(g\)</span> successive generations, given a (haploid) population size <span class="math inline">\(n\)</span> and a starting frequency <span class="math inline">\(x0\)</span>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>wfsim <span class="ot">&lt;-</span> <span class="cf">function</span>(n, g, x0) {</span>
@@ -466,6 +466,19 @@ Note
 <div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="va">REPO</span><span class="op">=</span>/path/to/community-archive/2012_PattersonGenetics</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">xerxes</span> fstats <span class="at">-d</span> <span class="va">$REPO</span> <span class="at">--statConfig</span> fstat_world_config.yaml <span class="at">-f</span> fstat_world_output.tsv <span class="op">&gt;</span> fstat_world_table.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Please see the <a href="./poseidon.html">Poseidon chapter</a> on how to download Poseidon data from the community archive, as referenced in the following example</p>
+</div>
+</div>
 <p>The standard output, is a nicely layouted ASCII Table, which looks like this in the beginning:</p>
 <pre><code>.-----------.-----------------.-----------------.---.---.---------.----------------.--------------------.------------------.--------------------.
 | Statistic |        a        |        b        | c | d | NrSites | Estimate_Total | Estimate_Jackknife | StdErr_Jackknife | Z_score_Jackknife  |

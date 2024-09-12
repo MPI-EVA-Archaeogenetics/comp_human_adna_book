@@ -14,9 +14,9 @@ citation-location: margin
 
 Genetic drift is the process by which allele frequencies change randomly due to random fluctuations. Various models exist to model such fluctuations, but the most widely used one is the Wright-Fisher model. In that model, a parent generation of N individuals produces exactly N individuals as offspring, which make up the next generation. To model the fluctuations, every "child" gets assigned a random "parent" from the previous generation.
 
-Example: With $N=100$ (haploid individuals), we might consider a genetic locus with two alleles $A$ and $B$, and in the parent generation, say, 50 individuals carried allele B, and 50 carried allele B. Then, the number of individuals carrying B in the next generation is the number of children who get assigned a parent with allele B. These will be close to 50, but not exactly, due to noise. 
+Example: With $N=100$ (haploid individuals), we might consider a genetic locus with two alleles $A$ and $B$, and in the parent generation, say, 50 individuals carried allele A, and 50 carried allele B. Then, the number of individuals carrying B in the next generation is the number of children who get assigned a parent with allele B. These will be close to 50, but not exactly, due to noise. 
 
-As a statistical process, this amounts to a binomial process, where the N offspring individuals are drawn, each carrying a 50% probability to have A vs. B. In the third generation, this probability may then have already shifted away from 50.
+As a statistical process, this amounts to a binomial process, where the N offspring individuals are drawn with replacement, each carrying a 50% probability to have A vs. B. In the third generation, this probability may then have already shifted away from 50.
 
 Here is a simple function in R to model the allele frequency in a number of $g$ successive generations, given a (haploid) population size $n$ and a starting frequency $x0$:
 
@@ -195,6 +195,10 @@ REPO=/path/to/community-archive/2012_PattersonGenetics
 
 xerxes fstats -d $REPO --statConfig fstat_world_config.yaml -f fstat_world_output.tsv > fstat_world_table.txt
 ```
+
+::: {.callout-note}
+Please see the [Poseidon chapter](poseidon.qmd) on how to download Poseidon data from the community archive, as referenced in the following example
+::: 
 
 The standard output, is a nicely layouted ASCII Table, which looks like this in the beginning:
 
