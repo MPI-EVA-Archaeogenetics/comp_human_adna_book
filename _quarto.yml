@@ -17,6 +17,7 @@ book:
     - fst.qmd
     - pca_mds.qmd
     - pmrread.qmd
+    - yleaf.qmd
     - admixfrog.qmd
     - references.qmd
 

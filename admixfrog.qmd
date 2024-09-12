@@ -7,8 +7,6 @@ toc: true
 bibliography: references.bib
 reference-location: margin
 citation-location: margin
-execute:
-  eval: false
 ---
 
 ## Archaic ancestry
@@ -59,7 +57,7 @@ More information can be found in the github page, [installation explained in: ht
 
 If you have called trustworthy genotypes for your target sample, you can use the VCF and create the input file:
 
-```{bash}
+```bash
 admixfrog-bam --ref ref_example.xz --vcfgt {input.vcf} --target {sample_name}"
   --force-target-file 
   --out {output.csv} 
@@ -67,7 +65,7 @@ admixfrog-bam --ref ref_example.xz --vcfgt {input.vcf} --target {sample_name}"
 
 If bam file is being used, make sure the RG tag in the bam file is specifying the correct library the read came from (quite often not the case). Also if library is fully UDG treated it might me difficult to determine deaminations:
 
-```{bash}
+```bash
 admixfrog-bam --bam ${target}.bam --ref ref_example.xz --out ${target}.in.xz
 ```
 
@@ -109,7 +107,7 @@ DEN:
 
 the rec file specifies the genetic map to be used in the form of the AA Map, with tab separated columns being: Physical_Pos and Name of genetic map (column has the genetic distances in cM).
 
-```{bash}
+```bash
 admixfrog-ref --vcf x_{CHROM}.vcf.gz --out x.ref.xz  \
     --states AFR VIN=Vindija33.19 DEN=Denisova \
     --pop-file data.yaml \
@@ -137,7 +135,7 @@ chrom  pos        ref  alt  map        AA_Map     deCODE     YRI_LD     CEU_LD  
 
 Most of the time the default parameter should work fine. Make sure to specify all reference populations you want to use in the **--states** parameter. The reference population from which you think the contamination stems from is specified with the --cont-id parameter (usually a modern human population, can also be one of the states e.g. AFR). The **--ancestral** parameter specify the reference population used to polarize the alleles. If not specified the ancestral states are unknown. With the **--filter-ancestral** you can filter all alleles where that do not have any ancestral information.
 
-```{bash}
+```bash
 admixfrog --infile ${target}.in.xz --ref ref_ascertainment.csv.xz -o ${target_output} \
 --states AFR NEA DEN --cont-id EUR --ll-tol 1e-2 --bin-size 5000 \
 --est-F --est-tau --freq-F 1 --freq-contamination 3 --e0 1e-2 --est-error \
@@ -147,7 +145,7 @@ admixfrog --infile ${target}.in.xz --ref ref_ascertainment.csv.xz -o ${target_ou
 
 Admixfrog has many optional parameters that are not used in the command above, and most up to date parameter descriptions can be accessed with the command:
 
-```{bash}
+```bash
 admixfrog --help
 ```
 
@@ -157,11 +155,11 @@ In the above example, we are trying to detect archaic ancestry in a modern human
 
 Admixfrog can estimate several parameters if wanted. These are
 
--   F:  Distance from reference (estimated if **--est-F** given). A related parameter is **--freq-F** that specifies the frequency of updating the estimate of F (e.g. in how many iterations it should be updated).
+- F:  Distance from reference (estimated if **--est-F** given). A related parameter is **--freq-F** that specifies the frequency of updating the estimate of F (e.g. in how many iterations it should be updated).
 
--   tau: population structure in references and is estimated if **--est-tau** is included. Initial value of tau is 0 by default.
+- tau: population structure in references and is estimated if **--est-tau** is included. Initial value of tau is 0 by default.
 
--   error: Sequencing error can be estimated per read group, if **--est-error** is a parameter. Value given after **--e0** parameter determines the initial error rate.
+- error: Sequencing error can be estimated per read group, if **--est-error** is a parameter. Value given after **--e0** parameter determines the initial error rate.
 
 Value provided after the parameter **--max-iter** specifies the maximum number of iterations. **--n-post-replicates** is important for the estimation of parameters listed above, and controls the number of replicates that will be sampled from the posterior. The distance between the positions is controlled by –**filter-pos.** Value provided after this parameter is the number of bases there should be between the positions. Value of **--filter-map** determines the distance between the positions based on the recombination map provided. Recombination map preferred should be specified with **--map-column**. Name of the recombination map given after should match the column name in the reference file.
 
@@ -173,7 +171,7 @@ Run penalty value provided after **--run-penalty** determines how likely nearby 
 
 There are 6 output files admixfrog can (and will) produce and they are all compressed with LZMA. They can be looked at with
 
-```{bash}
+```bash
 xzless ${output}.xz | column -s, -t | less -S
 ```
 
@@ -271,7 +269,7 @@ It is important to make sure the segments detected by admixfrog are real segment
 
 Overall Neandertal ancestry can be calculated from the \${output}.res.xz file after filtering this file for ILS as following:
 
-```{r}
+```r
 res=read.csv("output.res.xz")
 res_len_it = res %>% filter(state=='NEA', len>=40) 
 # len 10 for 0.05 cM and 40 for 0.2 cM
@@ -297,12 +295,12 @@ mean(res_cat$nea_all_ratio) # 0.0303691
 
 #### Limitations of admixfrog
 
--   Short segments might not be called or called with high false positive rate.
+- Short segments might not be called or called with high false positive rate.
 
--   Run penalty, which determines how often the segments are broken down, needs to be provided by the used. A run penalty that is too conservative (0.1) could break the real segments while a run penalty that is not conservative enough (0.4) could merge separate segments together. The best penalty to use depends on the age of the target genome, and the expected length of the segments. Best practice currently is running admixfrog with different run penalties and comparing the results. Alternative ways of merging/breaking segments is currently being developed.
+- Run penalty, which determines how often the segments are broken down, needs to be provided by the used. A run penalty that is too conservative (0.1) could break the real segments while a run penalty that is not conservative enough (0.4) could merge separate segments together. The best penalty to use depends on the age of the target genome, and the expected length of the segments. Best practice currently is running admixfrog with different run penalties and comparing the results. Alternative ways of merging/breaking segments is currently being developed.
 
--   For the genomes of relatively recent individuals, segment calling results depend a lot on the recombination map used. For older specimens (e.g. early modern humans) the effect of recombination map is small. Best practice currently is running admixfrog with different recombination maps and comparing the results.
+- For the genomes of relatively recent individuals, segment calling results depend a lot on the recombination map used. For older specimens (e.g. early modern humans) the effect of recombination map is small. Best practice currently is running admixfrog with different recombination maps and comparing the results.
 
--   Better assignment for deeply divergent references, drop in performance when the references are not deeply diverged. Can result in possible missasignment of ancestries as seen sometimes with Denisovan segments are being called as Neandertal in present day populations.
+- Better assignment for deeply divergent references, drop in performance when the references are not deeply diverged. Can result in possible missasignment of ancestries as seen sometimes with Denisovan segments are being called as Neandertal in present day populations.
 
--   Better assignment when reference and actual source population are close. For example, the Denisovan populations that introgressed into modern humans are not well represented by the Denisova3 high-coverage genome that is used as the reference representing the Denisovans. This makes the detection of the Denisovan segments challenging.
+- Better assignment when reference and actual source population are close. For example, the Denisovan populations that introgressed into modern humans are not well represented by the Denisova3 high-coverage genome that is used as the reference representing the Denisovans. This makes the detection of the Denisovan segments challenging.

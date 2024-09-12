@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.163">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,14 +17,15 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -38,8 +39,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -75,7 +75,8 @@ div.csl-indent {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -86,11 +87,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">References</h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./references.html">References</a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -98,82 +104,101 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Computational Methods for human population genetics and ancient DNA</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Quarto_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></a>
+  <a href="./Quarto_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./poseidon.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Genotype and context data management with Poseidon</span></a>
+  <a href="./poseidon.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Genotype and context data management with Poseidon</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fstats.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to F3- and F4-Statistics</span></a>
+  <a href="./fstats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to F3- and F4-Statistics</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./authentiCT.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contamination estimation with AuthentiCT</span></a>
+  <a href="./authentiCT.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contamination estimation with AuthentiCT</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./eager.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Introduction to nf-core/eager</span></a>
+  <a href="./eager.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Introduction to nf-core/eager</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./mobest.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">mobest - Spatiotemporal Ancestry Interpolation and Search</span></a>
+  <a href="./mobest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">mobest - Spatiotemporal Ancestry Interpolation and Search</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./fst.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></a>
+  <a href="./fst.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pca_mds.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></a>
+  <a href="./pca_mds.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pmrread.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pairwise mismatch rate (PMR) and READ relatedness inference</span></a>
+  <a href="./pmrread.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pairwise mismatch rate (PMR) and READ relatedness inference</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./admixfrog.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Detection of archaic ancestry segments using admixfrog</span></a>
+  <a href="./yleaf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Y-chromosomal haplogroup inference with Yleaf</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link active">References</a>
+  <a href="./admixfrog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Detection of archaic ancestry segments using admixfrog</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">References</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
@@ -183,7 +208,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">References</h1>
+<h1 class="title">References</h1>
 </div>
 
 
@@ -191,313 +216,341 @@ div.csl-indent {
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
 
 </header>
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
-<div id="ref-Akturk2023-yr" class="csl-entry" role="doc-biblioentry">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-Akturk2023-yr" class="csl-entry" role="listitem">
 Aktürk, Şevval, Igor Mapelli, Merve Nur Güler, Kanat Gürün, Büşra
 Katırcıoğlu, Kıvılcım Başak Vural, Ekin Sağlıcan, et al. 2023.
 <span>“Benchmarking Kinship Estimation Tools for Ancient Genomes Using
 Pedigree Simulations.”</span> <em>bioRxiv</em>.
 </div>
-<div id="ref-Alacamli2024-xq" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Alacamli2024-xq" class="csl-entry" role="listitem">
 Alaçamlı, Erkin, Thijessen Naidoo, Şevval Aktürk, Merve N Güler, Igor
 Mapelli, Kıvılcım Başak Vural, Mehmet Somel, Helena Malmström, and
 Torsten Günther. 2024. <span>“<span>READv2</span>: Advanced and
 User-Friendly Detection of Biological Relatedness in
 Archaeogenomics.”</span> <em>bioRxiv</em>.
 </div>
-<div id="ref-Annoni2003" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Annoni2003" class="csl-entry" role="listitem">
 Annoni, A. et al. 2003. <span>“Map Projections for Europe.”</span>
 Technical Report EUR 20120 EN. European Commission Joint Research
 Centre. <a href="http://mapref.org/LinkedDocuments/MapProjectionsForEurope-EUR-20120.pdf">http://mapref.org/LinkedDocuments/MapProjectionsForEurope-EUR-20120.pdf</a>.
 </div>
-<div id="ref-Appelhans2023" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Appelhans2023" class="csl-entry" role="listitem">
 Appelhans, Tim, Florian Detsch, Christoph Reudenbach, and Stefan
 Woellauer. 2023. <em>Mapview: Interactive Viewing of Spatial Data in
 r</em>. <a href="https://github.com/r-spatial/mapview">https://github.com/r-spatial/mapview</a>.
 </div>
-<div id="ref-Bhatia2013" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Bhatia2013" class="csl-entry" role="listitem">
 Bhatia, G, N Patterson, S Sankararaman, and A L Price. 2013.
 <span>“Estimating and Interpreting <span>FST</span>: The Impact of Rare
 Variants.”</span> <em>Genome Research</em> 23 (9): 1514–21. <a href="http://genome.cshlp.org/cgi/doi/10.1101/gr.154831.113">http://genome.cshlp.org/cgi/doi/10.1101/gr.154831.113</a>.
 </div>
-<div id="ref-ewels2020" class="csl-entry" role="doc-biblioentry">
+<div id="ref-ewels2020" class="csl-entry" role="listitem">
 Ewels, Philip A., Alexander Peltzer, Sven Fillinger, Harshil Patel,
 Johannes Alneberg, Andreas Wilm, Maxime Ulysse Garcia, Paolo Di Tommaso,
 and Sven Nahnsen. 2020. <span>“The Nf-Core Framework for
 Community-Curated Bioinformatics Pipelines.”</span> <em>Nature
 Biotechnology</em> 38 (3): 276–78. <a href="https://doi.org/10.1038/s41587-020-0439-x">https://doi.org/10.1038/s41587-020-0439-x</a>.
 </div>
-<div id="ref-FellowsYates2021" class="csl-entry" role="doc-biblioentry">
+<div id="ref-FellowsYates2021" class="csl-entry" role="listitem">
 Fellows Yates, James A., Thiseas C. Lamnidis, Maxime Borry, Aida
 Andrades Valtueña, Zandra Fagernäs, Stephen Clayton, Maxime U. Garcia,
 Judith Neukamm, and Alexander Peltzer. 2021. <span>“Reproducible,
 Portable, and Efficient Ancient Genome Reconstruction with
 Nf-Core/Eager.”</span> <em><span>PeerJ</span></em> 9 (March): e10947. <a href="https://doi.org/10.7717/peerj.10947">https://doi.org/10.7717/peerj.10947</a>.
 </div>
-<div id="ref-Fernandes2021-ze" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Fernandes2021-ze" class="csl-entry" role="listitem">
 Fernandes, Daniel M, Olivia Cheronet, Pere Gelabert, and Ron Pinhasi.
 2021. <span>“<span>TKGWV2</span>: An Ancient <span>DNA</span>
 Relatedness Pipeline for Ultra-Low Coverage Whole Genome Shotgun
 Data.”</span> <em>Sci. Rep.</em> 11 (1): 21262.
 </div>
-<div id="ref-fu2015" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Freilich2021" class="csl-entry" role="listitem">
+Freilich, Suzanne, Harald Ringbauer, Dženi Los, Mario Novak, Dinko
+Tresić Pavičić, Stephan Schiffels, and Ron Pinhasi. 2021.
+<span>“Reconstructing Genetic Histories and Social Organisation in
+Neolithic and Bronze Age Croatia.”</span> <em>Scientific Reports</em> 11
+(1): 1–16. <a href="https://doi.org/10.1038/s41598-021-94932-9">https://doi.org/10.1038/s41598-021-94932-9</a>.
+</div>
+<div id="ref-fu2015" class="csl-entry" role="listitem">
 Fu, Qiaomei, Mateja Hajdinjak, Oana Teodora Moldovan, Silviu Constantin,
 Swapan Mallick, Pontus Skoglund, Nick Patterson, et al. 2015. <span>“An
 Early Modern Human from Romania with a Recent Neanderthal
 Ancestor.”</span> <em>Nature</em> 524 (7564): 216–19. <a href="https://doi.org/10.1038/nature14558">https://doi.org/10.1038/nature14558</a>.
 </div>
-<div id="ref-Furtwangler2020-ce" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Furtwangler2020-ce" class="csl-entry" role="listitem">
 Furtwängler, Anja, A B Rohrlach, Thiseas C Lamnidis, Luka Papac, Gunnar
 U Neumann, Inga Siebke, Ella Reiter, et al. 2020. <span>“Ancient Genomes
 Reveal Social and Genetic Structure of Late Neolithic
 Switzerland.”</span> <em>Nat. Commun.</em> 11 (1): 1915.
 </div>
-<div id="ref-Gramacy2016" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Gramacy2016" class="csl-entry" role="listitem">
 Gramacy, Robert B. 2016. <span>“<span class="nocase">laGP</span>:
 Large-Scale Spatial Modeling via Local Approximate Gaussian Processes in
 <span>R</span>.”</span> <em>Journal of Statistical Software</em> 72 (1):
 1–46. <a href="https://doi.org/10.18637/jss.v072.i01">https://doi.org/10.18637/jss.v072.i01</a>.
 </div>
-<div id="ref-Gramacy2020" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Gramacy2020" class="csl-entry" role="listitem">
 ———. 2020. <em>Surrogates: <span>G</span>aussian Process Modeling,
 Design and &nbsp;Optimization for the Applied Sciences</em>. Boca Raton,
 Florida: Chapman Hall/CRC.
 </div>
-<div id="ref-green_draft_2010" class="csl-entry" role="doc-biblioentry">
+<div id="ref-green_draft_2010" class="csl-entry" role="listitem">
 Green, Richard E., Johannes Krause, Adrian W. Briggs, Tomislav Maricic,
 Udo Stenzel, Martin Kircher, Nick Patterson, et al. 2010a. <span>“A
 <span>Draft</span> <span>Sequence</span> of the <span>Neandertal</span>
 <span>Genome</span>.”</span> <em>Science</em> 328 (5979): 710. <a href="https://doi.org/10.1126/science.1188021">https://doi.org/10.1126/science.1188021</a>.
 </div>
-<div id="ref-Green2010" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Green2010" class="csl-entry" role="listitem">
 Green, Richard E, Johannes Krause, Adrian W Briggs, Tomislav Maricic,
 Udo Stenzel, Martin Kircher, Nick Patterson, et al. 2010b. <span>“A
 Draft Sequence of the Neandertal Genome.”</span> <em>Science</em> 328
 (5979): 710–22. <a href="http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed&amp;id=20448178&amp;retmode=ref&amp;cmd=prlinks">http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed&amp;id=20448178&amp;retmode=ref&amp;cmd=prlinks</a>.
 </div>
-<div id="ref-hajdinjak2021" class="csl-entry" role="doc-biblioentry">
+<div id="ref-hajdinjak2021" class="csl-entry" role="listitem">
 Hajdinjak, Mateja, Fabrizio Mafessoni, Laurits Skov, Benjamin Vernot,
 Alexander Hübner, Qiaomei Fu, Elena Essel, et al. 2021. <span>“Initial
 Upper Palaeolithic Humans in Europe Had Recent Neanderthal
 Ancestry.”</span> <em>Nature</em> 592 (7853): 253–57. <a href="https://doi.org/10.1038/s41586-021-03335-3">https://doi.org/10.1038/s41586-021-03335-3</a>.
 </div>
-<div id="ref-Harris2020-vr" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Harris2020-vr" class="csl-entry" role="listitem">
 Harris, Charles R, K Jarrod Millman, Stéfan J van der Walt, Ralf
 Gommers, Pauli Virtanen, David Cournapeau, Eric Wieser, et al. 2020.
 <span>“Array Programming with <span>NumPy</span>.”</span>
 <em>Nature</em> 585 (7825): 357–62.
 </div>
-<div id="ref-higham2014" class="csl-entry" role="doc-biblioentry">
+<div id="ref-higham2014" class="csl-entry" role="listitem">
 Higham, Tom, Katerina Douka, Rachel Wood, Christopher Bronk Ramsey,
 Fiona Brock, Laura Basell, Marta Camps, et al. 2014. <span>“The Timing
 and Spatiotemporal Patterning of Neanderthal Disappearance.”</span>
 <em>Nature</em> 512 (7514): 306–9. <a href="https://doi.org/10.1038/nature13621">https://doi.org/10.1038/nature13621</a>.
 </div>
-<div id="ref-Hudson1992" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Hudson1992" class="csl-entry" role="listitem">
 Hudson, R R, M Slatkin, and W P Maddison. 1992. <span>“Estimation of
 Levels of Gene Flow from <span>DNA</span> Sequence Data.”</span>
 <em>Genetics</em> 132 (2): 583–89. <a href="https://doi.org/10.1093/genetics/132.2.583">https://doi.org/10.1093/genetics/132.2.583</a>.
 </div>
-<div id="ref-iasi2024" class="csl-entry" role="doc-biblioentry">
+<div id="ref-iasi2024" class="csl-entry" role="listitem">
 Iasi, Leonardo N. M., Manjusha Chintalapati, Laurits Skov, Alba Bossoms
 Mesa, Mateja Hajdinjak, Benjamin M. Peter, and Priya Moorjani. 2024.
 <span>“Neandertal Ancestry Through Time: Insights from Genomes of
 Ancient and Present-Day Humans.”</span> <a href="http://dx.doi.org/10.1101/2024.05.13.593955">http://dx.doi.org/10.1101/2024.05.13.593955</a>.
 </div>
-<div id="ref-Kennett2017-qw" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Kennett2017-qw" class="csl-entry" role="listitem">
 Kennett, Douglas J, Stephen Plog, Richard J George, Brendan J Culleton,
 Adam S Watson, Pontus Skoglund, Nadin Rohland, et al. 2017.
 <span>“Archaeogenomic Evidence Reveals Prehistoric Matrilineal
 Dynasty.”</span> <em>Nat. Commun.</em> 8 (February): 14115.
 </div>
-<div id="ref-kistler2017" class="csl-entry" role="doc-biblioentry">
+<div id="ref-kistler2017" class="csl-entry" role="listitem">
 Kistler, Logan, Roselyn Ware, Oliver Smith, Matthew Collins, and Robin
 G. Allaby. 2017. <span>“A New Model for Ancient DNA Decay Based on
 Paleogenomic Meta-Analysis.”</span> <em>Nucleic Acids Research</em> 45
 (11): 6310–20. <a href="https://doi.org/10.1093/nar/gkx361">https://doi.org/10.1093/nar/gkx361</a>.
 </div>
-<div id="ref-Lamnidis2018" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Lamnidis2018" class="csl-entry" role="listitem">
 Lamnidis, Thiseas C, Kerttu Majander, Choongwon Jeong, Elina Salmela,
 Anna Wessman, Vyacheslav Moiseyev, Valery Khartanovich, et al. 2018.
 <span>“Ancient Fennoscandian Genomes Reveal Origin and Spread of
 Siberian Ancestry in Europe.”</span> <em>Nature Communications</em> 9
 (1): 5018. <a href="https://doi.org/10.1038/s41467-018-07483-5">https://doi.org/10.1038/s41467-018-07483-5</a>.
 </div>
-<div id="ref-Lazaridis2014" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Lazaridis2014" class="csl-entry" role="listitem">
 Lazaridis, Iosif, Nick Patterson, Alissa Mittnik, Gabriel Renaud, Swapan
 Mallick, Karola Kirsanow, Peter H Sudmant, et al. 2014. <span>“Ancient
 Human Genomes Suggest Three Ancestral Populations for Present-Day
 Europeans.”</span> <em>Nature</em> 513 (7518): 409–13. <a href="https://doi.org/10.1038/nature13673">https://doi.org/10.1038/nature13673</a>.
 </div>
-<div id="ref-lindahl1974" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Li2009" class="csl-entry" role="listitem">
+Li, Heng, Bob Handsaker, Alec Wysoker, Tim Fennell, Jue Ruan, Nils
+Homer, Gabor Marth, Goncalo Abecasis, Richard Durbin, and 1000 Genome
+Project Data Processing Subgroup. 2009. <span>“The Sequence
+Alignment/Map Format and <span>SAMtools</span>.”</span>
+<em>Bioinformatics</em> 25 (16): 2078–79. <a href="https://doi.org/10.1093/bioinformatics/btp352">https://doi.org/10.1093/bioinformatics/btp352</a>.
+</div>
+<div id="ref-lindahl1974" class="csl-entry" role="listitem">
 Lindahl, Tomas, and Barbro Nyberg. 1974. <span>“Heat-Induced Deamination
 of Cytosine Residues in Deoxyribonucleic Acid.”</span>
 <em>Biochemistry</em> 13 (16): 3405–10. <a href="https://doi.org/10.1021/bi00713a035">https://doi.org/10.1021/bi00713a035</a>.
 </div>
-<div id="ref-Mallick2023" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Mallick2023" class="csl-entry" role="listitem">
 Mallick, Swapan, Adam Micco, Matthew Mah, Harald Ringbauer, Iosif
 Lazaridis, Iñigo Olalde, Nick Patterson, and David Reich. 2023.
 <span>“The Allen Ancient <span>DNA</span> Resource (<span>AADR</span>):
 A Curated Compendium of Ancient Human Genomes,”</span> April. <a href="https://doi.org/10.1101/2023.04.06.535797">https://doi.org/10.1101/2023.04.06.535797</a>.
 </div>
-<div id="ref-Martin2015" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Martin2015" class="csl-entry" role="listitem">
 Martin, Simon H, John W Davey, and Chris D Jiggins. 2015.
 <span>“Evaluating the Use of <span>ABBA-BABA</span> Statistics to Locate
 Introgressed Loci.”</span> <em>Molecular Biology and Evolution</em> 32
 (1): 244–57. <a href="https://doi.org/10.1093/molbev/msu269">https://doi.org/10.1093/molbev/msu269</a>.
 </div>
-<div id="ref-Massicotte2024" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Massicotte2024" class="csl-entry" role="listitem">
 Massicotte, Philippe, and Andy South. 2024. <em>Rnaturalearth: World Map
 Data from Natural Earth</em>. <a href="https://docs.ropensci.org/rnaturalearth/">https://docs.ropensci.org/rnaturalearth/</a>.
 </div>
-<div id="ref-McKinney2010-zp" class="csl-entry" role="doc-biblioentry">
+<div id="ref-McKenna2010" class="csl-entry" role="listitem">
+McKenna, Aaron, Matthew Hanna, Eric Banks, Andrey Sivachenko, Kristian
+Cibulskis, Andrew Kernytsky, Kiran Garimella, et al. 2010. <span>“The
+Genome Analysis Toolkit: A <span>MapReduce</span> Framework for
+Analyzing Next-Generation <span>DNA</span> Sequencing Data.”</span>
+<em>Genome Research</em> 20 (9): 1297–1303. <a href="https://doi.org/10.1101/gr.107524.110">https://doi.org/10.1101/gr.107524.110</a>.
+</div>
+<div id="ref-McKinney2010-zp" class="csl-entry" role="listitem">
 McKinney, Wes. 2010. <span>“Data Structures for Statistical Computing in
 Python,”</span> 56–61.
 </div>
-<div id="ref-meyer2016" class="csl-entry" role="doc-biblioentry">
+<div id="ref-meyer2016" class="csl-entry" role="listitem">
 Meyer, Matthias, Juan-Luis Arsuaga, Cesare de Filippo, Sarah Nagel,
 Ayinuer Aximu-Petri, Birgit Nickel, Ignacio Martínez, et al. 2016.
 <span>“Nuclear DNA Sequences from the Middle Pleistocene Sima de Los
 Huesos Hominins.”</span> <em>Nature</em> 531 (7595): 504–7. <a href="https://doi.org/10.1038/nature17405">https://doi.org/10.1038/nature17405</a>.
 </div>
-<div id="ref-meyer_high-coverage_2012" class="csl-entry" role="doc-biblioentry">
+<div id="ref-meyer_high-coverage_2012" class="csl-entry" role="listitem">
 Meyer, Matthias, Martin Kircher, Marie-Theres Gansauge, Heng Li,
 Fernando Racimo, Swapan Mallick, Joshua G. Schraiber, et al. 2012.
 <span>“A High-Coverage Genome Sequence from an Archaic
 <span>Denisovan</span> Individual.”</span> <em>Science (New York,
 N.Y.)</em> 338 (6104): 222–26. <a href="https://doi.org/10.1126/science.1224344">https://doi.org/10.1126/science.1224344</a>.
 </div>
-<div id="ref-Monroy_Kuhn2018-fb" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Monroy_Kuhn2018-fb" class="csl-entry" role="listitem">
 Monroy Kuhn, Jose Manuel, Mattias Jakobsson, and Torsten Günther. 2018.
 <span>“Estimating Genetic Kin Relationships in Prehistoric
 Populations.”</span> <em>PLoS One</em> 13 (4): e0195491.
 </div>
-<div id="ref-Patterson2012" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Patterson2012" class="csl-entry" role="listitem">
 Patterson, Nick, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin
 Rohland, Yiping Zhan, Teri Genschoreck, Teresa Webster, and David Reich.
 2012a. <span>“Ancient Admixture in Human History.”</span>
 <em>Genetics</em> 192 (3): 1065–93. <a href="https://doi.org/10.1534/genetics.112.145037">https://doi.org/10.1534/genetics.112.145037</a>.
 </div>
-<div id="ref-Patterson2012-im" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Patterson2012-im" class="csl-entry" role="listitem">
 ———. 2012b. <span>“Ancient Admixture in Human History.”</span>
 <em>Genetics</em> 192 (3): 1065–93.
 </div>
-<div id="ref-Pebesma2018" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Pebesma2018" class="csl-entry" role="listitem">
 Pebesma, Edzer. 2018. <span>“<span class="nocase">Simple Features for R:
 Standardized Support for Spatial Vector Data</span>.”</span>
 <em><span>The R Journal</span></em> 10 (1): 439–46. <a href="https://doi.org/10.32614/RJ-2018-009">https://doi.org/10.32614/RJ-2018-009</a>.
 </div>
-<div id="ref-Peter_admixture_2016" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Peter_admixture_2016" class="csl-entry" role="listitem">
 Peter, Benjamin M. 2016a. <span>“<span class="nocase">Admixture,
 Population Structure, and F-Statistics</span>.”</span> <em>Genetics</em>
 202 (4): 1485–1501. <a href="https://doi.org/10.1534/genetics.115.183913">https://doi.org/10.1534/genetics.115.183913</a>.
 </div>
-<div id="ref-Peter2016" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Peter2016" class="csl-entry" role="listitem">
 ———. 2016b. <span>“Admixture, Population Structure, and
 <span>F-Statistics</span>.”</span> <em>Genetics</em> 202 (4): 1485–1501.
 <a href="https://doi.org/10.1534/genetics.115.183913">https://doi.org/10.1534/genetics.115.183913</a>.
 </div>
-<div id="ref-peter2020" class="csl-entry" role="doc-biblioentry">
+<div id="ref-peter2020" class="csl-entry" role="listitem">
 ———. 2020. <span>“100,000 Years of Gene Flow Between Neandertals and
 Denisovans in the Altai Mountains.”</span> <a href="http://dx.doi.org/10.1101/2020.03.13.990523">http://dx.doi.org/10.1101/2020.03.13.990523</a>.
 </div>
-<div id="ref-Peyregne2020" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Peyregne2020" class="csl-entry" role="listitem">
 Peyrégné, Someone. 2020. <span>“Title of the Article.”</span>
 <em>Journal Name</em> 10: 100–110. <a href="https://doi.org/10.1000/j.journal.2020.01.001">https://doi.org/10.1000/j.journal.2020.01.001</a>.
 </div>
-<div id="ref-prüfer2017" class="csl-entry" role="doc-biblioentry">
+<div id="ref-prüfer2017" class="csl-entry" role="listitem">
 Prüfer, Kay, Cesare de Filippo, Steffi Grote, Fabrizio Mafessoni, Petra
 Korlević, Mateja Hajdinjak, Benjamin Vernot, et al. 2017. <span>“A
 High-Coverage Neandertal Genome from Vindija Cave in Croatia.”</span>
 <em>Science</em> 358 (6363): 655–58. <a href="https://doi.org/10.1126/science.aao1887">https://doi.org/10.1126/science.aao1887</a>.
 </div>
-<div id="ref-prüfer2021" class="csl-entry" role="doc-biblioentry">
+<div id="ref-prüfer2021" class="csl-entry" role="listitem">
 Prüfer, Kay, Cosimo Posth, He Yu, Alexander Stoessel, Maria A. Spyrou,
 Thibaut Deviese, Marco Mattonai, et al. 2021. <span>“A Genome Sequence
 from a Modern Human Skull over 45,000 Years Old from Zlatý
 k<span>ů</span><span>ň</span> in Czechia.”</span> <em>Nature Ecology
 &amp; Evolution</em> 5 (6): 820–25. <a href="https://doi.org/10.1038/s41559-021-01443-x">https://doi.org/10.1038/s41559-021-01443-x</a>.
 </div>
-<div id="ref-reich_genetic_2010" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Ralf2018" class="csl-entry" role="listitem">
+Ralf, Arwin, Diego Montiel González, Kaiyin Zhong, and Manfred Kayser.
+2018. <span>“Yleaf: Software for Human <span>Y</span>-Chromosomal
+Haplogroup Inference from Next-Generation Sequencing Data.”</span>
+<em>Molecular Biology and Evolution</em> 35 (7): 1820. <a href="https://doi.org/10.1093/molbev/msy080">https://doi.org/10.1093/molbev/msy080</a>.
+</div>
+<div id="ref-reich_genetic_2010" class="csl-entry" role="listitem">
 Reich, David, Richard E. Green, Martin Kircher, Johannes Krause, Nick
 Patterson, Eric Y. Durand, Bence Viola, et al. 2010. <span>“Genetic
 History of an Archaic Hominin Group from <span>Denisova</span>
 <span>Cave</span> in <span>Siberia</span>.”</span> <em>Nature</em> 468
 (December): 1053. <a href="https://doi.org/10.1038/nature09710">https://doi.org/10.1038/nature09710</a>.
 </div>
-<div id="ref-Reich2012" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Reich2012" class="csl-entry" role="listitem">
 Reich, David, Nick Patterson, Desmond Campbell, Arti Tandon, Stéphane
 Mazieres, Nicolas Ray, Maria V Parra, et al. 2012. <span>“Reconstructing
 Native American Population History.”</span> <em>Nature</em> 488 (7411):
 370–74.
 </div>
-<div id="ref-Rivollat2020-qq" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Rivollat2020-qq" class="csl-entry" role="listitem">
 Rivollat, Maı̈té, Choongwon Jeong, Stephan Schiffels, İşil Küçükkalıpçı,
 Marie-Hélène Pemonge, Adam Benjamin Rohrlach, Kurt W Alt, et al. 2020.
 <span>“Ancient Genome-Wide <span>DNA</span> from France Highlights the
 Complexity of Interactions Between Mesolithic Hunter-Gatherers and
 Neolithic Farmers.”</span> <em>Sci Adv</em> 6 (22): eaaz5344.
 </div>
-<div id="ref-Rohrlach2023.04.17.537144" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Rohrlach2023.04.17.537144" class="csl-entry" role="listitem">
 Rohrlach, Adam B, Jonathan Tuke, Divyaratan Popli, and Wolfgang Haak.
 2023. <span>“BREADR: An r Package for the Bayesian Estimation of Genetic
 Relatedness from Low-Coverage Genotype Data.”</span> <em>bioRxiv</em>.
 <a href="https://doi.org/10.1101/2023.04.17.537144">https://doi.org/10.1101/2023.04.17.537144</a>.
 </div>
-<div id="ref-sawyer2012" class="csl-entry" role="doc-biblioentry">
+<div id="ref-sawyer2012" class="csl-entry" role="listitem">
 Sawyer, Susanna, Johannes Krause, Katerina Guschanski, Vincent
 Savolainen, and Svante Pääbo. 2012. <span>“Temporal Patterns of
 Nucleotide Misincorporations and DNA Fragmentation in Ancient
 DNA.”</span> Edited by Carles Lalueza-Fox. <em>PLoS ONE</em> 7 (3):
 e34131. <a href="https://doi.org/10.1371/journal.pone.0034131">https://doi.org/10.1371/journal.pone.0034131</a>.
 </div>
-<div id="ref-Schmid2023" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Schmid2023" class="csl-entry" role="listitem">
 Schmid, Clemens, and Stephan Schiffels. 2023. <span>“Estimating Human
 Mobility in Holocene Western Eurasia with Large-Scale Ancient Genomic
 Data.”</span> <em>Proceedings of the National Academy of Sciences</em>
 120 (9). <a href="https://doi.org/10.1073/pnas.2218375120">https://doi.org/10.1073/pnas.2218375120</a>.
 </div>
-<div id="ref-skov2018" class="csl-entry" role="doc-biblioentry">
+<div id="ref-skov2018" class="csl-entry" role="listitem">
 Skov, Laurits, Ruoyun Hui, Vladimir Shchur, Asger Hobolth, Aylwyn
 Scally, Mikkel Heide Schierup, and Richard Durbin. 2018.
 <span>“Detecting Archaic Introgression Using an Unadmixed
 Outgroup.”</span> Edited by Fernando Racimo. <em>PLOS Genetics</em> 14
 (9): e1007641. <a href="https://doi.org/10.1371/journal.pgen.1007641">https://doi.org/10.1371/journal.pgen.1007641</a>.
 </div>
-<div id="ref-Tsoulos2003" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Tsoulos2003" class="csl-entry" role="listitem">
 Tsoulos, Lysandros. 2003. <span>“An Equal Area Projection for
 Statistical Mapping in the EU.”</span> In <em>Map Projections for
 Europe</em>, edited by A. Annoni et al., 50–55. European Commission
 Joint Research Centre. <a href="http://mapref.org/LinkedDocuments/MapProjectionsForEurope-EUR-20120.pdf">http://mapref.org/LinkedDocuments/MapProjectionsForEurope-EUR-20120.pdf</a>.
 </div>
-<div id="ref-Weir2002" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Weir2002" class="csl-entry" role="listitem">
 Weir, B S, and W G Hill. 2002. <span>“Estimating f-Statistics.”</span>
 <em>Annual Review of Genetics</em> 36: 721–50. <a href="https://doi.org/10.1146/annurev.genet.36.050802.093940">https://doi.org/10.1146/annurev.genet.36.050802.093940</a>.
 </div>
-<div id="ref-Wickham2019" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Wickham2019" class="csl-entry" role="listitem">
 Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy
 D’Agostino McGowan, Romain François, Garrett Grolemund, et al. 2019.
 <span>“Welcome to the <span class="nocase">tidyverse</span>.”</span>
 <em>Journal of Open Source Software</em> 4 (43): 1686. <a href="https://doi.org/10.21105/joss.01686">https://doi.org/10.21105/joss.01686</a>.
 </div>
-<div id="ref-Wilke2024" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Wilke2024" class="csl-entry" role="listitem">
 Wilke, Claus O. 2024. <em>Cowplot: Streamlined Plot Theme and Plot
 Annotations for ’Ggplot2’</em>. <a href="https://wilkelab.org/cowplot/">https://wilkelab.org/cowplot/</a>.
 </div>
-<div id="ref-Wilkinson2016" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Wilkinson2016" class="csl-entry" role="listitem">
 Wilkinson, Mark D., Michel Dumontier, IJsbrand Jan Aalbersberg,
 Gabrielle Appleton, Myles Axton, Arie Baak, Niklas Blomberg, et al.
 2016. <span>“The <span>FAIR</span> Guiding Principles for Scientific
 Data Management and Stewardship.”</span> <em>Scientific Data</em> 3 (1).
 <a href="https://doi.org/10.1038/sdata.2016.18">https://doi.org/10.1038/sdata.2016.18</a>.
 </div>
-<div id="ref-Wright1922-vm" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Wright1922-vm" class="csl-entry" role="listitem">
 Wright, Sewall. 1922. <span>“Coefficients of Inbreeding and
 Relationship.”</span> <em>Am. Nat.</em> 56 (645): 330–38.
 </div>
@@ -533,9 +586,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -547,7 +614,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -583,31 +667,135 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./admixfrog.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Detection of archaic ancestry segments using admixfrog</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Detection of archaic ancestry segments using admixfrog</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
