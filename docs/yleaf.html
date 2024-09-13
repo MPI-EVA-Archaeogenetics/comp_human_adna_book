@@ -355,16 +355,16 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p>Yleaf requires python 3.6 and currently only works on Linux</p>
+</div>
+</div>
 <ul>
-<li>Yleaf requires python 3.6 and currently only works on Linux</li>
 <li>Yleaf works with both raw and aligned sequencing data in a single command</li>
 <li>It accepts raw fastq files, bam, cram and vcf files</li>
 <li>The batch function allows you to provide a path to a folder and it will pick up all the files sharing the same extension</li>
 <li>The raw reads are aligned against the reference human genome (either hg19 or hg38) with minimap2 using default settings, which creates a SAM file. (There is also a multi-threading option -t)</li>
 <li>The SAM file is converted to a BAM file with SAMtools, sorted and indexed.</li>
 </ul>
-</div>
-</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -375,15 +375,15 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p>For ancient DNA it is advised to rather supply Yleaf with your quality-filtered BAM files</p>
+</div>
+</div>
 <ul>
-<li>For ancient DNA it is advised to rather supply Yleaf with your quality-filtered BAM files</li>
 <li>The BAM file is filtered on reads only aligning to the Y-chromosome.</li>
 <li>SAMtools mpileup function creates a raw data file for variant calling.</li>
 <li>Yleaf has a function embedded to perform variant calling using the generated pileup file</li>
 <li>An output folder is created containing output files in the root path for each of the input files.</li>
 </ul>
-</div>
-</div>
 </section>
 </section>
 <section id="installation-and-first-use" class="level2" data-number="10.4">

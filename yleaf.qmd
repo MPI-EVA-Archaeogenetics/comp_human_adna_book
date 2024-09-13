@@ -44,21 +44,25 @@ Yleaf was tested on modern and ancient published datasets, and produced high con
 ### How does Yleaf work?
 
 :::{.callout-note}
-- Yleaf requires python 3.6 and currently only works on Linux
+Yleaf requires python 3.6 and currently only works on Linux
+:::
+
 -   Yleaf works with both raw and aligned sequencing data in a single command
 -   It accepts raw fastq files, bam, cram and vcf files
 -   The batch function allows you to provide a path to a folder and it will pick up all the files sharing the same extension
 -   The raw reads are aligned against the reference human genome (either hg19 or hg38) with minimap2 using default settings, which creates a SAM file. (There is also a multi-threading option -t)
 -   The SAM file is converted to a BAM file with SAMtools, sorted and indexed.
-::: 
+
 
 :::{.callout-note}
-- For ancient DNA it is advised to rather supply Yleaf with your quality-filtered BAM files
+For ancient DNA it is advised to rather supply Yleaf with your quality-filtered BAM files
+:::
+
 - The BAM file is filtered on reads only aligning to the Y-chromosome.
 - SAMtools mpileup function creates a raw data file for variant calling.
 - Yleaf has a function embedded to perform variant calling using the generated pileup file
 - An output folder is created containing output files in the root path for each of the input files.
-:::
+
 
 ## Installation and first use
 
