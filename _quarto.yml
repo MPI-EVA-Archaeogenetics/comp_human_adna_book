@@ -19,6 +19,7 @@ book:
     - pmrread.qmd
     - yleaf.qmd
     - admixfrog.qmd
+    - quality_control.qmd
     - references.qmd
 
 bibliography: references.bib
