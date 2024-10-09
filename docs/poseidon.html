@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Ayshin Ghalichi &amp; CLemens Schmid">
+<meta name="author" content="Ayshin Ghalichi &amp; Clemens Schmid">
 <meta name="dcterms.date" content="2023-10-19">
 
 <title>Computational Methods for human population genetics and ancient DNA - 2&nbsp; Genotype and context data management with Poseidon</title>
@@ -277,7 +277,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Ayshin Ghalichi &amp; CLemens Schmid </p>
+             <p>Ayshin Ghalichi &amp; Clemens Schmid </p>
           </div>
   </div>
     
@@ -307,7 +307,7 @@ Wilkinson, Mark D., Michel Dumontier, IJsbrand Jan Aalbersberg, Gabrielle Applet
 <figcaption class="figure-caption">Overview of the Poseidon framework</figcaption>
 </figure>
 </div>
-<p>Poseidon is an entire ecosystem build on top of the data format specification of the Poseidon package.</p>
+<p>Poseidon is an entire ecosystem built on top of the data format specification of the Poseidon package.</p>
 <section id="the-poseidon-package" class="level3" data-number="2.1.1">
 <h3 data-number="2.1.1" class="anchored" data-anchor-id="the-poseidon-package"><span class="header-section-number">2.1.1</span> The Poseidon package</h3>
 <p>A <a href="https://www.poseidon-adna.org/#/standard"><strong>Poseidon package</strong></a> bundles <a href="https://www.poseidon-adna.org/#/genotype_data">genotype data in EIGENSTRAT/PLINK format</a> with human- and machine-readable meta-data.</p>
@@ -317,7 +317,7 @@ Wilkinson, Mark D., Michel Dumontier, IJsbrand Jan Aalbersberg, Gabrielle Applet
 <figcaption class="figure-caption">The files in a Poseidon package</figcaption>
 </figure>
 </div>
-<p>It includes sample-wise context information like spatio-temporal origin and genetic data quality in <a href="https://www.poseidon-adna.org/#/janno_details">the <code>.janno</code>-file</a>, literature in the <code>.bib</code>, and pointers to sequencing data in <a href="https://www.poseidon-adna.org/#/ssf_details">the <code>.ssf</code> file</a>.</p>
+<p>It includes sample-wise context information like spatio-temporal origin and genetic data quality in <a href="https://www.poseidon-adna.org/#/janno_details">the <code>.janno</code>-file</a>, literature in the <code>.bib</code>-file, and pointers to sequencing data in <a href="https://www.poseidon-adna.org/#/ssf_details">the <code>.ssf</code>-file</a>.</p>
 <p><code>.janno</code> and <code>.ssf</code> have many predefined and specified columns, but can store arbitrary additional variables.</p>
 </section>
 <section id="the-software-tools" class="level3 page-columns page-full" data-number="2.1.2">
@@ -331,9 +331,9 @@ Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino 
 </section>
 <section id="the-public-archives" class="level3 page-columns page-full" data-number="2.1.3">
 <h3 data-number="2.1.3" class="anchored" data-anchor-id="the-public-archives"><span class="header-section-number">2.1.3</span> The public archives</h3>
-<p>The Poseidon community maintains <a href="https://www.poseidon-adna.org/#/archive_overview"><strong>public archives</strong></a> for Poseidon packages to establish a central, open point of access for published, archaeogenetic genotype data.</p>
+<p>The Poseidon community maintains <a href="https://www.poseidon-adna.org/#/archive_overview"><strong>public archives</strong></a> for Poseidon packages to establish a central open point of access for published archaeogenetic genotype data.</p>
 <ul>
-<li>The <strong>Community Archive</strong>: Author supplied, per-paper packages with the genotype data published in the respective papers. Partially pre-populated from various versions of the AADR.</li>
+<li>The <strong>Community Archive</strong>: Author supplied per-paper packages with the genotype data published in the respective papers. Partially pre-populated from various versions of the AADR.</li>
 <li>The <strong>AADR Archive</strong>: Complete and structurally unified releases of the Allen Ancient DNA Resource (<span class="citation" data-cites="Mallick2023">Mallick et al. (<a href="references.html#ref-Mallick2023" role="doc-biblioref">2023</a>)</span>) repackaged in the Poseidon package format.</li>
 <li>The <strong>Minotaur Archive</strong>: Per-paper packages with genotype data reprocessed by the Minotaur workflow (see below).</li>
 </ul>
@@ -345,12 +345,12 @@ Mallick, Swapan, Adam Micco, Matthew Mah, Harald Ringbauer, Iosif Lazaridis, Iñ
 </section>
 <section id="the-minotaur-workflow" class="level3 page-columns page-full" data-number="2.1.4">
 <h3 data-number="2.1.4" class="anchored" data-anchor-id="the-minotaur-workflow"><span class="header-section-number">2.1.4</span> The Minotaur workflow</h3>
-<p>The <a href="https://www.poseidon-adna.org/#/minotaur"><strong>Minotaur workflow</strong></a> is a semi-automatic workflow to reproducibly process published sequencing data from the International Nucleotide Sequence Database Collaboration (<a href="Ihttps://www.insdc.org">INSDC</a>) archives into Poseidon packages.</p>
+<p>The <a href="https://www.poseidon-adna.org/#/minotaur"><strong>Minotaur workflow</strong></a> is a semi-automatic workflow to reproducibly process published sequencing data from the International Nucleotide Sequence Database Collaboration (<a href="https://www.insdc.org">INSDC</a>) archives into Poseidon packages.</p>
 <p>Community members can request new packages by submitting a build recipe as a Pull Request against a dedicated submission GitHub repository. This recipe is derived from a Sequencing Source File (<code>.ssf</code>), describing the sequencing data for the package and where it can be downloaded.</p>
 <p>Using the recipe, the sequencing data gets processed through nf-core/eager (<span class="citation" data-cites="FellowsYates2021">Fellows Yates et al. (<a href="references.html#ref-FellowsYates2021" role="doc-biblioref">2021</a>)</span>) on computational infrastructure of MPI-EVA, using a standardised, yet flexible, set of parameters.</p>
 <div class="no-row-height column-margin column-container"><div id="ref-FellowsYates2021" class="csl-entry" role="listitem">
 Fellows Yates, James A., Thiseas C. Lamnidis, Maxime Borry, Aida Andrades Valtueña, Zandra Fagernäs, Stephen Clayton, Maxime U. Garcia, Judith Neukamm, and Alexander Peltzer. 2021. <span>“Reproducible, Portable, and Efficient Ancient Genome Reconstruction with Nf-Core/Eager.”</span> <em><span>PeerJ</span></em> 9 (March): e10947. <a href="https://doi.org/10.7717/peerj.10947">https://doi.org/10.7717/peerj.10947</a>.
-</div></div><p>The generated genotypes, together with descriptive statistics of the sequencing data (Endogenous, Damage, Nr_SNPs, Contamination), are compiled into a Poseidon package, and made available to users in the Minotaur archive.</p>
+</div></div><p>The generated genotypes, together with descriptive statistics of the sequencing data (Endogenous, Damage, Nr_SNPs, Contamination), are compiled into a Poseidon package and made available to users in the Minotaur archive.</p>
 </section>
 </section>
 <section id="forging-a-dataset-with-trident" class="level2" data-number="2.2">
@@ -358,8 +358,8 @@ Fellows Yates, James A., Thiseas C. Lamnidis, Maxime Borry, Aida Andrades Valtue
 <p><code>forge</code> creates new Poseidon packages by extracting and merging packages, populations and individuals/samples from your Poseidon repositories. It can also work directly with your genotype data. In addition, <code>forge</code> allows merging of multiple data sets (packages), in contrast to <a href="https://github.com/DReichLab/EIG"><code>mergeit</code></a> which merges only two data sets at a time.</p>
 <p><code>(-f/--forgeString)</code> can be used to query entire packages, groups or individuals. In general <code>--forgeString</code> query consists of multiple entities, inside <code>""</code> separated by <code>,</code> .</p>
 <ul>
-<li><p>To include all individuals in a Poseidon package, use <code>*</code> to surround the package title.<code>*2019_Jeong_InnerEurasia*</code> . In cases where only genotype files are available, use the file name prefix.</p></li>
-<li><p>To include certain group(s) from a Poseidon package, simply add them to the <code>-f</code> query. No specific markers are required. <code>Russia_HG_Karelia</code></p></li>
+<li><p>To include all individuals in a Poseidon package, use <code>*</code> to surround the package title (e.g.&nbsp;<code>*2019_Jeong_InnerEurasia*</code>) . In cases where only genotype files are available, use the file name prefix.</p></li>
+<li><p>To include certain group(s) from a Poseidon package, simply add them to the <code>-f</code> query. No specific markers are required. <code>Russia_HG_Karelia</code>. You don’t have to specify the group, as trident will search all packages for the given group.</p></li>
 <li><p>To extract individuals only, surround them by <code>&lt;</code> and <code>&gt;</code>. <code>&lt;ALA026&gt;</code> . To exclude individuals add package name <code>*package*</code> and <code>&lt;individual&gt;</code> with a dash sign. <code>"*2021_Saag_EastEuropean-3.2.0*,-&lt;NIK003&gt;"</code><br>
 </p></li>
 </ul>
@@ -372,7 +372,7 @@ Fellows Yates, James A., Thiseas C. Lamnidis, Maxime Borry, Aida Andrades Valtue
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">--outFormat</span> EIGENSTRAT <span class="dt">\</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  /</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><a href="https://www.poseidon-adna.org/#/trident?id=the-forge-selection-language">Forge selection language</a></p>
-<p><code>forge</code> has a an optional flag <code>--intersect,</code> that defines, if the genotype data from different packages should be merged with an <strong>intersect</strong> instead of the default <strong>union</strong> operation. The default is to output the union of all SNPs, by setting the additional SNPs from the other merged package as missing in the samples that did not have them originally. This option is useful for making a data set based on Human Origins (HO) SNPs for analysis like PCA and ADMIXTURE.</p>
+<p><code>forge</code> has a an optional flag <code>--intersect,</code> that defines whether the genotype data from different packages should be merged with an <strong>intersect</strong> instead of the default <strong>union</strong> operation. The default is to output the union of all SNPs, by setting the additional SNPs from the other merged package as missing in the samples that did not have them originally. This option is useful for making a data set based on Human Origins (HO) SNPs for analysis like PCA and ADMIXTURE.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">trident</span> forge <span class="dt">\</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--intersect</span> <span class="dt">\</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">-p</span> pileupcaller.double.geno <span class="dt">\</span></span>
@@ -495,7 +495,7 @@ bibFile: myPackage.bib</code></pre>
 <ul>
 <li>Git has be installed for your computer (see <a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">here</a>)</li>
 <li>You must have created an ssh key pair to connect to GitHub via ssh (see <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh">here</a>)</li>
-<li>Git LFS has to be installed (see <a href="https://git-lfs.com">here</a>) and and configured for your user with <code>git lfs install</code></li>
+<li>Git LFS has to be installed (see <a href="https://git-lfs.com">here</a>) and configured for your user with <code>git lfs install</code></li>
 </ul>
 <div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="va">GIT_LFS_SKIP_SMUDGE</span><span class="op">=</span>1 <span class="fu">git</span> clone git@github.com:<span class="op">&lt;</span>yourGitHubUserName<span class="op">&gt;</span>/community-archive.git</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
 <li><p>With the cloned repository on our system we can copy the files into the repositories directory and commit the changes.</p>

@@ -1,6 +1,6 @@
 ---
 title: "Genotype and context data management with Poseidon"
-author: "Ayshin Ghalichi & CLemens Schmid"
+author: "Ayshin Ghalichi & Clemens Schmid"
 date: "10/19/2023"
 bibliography: references.bib
 toc: true
@@ -20,7 +20,7 @@ Poseidon and all its components is well documented at <https://www.poseidon-adna
 
 ![Overview of the Poseidon framework](img/poseidon/popgen_toolbox_schema.png){width="60%"}
 
-Poseidon is an entire ecosystem build on top of the data format specification of the Poseidon package.
+Poseidon is an entire ecosystem built on top of the data format specification of the Poseidon package.
 
 ### The Poseidon package
 
@@ -28,7 +28,7 @@ A [**Poseidon package**](https://www.poseidon-adna.org/#/standard) bundles [geno
 
 ![The files in a Poseidon package](img/poseidon/popgen_toolbox_package_schema.png){width="60%"}
 
-It includes sample-wise context information like spatio-temporal origin and genetic data quality in [the `.janno`-file](https://www.poseidon-adna.org/#/janno_details), literature in the `.bib`, and pointers to sequencing data in [the `.ssf` file](https://www.poseidon-adna.org/#/ssf_details).
+It includes sample-wise context information like spatio-temporal origin and genetic data quality in [the `.janno`-file](https://www.poseidon-adna.org/#/janno_details), literature in the `.bib`-file, and pointers to sequencing data in [the `.ssf`-file](https://www.poseidon-adna.org/#/ssf_details).
 
 `.janno` and `.ssf` have many predefined and specified columns, but can store arbitrary additional variables.
 
@@ -44,9 +44,9 @@ It includes sample-wise context information like spatio-temporal origin and gene
 
 ### The public archives
 
-The Poseidon community maintains [**public archives**](https://www.poseidon-adna.org/#/archive_overview) for Poseidon packages to establish a central, open point of access for published, archaeogenetic genotype data.
+The Poseidon community maintains [**public archives**](https://www.poseidon-adna.org/#/archive_overview) for Poseidon packages to establish a central open point of access for published archaeogenetic genotype data.
 
--   The **Community Archive**: Author supplied, per-paper packages with the genotype data published in the respective papers. Partially pre-populated from various versions of the AADR.
+-   The **Community Archive**: Author supplied per-paper packages with the genotype data published in the respective papers. Partially pre-populated from various versions of the AADR.
 -   The **AADR Archive**: Complete and structurally unified releases of the Allen Ancient DNA Resource (@Mallick2023) repackaged in the Poseidon package format.
 -   The **Minotaur Archive**: Per-paper packages with genotype data reprocessed by the Minotaur workflow (see below).
 
@@ -58,13 +58,13 @@ This API enables a little [**Archive explorer**](https://www.poseidon-adna.org/#
 
 ### The Minotaur workflow
 
-The [**Minotaur workflow**](https://www.poseidon-adna.org/#/minotaur) is a semi-automatic workflow to reproducibly process published sequencing data from the International Nucleotide Sequence Database Collaboration ([INSDC](Ihttps://www.insdc.org)) archives into Poseidon packages.
+The [**Minotaur workflow**](https://www.poseidon-adna.org/#/minotaur) is a semi-automatic workflow to reproducibly process published sequencing data from the International Nucleotide Sequence Database Collaboration ([INSDC](https://www.insdc.org)) archives into Poseidon packages.
 
 Community members can request new packages by submitting a build recipe as a Pull Request against a dedicated submission GitHub repository. This recipe is derived from a Sequencing Source File (`.ssf`), describing the sequencing data for the package and where it can be downloaded.
 
 Using the recipe, the sequencing data gets processed through nf-core/eager (@FellowsYates2021) on computational infrastructure of MPI-EVA, using a standardised, yet flexible, set of parameters.
 
-The generated genotypes, together with descriptive statistics of the sequencing data (Endogenous, Damage, Nr_SNPs, Contamination), are compiled into a Poseidon package, and made available to users in the Minotaur archive.
+The generated genotypes, together with descriptive statistics of the sequencing data (Endogenous, Damage, Nr_SNPs, Contamination), are compiled into a Poseidon package and made available to users in the Minotaur archive.
 
 ## Forging a dataset with `trident`
 
@@ -72,9 +72,9 @@ The generated genotypes, together with descriptive statistics of the sequencing 
 
 `(-f/--forgeString)` can be used to query entire packages, groups or individuals. In general `--forgeString` query consists of multiple entities, inside `""` separated by `,` .
 
--   To include all individuals in a Poseidon package, use `*` to surround the package title.`*2019_Jeong_InnerEurasia*` . In cases where only genotype files are available, use the file name prefix.
+-   To include all individuals in a Poseidon package, use `*` to surround the package title (e.g. `*2019_Jeong_InnerEurasia*`) . In cases where only genotype files are available, use the file name prefix.
 
--   To include certain group(s) from a Poseidon package, simply add them to the `-f` query. No specific markers are required. `Russia_HG_Karelia`
+-   To include certain group(s) from a Poseidon package, simply add them to the `-f` query. No specific markers are required. `Russia_HG_Karelia`. You don't have to specify the group, as trident will search all packages for the given group.
 
 -   To extract individuals only, surround them by `<` and `>`. `<ALA026>` . To exclude individuals add package name `*package*` and `<individual>` with a dash sign. `"*2021_Saag_EastEuropean-3.2.0*,-<NIK003>"`\
 
@@ -91,7 +91,7 @@ trident forge \
 
 [Forge selection language](https://www.poseidon-adna.org/#/trident?id=the-forge-selection-language)
 
-`forge` has a an optional flag `--intersect,` that defines, if the genotype data from different packages should be merged with an **intersect** instead of the default **union** operation. The default is to output the union of all SNPs, by setting the additional SNPs from the other merged package as missing in the samples that did not have them originally. This option is useful for making a data set based on Human Origins (HO) SNPs for analysis like PCA and ADMIXTURE.
+`forge` has a an optional flag `--intersect,` that defines whether the genotype data from different packages should be merged with an **intersect** instead of the default **union** operation. The default is to output the union of all SNPs, by setting the additional SNPs from the other merged package as missing in the samples that did not have them originally. This option is useful for making a data set based on Human Origins (HO) SNPs for analysis like PCA and ADMIXTURE.
 
 ```bash
 trident forge \
@@ -212,7 +212,7 @@ This tutorial explains the main cornerstones of a workflow to add a new Poseidon
 
     -   Git has be installed for your computer (see [here](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git))
     -   You must have created an ssh key pair to connect to GitHub via ssh (see [here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh))
-    -   Git LFS has to be installed (see [here](https://git-lfs.com)) and and configured for your user with `git lfs install`
+    -   Git LFS has to be installed (see [here](https://git-lfs.com)) and configured for your user with `git lfs install`
 
     ``` bash
     GIT_LFS_SKIP_SMUDGE=1 git clone git@github.com:<yourGitHubUserName>/community-archive.git
