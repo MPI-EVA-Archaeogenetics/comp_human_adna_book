@@ -103,7 +103,7 @@ The model is based on an unrooted tree and while we show graphs with a selected 
 
 Preparing the graph file for the following tree:
 
-![Figure 1. Example tree topology](Figure1.png){fig-align="right"}
+![Figure 1. Example tree topology](img/qpgraph/Figure1.png){fig-align="right"}
 
 ``` bash
 root  a0
@@ -223,7 +223,7 @@ admix          a17         a10        a12      0.971592     0.028408
 
 -   Numbers on solid lines are genetic drift with units of FST × 1000; if it is 0 then a tri-furcation is suggested, meaning that the branch can be collapsed to the node before.
 
-![Figure2. Output tree](Figure2.png)
+![Figure2. Output tree](img/qpgraph/Figure2.png)
 
 **Once confirming that the base tree works we can keep adding the groups of interest by adding them as edges and checking the output for the statistics.**
 
@@ -259,7 +259,7 @@ admix a17 a10 a12
 edge  b_a17_a16 a17 a16
 ```
 
-![Figure 3. Produced tree after the graph topology we have set in the graph file. Solid arrow edges reported in units of genetic drift (Fst of the two populations multiplied by 1000). In the admixture edge, admixture proportions are shown in percentages on the dashed arrows.](Figure3.png)
+![Figure 3. Produced tree after the graph topology we have set in the graph file. Solid arrow edges reported in units of genetic drift (Fst of the two populations multiplied by 1000). In the admixture edge, admixture proportions are shown in percentages on the dashed arrows.](img/qpgraph/Figure3.png)
 
 # 5. Tips
 
