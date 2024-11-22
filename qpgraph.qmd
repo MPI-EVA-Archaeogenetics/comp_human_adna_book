@@ -13,7 +13,7 @@ Qpgraph is used to reconstruct models of genetic relationships between different
 
 [^1]: For more information, see chapter 3. *Introduction to F3- and F4-Statistics*
 
-For a given topology, `qpGraph`[^2] [@patterson2012] provides branch lengths (and mixture proportions in the case of an admixture event) that produce the best fit to allele frequency statistics measured on the data. Groups that share a more recent common ancestor will co-vary more than others in their allele frequencies due to common genetic drift.
+For a given topology, `qpGraph`[^2] [@Patterson2012] provides branch lengths (and mixture proportions in the case of an admixture event) that produce the best fit to allele frequency statistics measured on the data. Groups that share a more recent common ancestor will co-vary more than others in their allele frequencies due to common genetic drift.
 
 [^2]: [AdmixtureGraph](https://github.com/DReichLab/AdmixTools/blob/master/README.QPGRAPHhttps), part of Admixtools Package
 
