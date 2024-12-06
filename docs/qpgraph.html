@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Eleni Seferidou">
+<meta name="dcterms.date" content="2024-10-17">
+
+<title>Computational Methods for human population genetics and ancient DNA - 13&nbsp; Estimating Admixture Graphs with qpGraph</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./quality_control.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./qpgraph.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Estimating Admixture Graphs with qpGraph</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Computational Methods for human population genetics and ancient DNA</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Quarto_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./poseidon.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Genotype and context data management with Poseidon</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fstats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Introduction to F3- and F4-Statistics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./authentiCT.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Contamination estimation with AuthentiCT</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eager.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Introduction to nf-core/eager</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./mobest.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">mobest - Spatiotemporal Ancestry Interpolation and Search</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fst.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Measuring population structure using Fst</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pca_mds.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Dimensionality reduction using PCA and MDS</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pmrread.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Pairwise mismatch rate (PMR) and READ relatedness inference</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./yleaf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Y-chromosomal haplogroup inference with Yleaf</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./admixfrog.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Detection of archaic ancestry segments using admixfrog</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./quality_control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Quality Control</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./qpgraph.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Estimating Admixture Graphs with qpGraph</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#method-overview" id="toc-method-overview" class="nav-link active" data-scroll-target="#method-overview"><span class="header-section-number">13.1</span> Method Overview</a></li>
+  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation"><span class="header-section-number">13.2</span> Data Preparation</a>
+  <ul class="collapse">
+  <li><a href="#parfile" id="toc-parfile" class="nav-link" data-scroll-target="#parfile"><span class="header-section-number">13.2.1</span> Parfile</a></li>
+  <li><a href="#graph-topology" id="toc-graph-topology" class="nav-link" data-scroll-target="#graph-topology"><span class="header-section-number">13.2.2</span> Graph Topology</a></li>
+  <li><a href="#run" id="toc-run" class="nav-link" data-scroll-target="#run"><span class="header-section-number">13.2.3</span> Run</a></li>
+  </ul></li>
+  <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output"><span class="header-section-number">13.3</span> Output</a></li>
+  <li><a href="#adding-an-admixture-edge" id="toc-adding-an-admixture-edge" class="nav-link" data-scroll-target="#adding-an-admixture-edge"><span class="header-section-number">13.4</span> Adding an Admixture Edge</a></li>
+  <li><a href="#tips" id="toc-tips" class="nav-link" data-scroll-target="#tips"><span class="header-section-number">13.5</span> Tips</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Estimating Admixture Graphs with qpGraph</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Eleni Seferidou </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 17, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="method-overview" class="level2" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="method-overview"><span class="header-section-number">13.1</span> Method Overview</h2>
+<p>Qpgraph is used to reconstruct models of genetic relationships between different groups (that can be single individuals or larger populations) through a phylogenetic tree, which allows for admixture from one group into another. The method operates on a user-defined graph topology and estimates <em>f</em>2, <em>f</em>3, and <em>f</em>4-statistic values<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> for all pairs, triples, and quadruples of groups in the provided dataset. After, these calculated statistics are compared to the expected – based on the graph topology the user has set - allele frequency correlation of the tested groups.</p>
+<p>For a given topology, <code>qpGraph</code><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> <span class="citation" data-cites="Patterson2012">(<a href="references.html#ref-Patterson2012" role="doc-biblioref">Patterson et al. 2012</a>)</span> provides branch lengths (and mixture proportions in the case of an admixture event) that produce the best fit to allele frequency statistics measured on the data. Groups that share a more recent common ancestor will co-vary more than others in their allele frequencies due to common genetic drift.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Keep in mind: The reconstructed graph is never meant to reflect a comprehensive population history of the region under study but the best fitted model to the limit of the available groups, the user’s input topology and the method’s resolution.</p>
+</div>
+</div>
+<p>▶️▶️▶️ Instructions on how to install the AdmixTools package and qpGraph can be found <a href="https://github.com/DReichLab/AdmixTools/blob/master/README.INSTALL">here</a>.</p>
+</section>
+<section id="data-preparation" class="level2" data-number="13.2">
+<h2 data-number="13.2" class="anchored" data-anchor-id="data-preparation"><span class="header-section-number">13.2</span> Data Preparation</h2>
+<ul>
+<li><p>Include individuals with at least 100,000 SNPs covered.</p></li>
+<li><p>Genotype data in <a href="https://reich.hms.harvard.edu/software/InputFileFormats">EIGENSTRAT</a> format as input.</p></li>
+<li><p>When working with ancient DNA, exclude a subset of SNPs<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> that are transitions in CpG sites. Those Cytosines are prone to be methylated and if deamination (the typical chemical modification of aDNA) occurs at the same position Cytosine is directly converted into Thymine without becoming Uracil. Thus, the resulting CtoT modification cannot be removed with an enzymatic reaction like performing uracil-DNA glycosylase (UDG) treatment.<br>
+This results in additional noise in aDNA data that can be reduced by excluding those SNPs, especially when analysing ancient samples that have been processed using different laboratory protocols.</p></li>
+</ul>
+<p>▶️ With plink:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">plink</span> <span class="at">--bfile</span> packageprefix <span class="at">--exclude</span> snplist <span class="at">--make-bed</span> <span class="at">--out</span> packageprefix.filtered</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="parfile" class="level3" data-number="13.2.1">
+<h3 data-number="13.2.1" class="anchored" data-anchor-id="parfile"><span class="header-section-number">13.2.1</span> Parfile</h3>
+<p>To run <code>qpGraph</code> you will need a parameter file with the following format:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">DIR:</span> /data/qpGraph</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">genotypename:</span> DIR/<span class="op">&lt;</span>filename<span class="op">&gt;</span>.geno</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">snpname:</span> DIR/<span class="op">&lt;</span>filename<span class="op">&gt;</span>.snp</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">indivname:</span> DIR/<span class="op">&lt;</span>filename<span class="op">&gt;</span>.ind</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ex">outpop:</span> NULL</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="ex">useallsnps:</span> YES</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="ex">blgsize:</span> 0.05       </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="ex">forcezmode:</span> YES</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="ex">lsqmode:</span> YES</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="ex">diag:.0001</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="ex">bigiter:</span> 15</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="ex">hires:</span> YES</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="ex">lambdascale:</span> 1</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="ex">initmix:</span> 1000</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="ex">inbreed:</span> NO</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="ex">fstdmode:</span> YES</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Going through the most important parameter options:</p>
+<p><code>outpop: NULL</code> does not use an outgroup population to normalize f-stats by heterozygosity e.g.&nbsp;selecting a group in the graph in which SNPs must be polymorphic.</p>
+<p><code>useallsnps: YES</code> each comparison uses all SNPs overlapping in that specific test, and not between all groups. The default option is <code>NO</code>; with which <code>qpGraph</code> will calculate the SNPs overlapping across all individuals in the provided dataset. This will result in a lower number of SNPs but will increase the comparability between the individual statistical tests.</p>
+<p><code>blgsize: 0.05</code> block size in Morgans for Jackknife.</p>
+<p><code>lsqmode: YES</code><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> least-squares mode (The default option is <code>NO</code>); sets the off-diagonal elements of the block-jackknife covariance matrix to 0; this provides stability for large graphs.</p>
+<p><code>diag:.0001</code><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> use the full matrix form of the objective function to avoid the basis dependence of the least-squares version of the computation.</p>
+<p><code>hires: YES</code> controls output when more decimals are desired.</p>
+<p><code>lambdascale: 1</code> preserves the standard scaling of the f-statistics without an extra denominator.</p>
+<p><code>initmix: 1000</code> This may be useful if you are worried the program may not have found the global optimum.</p>
+<p><code>inbreed: NO</code> if you have populations with 1 individual.</p>
+<p><code>fstdmode: YES</code> branch lengths in units of Fst.</p>
+<p>▶️▶️▶️ For more parameter options look at the tool’s page on <a href="https://github.com/DReichLab/AdmixTools/blob/master/README.QPGRAPH">GitHub</a> and on this <a href="https://comppopgenworkshop2019.readthedocs.io/en/latest/contents/07_qpgraph/qpGraph.html">Workshop</a></p>
+</section>
+<section id="graph-topology" class="level3" data-number="13.2.2">
+<h3 data-number="13.2.2" class="anchored" data-anchor-id="graph-topology"><span class="header-section-number">13.2.2</span> Graph Topology</h3>
+<p>In addition, you need to provide a file in which the graph topology for the tree is set. For this, prepare a tab-separated file, beginning with setting labels for each population you need included in the tree. <strong>Tip !</strong> in the output summary statistics, only the first three letters appear, so make the labels distinguishable!</p>
+<p>In the second part of the graph topology file, you will need to provide the edges of the tree in a bifurcation structure.<br>
+The model is based on an unrooted tree and while we show graphs with a selected outgroup as the root, the results should not depend on the root position. After, set the edges based on the direction you want to test. The structure to be followed here is to indicate from which node does the edge start from and to which node does it move towards (b_a0_a1), the node1 (a0) and the node2 (a1) - all separated with tabs.<br>
+</p>
+<p>🔍 Example. For this example, we are using populations from the <strong>Simons Genome Diversity Project</strong> <span class="citation" data-cites="mallick2016">(<a href="references.html#ref-mallick2016" role="doc-biblioref">Mallick et al. 2016</a>)</span></p>
+<p>Preparing the graph file for the following tree:</p>
+<div class="quarto-figure quarto-figure-right">
+<figure class="figure">
+<p><img src="img/qpgraph/Figure1.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure 1. Example tree topology</figcaption>
+</figure>
+</div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">root</span>  a0</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">label</span> Mbuti.DG  a1</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">label</span> Han.DG  a2</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">label</span> Pima.DG a4</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">label</span> Mayan.DG  a6</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="ex">label</span> Piapoco.DG  a10</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="ex">label</span> Surui.DG  a12</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="ex">label</span> Karitiana.DG  a14</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a0_a1 a0  a1</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a0_a3 a0  a3</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a3_a2 a3  a2</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a3_a5 a3  a5</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a5_a4 a5  a4</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a5_a7 a5  a7</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a7_a6 a7  a6</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a7_a9 a7  a9</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a9_a8 a9  a8</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a9_a11  a9  a11</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a11_a10 a11 a10</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a8_a12  a8  a12</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a8_a14  a8  a14</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="run" class="level3" data-number="13.2.3">
+<h3 data-number="13.2.3" class="anchored" data-anchor-id="run"><span class="header-section-number">13.2.3</span> Run</h3>
+<p>Directly on the command line:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">qpGraph</span> <span class="at">-p</span> parfile_qpGraph.sh <span class="at">-g</span> scaffold.graph <span class="at">-o</span> scaffold.graph.ggg <span class="at">-d</span> scaffold.graph.dot <span class="op">&gt;</span> scaffold.graph.out</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Where <code>-p</code> add the path to the parameter file, <code>-g</code> add the path for your graph file (the one prepared above), <code>-o</code> refers to the output file (<code>.ggg</code>), <code>-d</code> will be the dot file (to visualise the produced tree) and finally, <code>.out</code> file is the combined output file ❗ <strong>Keep the naming consistent for each run</strong> ❗</p>
+<ul>
+<li>With run file:</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="va">par</span><span class="op">=</span>DIR/parfile_qpGraph.sh  <span class="co"># path to parfile</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="va">gp</span><span class="op">=</span>DIR/scaffold.graph       <span class="co"># graph file</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> DIR/output               <span class="co"># path to output folder</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ex">qsub</span> <span class="at">-cwd</span> <span class="at">-V</span> <span class="at">-b</span> y <span class="at">-l</span> h_vmem=40G <span class="at">-pe</span> smp 4 qpGraph <span class="at">-p</span> <span class="va">${par}</span> <span class="at">-g</span> <span class="va">${gp}</span> <span class="at">-o</span> <span class="co">#par.qp${gp}.ggg -d par.qp${gp}.dot &gt; par.qp${gp}.out</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>Get the pdf through the <code>.dot</code> file:</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">dot</span> <span class="at">-Tpdf</span> scaffold.graph.dot <span class="op">&gt;</span> scaffold.graph.pdf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="output" class="level2" data-number="13.3">
+<h2 data-number="13.3" class="anchored" data-anchor-id="output"><span class="header-section-number">13.3</span> Output</h2>
+<p>Includes:</p>
+<p><code>.out</code> file</p>
+<ul>
+<li><p>with the total number of individuals used for all groups and the total number of SNPs available from at least one individual.</p></li>
+<li><p>List of SNPs with no data.</p></li>
+<li><p>Summary of Fst, <em>F</em>2, <em>F</em>3, <em>F</em>4-statistics. In case where multiple tests deviate from 0, you can make use of those statistics to get information on where the tree topology does not work, and which populations attract each other more than indicated by the provided topology. After you can adjust the tree accordingly to achieve a better Z-score.</p></li>
+<li><p>Z-scores determined from standard errors obtained from jackknife resampling.Since we are looking for a tree that fits our data, a Z score of 0 means a perfect fit. Ideally, we are looking for Z-score between 3 and -3 to accept the graph topology.</p></li>
+<li><p>Worst f-statistic [the outlier <em>f</em>4-statistics]. The entries show the test groups, the fitted (from the defined graph topology) and the observed <em>f</em>4 values, the difference between them, the standard error obtained from <a href="https://www.sciencedirect.com/topics/mathematics/jackknife-resampling">jackknife resampling</a>, and lastly the Z-score for the test.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">nodata:</span>           rs75089321</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">outpop:</span> NULL</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">population:</span>   0                       Mbuti.DG    4</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">population:</span>   1                         Han.DG    3</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">population:</span>   2                        Pima.DG    2</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ex">population:</span>   3                       Mayan.DG    2</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="ex">population:</span>   4                     Piapoco.DG    2</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="ex">population:</span>   5                       Surui.DG    2</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="ex">population:</span>   6                   Karitiana.DG    3</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="ex">before</span> setwt numsnps: 918965  outpop: NULL</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="ex">setwt</span> numsnps: 656994</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="ex">number</span> of blocks for moving block jackknife: 711</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="ex">snps:</span> 656994  indivs: 18</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="ex">number</span> of blocks for block jackknife: 711</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="ex">lambdascale:</span>     1.000</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="ex">outliers:</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>                                      <span class="ex">Fit</span>         Obs         Diff       Std. error      Z </span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="ex">worst</span> f-stat: Pim   Pia   Sur   Kar   0.000000  <span class="at">-0.001301</span>  <span class="at">-0.001301</span>     0.000488    <span class="at">-2.666</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ul>
+<p><code>.ggg</code> file</p>
+<ul>
+<li>Drift lengths (in units of Fst multiplied by 1000) and admixture proportions (as percentages from each group) in the case where an admixture edge has been set.</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>      b_a0_a1           a0           a1     0.042317</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>      b_a0_a3           a0           a3     0.042317</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>      b_a3_a2           a3           a2     0.008442</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>      b_a3_a5           a3           a5     0.023047</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>      b_a5_a4           a5           a4     0.010935</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>      b_a5_a7           a5           a7     0.002088</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>      b_a7_a6           a7           a6     0.001838</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>      b_a7_a9           a7           a9     0.002316</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>      b_a9_a8           a9           a8     0.003027</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>     b_a9_a11           a9          a11     0.001235</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>     b_a8_a12           a8          a12     0.021636</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>     b_a8_a14           a8          a14     0.017294</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>    b_a11_a10          a11          a10     0.001235</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>    b_a17_a16          a17          a16     0.009809</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="ex">admix</span>          a17         a10        a12      0.971592     0.028408</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>.dot</code> file (in pdf format)</p>
+<ul>
+<li><p>At the top you have the worst Z-score informing you which populations attract more than the tree suggests. If it is positive then in the structure a,b,c,d we have more attraction in a-c and b-d.&nbsp;If it is negative then we have more attraction in b-c and a-d.</p></li>
+<li><p>Numbers on solid lines are genetic drift with units of FST × 1000; if it is 0 then a tri-furcation is suggested, meaning that the branch can be collapsed to the node before.</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/qpgraph/Figure2.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure2. Output tree</figcaption>
+</figure>
+</div>
+<p><strong>Once confirming that the base tree works we can keep adding the groups of interest by adding them as edges and checking the output for the statistics.</strong></p>
+</section>
+<section id="adding-an-admixture-edge" class="level2" data-number="13.4">
+<h2 data-number="13.4" class="anchored" data-anchor-id="adding-an-admixture-edge"><span class="header-section-number">13.4</span> Adding an Admixture Edge</h2>
+<p>If there are indications of an admixture event (either from other analyses or from population history), the tree can be adjusted. To add an admixture edge, we need to adjust the Graph Topology and the graph file accordingly. For this, we need to set an extra edge (admix) specifying which populations have contributed to the admixture.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">root</span>  a0</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">label</span> Mbuti.DG  a1</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">label</span> Han.DG  a2</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">label</span> Pima.DG a4</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="ex">label</span> Mayan.DG  a6</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="ex">label</span> Piapoco.DG  a10</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="ex">label</span> Surui.DG  a12</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="ex">label</span> Karitiana.DG  a14</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="ex">Label</span> New_population a16</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a0_a1 a0  a1</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a0_a3 a0  a3</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a3_a2 a3  a2</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a3_a5 a3  a5</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a5_a4 a5  a4</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a5_a7 a5  a7</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a7_a6 a7  a6</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a7_a9 a7  a9</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a9_a8 a9  a8</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a9_a11  a9  a11</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a11_a10 a11 a10</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a8_a12  a8  a12</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a8_a14  a8  a14</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="ex">admix</span> a17 a10 a12</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="ex">edge</span>  b_a17_a16 a17 a16</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="img/qpgraph/Figure3.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure 3. Produced tree after the graph topology we have set in the graph file. Solid arrow edges reported in units of genetic drift (Fst of the two populations multiplied by 1000). In the admixture edge, admixture proportions are shown in percentages on the dashed arrows.</figcaption>
+</figure>
+</div>
+</section>
+<section id="tips" class="level2" data-number="13.5">
+<h2 data-number="13.5" class="anchored" data-anchor-id="tips"><span class="header-section-number">13.5</span> Tips</h2>
+<ul>
+<li>Start with a small, well-understood graph and then add populations (either unadmixed or admixed) one at a time in their best-fitting positions. This involves trying different branch points for the new population and comparing the results <span class="citation" data-cites="lipson2017">(<a href="references.html#ref-lipson2017" role="doc-biblioref">Lipson and Reich 2017</a>)</span>.</li>
+<li>If a population is unadmixed and placed in the wrong position, the fit of the model will be poorer, and the inferred split point will move as far as it can in the correct direction, constrained only by the specified topology. If no placement provides a good fit, then we can infer an admixture event, in which case we test for the best-fitting split points of the two ancestry components.</li>
+<li><strong>Mindful of missing data</strong> as all f-statistics are computed on the same set of markers (especially if <code>useallsnps: NO</code> is set.</li>
+<li><strong>Over-fitting</strong> can be a problem, especially if we hypothesize many admixing events but only have data for a few populations.</li>
+<li>It is important to not have zero-length edges because it might signify that the modeled edge does not exist. Also, terminal edges for ancient groups, especially if composed by a single individual, are artificially long and should not be considered</li>
+<li>Make different directories for every population you want to add, to have more control over the effect it has on the tree topology.</li>
+<li>Using <code>QpGraph</code> to explore the phylogenetic topology of populations, whose population history is not known is not ideal and can be time consuming. Users recommend using this tool to test two hypotheses against each other and estimating which one has a better fit to the provided data.</li>
+</ul>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-lipson2017" class="csl-entry" role="listitem">
+Lipson, Mark, and David Reich. 2017. <span>“A Working Model of the Deep Relationships of Diverse Modern Human Genetic Lineages Outside of Africa.”</span> <em>Molecular Biology and Evolution</em>, January, msw293. <a href="https://doi.org/10.1093/molbev/msw293">https://doi.org/10.1093/molbev/msw293</a>.
+</div>
+<div id="ref-mallick2016" class="csl-entry" role="listitem">
+Mallick, Swapan, Heng Li, Mark Lipson, Iain Mathieson, Melissa Gymrek, Fernando Racimo, Mengyao Zhao, and Chennagiri. 2016. <span>“The Simons Genome Diversity Project: 300 Genomes from 142 Diverse Populations.”</span> <em>Nature</em> 538 (7624): 201–6. <a href="https://doi.org/10.1038/nature18964">https://doi.org/10.1038/nature18964</a>.
+</div>
+<div id="ref-Patterson2012" class="csl-entry" role="listitem">
+Patterson, Nick, Priya Moorjani, Yontao Luo, Swapan Mallick, Nadin Rohland, Yiping Zhan, Teri Genschoreck, Teresa Webster, and David Reich. 2012. <span>“Ancient Admixture in Human History.”</span> <em>Genetics</em> 192 (3): 1065–93. <a href="https://doi.org/10.1534/genetics.112.145037">https://doi.org/10.1534/genetics.112.145037</a>.
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>For more information, see chapter 3. <em>Introduction to F3- and F4-Statistics</em><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a href="https://github.com/DReichLab/AdmixTools/blob/master/README.QPGRAPHhttps">AdmixtureGraph</a>, part of Admixtools Package<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>A snp list with CpG sites can be found <a href="https://github.com/EleniSef/qpGraph">here</a><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Least-squares mode: minimizes the sum of the squares of the differences (the “errors”) between the observed (measured) values and the values predicted by a model.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>By using the full matrix representation of the objective function, one can avoid potential issues of <strong>basis dependence</strong> that might arise when using the <strong>least-squares</strong> approach – for fitting, leading to more reliable computations. Adding a small value (0.0001) to the diagonal elements of the matrix ensures numerical stability, especially when the matrix might otherwise have very small or zero values on the diagonal, which can cause issues in computations like matrix inversion.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./quality_control.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Quality Control</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

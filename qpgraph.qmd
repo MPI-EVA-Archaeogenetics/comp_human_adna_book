@@ -5,9 +5,10 @@ format: html
 editor: visual
 bibliography: references.bib
 toc: true
+date: 2024-10-17
 ---
 
-# 1. Method Overview
+## Method Overview
 
 Qpgraph is used to reconstruct models of genetic relationships between different groups (that can be single individuals or larger populations) through a phylogenetic tree, which allows for admixture from one group into another. The method operates on a user-defined graph topology and estimates *f*2, *f*3, and *f*4-statistic values[^1] for all pairs, triples, and quadruples of groups in the provided dataset. After, these calculated statistics are compared to the expected – based on the graph topology the user has set - allele frequency correlation of the tested groups.
 
@@ -17,13 +18,13 @@ For a given topology, `qpGraph`[^2] [@Patterson2012] provides branch lengths (an
 
 [^2]: [AdmixtureGraph](https://github.com/DReichLab/AdmixTools/blob/master/README.QPGRAPHhttps), part of Admixtools Package
 
-💡 Keep in mind!
-
-The reconstructed graph is never meant to reflect a comprehensive population history of the region under study but the best fitted model to the limit of the available groups, the user's input topology and the method’s resolution.
+:::{.callout-tip}
+ Keep in mind: The reconstructed graph is never meant to reflect a comprehensive population history of the region under study but the best fitted model to the limit of the available groups, the user's input topology and the method’s resolution.
+::: 
 
 ▶️▶️▶️ Instructions on how to install the AdmixTools package and qpGraph can be found [here](https://github.com/DReichLab/AdmixTools/blob/master/README.INSTALL).
 
-# 2. Data Preparation
+## Data Preparation
 
 -   Include individuals with at least 100,000 SNPs covered.
 
@@ -40,7 +41,7 @@ The reconstructed graph is never meant to reflect a comprehensive population his
 plink --bfile packageprefix --exclude snplist --make-bed --out packageprefix.filtered
 ```
 
-### 2.1 Parfile
+### Parfile
 
 To run `qpGraph` you will need a parameter file with the following format:
 
@@ -92,7 +93,7 @@ Going through the most important parameter options:
 
 ▶️▶️▶️ For more parameter options look at the tool's page on [GitHub](https://github.com/DReichLab/AdmixTools/blob/master/README.QPGRAPH) and on this [Workshop](https://comppopgenworkshop2019.readthedocs.io/en/latest/contents/07_qpgraph/qpGraph.html)
 
-### 2.2 Graph Topology
+### Graph Topology
 
 In addition, you need to provide a file in which the graph topology for the tree is set. For this, prepare a tab-separated file, beginning with setting labels for each population you need included in the tree. **Tip !** in the output summary statistics, only the first three letters appear, so make the labels distinguishable!
 
@@ -130,7 +131,7 @@ edge  b_a8_a12  a8  a12
 edge  b_a8_a14  a8  a14
 ```
 
-### 2.3 Run
+### Run
 
 Directly on the command line:
 
@@ -157,7 +158,7 @@ qsub -cwd -V -b y -l h_vmem=40G -pe smp 4 qpGraph -p ${par} -g ${gp} -o #par.qp$
 dot -Tpdf scaffold.graph.dot > scaffold.graph.pdf
 ```
 
-# 3. Output
+## Output
 
 Includes:
 
@@ -227,7 +228,7 @@ admix          a17         a10        a12      0.971592     0.028408
 
 **Once confirming that the base tree works we can keep adding the groups of interest by adding them as edges and checking the output for the statistics.**
 
-# 4. Adding an Admixture Edge
+## Adding an Admixture Edge
 
 If there are indications of an admixture event (either from other analyses or from population history), the tree can be adjusted. To add an admixture edge, we need to adjust the Graph Topology and the graph file accordingly. For this, we need to set an extra edge (admix) specifying which populations have contributed to the admixture.
 
@@ -261,7 +262,7 @@ edge  b_a17_a16 a17 a16
 
 ![Figure 3. Produced tree after the graph topology we have set in the graph file. Solid arrow edges reported in units of genetic drift (Fst of the two populations multiplied by 1000). In the admixture edge, admixture proportions are shown in percentages on the dashed arrows.](img/qpgraph/Figure3.png)
 
-# 5. Tips
+## Tips
 
 -   Start with a small, well-understood graph and then add populations (either unadmixed or admixed) one at a time in their best-fitting positions. This involves trying different branch points for the new population and comparing the results [@lipson2017].
 -   If a population is unadmixed and placed in the wrong position, the fit of the model will be poorer, and the inferred split point will move as far as it can in the correct direction, constrained only by the specified topology. If no placement provides a good fit, then we can infer an admixture event, in which case we test for the best-fitting split points of the two ancestry components.
