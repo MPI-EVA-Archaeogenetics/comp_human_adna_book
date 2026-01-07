@@ -1,6 +1,6 @@
 ---
 title: "Introduction to Quarto"
-author: "Laura Lacher & James Fellows Yates"
+author: "Laura Lacher"
 date: "10/12/2023"
 editor: visual
 bibliography: references.bib
