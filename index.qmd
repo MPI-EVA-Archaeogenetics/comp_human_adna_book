@@ -4,3 +4,4 @@ This book summarises prepared mini-courses for various computational tools and m
 
 The chapters are contributed by different authors, as indicated in the Yaml-frontmatter of each chapter's `.qmd` source file.
 
+The github repository for this book can be found [here](https://github.com/MPI-EVA-Archaeogenetics/comp_human_adna_book).
