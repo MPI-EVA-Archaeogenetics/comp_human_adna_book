@@ -8,19 +8,19 @@ book:
   date: "9/21/2023"
   chapters:
     - index.qmd
-    - Quarto_intro.qmd
-    - poseidon.qmd
-    - fstats.qmd
-    - authentiCT.qmd
-    - eager.qmd
-    - mobest.qmd
-    - fst.qmd
-    - pca_mds.qmd
-    - pmrread.qmd
-    - yleaf.qmd
-    - admixfrog.qmd
-    - quality_control.qmd
-    - qpgraph.qmd
+    - 3_eager/eager.qmd
+    - 4_quality_control/quality_control.qmd
+    - 5_contamination/authentiCT.qmd
+    - 6_poseidon/poseidon.qmd
+    - 8_fst/fst.qmd
+    - 9_fstats/fstats.qmd
+    - 10_pca_mds/pca_mds.qmd
+    - 11_mobest/mobest.qmd
+    - 14_qpgraph/qpgraph.qmd
+    - 18_pmrread/pmrread.qmd
+    - 27_yleaf/yleaf.qmd
+    - 28_admixfrog/admixfrog.qmd
+    - 31_quarto/Quarto_intro.qmd
     - references.qmd
 
 bibliography: references.bib
