@@ -170,6 +170,20 @@ Another way to see this measure is to consider it as _relative shared variance_:
 
 For human present-day populations, we can compute pairwise FSt using [xerxes](https://www.poseidon-adna.org/#/xerxes?id=xerxes-cli-software).
 
+::: callout-tip
+If you happen to have downloaded a copy of the [Poseidon Community Archive](https://www.poseidon-adna.org/#/archive_overview?id=public-poseidon-archives) already, then just use the path to that archive in the following commands. Otherwise you download the entire archive via
+
+``` bash
+trident fetch -d /somewhere/to/store/the/archive --downloadAll 
+```
+
+or just the relevant packages for the examples in this chapter:
+
+``` bash
+trident fetch -d /somewhere/to/store/the/archive -f "*2012_PattersonGenetics*"
+```
+:::
+
 We here chose a number of populations from [@Patterson2012] with more than 10 samples per population, and prepare the following config file for xerxes:
 
 ```Yaml
