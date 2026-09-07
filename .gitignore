@@ -2,5 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
-
+latex/
 /.quarto/
+/latex-build/
+.DS_Store
