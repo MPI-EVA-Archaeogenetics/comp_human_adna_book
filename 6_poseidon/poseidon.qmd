@@ -4,8 +4,10 @@ author: "Ayshin Ghalichi & Clemens Schmid"
 date: "10/19/2023"
 bibliography: ../references.bib
 toc: true
-reference-location: margin
-citation-location: margin
+format:
+  html:
+    reference-location: margin
+    citation-location: margin
 execute:
   eval: false
 ---

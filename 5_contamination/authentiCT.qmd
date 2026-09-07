@@ -196,7 +196,6 @@ done
 
 **Output example**
 
-``` markdown
 |       | Parameter    | Std.Err      | Output Explanation                                                                              |
 |------------------|------------------|------------------|-------------------|
 | e     | 0.003659     | 0.000079     | Error rate: we expect around 1 or 2 mismatches every 1000                                       |
@@ -207,7 +206,6 @@ done
 | contm | 0.098113    | 0.011459 | Contamination estimate (rate from 0 to 1)                                                   |
 | o     | 0.626460     | 0.018110     | Frequency of 5' single-stranded overhangs                                                       |
 | o2    | 0.657778     | 0.020543     | o2 is proportional to the frequency of 3' single-stranded overhangs                             |
-```
 
 ## Practical examples
 
@@ -221,10 +219,8 @@ done
 
 ![Plot comparing AuthentiCT output for SG and capture (1240k) data, showing 2x standard error. We did not observe high discrepancies when comparing samples with high number of input reads and C-T damage (\>30%). However, we observed higher SE for samples with low number of input reads (less than 10.000), mainly for SG data. Data used are shown in table below.](image-163130435.png)
 
-``` markdown
-
 | Seq ID | SG_Nr. Mapped Reads Passed Post-Filter | SG_Endogenous DNA Post (%) | SG_5 Prime C>T 1st base | TF_Nr. Mapped Reads Passed Post-Filter | TF_Endogenous DNA Post (%) | TF_5 Prime C>T 1st base |
-|--------|-----------------------------------------|----------------------------|-------------------------|-----------------------------------------|----------------------------|-------------------------|
+|------------|-----------------------------------------|----------------------------|-------------------------|-----------------------------------------|----------------------------|-------------------------|
 | 002.A  | 1,173,469                               | 21.38                       | 31.60%                  | 19,718,426                              | 65.53                      | 32.80%                  |
 | 003.A  | 85,840                                  | 1.58                        | 40.10%                  | 13,387,538                              | 40.04                      | 40.90%                  |
 | 005.B  | 67,131                                  | 1.51                        | 56.40%                  | 16,556,830                              | 3.52                       | 55.40%                  |
@@ -238,7 +234,6 @@ done
 | A008.C | 80,062                                  | 1.74                        | 36.40%                  | 2,958,958                               | 7.87                       | 35.40%                  |
 | A010.A | 12,212                                  | 0.28                        | 52.00%                  | 198,887                                 | 0.63                       | 50.70%                  |
 | A015.A | 3,440                                   | 0.06                        | 38.00%                  | 64,418                                  | 0.16                       | 45.60%                  |
-```
 
 ### Impact of sequence count used on AuthentiCT estimates
 

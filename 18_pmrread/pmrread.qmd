@@ -124,10 +124,14 @@ According to the authors READv2 alone can lead to very similar results as the co
 
 READv2 is very similar in its approach to BREADR [@Rohrlach2023.04.17.537144] and TKGWV2 [@Fernandes2021-ze], with each tool having its own unique features. READv2 has the functionality to separate the different first-degree relationships, BREADR has a better quantification of uncertainty, and TKGWV2 works well with lower amounts of input data.
 
-<!-- animated GIF, breaks LaTeX/PDF rendering (no BoundingBox) -- commented out for the quarto-native-pdf experiment branch
+::: {.content-visible when-format="html"}
 ![**Table 2.** Comparison of methods available for relatedness reconstruction in ancient genomic data. From Alaçamlı et al. [-@Alacamli2024-xq].](Alacamli.TS1.gif){fig-align="center" width="500"}
--->
+:::
 
+::: {.content-visible unless-format="html"}
+<!-- animated GIF has no LaTeX/PDF equivalent (no BoundingBox for a GIF) -- first frame only, for print -->
+![**Table 2.** Comparison of methods available for relatedness reconstruction in ancient genomic data. From Alaçamlı et al. [-@Alacamli2024-xq].](Alacamli.TS1_frame1.png){fig-align="center" width="70%"}
+:::
 
 For further comparison of some of the methods available, you can also refer to the paper by Akturk et al. [-@Akturk2023-yr]
 

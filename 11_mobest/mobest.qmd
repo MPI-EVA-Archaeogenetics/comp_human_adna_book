@@ -4,8 +4,10 @@ author: "Clemens Schmid"
 date: "03/07/2024"
 bibliography: ../references.bib
 toc: true
-reference-location: margin
-citation-location: margin
+format:
+  html:
+    reference-location: margin
+    citation-location: margin
 execute:
   eval: false
 ---

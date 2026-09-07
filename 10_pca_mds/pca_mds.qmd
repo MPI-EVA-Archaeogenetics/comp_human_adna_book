@@ -4,8 +4,10 @@ author: "Martyna Molak & Thiseas C. Lamnidis"
 date: "12/07/2023"
 bibliography: ../references.bib
 toc: true
-reference-location: margin
-citation-location: margin
+format:
+  html:
+    reference-location: margin
+    citation-location: margin
 execute:
   eval: false
 ---
@@ -30,10 +32,14 @@ The datasets used in human ancient DNA analysis are often extremely multidimensi
 
 When using either of these methods, we are essentially representing the data on a new set of **orthogonal** axes, with its origin in the center of the data. In PCA we typically use the original data for this transformation (i.e. the genotype matrix), and attempt to find the axes that capture the most variation among the samples. A covariance matrix (i.e. a similarity matrix) is often calculated and used as a useful intermediate step in PCA. Instead, in MDS we start with a pairwise distance matrix (typically a matrix of 1-F3), and attempt to find a spatial representation that best captures the distances between points.
 
-<!-- animated GIF, breaks LaTeX/PDF rendering (no BoundingBox) -- commented out for the quarto-native-pdf experiment branch
+::: {.content-visible when-format="html"}
 ![A visual representation of the transformation PCA applies to a cloud of points, the range of which is represented by the blue oval. First, the data is rescaled around its own mean value, effectively moving the origin to the center of the data cloud (here shown s a red point). Then, the axes of maximal variation are discovered using linear algebra. Finally, the data is transformed to represent it along the identified axes of variation.](pca.gif){fig-align="center" width="40%"}
--->
+:::
 
+::: {.content-visible unless-format="html"}
+<!-- animated GIF has no LaTeX/PDF equivalent (no BoundingBox for a GIF) -- first frame only, for print -->
+![A visual representation of the transformation PCA applies to a cloud of points, the range of which is represented by the blue oval. First, the data is rescaled around its own mean value, effectively moving the origin to the center of the data cloud (here shown s a red point). Then, the axes of maximal variation are discovered using linear algebra. Finally, the data is transformed to represent it along the identified axes of variation.](pca_frame1.png){fig-align="center" width="40%"}
+:::
 
 The results of both of these methods are (usually) a 2 dimensional plot in which the distances between individual points roughly correlates to the genetic distance between these individuals. Therefore, genetically similar individuals will be plotted close to one another, and further away from individuals that are more genetically dissimilar.
 
