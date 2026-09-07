@@ -4,8 +4,10 @@ author: "Arev Sümer & Leonardo Iasi"
 date: "07/25/2024"
 toc: true
 bibliography: ../references.bib
-reference-location: margin
-citation-location: margin
+format:
+  html:
+    reference-location: margin
+    citation-location: margin
 ---
 
 ## Archaic ancestry
@@ -230,7 +232,7 @@ snp_id  tref  talt  chrom  pos        map         G0          G1         G2     
 
 -   **\${output}.rle.xz** : called runs of ancestry. This is the output file we usually use for plotting the called segments, and it includes the start and end position (in bp or cM) of a segment of a certain ancestry. The "type" column could have het, homo, or state as values. This indicates either the segment is homozygous or heterozygous, or irrelevant from the ploidy, the state of the segment is what it is given in the column before. One should use either the het/homo, or state, as state will include the previous two.
 
-    ![Figure 3: Naming of the called segments in the type column.](figure3.png){width="614"}
+    ![Figure 3: Naming of the called segments in the type column.](figure3.png){width="70%"}
 
 ```         
 chrom  start   end     score        target  type   map         pos        id      map_end     pos_end    id_end  len    map_len     pos_len    nscore

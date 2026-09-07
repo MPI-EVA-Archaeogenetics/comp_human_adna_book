@@ -4,8 +4,10 @@ author: "Stephan Schiffels and Joscha Gretzinger"
 date: "11/23/2023"
 bibliography: ../references.bib
 toc: true
-reference-location: margin
-citation-location: margin
+format:
+  html:
+    reference-location: margin
+    citation-location: margin
 ---
 
 ## Theory primer

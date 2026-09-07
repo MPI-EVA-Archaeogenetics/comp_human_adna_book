@@ -4,8 +4,10 @@ author: "Kathrin Nägele"
 date: "09/12/2024"
 toc: true
 bibliography: ../references.bib
-reference-location: margin
-citation-location: margin
+format:
+  html:
+    reference-location: margin
+    citation-location: margin
 execute:
   eval: false
 ---

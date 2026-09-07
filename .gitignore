@@ -2,7 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
-
+latex/
+pdf-build/
 /.quarto/
 **/*.quarto_ipynb
 

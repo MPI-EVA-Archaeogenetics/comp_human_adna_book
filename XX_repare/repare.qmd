@@ -1,0 +1,189 @@
+---
+title: "Pedigree Reconstruction with repare"
+author: "Edward C. Huang"
+date: "05/21/2026"
+bibliography: ../references.bib
+toc: true
+execute:
+  eval: false
+---
+
+Given a set of closely related ancient individuals, it is possible to reconstruct an ancient pedigree. However, while many tools exist to infer pairwise kinship relations in ancient DNA, assembling these relations into a coherent pedigree is a separate and difficult task. **repare** is a Python tool that takes pairwise kinship relation inferences and reconstructs full pedigrees, while automatically identifying and correcting inconsistent inputs [@Huang2026-repare]. repare is available at <https://github.com/Narasimhan-Lab/repare>.
+
+## Background
+
+### From kinship to pedigrees
+There are numerous methods that can infer degree-level kinship relations between pairs of ancient individuals, including BREADR, correctKin, GRUPS-rs, KIN, and READv2. Additionally, many of these methods can distinguish between 1st-degree relation types (parent-child or full siblings).
+
+However, the process for manually assembling these pairwise kinship relations into a pedigree can be very difficult and tedious. repare aims to automate this pedigree reconstruction process in a user-friendly, flexible manner.
+
+### Biological constraints
+Certain biological information can aid in the reconstruction of ancient pedigrees. For example, mitochondrial haplogroups are transmitted through maternal lineages, and Y-chromosome haplogroups are transmitted through paternal lineages (for genetic males), so candidate pedigrees that violate these constraints can be discarded. Similarly, skeletal age-at-death estimates, runs-of-homozygosity (ROH) data, and temporal information can be used to constrain the set of candidate pedigrees.
+
+### Imperfect kinship inference
+One factor complicating ancient pedigree reconstruction is the error rate of kinship inference. In manual pedigree reconstruction, one must routinely consider alternative degrees of relatedness for pairs of individuals; it is very rare that a kinship inference method can achieve 100% accuracy on an ancient DNA dataset. repare replicates this error-checking process by explicitly considering alternative degrees of relatedness for each input pair, unless otherwise specified by the user.
+
+## Getting started
+
+### Installation
+We recommend installing repare using the provided conda environment file.
+```bash
+curl -O https://raw.githubusercontent.com/Narasimhan-Lab/repare/main/repare-environment.yml
+conda env create -f repare-environment.yml
+conda activate repare
+```
+
+### Input files
+repare takes two CSV files as input: a **nodes** file which describes individuals and a **relations** file which describes (inferred) pairwise kinship relations.
+
+### Nodes CSV
+Each row represents one individual. The required and optional columns are:
+
+| Column | Required | Description |
+|--------|----------|-------------|
+| `id` | Yes | Individual identifier (cannot be fully numeric) |
+| `sex` | Yes | Genetic sex: `M` or `F` |
+| `y_haplogroup` | Yes | Y-chromosome haplogroup (`*` as wildcard; empty for females) |
+| `mt_haplogroup` | Yes | Mitochondrial haplogroup (`*` as wildcard) |
+| `can_have_children` | No | Whether the individual can have offspring (default: `True`) |
+| `can_be_inbred` | No | Whether parents can be related at 3rd degree or closer (default: `True`) |
+| `years_before_present` | No | Approximate birth date in years before present |
+
+Example:
+
+```{.csv filename="nodes.csv"}
+id,sex,y_haplogroup,mt_haplogroup,can_have_children,can_be_inbred,years_before_present
+N1,F,,ab*,True,True,1000
+N2,M,xyz,abc,True,False
+N3,M,xyz,def,False,True,975
+N4,M,*,g*,True,True
+N5,F,,ghi,True,False
+N6,F,,de*,True,True
+```
+
+### Relations CSV
+Each row represents an inferred kinship relation between two individuals.
+
+| Column | Required | Description |
+|--------|----------|-------------|
+| `id1` | Yes | ID of individual 1 |
+| `id2` | Yes | ID of individual 2 |
+| `degree` | Yes | Inferred kinship degree: `1`, `2`, or `3` |
+| `constraints` | No | Semicolon-delimited list of allowed relationship types |
+| `force_constraints` | No | Whether the constraint must be enforced (default: `False`) |
+
+Example:
+
+```{.csv filename="relations.csv"}
+id1,id2,degree,constraints,force_constraints
+N1,N2,1,parent-child,
+N2,N4,1,parent-child;child-parent,
+N2,N3,1,,
+N2,N6,1,,
+N4,N5,1,,
+N3,N6,1,siblings,True
+N1,N3,1,,
+N1,N4,2,,
+N3,N4,2,,
+N4,N6,2,,
+N1,N6,2,,
+```
+
+### Constraints
+
+The `constraints` column allows you to restrict the possible exact kinship relation types (within a certain kinship degree) for a given pair of individuals. This can be useful when you have additional archaeological or genetic evidence. The full list of allowed constraint strings can be printed with:
+
+```bash
+repare --print-allowed-constraints
+```
+
+The allowed values include:
+
+- `parent-child`
+- `child-parent`
+- `siblings`
+- `maternal half-siblings`
+- `paternal half-siblings`
+- `maternal aunt/uncle-nephew/niece`
+- `maternal nephew/niece-aunt/uncle`
+- `paternal aunt/uncle-nephew/niece`
+- `paternal nephew/niece-aunt/uncle`
+- `maternal grandparent-grandchild`
+- `maternal grandchild-grandparent`
+- `paternal grandparent-grandchild`
+- `paternal grandchild-grandparent`
+- `double cousins`
+
+When `force_constraints` is set to `True`, repare can not override that constraint during reconstruction. When `force_constraints` is set to `False`, overriding a constraint counts as one "inconsistency" in the resulting pedigree.
+
+## Running repare
+
+### Basic command
+
+```bash
+repare -n nodes.csv -r relations.csv
+```
+
+### Full command-line options
+
+| Flag | Description | Default |
+|------|-------------|---------|
+| `-n NODES` | Path to nodes CSV (required) | -- |
+| `-r RELATIONS` | Path to relations CSV (required) | -- |
+| `-o OUTPUT` | Output directory | Current directory |
+| `-m MAX` | Maximum candidate pedigrees to explore | 1000 |
+| `-e EPSILON` | Epsilon parameter for greedy sampling | 0.2 |
+| `-s SEED` | Random seed for reproducibility | 42 |
+| `-d` | Disable pedigree plotting | Off |
+| `-w` | Write outputs for alternate pedigrees with equivalent scores | Off |
+| `-v` | Verbose output (INFO-level logging) | Off |
+
+### Example
+
+With the example files from above:
+
+```bash
+repare -n nodes.csv -r relations.csv -o outputs
+```
+
+## Output
+
+repare produces three output files:
+
+### corrected_input_relations.csv
+This file includes the input kinship relations, as well as any corrections that repare applied. For instance, if a pair was originally inferred as 1st-degree, but repare determined it should be 2nd-degree to achieve a better pedigree, the corrected degree will appear here.
+
+### reconstructed_exact_relations.csv
+This file contains the exact relation type for each pair (e.g., `parent-child`, `siblings`, `paternal half-siblings`).
+
+### reconstructed_pedigree.pdf
+A plot of the reconstructed pedigree. This output requires the Graphviz/PyGraphviz dependencies from the conda installation.
+
+::: {.callout-tip}
+Use the `-w` flag to output alternative pedigree reconstructions that have the same inconsistency score as the best one. This can be useful when the data does not uniquely determine a single pedigree.
+:::
+
+## Practical considerations
+
+### Choosing the number of candidate pedigrees
+The `-m` parameter controls how many candidate pedigrees repare explores at each algorithm iteration. Higher values increase the chance of finding the optimal reconstruction but also increase runtime. The default of 1000 is suitable in most cases. You may wish to increase this parameter for larger pedigrees.
+
+### Haplogroup wildcards
+When haplogroup information is uncertain, use the `*` wildcard. For example, `R1b*` is compatible with `R1b1a` or `R1b1b`. This can be useful when haplogroup calls are imprecise due to low coverage.
+
+## Test yourself
+1. You have three individuals A, B, and C. A and B are 1st-degree relatives, B and C are 1st-degree relatives, and A and C are 2nd-degree relatives. A and B are male and share the same Y haplogroup; C is female. What pedigree structure(s) could explain these data?
+
+2. An individual is female but has a Y-chromosome haplogroup listed in the nodes file. What problem would this cause for repare, and how should you handle it?
+
+3. You run repare on a dataset, and it corrects 5 out of 6 input relations. What might this indicate about your data or your set of individuals?
+
+4. When should you use `force_constraints` in the relations CSV?
+
+## Further reading
+
+- repare GitHub repository: <https://github.com/Narasimhan-Lab/repare>
+- @Huang2026-repare: the paper describing repare.
+- @Alacamli2024-readv2: the paper describing READv2, a widely used tool for estimating biological relatedness in ancient DNA.
+- @Rohrlach2023.04.17.537144: BREADR, a Bayesian approach for estimating biological relatedness in low-coverage data.
+- @Lefeuvre2026: a benchmarking study comparing ancient kinship estimation methods.

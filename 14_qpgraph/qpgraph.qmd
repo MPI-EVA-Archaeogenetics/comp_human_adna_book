@@ -170,7 +170,7 @@ Includes:
 
 -   Summary of Fst, *F*2, *F*3, *F*4-statistics. In case where multiple tests deviate from 0, you can make use of those statistics to get information on where the tree topology does not work, and which populations attract each other more than indicated by the provided topology. After you can adjust the tree accordingly to achieve a better Z-score.
 
--   Z-scores determined from standard errors obtained from jackknife resampling.Since we are looking for a tree that fits our data, a Z score of 0 means a perfect fit. Ideally, we are looking for Z-score between 3 and -3 to accept the graph topology.
+-   Z-scores determined from standard errors obtained from jackknife resampling. Since we are looking for a tree that fits our data, a Z score of 0 means a perfect fit. Ideally, we are looking for Z-score between 3 and -3 to accept the graph topology.
 
 -   Worst f-statistic \[the outlier *f*4-statistics\]. The entries show the test groups, the fitted (from the defined graph topology) and the observed *f*4 values, the difference between them, the standard error obtained from [jackknife resampling](https://www.sciencedirect.com/topics/mathematics/jackknife-resampling), and lastly the Z-score for the test.
 

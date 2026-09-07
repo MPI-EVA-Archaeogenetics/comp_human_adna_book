@@ -21,6 +21,7 @@ book:
     - 27_yleaf/yleaf.qmd
     - 28_admixfrog/admixfrog.qmd
     - 31_quarto/Quarto_intro.qmd
+    - XX_repare/repare.qmd
     - references.qmd
 
 bibliography: references.bib
