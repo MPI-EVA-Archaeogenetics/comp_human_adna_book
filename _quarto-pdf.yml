@@ -1,0 +1,6 @@
+project:
+  output-dir: pdf-build
+
+format:
+  pdf:
+    keep-tex: true

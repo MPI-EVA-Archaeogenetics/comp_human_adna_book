@@ -8,14 +8,13 @@ reference-location: margin
 citation-location: margin
 execute:
   eval: false
-shift-heading-level-by: 1
 ---
 
 ::: {.callout-note}
 The practical parts @sec-install and @sec-basic of the following introduction are a slightly adjusted version of two sections of the mobest documentation available at **<https://nevrome.de/mobest>**. More advanced topics beyond the most basic usecase are also introduced there.
 :::
 
-# Overview
+## Overview
 
 mobest is an R package providing types and functions for spatiotemporal interpolation of human genetic ancestry components, probabilistic similarity search and the calculation of a derived measure of ancestry relocation and mobility. The workflow in mobest version 1.0.0 was specifically developed for @Schmid2023.
 
@@ -47,7 +46,7 @@ mobest finally allows to derive a similarity likelihood for samples of interest 
 
 The *Stuttgart* sample used for illustrative purposes here was taken from an Early Neolithic individual from Southern Germany and first published in @Lazaridis2014.
 
-# Installing mobest {#sec-install}
+## Installing mobest {#sec-install}
 
 mobest is an R package and can be installed directly from GitHub with the following code on the R console:
 
@@ -69,7 +68,7 @@ For any of this to work a number of system libraries (mostly for processing geos
 
 The `sf` package maintainers provide a good explanation how to install these: <https://r-spatial.github.io/sf/#installing>
 
-# A basic similarity search workflow {#sec-basic}
+## A basic similarity search workflow {#sec-basic}
 
 This section explains the setup for a basic ancestry similarity search with mobest in R. 
 
@@ -80,7 +79,7 @@ The script explained in the following sections as well as the data required for 
 - [similarity_search.R](https://nevrome.de/mobest/html/master/_downloads/bd4196d81560314ca988325dbbf9e8ca/similarity_search.R)
 - [samples_basic.csv](https://nevrome.de/mobest/html/master/_downloads/6993cd8a8dddf005e4d1d25c41e7c8ad/samples_basic.csv)
 
-## Preparing the computational environment
+### Preparing the computational environment
 
 For this script we use various packages beyond base R, among which the following ones are required:
 
@@ -101,13 +100,13 @@ library(magrittr)
 library(ggplot2)
 ```
 
-## Preparing the input data
+### Preparing the input data
 
-### Generating the the spatial prediction grid
+#### Generating the the spatial prediction grid
 
 mobest's similarity search is typically run for a regular grid of spatial positions in the area of interest. It provides a function, `mobest::create_prediction_grid()`, to create such a grid, given a specification of the desired area. This area is typically the land area in a certain part of planet Earth.
 
-#### Defining the research area
+##### Defining the research area
 
 In a first step we therefore have to define the research area for our analysis as a polygon in space. One way of doing so is to provide a list of latitude and longitude coordinates (extracted e.g. from [Google Maps](https://support.google.com/maps/answer/18539)). The following code defines a simple research area covering large parts of Western Eurasia.
 
@@ -158,7 +157,7 @@ ggplot() + geom_sf(data = research_land_outline_4326)
 
 ![The land area within the research area.](research_area_land_outline_4326.png)
 
-#### Projecting the spatial data
+##### Projecting the spatial data
 
 At this point we run into a specific issue of mobest: It requires its "independent" spatial and temporal coordinates to be coordinates in a [Cartesian system](https://en.wikipedia.org/wiki/Cartesian_coordinate_system) describing [Euclidean space](https://en.wikipedia.org/wiki/Euclidean_space).
 
@@ -189,7 +188,7 @@ ggplot() + geom_sf(data = research_land_outline_3035)
 
 ![The research area land polygon now transformed to EPSG:3035.](research_area_land_outline_3035.png)
 
-#### Creating the prediction grid
+##### Creating the prediction grid
 
 To finally create the prediction grid we can use `mobest::create_prediction_grid()`. It takes the land outline polygon and overlays its bounding box with a regular grid (using `sf::st_make_grid()`), where each cell has the size corresponding to the `spatial_cell_size` parameter. It then determines the centres of each grid cell and crops the resulting, regular point cloud with the land area.
 
@@ -219,7 +218,7 @@ ggplot() +
 
 ![The 4738 spatial prediction grid points plotted on top of the land area.](spatial_prediction_grid.png)
 
-### Reading the input samples
+#### Reading the input samples
 
 mobest requires a set of data points, archaeogenetic samples, to inform the ancestry field interpolation. For each sample the position in space, time and a dependent variable space (e.g. the coordinates in a PCA analysis) must be known. This information must be provided in a specific format. A typical mobest workflow involves preparing a sample list in a .xlsx or .csv table, which could then be read into R and transformed to the correct format.
 
@@ -279,7 +278,7 @@ ggplot() +
 
 A number of samples are outside of the area we want to predict here. That is no problem. They will inform the field in the north-eastern fringes of the area and do no harm. It is much more problematic that some zones within our research area are severely under-sampled. We have to keep sampling gaps like this in mind when we interpret the results of the similarity search.
 
-## Specifying the search sample
+### Specifying the search sample
 
 mobest's similarity search usually takes the perspective of an individual sample for which we want to determine similarity probabilities for a spatial prediction grid at a specific point in time. For this sample, the "search sample", we require the same information as for the input samples: The position in space, time and the dependent variable space (e.g. PCA or MDS space).
 
@@ -296,11 +295,11 @@ search_samples <- samples_projected %>%
 
 With this setup the search sample itself will be part of the samples used to inform the ancestry field interpolation (`samples_projected`). This is no problem - the search sample is a known data point in space and time that can very well be employed to build a better model of the past ancestry distribution. There may be research questions for which this might not be desired, though. Then it can just as well be excluded from the `samples_projected` table.
 
-## Running mobest's interpolation and search function
+### Running mobest's interpolation and search function
 
 With the input data, both the spatial prediction grid and the samples to inform the ancestry field interpolation, prepared and ready, we can now run `mobest::locate()`. For that we first have to split and transform the input into the required data structures.
 
-### Building the input data for the interpolation
+#### Building the input data for the interpolation
 
 Here is how the interface of `mobest::locate()` looks:
 
@@ -333,7 +332,7 @@ mobest::locate(
 
 Each of these arguments requires specific input.
 
-#### Independent and dependent positions
+##### Independent and dependent positions
 
 The `locest()` arguments `independent` and `dependent` take the spatiotemporal and genetic (as for example derived from MDS/PCA) positions of the interpolation-informing samples. The terms *independent* and *dependent* allude to the notion and terminology of a statistical model, where positions in dependent, genetic space are predicted based on positions in independent, spatiotemporal space.
 
@@ -376,7 +375,7 @@ search_dep <- mobest::create_obs(
 )
 ```
 
-#### Kernel parameter settings
+##### Kernel parameter settings
 
 The `locest()` argument `kernel` takes an object of the class `mobest_kernelsetting`. This type encodes kernel configurations for each dependent variable, so the parameters for the Gaussian process regression (GPR) interpolation that should be used for this variable. These include mostly the lengthscale parameters in space (x and y) and time, as well as the nugget parameter (@Gramacy2020, specifically [here](https://bookdown.org/rbg/surrogates/chap5.html#chap5hyper)). In very simple terms:
 
@@ -410,7 +409,7 @@ The analysis in @Schmid2023 showed that Gaussian process regression returns reas
 mobest is primarily a visualization method and adjusting its parameters to ones liking is legitimate if the choices are communicated transparently.
 :::
 
-#### Search positions
+##### Search positions
 
 With input data and settings out of the way we can now specify the points in space and time where we actually want to perform the search. For these positions the GPR model is queried to return a mean and error, which are in turn used to calculate the probability density of a specific dependent variable space position, e.g. a specific coordinate on the first coordinate of an MDS analysis.
 
@@ -430,13 +429,13 @@ search_time_mode = "absolute"
 
 This will search at exactly one point in time; a single timeslice 6800 BC.
 
-#### Normalization
+##### Normalization
 
 The last relevant option of `locate()`, `normalize`, concerns the normalization of the output. mobest's search calculates likelihoods for each search point. This is a dimensionless measure that is hard to compare across multiple runs with different parameter settings. If `normalize` is set to `TRUE`, then the densities for sets of spatial points that share all other parameters (including the timeslice) are rescaled to a sum of one, so to proper probabilities.
 
 We assume users generally want to use mobest, specifically `locate()`, to calculate similarity probability density maps for individual samples, time slices and parameter settings. The most natural normalization for this case is to unify the scaling of these maps. This renders them comparable. `normalize` should therefore be set to `TRUE` for basic applications. This is also encoded as the the default setting.
 
-### Calling `mobest::locate()`
+#### Calling `mobest::locate()`
 
 In the previous sections we have thoroughly prepared the input for a first, simple run of `mobest::locate()`. We can now finally call the function.
 
@@ -455,11 +454,11 @@ search_result <- mobest::locate(
 
 This typically runs for a couple of seconds, uses every available processor core and returns an object `search_result`, which we will inspect below.
 
-## Inspecting the computed results
+### Inspecting the computed results
 
 `mobest::locate()` returns an object of class `mobest_locateoverview`. It includes the relevant information for visualization and further processing of the analysis results.
 
-### The mobest_locateoverview table
+#### The mobest_locateoverview table
 
 `mobest_locateoverview` is derived from `tibble` and has a large set of columns, many not immediately relevant to the basic example here. This applies especially for the variables documenting the excessive permutation mechanics hidden behind the relatively simple interface of `mobest::locate()`. `locate()` is, in fact, a wrapper function for the more flexible function `mobest::locate_multi()`, which can handle permutations in various additional input parameters.
 
@@ -508,7 +507,7 @@ We have:
 
 This means we expect exactly $2 * 4738 = 9476$ rows in `search_result`, which we can confirm with `nrow(search_result)`. 
 
-### Creating similarity probability maps for individual dependent variables
+#### Creating similarity probability maps for individual dependent variables
 
 The most basic similarity probability map we can create with `search_result` is a map for just one parameter permutation, including only one dependent variable. In this case the relevant similarity probability observations are easy to obtain. We can just filter by `dependent_var_id` to only include either `C1` or `C2`.
 
@@ -543,7 +542,7 @@ cowplot::plot_grid(p_C1, p_C2, labels = c("C1", "C2"))
 
 ![The similarity probability search results for the sample Stuttgart for 6800 BC.](search_map_simple_C1_C2.png)
 
-### Combining the information from multiple dependent variables
+#### Combining the information from multiple dependent variables
 
 The results for individual dependent variables, so ancestry components like MDS or PCA dimensions, can be informative, but are usually under-powered to exclude highly improbable search results. Generally combining multiple ancestry components improves the accuracy of the results for individual samples, and we think this is best done by multiplying the results for the different dependent variables. This way spatial areas with high similarity probability for all dependent variables are naturally up-weighted, whereas areas that are unlikely similar for some dependent variables are down-weighted.
 
