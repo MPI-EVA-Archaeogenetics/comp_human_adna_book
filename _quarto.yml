@@ -18,10 +18,10 @@ book:
     - 11_mobest/mobest.qmd
     - 14_qpgraph/qpgraph.qmd
     - 18_pmrread/pmrread.qmd
+    - 21_repare/repare.qmd
     - 27_yleaf/yleaf.qmd
     - 28_admixfrog/admixfrog.qmd
     - 31_quarto/Quarto_intro.qmd
-    - 21_repare/repare.qmd
     - references.qmd
 
 bibliography: references.bib
@@ -29,4 +29,3 @@ bibliography: references.bib
 format:
   html:
     theme: cosmo
-

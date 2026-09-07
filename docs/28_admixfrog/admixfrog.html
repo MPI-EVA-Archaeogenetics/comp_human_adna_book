@@ -9,7 +9,7 @@
 <meta name="author" content="Arev Sümer &amp; Leonardo Iasi">
 <meta name="dcterms.date" content="2024-07-25">
 
-<title>Computational Methods for human population genetics and ancient DNA - 12&nbsp; Detection of archaic ancestry segments using admixfrog</title>
+<title>Computational Methods for human population genetics and ancient DNA - 13&nbsp; Detection of archaic ancestry segments using admixfrog</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -131,7 +131,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../28_admixfrog/admixfrog.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Detection of archaic ancestry segments using admixfrog</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../28_admixfrog/admixfrog.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Detection of archaic ancestry segments using admixfrog</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -224,26 +224,26 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../21_repare/repare.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Pedigree Reconstruction with repare</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../27_yleaf/yleaf.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Y-chromosomal haplogroup inference with Yleaf</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Y-chromosomal haplogroup inference with Yleaf</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../28_admixfrog/admixfrog.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Detection of archaic ancestry segments using admixfrog</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Detection of archaic ancestry segments using admixfrog</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../31_quarto/Quarto_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../21_repare/repare.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Pedigree Reconstruction with repare</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -262,8 +262,8 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#archaic-ancestry" id="toc-archaic-ancestry" class="nav-link active" data-scroll-target="#archaic-ancestry"><span class="header-section-number">12.1</span> Archaic ancestry</a></li>
-  <li><a href="#calling-archaic-segments-with-admixfrog" id="toc-calling-archaic-segments-with-admixfrog" class="nav-link" data-scroll-target="#calling-archaic-segments-with-admixfrog"><span class="header-section-number">12.2</span> Calling archaic segments with admixfrog</a></li>
+  <li><a href="#archaic-ancestry" id="toc-archaic-ancestry" class="nav-link active" data-scroll-target="#archaic-ancestry"><span class="header-section-number">13.1</span> Archaic ancestry</a></li>
+  <li><a href="#calling-archaic-segments-with-admixfrog" id="toc-calling-archaic-segments-with-admixfrog" class="nav-link" data-scroll-target="#calling-archaic-segments-with-admixfrog"><span class="header-section-number">13.2</span> Calling archaic segments with admixfrog</a></li>
   </ul>
 </nav>
     </div>
@@ -272,7 +272,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Detection of archaic ancestry segments using admixfrog</span></h1>
+<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Detection of archaic ancestry segments using admixfrog</span></h1>
 </div>
 
 
@@ -299,8 +299,8 @@ div.csl-indent {
 
 </header>
 
-<section id="archaic-ancestry" class="level2 page-columns page-full" data-number="12.1">
-<h2 data-number="12.1" class="anchored" data-anchor-id="archaic-ancestry"><span class="header-section-number">12.1</span> Archaic ancestry</h2>
+<section id="archaic-ancestry" class="level2 page-columns page-full" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="archaic-ancestry"><span class="header-section-number">13.1</span> Archaic ancestry</h2>
 <p>Neandertals and Denisovans lived in Europe and Asia for hundreds of thousands of years before their disappearance around 40 thousand years ago (kya) <span class="citation" data-cites="higham2014">(<a href="../references.html#ref-higham2014" role="doc-biblioref">Higham et al. 2014</a>)</span>. In the last few thousand years of their documented existence, they met and interbred with modern humans who arrived from Africa, and as a result, 2-3% of the ancestry of present-day non-Africans derives from Neandertals and between 0.2 to 4% from Denisovans (<span class="citation" data-cites="green_draft_2010">(<a href="../references.html#ref-green_draft_2010" role="doc-biblioref">Green et al. 2010</a>)</span>,<span class="citation" data-cites="reich_genetic_2010">(<a href="../references.html#ref-reich_genetic_2010" role="doc-biblioref">Reich et al. 2010</a>)</span>,<span class="citation" data-cites="meyer_high-coverage_2012">(<a href="../references.html#ref-meyer_high-coverage_2012" role="doc-biblioref">Meyer et al. 2012</a>)</span>,<span class="citation" data-cites="prüfer2017">(<a href="../references.html#ref-prüfer2017" role="doc-biblioref">Prüfer et al. 2017</a>)</span>, <span class="citation" data-cites="hajdinjak2021">(<a href="../references.html#ref-hajdinjak2021" role="doc-biblioref">Hajdinjak et al. 2021</a>)</span>).</p>
 <div class="no-row-height column-margin column-container"><div id="ref-higham2014" class="csl-entry" role="listitem">
 Higham, Tom, Katerina Douka, Rachel Wood, Christopher Bronk Ramsey, Fiona Brock, Laura Basell, Marta Camps, et al. 2014. <span>“The Timing and Spatiotemporal Patterning of Neanderthal Disappearance.”</span> <em>Nature</em> 512 (7514): 306–9. <a href="https://doi.org/10.1038/nature13621">https://doi.org/10.1038/nature13621</a>.
@@ -317,8 +317,8 @@ Hajdinjak, Mateja, Fabrizio Mafessoni, Laurits Skov, Benjamin Vernot, Alexander 
 </div><div id="ref-Peter_admixture_2016" class="csl-entry" role="listitem">
 Peter, Benjamin M. 2016. <span>“<span class="nocase">Admixture, Population Structure, and F-Statistics</span>.”</span> <em>Genetics</em> 202 (4): 1485–1501. <a href="https://doi.org/10.1534/genetics.115.183913">https://doi.org/10.1534/genetics.115.183913</a>.
 </div></div><p>Genome-wide average archaic ancestry can be detected using F-statistics or D-statistics (<span class="citation" data-cites="Peter_admixture_2016">(<a href="../references.html#ref-Peter_admixture_2016" role="doc-biblioref">Peter 2016</a>)</span>). However, for more detailed investigation of the archaic ancestry in the modern human genomes, segment calling is preferred.</p>
-<section id="what-can-we-learn-from-the-segments" class="level4 page-columns page-full" data-number="12.1.0.1">
-<h4 data-number="12.1.0.1" class="anchored" data-anchor-id="what-can-we-learn-from-the-segments"><span class="header-section-number">12.1.0.1</span> What can we learn from the segments?</h4>
+<section id="what-can-we-learn-from-the-segments" class="level4 page-columns page-full" data-number="13.1.0.1">
+<h4 data-number="13.1.0.1" class="anchored" data-anchor-id="what-can-we-learn-from-the-segments"><span class="header-section-number">13.1.0.1</span> What can we learn from the segments?</h4>
 <ul>
 <li><p>Number and duration of the introgression event(s)</p></li>
 <li><p>Generations past since the introgression event</p></li>
@@ -336,8 +336,8 @@ Prüfer, Kay, Cosimo Posth, He Yu, Alexander Stoessel, Maria A. Spyrou, Thibaut 
 </div></div><p>Hidden Markov Models (HMMs) are used for calling the archaic segments, and there are various methods including hmmix which is reference free method that currently do not work on low coverage data <span class="citation" data-cites="skov2018">(<a href="../references.html#ref-skov2018" role="doc-biblioref">Skov et al. 2018</a>)</span>, and other HMMs which can detect segments using genotype calls (again, not suitable for low coverage data) <span class="citation" data-cites="prüfer2021">(<a href="../references.html#ref-prüfer2021" role="doc-biblioref">Prüfer et al. 2021</a>)</span>. In this chapter, we will focus on admixfrog <span class="citation" data-cites="peter2020">(<a href="../references.html#ref-peter2020" role="doc-biblioref">Peter 2020</a>)</span>, as it can call segments in low and contaminated data.</p>
 </section>
 </section>
-<section id="calling-archaic-segments-with-admixfrog" class="level2 page-columns page-full" data-number="12.2">
-<h2 data-number="12.2" class="anchored" data-anchor-id="calling-archaic-segments-with-admixfrog"><span class="header-section-number">12.2</span> Calling archaic segments with admixfrog</h2>
+<section id="calling-archaic-segments-with-admixfrog" class="level2 page-columns page-full" data-number="13.2">
+<h2 data-number="13.2" class="anchored" data-anchor-id="calling-archaic-segments-with-admixfrog"><span class="header-section-number">13.2</span> Calling archaic segments with admixfrog</h2>
 <p>Admixfrog can call segments of archaic ancestry from unphased nuclear genomes with coverage as low as 0.2x, both from shotgun and capture data. It is well tested on not only detecting Neandertal/Denisovan ancestry in modern human genomes, but also for detecting Denisovan ancestry in Neandertal genomes. Admixfrog is a HMM with hidden states being all possible pairwise combinations of ancestry between user defined source populations. The method does not rely on simulations and model assumptions much, and uses the data to estimate parameters with a flexible Bayes model. It requires two main input files:</p>
 <ol type="1">
 <li><p>Target genome that belongs to the individual one wants to detect archaic ancestry in. This file can be created from a bam file using the command <strong>admixfrog-bam</strong>. Alternatively, if contamination and error should not be estimated, it is possible to use genotypes provided in eigenstrat-format. It contains observed number of alternative and reference reads, and is stratified by read length, library ID, and presence/absence of deamination on the read.</p></li>
@@ -353,13 +353,13 @@ Prüfer, Kay, Cosimo Posth, He Yu, Alexander Stoessel, Maria A. Spyrou, Thibaut 
 </figure>
 </div>
 <p>The contamination is estimated from the observed allele on the reads (<span class="math inline">\(O_r\)</span>). The reads are clustered into read groups (<span class="math inline">\(r\)</span> with <span class="math inline">\(n_r\)</span> reads in the read group) which stem from a certain sequence library, with a given length and presence or absence of contamination. From this the proportion of contamination (<span class="math inline">\(c_r\)</span>) and error (<span class="math inline">\(e_r\)</span>) is estimated. The basic idea here is that if there is no contamination <span class="math inline">\(,p\)</span> the probability of seeing a derived allele, should be the same across all read groups for a certain SNP. If there is, however, contamination and error it will lead to variation between read groups from, which the error and contamination parameter can be estimated.</p>
-<section id="installing-admixfrog" class="level4" data-number="12.2.0.1">
-<h4 data-number="12.2.0.1" class="anchored" data-anchor-id="installing-admixfrog"><span class="header-section-number">12.2.0.1</span> Installing admixfrog</h4>
+<section id="installing-admixfrog" class="level4" data-number="13.2.0.1">
+<h4 data-number="13.2.0.1" class="anchored" data-anchor-id="installing-admixfrog"><span class="header-section-number">13.2.0.1</span> Installing admixfrog</h4>
 <p>Admixfrog requires python version 3.8 or higher, along with several packages. Dependencies can be installed with <code>pip install cython scipy --upgrade</code> and admixfrog can be installed from github with <code>pip install git+https://github.com/benjaminpeter/admixfrog</code>.</p>
 <p>More information can be found in the github page, <a href="#0">installation explained in: https://github.com/BenjaminPeter/admixfrog/tree/master</a>.</p>
 </section>
-<section id="preparing-input-files" class="level4" data-number="12.2.0.2">
-<h4 data-number="12.2.0.2" class="anchored" data-anchor-id="preparing-input-files"><span class="header-section-number">12.2.0.2</span> Preparing input files</h4>
+<section id="preparing-input-files" class="level4" data-number="13.2.0.2">
+<h4 data-number="13.2.0.2" class="anchored" data-anchor-id="preparing-input-files"><span class="header-section-number">13.2.0.2</span> Preparing input files</h4>
 <ul>
 <li>Target file</li>
 </ul>
@@ -416,8 +416,8 @@ DEN:
 1      847491     G    A    0.00000    0.00000    0.00000    0.54790    0.26638    260      154      50       26       2        0        6        2        2        0        1        0        0        2        80       8        107      27      
 ...</code></pre>
 </section>
-<section id="running-admixfrog" class="level4" data-number="12.2.0.3">
-<h4 data-number="12.2.0.3" class="anchored" data-anchor-id="running-admixfrog"><span class="header-section-number">12.2.0.3</span> Running admixfrog</h4>
+<section id="running-admixfrog" class="level4" data-number="13.2.0.3">
+<h4 data-number="13.2.0.3" class="anchored" data-anchor-id="running-admixfrog"><span class="header-section-number">13.2.0.3</span> Running admixfrog</h4>
 <p>Most of the time the default parameter should work fine. Make sure to specify all reference populations you want to use in the <strong>–states</strong> parameter. The reference population from which you think the contamination stems from is specified with the –cont-id parameter (usually a modern human population, can also be one of the states e.g.&nbsp;AFR). The <strong>–ancestral</strong> parameter specify the reference population used to polarize the alleles. If not specified the ancestral states are unknown. With the <strong>–filter-ancestral</strong> you can filter all alleles where that do not have any ancestral information.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">admixfrog</span> <span class="at">--infile</span> <span class="va">${target}</span>.in.xz <span class="at">--ref</span> ref_ascertainment.csv.xz <span class="at">-o</span> <span class="va">${target_output}</span> <span class="dt">\</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>--states AFR NEA DEN <span class="at">--cont-id</span> EUR <span class="at">--ll-tol</span> 1e-2 <span class="at">--bin-size</span> 5000 <span class="dt">\</span></span>
@@ -443,8 +443,8 @@ DEN:
 </figure>
 </div>
 </section>
-<section id="output-files" class="level4 page-columns page-full" data-number="12.2.0.4">
-<h4 data-number="12.2.0.4" class="anchored" data-anchor-id="output-files"><span class="header-section-number">12.2.0.4</span> Output files</h4>
+<section id="output-files" class="level4 page-columns page-full" data-number="13.2.0.4">
+<h4 data-number="13.2.0.4" class="anchored" data-anchor-id="output-files"><span class="header-section-number">13.2.0.4</span> Output files</h4>
 <p>There are 6 output files admixfrog can (and will) produce and they are all compressed with LZMA. They can be looked at with</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">xzless</span> <span class="va">${output}</span>.xz <span class="kw">|</span> <span class="ex">column</span> <span class="at">-s,</span> <span class="at">-t</span> <span class="kw">|</span> <span class="fu">less</span> <span class="at">-S</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We present the 10 top rows of each output file as an example below. Input files provided for this run were resritced and ascertained with the sites on the “Archaic admixture array” <span class="citation" data-cites="fu2015">(<a href="../references.html#ref-fu2015" role="doc-biblioref">Fu et al. 2015</a>)</span>, as we use this capture array to obtain data from the sites best represent the diversity in the archaic genomes.</p>
@@ -530,8 +530,8 @@ AFR    1      1938   2417   479    0
 AFR    1      2419   2601   182    0
 AFR    1      1487   2905   1418   0</code></pre>
 </section>
-<section id="filtering-and-checking-the-output-files" class="level4" data-number="12.2.0.5">
-<h4 data-number="12.2.0.5" class="anchored" data-anchor-id="filtering-and-checking-the-output-files"><span class="header-section-number">12.2.0.5</span> Filtering and checking the output files</h4>
+<section id="filtering-and-checking-the-output-files" class="level4" data-number="13.2.0.5">
+<h4 data-number="13.2.0.5" class="anchored" data-anchor-id="filtering-and-checking-the-output-files"><span class="header-section-number">13.2.0.5</span> Filtering and checking the output files</h4>
 <p>It is important to make sure the segments detected by admixfrog are real segments. Incomplete lineage sorting (ILS) might be incorrectly detected as an introgressed segment. In most publications only segments with a minimum length of 0.2 cM are retained for very ancient individuals (such as early modern humans) and 0.05 cM for more recent ancient and present day humans.</p>
 <p>Overall Neandertal ancestry can be calculated from the ${output}.res.xz file after filtering this file for ILS as following:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>res<span class="ot">=</span><span class="fu">read.csv</span>(<span class="st">"output.res.xz"</span>)</span>
@@ -556,8 +556,8 @@ AFR    1      1487   2905   1418   0</code></pre>
 <span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(res_cat<span class="sc">$</span>nea_all_ratio) <span class="co"># 0.02978274</span></span>
 <span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(res_cat<span class="sc">$</span>nea_all_ratio) <span class="co"># 0.0303691</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="limitations-of-admixfrog" class="level4" data-number="12.2.0.6">
-<h4 data-number="12.2.0.6" class="anchored" data-anchor-id="limitations-of-admixfrog"><span class="header-section-number">12.2.0.6</span> Limitations of admixfrog</h4>
+<section id="limitations-of-admixfrog" class="level4" data-number="13.2.0.6">
+<h4 data-number="13.2.0.6" class="anchored" data-anchor-id="limitations-of-admixfrog"><span class="header-section-number">13.2.0.6</span> Limitations of admixfrog</h4>
 <ul>
 <li><p>Short segments might not be called or called with high false positive rate.</p></li>
 <li><p>Run penalty, which determines how often the segments are broken down, needs to be provided by the used. A run penalty that is too conservative (0.1) could break the real segments while a run penalty that is not conservative enough (0.4) could merge separate segments together. The best penalty to use depends on the age of the target genome, and the expected length of the segments. Best practice currently is running admixfrog with different run penalties and comparing the results. Alternative ways of merging/breaking segments is currently being developed.</p></li>
@@ -808,12 +808,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../27_yleaf/yleaf.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Y-chromosomal haplogroup inference with Yleaf</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Y-chromosomal haplogroup inference with Yleaf</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../31_quarto/Quarto_intro.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

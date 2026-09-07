@@ -9,7 +9,7 @@
 <meta name="author" content="Edward C. Huang">
 <meta name="dcterms.date" content="2026-05-21">
 
-<title>Computational Methods for human population genetics and ancient DNA - 14&nbsp; Pedigree Reconstruction with repare</title>
+<title>Computational Methods for human population genetics and ancient DNA - 11&nbsp; Pedigree Reconstruction with repare</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,8 +85,8 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../references.html" rel="next">
-<link href="../31_quarto/Quarto_intro.html" rel="prev">
+<link href="../27_yleaf/yleaf.html" rel="next">
+<link href="../18_pmrread/pmrread.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -129,7 +129,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../21_repare/repare.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Pedigree Reconstruction with repare</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../21_repare/repare.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Pedigree Reconstruction with repare</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -222,26 +222,26 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../21_repare/repare.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Pedigree Reconstruction with repare</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../27_yleaf/yleaf.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Y-chromosomal haplogroup inference with Yleaf</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Y-chromosomal haplogroup inference with Yleaf</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../28_admixfrog/admixfrog.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Detection of archaic ancestry segments using admixfrog</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Detection of archaic ancestry segments using admixfrog</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../31_quarto/Quarto_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../21_repare/repare.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Pedigree Reconstruction with repare</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -260,39 +260,39 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">14.1</span> Background</a>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">11.1</span> Background</a>
   <ul class="collapse">
-  <li><a href="#from-kinship-to-pedigrees" id="toc-from-kinship-to-pedigrees" class="nav-link" data-scroll-target="#from-kinship-to-pedigrees"><span class="header-section-number">14.1.1</span> From kinship to pedigrees</a></li>
-  <li><a href="#biological-constraints" id="toc-biological-constraints" class="nav-link" data-scroll-target="#biological-constraints"><span class="header-section-number">14.1.2</span> Biological constraints</a></li>
-  <li><a href="#imperfect-kinship-inference" id="toc-imperfect-kinship-inference" class="nav-link" data-scroll-target="#imperfect-kinship-inference"><span class="header-section-number">14.1.3</span> Imperfect kinship inference</a></li>
+  <li><a href="#from-kinship-to-pedigrees" id="toc-from-kinship-to-pedigrees" class="nav-link" data-scroll-target="#from-kinship-to-pedigrees"><span class="header-section-number">11.1.1</span> From kinship to pedigrees</a></li>
+  <li><a href="#biological-constraints" id="toc-biological-constraints" class="nav-link" data-scroll-target="#biological-constraints"><span class="header-section-number">11.1.2</span> Biological constraints</a></li>
+  <li><a href="#imperfect-kinship-inference" id="toc-imperfect-kinship-inference" class="nav-link" data-scroll-target="#imperfect-kinship-inference"><span class="header-section-number">11.1.3</span> Imperfect kinship inference</a></li>
   </ul></li>
-  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started"><span class="header-section-number">14.2</span> Getting started</a>
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link" data-scroll-target="#getting-started"><span class="header-section-number">11.2</span> Getting started</a>
   <ul class="collapse">
-  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation"><span class="header-section-number">14.2.1</span> Installation</a></li>
-  <li><a href="#input-files" id="toc-input-files" class="nav-link" data-scroll-target="#input-files"><span class="header-section-number">14.2.2</span> Input files</a></li>
-  <li><a href="#nodes-csv" id="toc-nodes-csv" class="nav-link" data-scroll-target="#nodes-csv"><span class="header-section-number">14.2.3</span> Nodes CSV</a></li>
-  <li><a href="#relations-csv" id="toc-relations-csv" class="nav-link" data-scroll-target="#relations-csv"><span class="header-section-number">14.2.4</span> Relations CSV</a></li>
-  <li><a href="#constraints" id="toc-constraints" class="nav-link" data-scroll-target="#constraints"><span class="header-section-number">14.2.5</span> Constraints</a></li>
+  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation"><span class="header-section-number">11.2.1</span> Installation</a></li>
+  <li><a href="#input-files" id="toc-input-files" class="nav-link" data-scroll-target="#input-files"><span class="header-section-number">11.2.2</span> Input files</a></li>
+  <li><a href="#nodes-csv" id="toc-nodes-csv" class="nav-link" data-scroll-target="#nodes-csv"><span class="header-section-number">11.2.3</span> Nodes CSV</a></li>
+  <li><a href="#relations-csv" id="toc-relations-csv" class="nav-link" data-scroll-target="#relations-csv"><span class="header-section-number">11.2.4</span> Relations CSV</a></li>
+  <li><a href="#constraints" id="toc-constraints" class="nav-link" data-scroll-target="#constraints"><span class="header-section-number">11.2.5</span> Constraints</a></li>
   </ul></li>
-  <li><a href="#running-repare" id="toc-running-repare" class="nav-link" data-scroll-target="#running-repare"><span class="header-section-number">14.3</span> Running repare</a>
+  <li><a href="#running-repare" id="toc-running-repare" class="nav-link" data-scroll-target="#running-repare"><span class="header-section-number">11.3</span> Running repare</a>
   <ul class="collapse">
-  <li><a href="#basic-command" id="toc-basic-command" class="nav-link" data-scroll-target="#basic-command"><span class="header-section-number">14.3.1</span> Basic command</a></li>
-  <li><a href="#full-command-line-options" id="toc-full-command-line-options" class="nav-link" data-scroll-target="#full-command-line-options"><span class="header-section-number">14.3.2</span> Full command-line options</a></li>
-  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="header-section-number">14.3.3</span> Example</a></li>
+  <li><a href="#basic-command" id="toc-basic-command" class="nav-link" data-scroll-target="#basic-command"><span class="header-section-number">11.3.1</span> Basic command</a></li>
+  <li><a href="#full-command-line-options" id="toc-full-command-line-options" class="nav-link" data-scroll-target="#full-command-line-options"><span class="header-section-number">11.3.2</span> Full command-line options</a></li>
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="header-section-number">11.3.3</span> Example</a></li>
   </ul></li>
-  <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output"><span class="header-section-number">14.4</span> Output</a>
+  <li><a href="#output" id="toc-output" class="nav-link" data-scroll-target="#output"><span class="header-section-number">11.4</span> Output</a>
   <ul class="collapse">
-  <li><a href="#corrected_input_relations.csv" id="toc-corrected_input_relations.csv" class="nav-link" data-scroll-target="#corrected_input_relations.csv"><span class="header-section-number">14.4.1</span> corrected_input_relations.csv</a></li>
-  <li><a href="#reconstructed_exact_relations.csv" id="toc-reconstructed_exact_relations.csv" class="nav-link" data-scroll-target="#reconstructed_exact_relations.csv"><span class="header-section-number">14.4.2</span> reconstructed_exact_relations.csv</a></li>
-  <li><a href="#reconstructed_pedigree.pdf" id="toc-reconstructed_pedigree.pdf" class="nav-link" data-scroll-target="#reconstructed_pedigree.pdf"><span class="header-section-number">14.4.3</span> reconstructed_pedigree.pdf</a></li>
+  <li><a href="#corrected_input_relations.csv" id="toc-corrected_input_relations.csv" class="nav-link" data-scroll-target="#corrected_input_relations.csv"><span class="header-section-number">11.4.1</span> corrected_input_relations.csv</a></li>
+  <li><a href="#reconstructed_exact_relations.csv" id="toc-reconstructed_exact_relations.csv" class="nav-link" data-scroll-target="#reconstructed_exact_relations.csv"><span class="header-section-number">11.4.2</span> reconstructed_exact_relations.csv</a></li>
+  <li><a href="#reconstructed_pedigree.pdf" id="toc-reconstructed_pedigree.pdf" class="nav-link" data-scroll-target="#reconstructed_pedigree.pdf"><span class="header-section-number">11.4.3</span> reconstructed_pedigree.pdf</a></li>
   </ul></li>
-  <li><a href="#practical-considerations" id="toc-practical-considerations" class="nav-link" data-scroll-target="#practical-considerations"><span class="header-section-number">14.5</span> Practical considerations</a>
+  <li><a href="#practical-considerations" id="toc-practical-considerations" class="nav-link" data-scroll-target="#practical-considerations"><span class="header-section-number">11.5</span> Practical considerations</a>
   <ul class="collapse">
-  <li><a href="#choosing-the-number-of-candidate-pedigrees" id="toc-choosing-the-number-of-candidate-pedigrees" class="nav-link" data-scroll-target="#choosing-the-number-of-candidate-pedigrees"><span class="header-section-number">14.5.1</span> Choosing the number of candidate pedigrees</a></li>
-  <li><a href="#haplogroup-wildcards" id="toc-haplogroup-wildcards" class="nav-link" data-scroll-target="#haplogroup-wildcards"><span class="header-section-number">14.5.2</span> Haplogroup wildcards</a></li>
+  <li><a href="#choosing-the-number-of-candidate-pedigrees" id="toc-choosing-the-number-of-candidate-pedigrees" class="nav-link" data-scroll-target="#choosing-the-number-of-candidate-pedigrees"><span class="header-section-number">11.5.1</span> Choosing the number of candidate pedigrees</a></li>
+  <li><a href="#haplogroup-wildcards" id="toc-haplogroup-wildcards" class="nav-link" data-scroll-target="#haplogroup-wildcards"><span class="header-section-number">11.5.2</span> Haplogroup wildcards</a></li>
   </ul></li>
-  <li><a href="#test-yourself" id="toc-test-yourself" class="nav-link" data-scroll-target="#test-yourself"><span class="header-section-number">14.6</span> Test yourself</a></li>
-  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">14.7</span> Further reading</a></li>
+  <li><a href="#test-yourself" id="toc-test-yourself" class="nav-link" data-scroll-target="#test-yourself"><span class="header-section-number">11.6</span> Test yourself</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">11.7</span> Further reading</a></li>
   </ul>
 </nav>
     </div>
@@ -301,7 +301,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Pedigree Reconstruction with repare</span></h1>
+<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Pedigree Reconstruction with repare</span></h1>
 </div>
 
 
@@ -329,37 +329,37 @@ div.csl-indent {
 </header>
 
 <p>Given a set of closely related ancient individuals, it is possible to reconstruct an ancient pedigree. However, while many tools exist to infer pairwise kinship relations in ancient DNA, assembling these relations into a coherent pedigree is a separate and difficult task. <strong>repare</strong> is a Python tool that takes pairwise kinship relation inferences and reconstructs full pedigrees, while automatically identifying and correcting inconsistent inputs <span class="citation" data-cites="Huang2026-repare">(<a href="../references.html#ref-Huang2026-repare" role="doc-biblioref">Huang, Li, and Narasimhan 2026</a>)</span>. repare is available at <a href="https://github.com/Narasimhan-Lab/repare" class="uri">https://github.com/Narasimhan-Lab/repare</a>.</p>
-<section id="background" class="level2" data-number="14.1">
-<h2 data-number="14.1" class="anchored" data-anchor-id="background"><span class="header-section-number">14.1</span> Background</h2>
-<section id="from-kinship-to-pedigrees" class="level3" data-number="14.1.1">
-<h3 data-number="14.1.1" class="anchored" data-anchor-id="from-kinship-to-pedigrees"><span class="header-section-number">14.1.1</span> From kinship to pedigrees</h3>
+<section id="background" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="background"><span class="header-section-number">11.1</span> Background</h2>
+<section id="from-kinship-to-pedigrees" class="level3" data-number="11.1.1">
+<h3 data-number="11.1.1" class="anchored" data-anchor-id="from-kinship-to-pedigrees"><span class="header-section-number">11.1.1</span> From kinship to pedigrees</h3>
 <p>There are numerous methods that can infer degree-level kinship relations between pairs of ancient individuals, including BREADR, correctKin, GRUPS-rs, KIN, and READv2. Additionally, many of these methods can distinguish between 1st-degree relation types (parent-child or full siblings).</p>
 <p>However, the process for manually assembling these pairwise kinship relations into a pedigree can be very difficult and tedious. repare aims to automate this pedigree reconstruction process in a user-friendly, flexible manner.</p>
 </section>
-<section id="biological-constraints" class="level3" data-number="14.1.2">
-<h3 data-number="14.1.2" class="anchored" data-anchor-id="biological-constraints"><span class="header-section-number">14.1.2</span> Biological constraints</h3>
+<section id="biological-constraints" class="level3" data-number="11.1.2">
+<h3 data-number="11.1.2" class="anchored" data-anchor-id="biological-constraints"><span class="header-section-number">11.1.2</span> Biological constraints</h3>
 <p>Certain biological information can aid in the reconstruction of ancient pedigrees. For example, mitochondrial haplogroups are transmitted through maternal lineages, and Y-chromosome haplogroups are transmitted through paternal lineages (for genetic males), so candidate pedigrees that violate these constraints can be discarded. Similarly, skeletal age-at-death estimates, runs-of-homozygosity (ROH) data, and temporal information can be used to constrain the set of candidate pedigrees.</p>
 </section>
-<section id="imperfect-kinship-inference" class="level3" data-number="14.1.3">
-<h3 data-number="14.1.3" class="anchored" data-anchor-id="imperfect-kinship-inference"><span class="header-section-number">14.1.3</span> Imperfect kinship inference</h3>
+<section id="imperfect-kinship-inference" class="level3" data-number="11.1.3">
+<h3 data-number="11.1.3" class="anchored" data-anchor-id="imperfect-kinship-inference"><span class="header-section-number">11.1.3</span> Imperfect kinship inference</h3>
 <p>One factor complicating ancient pedigree reconstruction is the error rate of kinship inference. In manual pedigree reconstruction, one must routinely consider alternative degrees of relatedness for pairs of individuals; it is very rare that a kinship inference method can achieve 100% accuracy on an ancient DNA dataset. repare replicates this error-checking process by explicitly considering alternative degrees of relatedness for each input pair, unless otherwise specified by the user.</p>
 </section>
 </section>
-<section id="getting-started" class="level2" data-number="14.2">
-<h2 data-number="14.2" class="anchored" data-anchor-id="getting-started"><span class="header-section-number">14.2</span> Getting started</h2>
-<section id="installation" class="level3" data-number="14.2.1">
-<h3 data-number="14.2.1" class="anchored" data-anchor-id="installation"><span class="header-section-number">14.2.1</span> Installation</h3>
+<section id="getting-started" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="getting-started"><span class="header-section-number">11.2</span> Getting started</h2>
+<section id="installation" class="level3" data-number="11.2.1">
+<h3 data-number="11.2.1" class="anchored" data-anchor-id="installation"><span class="header-section-number">11.2.1</span> Installation</h3>
 <p>We recommend installing repare using the provided conda environment file.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-O</span> https://raw.githubusercontent.com/Narasimhan-Lab/repare/main/repare-environment.yml</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env create <span class="at">-f</span> repare-environment.yml</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate repare</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="input-files" class="level3" data-number="14.2.2">
-<h3 data-number="14.2.2" class="anchored" data-anchor-id="input-files"><span class="header-section-number">14.2.2</span> Input files</h3>
+<section id="input-files" class="level3" data-number="11.2.2">
+<h3 data-number="11.2.2" class="anchored" data-anchor-id="input-files"><span class="header-section-number">11.2.2</span> Input files</h3>
 <p>repare takes two CSV files as input: a <strong>nodes</strong> file which describes individuals and a <strong>relations</strong> file which describes (inferred) pairwise kinship relations.</p>
 </section>
-<section id="nodes-csv" class="level3" data-number="14.2.3">
-<h3 data-number="14.2.3" class="anchored" data-anchor-id="nodes-csv"><span class="header-section-number">14.2.3</span> Nodes CSV</h3>
+<section id="nodes-csv" class="level3" data-number="11.2.3">
+<h3 data-number="11.2.3" class="anchored" data-anchor-id="nodes-csv"><span class="header-section-number">11.2.3</span> Nodes CSV</h3>
 <p>Each row represents one individual. The required and optional columns are:</p>
 <table class="table">
 <colgroup>
@@ -426,8 +426,8 @@ N5,F,,ghi,True,False
 N6,F,,de*,True,True</code></pre>
 </div>
 </section>
-<section id="relations-csv" class="level3" data-number="14.2.4">
-<h3 data-number="14.2.4" class="anchored" data-anchor-id="relations-csv"><span class="header-section-number">14.2.4</span> Relations CSV</h3>
+<section id="relations-csv" class="level3" data-number="11.2.4">
+<h3 data-number="11.2.4" class="anchored" data-anchor-id="relations-csv"><span class="header-section-number">11.2.4</span> Relations CSV</h3>
 <p>Each row represents an inferred kinship relation between two individuals.</p>
 <table class="table">
 <colgroup>
@@ -489,8 +489,8 @@ N4,N6,2,,
 N1,N6,2,,</code></pre>
 </div>
 </section>
-<section id="constraints" class="level3" data-number="14.2.5">
-<h3 data-number="14.2.5" class="anchored" data-anchor-id="constraints"><span class="header-section-number">14.2.5</span> Constraints</h3>
+<section id="constraints" class="level3" data-number="11.2.5">
+<h3 data-number="11.2.5" class="anchored" data-anchor-id="constraints"><span class="header-section-number">11.2.5</span> Constraints</h3>
 <p>The <code>constraints</code> column allows you to restrict the possible exact kinship relation types (within a certain kinship degree) for a given pair of individuals. This can be useful when you have additional archaeological or genetic evidence. The full list of allowed constraint strings can be printed with:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">repare</span> <span class="at">--print-allowed-constraints</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The allowed values include:</p>
@@ -513,14 +513,14 @@ N1,N6,2,,</code></pre>
 <p>When <code>force_constraints</code> is set to <code>True</code>, repare can not override that constraint during reconstruction. When <code>force_constraints</code> is set to <code>False</code>, overriding a constraint counts as one “inconsistency” in the resulting pedigree.</p>
 </section>
 </section>
-<section id="running-repare" class="level2" data-number="14.3">
-<h2 data-number="14.3" class="anchored" data-anchor-id="running-repare"><span class="header-section-number">14.3</span> Running repare</h2>
-<section id="basic-command" class="level3" data-number="14.3.1">
-<h3 data-number="14.3.1" class="anchored" data-anchor-id="basic-command"><span class="header-section-number">14.3.1</span> Basic command</h3>
+<section id="running-repare" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="running-repare"><span class="header-section-number">11.3</span> Running repare</h2>
+<section id="basic-command" class="level3" data-number="11.3.1">
+<h3 data-number="11.3.1" class="anchored" data-anchor-id="basic-command"><span class="header-section-number">11.3.1</span> Basic command</h3>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">repare</span> <span class="at">-n</span> nodes.csv <span class="at">-r</span> relations.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="full-command-line-options" class="level3" data-number="14.3.2">
-<h3 data-number="14.3.2" class="anchored" data-anchor-id="full-command-line-options"><span class="header-section-number">14.3.2</span> Full command-line options</h3>
+<section id="full-command-line-options" class="level3" data-number="11.3.2">
+<h3 data-number="11.3.2" class="anchored" data-anchor-id="full-command-line-options"><span class="header-section-number">11.3.2</span> Full command-line options</h3>
 <table class="table">
 <colgroup>
 <col style="width: 21%">
@@ -583,25 +583,25 @@ N1,N6,2,,</code></pre>
 </tbody>
 </table>
 </section>
-<section id="example" class="level3" data-number="14.3.3">
-<h3 data-number="14.3.3" class="anchored" data-anchor-id="example"><span class="header-section-number">14.3.3</span> Example</h3>
+<section id="example" class="level3" data-number="11.3.3">
+<h3 data-number="11.3.3" class="anchored" data-anchor-id="example"><span class="header-section-number">11.3.3</span> Example</h3>
 <p>With the example files from above:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">repare</span> <span class="at">-n</span> nodes.csv <span class="at">-r</span> relations.csv <span class="at">-o</span> outputs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="output" class="level2" data-number="14.4">
-<h2 data-number="14.4" class="anchored" data-anchor-id="output"><span class="header-section-number">14.4</span> Output</h2>
+<section id="output" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="output"><span class="header-section-number">11.4</span> Output</h2>
 <p>repare produces three output files:</p>
-<section id="corrected_input_relations.csv" class="level3" data-number="14.4.1">
-<h3 data-number="14.4.1" class="anchored" data-anchor-id="corrected_input_relations.csv"><span class="header-section-number">14.4.1</span> corrected_input_relations.csv</h3>
+<section id="corrected_input_relations.csv" class="level3" data-number="11.4.1">
+<h3 data-number="11.4.1" class="anchored" data-anchor-id="corrected_input_relations.csv"><span class="header-section-number">11.4.1</span> corrected_input_relations.csv</h3>
 <p>This file includes the input kinship relations, as well as any corrections that repare applied. For instance, if a pair was originally inferred as 1st-degree, but repare determined it should be 2nd-degree to achieve a better pedigree, the corrected degree will appear here.</p>
 </section>
-<section id="reconstructed_exact_relations.csv" class="level3" data-number="14.4.2">
-<h3 data-number="14.4.2" class="anchored" data-anchor-id="reconstructed_exact_relations.csv"><span class="header-section-number">14.4.2</span> reconstructed_exact_relations.csv</h3>
+<section id="reconstructed_exact_relations.csv" class="level3" data-number="11.4.2">
+<h3 data-number="11.4.2" class="anchored" data-anchor-id="reconstructed_exact_relations.csv"><span class="header-section-number">11.4.2</span> reconstructed_exact_relations.csv</h3>
 <p>This file contains the exact relation type for each pair (e.g., <code>parent-child</code>, <code>siblings</code>, <code>paternal half-siblings</code>).</p>
 </section>
-<section id="reconstructed_pedigree.pdf" class="level3" data-number="14.4.3">
-<h3 data-number="14.4.3" class="anchored" data-anchor-id="reconstructed_pedigree.pdf"><span class="header-section-number">14.4.3</span> reconstructed_pedigree.pdf</h3>
+<section id="reconstructed_pedigree.pdf" class="level3" data-number="11.4.3">
+<h3 data-number="11.4.3" class="anchored" data-anchor-id="reconstructed_pedigree.pdf"><span class="header-section-number">11.4.3</span> reconstructed_pedigree.pdf</h3>
 <p>A plot of the reconstructed pedigree. This output requires the Graphviz/PyGraphviz dependencies from the conda installation.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -618,19 +618,19 @@ Tip
 </div>
 </section>
 </section>
-<section id="practical-considerations" class="level2" data-number="14.5">
-<h2 data-number="14.5" class="anchored" data-anchor-id="practical-considerations"><span class="header-section-number">14.5</span> Practical considerations</h2>
-<section id="choosing-the-number-of-candidate-pedigrees" class="level3" data-number="14.5.1">
-<h3 data-number="14.5.1" class="anchored" data-anchor-id="choosing-the-number-of-candidate-pedigrees"><span class="header-section-number">14.5.1</span> Choosing the number of candidate pedigrees</h3>
+<section id="practical-considerations" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="practical-considerations"><span class="header-section-number">11.5</span> Practical considerations</h2>
+<section id="choosing-the-number-of-candidate-pedigrees" class="level3" data-number="11.5.1">
+<h3 data-number="11.5.1" class="anchored" data-anchor-id="choosing-the-number-of-candidate-pedigrees"><span class="header-section-number">11.5.1</span> Choosing the number of candidate pedigrees</h3>
 <p>The <code>-m</code> parameter controls how many candidate pedigrees repare explores at each algorithm iteration. Higher values increase the chance of finding the optimal reconstruction but also increase runtime. The default of 1000 is suitable in most cases. You may wish to increase this parameter for larger pedigrees.</p>
 </section>
-<section id="haplogroup-wildcards" class="level3" data-number="14.5.2">
-<h3 data-number="14.5.2" class="anchored" data-anchor-id="haplogroup-wildcards"><span class="header-section-number">14.5.2</span> Haplogroup wildcards</h3>
+<section id="haplogroup-wildcards" class="level3" data-number="11.5.2">
+<h3 data-number="11.5.2" class="anchored" data-anchor-id="haplogroup-wildcards"><span class="header-section-number">11.5.2</span> Haplogroup wildcards</h3>
 <p>When haplogroup information is uncertain, use the <code>*</code> wildcard. For example, <code>R1b*</code> is compatible with <code>R1b1a</code> or <code>R1b1b</code>. This can be useful when haplogroup calls are imprecise due to low coverage.</p>
 </section>
 </section>
-<section id="test-yourself" class="level2" data-number="14.6">
-<h2 data-number="14.6" class="anchored" data-anchor-id="test-yourself"><span class="header-section-number">14.6</span> Test yourself</h2>
+<section id="test-yourself" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="test-yourself"><span class="header-section-number">11.6</span> Test yourself</h2>
 <ol type="1">
 <li><p>You have three individuals A, B, and C. A and B are 1st-degree relatives, B and C are 1st-degree relatives, and A and C are 2nd-degree relatives. A and B are male and share the same Y haplogroup; C is female. What pedigree structure(s) could explain these data?</p></li>
 <li><p>An individual is female but has a Y-chromosome haplogroup listed in the nodes file. What problem would this cause for repare, and how should you handle it?</p></li>
@@ -638,8 +638,8 @@ Tip
 <li><p>When should you use <code>force_constraints</code> in the relations CSV?</p></li>
 </ol>
 </section>
-<section id="further-reading" class="level2" data-number="14.7">
-<h2 data-number="14.7" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">14.7</span> Further reading</h2>
+<section id="further-reading" class="level2" data-number="11.7">
+<h2 data-number="11.7" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">11.7</span> Further reading</h2>
 <ul>
 <li>repare GitHub repository: <a href="https://github.com/Narasimhan-Lab/repare" class="uri">https://github.com/Narasimhan-Lab/repare</a></li>
 <li><span class="citation" data-cites="Huang2026-repare">Huang, Li, and Narasimhan (<a href="../references.html#ref-Huang2026-repare" role="doc-biblioref">2026</a>)</span>: the paper describing repare.</li>
@@ -901,13 +901,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../31_quarto/Quarto_intro.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></span>
+      <a href="../18_pmrread/pmrread.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Pairwise mismatch rate (PMR) and READ relatedness inference</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../references.html" class="pagination-link">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../27_yleaf/yleaf.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Y-chromosomal haplogroup inference with Yleaf</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -9,7 +9,7 @@
 <meta name="author" content="Suzanne Freilich">
 <meta name="dcterms.date" content="2024-02-22">
 
-<title>Computational Methods for human population genetics and ancient DNA - 11&nbsp; Y-chromosomal haplogroup inference with Yleaf</title>
+<title>Computational Methods for human population genetics and ancient DNA - 12&nbsp; Y-chromosomal haplogroup inference with Yleaf</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -86,7 +86,7 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
 <link href="../28_admixfrog/admixfrog.html" rel="next">
-<link href="../18_pmrread/pmrread.html" rel="prev">
+<link href="../21_repare/repare.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -129,7 +129,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../27_yleaf/yleaf.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Y-chromosomal haplogroup inference with Yleaf</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../27_yleaf/yleaf.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Y-chromosomal haplogroup inference with Yleaf</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -222,26 +222,26 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../21_repare/repare.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Pedigree Reconstruction with repare</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../27_yleaf/yleaf.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Y-chromosomal haplogroup inference with Yleaf</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Y-chromosomal haplogroup inference with Yleaf</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../28_admixfrog/admixfrog.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Detection of archaic ancestry segments using admixfrog</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Detection of archaic ancestry segments using admixfrog</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../31_quarto/Quarto_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../21_repare/repare.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Pedigree Reconstruction with repare</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Introduction to Quarto</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -260,37 +260,37 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#resources" id="toc-resources" class="nav-link active" data-scroll-target="#resources"><span class="header-section-number">11.1</span> Resources</a>
+  <li><a href="#resources" id="toc-resources" class="nav-link active" data-scroll-target="#resources"><span class="header-section-number">12.1</span> Resources</a>
   <ul class="collapse">
-  <li><a href="#original-publication" id="toc-original-publication" class="nav-link" data-scroll-target="#original-publication"><span class="header-section-number">11.1.1</span> Original publication</a></li>
-  <li><a href="#software-and-manual" id="toc-software-and-manual" class="nav-link" data-scroll-target="#software-and-manual"><span class="header-section-number">11.1.2</span> Software and manual</a></li>
+  <li><a href="#original-publication" id="toc-original-publication" class="nav-link" data-scroll-target="#original-publication"><span class="header-section-number">12.1.1</span> Original publication</a></li>
+  <li><a href="#software-and-manual" id="toc-software-and-manual" class="nav-link" data-scroll-target="#software-and-manual"><span class="header-section-number">12.1.2</span> Software and manual</a></li>
   </ul></li>
-  <li><a href="#background-to-y-chromosomal-haplogroup-assignment" id="toc-background-to-y-chromosomal-haplogroup-assignment" class="nav-link" data-scroll-target="#background-to-y-chromosomal-haplogroup-assignment"><span class="header-section-number">11.2</span> Background to Y-chromosomal haplogroup assignment</a></li>
-  <li><a href="#what-is-yleaf" id="toc-what-is-yleaf" class="nav-link" data-scroll-target="#what-is-yleaf"><span class="header-section-number">11.3</span> What is Yleaf?</a>
+  <li><a href="#background-to-y-chromosomal-haplogroup-assignment" id="toc-background-to-y-chromosomal-haplogroup-assignment" class="nav-link" data-scroll-target="#background-to-y-chromosomal-haplogroup-assignment"><span class="header-section-number">12.2</span> Background to Y-chromosomal haplogroup assignment</a></li>
+  <li><a href="#what-is-yleaf" id="toc-what-is-yleaf" class="nav-link" data-scroll-target="#what-is-yleaf"><span class="header-section-number">12.3</span> What is Yleaf?</a>
   <ul class="collapse">
-  <li><a href="#what-are-the-advantage-of-using-yleaf" id="toc-what-are-the-advantage-of-using-yleaf" class="nav-link" data-scroll-target="#what-are-the-advantage-of-using-yleaf"><span class="header-section-number">11.3.1</span> What are the advantage of using Yleaf?</a></li>
-  <li><a href="#how-does-yleaf-compare-to-other-tools" id="toc-how-does-yleaf-compare-to-other-tools" class="nav-link" data-scroll-target="#how-does-yleaf-compare-to-other-tools"><span class="header-section-number">11.3.2</span> How does Yleaf compare to other tools?</a></li>
-  <li><a href="#how-does-yleaf-work" id="toc-how-does-yleaf-work" class="nav-link" data-scroll-target="#how-does-yleaf-work"><span class="header-section-number">11.3.3</span> How does Yleaf work?</a></li>
+  <li><a href="#what-are-the-advantage-of-using-yleaf" id="toc-what-are-the-advantage-of-using-yleaf" class="nav-link" data-scroll-target="#what-are-the-advantage-of-using-yleaf"><span class="header-section-number">12.3.1</span> What are the advantage of using Yleaf?</a></li>
+  <li><a href="#how-does-yleaf-compare-to-other-tools" id="toc-how-does-yleaf-compare-to-other-tools" class="nav-link" data-scroll-target="#how-does-yleaf-compare-to-other-tools"><span class="header-section-number">12.3.2</span> How does Yleaf compare to other tools?</a></li>
+  <li><a href="#how-does-yleaf-work" id="toc-how-does-yleaf-work" class="nav-link" data-scroll-target="#how-does-yleaf-work"><span class="header-section-number">12.3.3</span> How does Yleaf work?</a></li>
   </ul></li>
-  <li><a href="#installation-and-first-use" id="toc-installation-and-first-use" class="nav-link" data-scroll-target="#installation-and-first-use"><span class="header-section-number">11.4</span> Installation and first use</a></li>
-  <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage"><span class="header-section-number">11.5</span> Usage</a>
+  <li><a href="#installation-and-first-use" id="toc-installation-and-first-use" class="nav-link" data-scroll-target="#installation-and-first-use"><span class="header-section-number">12.4</span> Installation and first use</a></li>
+  <li><a href="#usage" id="toc-usage" class="nav-link" data-scroll-target="#usage"><span class="header-section-number">12.5</span> Usage</a>
   <ul class="collapse">
-  <li><a href="#options-that-are-most-relevant-for-ancient-dna-analysis" id="toc-options-that-are-most-relevant-for-ancient-dna-analysis" class="nav-link" data-scroll-target="#options-that-are-most-relevant-for-ancient-dna-analysis"><span class="header-section-number">11.5.1</span> Options that are most relevant for ancient DNA analysis</a></li>
-  <li><a href="#minimum-usage-examples" id="toc-minimum-usage-examples" class="nav-link" data-scroll-target="#minimum-usage-examples"><span class="header-section-number">11.5.2</span> Minimum usage examples</a></li>
-  <li><a href="#optimising-settings-for-ancient-dna-data" id="toc-optimising-settings-for-ancient-dna-data" class="nav-link" data-scroll-target="#optimising-settings-for-ancient-dna-data"><span class="header-section-number">11.5.3</span> Optimising settings for ancient DNA data</a></li>
+  <li><a href="#options-that-are-most-relevant-for-ancient-dna-analysis" id="toc-options-that-are-most-relevant-for-ancient-dna-analysis" class="nav-link" data-scroll-target="#options-that-are-most-relevant-for-ancient-dna-analysis"><span class="header-section-number">12.5.1</span> Options that are most relevant for ancient DNA analysis</a></li>
+  <li><a href="#minimum-usage-examples" id="toc-minimum-usage-examples" class="nav-link" data-scroll-target="#minimum-usage-examples"><span class="header-section-number">12.5.2</span> Minimum usage examples</a></li>
+  <li><a href="#optimising-settings-for-ancient-dna-data" id="toc-optimising-settings-for-ancient-dna-data" class="nav-link" data-scroll-target="#optimising-settings-for-ancient-dna-data"><span class="header-section-number">12.5.3</span> Optimising settings for ancient DNA data</a></li>
   </ul></li>
-  <li><a href="#output-and-post-processing" id="toc-output-and-post-processing" class="nav-link" data-scroll-target="#output-and-post-processing"><span class="header-section-number">11.6</span> Output and post-processing</a>
+  <li><a href="#output-and-post-processing" id="toc-output-and-post-processing" class="nav-link" data-scroll-target="#output-and-post-processing"><span class="header-section-number">12.6</span> Output and post-processing</a>
   <ul class="collapse">
-  <li><a href="#the-log-file" id="toc-the-log-file" class="nav-link" data-scroll-target="#the-log-file"><span class="header-section-number">11.6.1</span> The Log file</a></li>
-  <li><a href="#yleaf-haplogroup-prediction-function" id="toc-yleaf-haplogroup-prediction-function" class="nav-link" data-scroll-target="#yleaf-haplogroup-prediction-function"><span class="header-section-number">11.6.2</span> Yleaf Haplogroup prediction function</a></li>
-  <li><a href="#quality-control-files" id="toc-quality-control-files" class="nav-link" data-scroll-target="#quality-control-files"><span class="header-section-number">11.6.3</span> Quality control files</a></li>
-  <li><a href="#manual-inspection-and-haplotype-calling-of-ancient-dna-data-using-the-.out-file" id="toc-manual-inspection-and-haplotype-calling-of-ancient-dna-data-using-the-.out-file" class="nav-link" data-scroll-target="#manual-inspection-and-haplotype-calling-of-ancient-dna-data-using-the-.out-file"><span class="header-section-number">11.6.4</span> Manual inspection and haplotype calling of ancient DNA data using the .out file</a></li>
-  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting"><span class="header-section-number">11.6.5</span> Troubleshooting</a></li>
-  <li><a href="#private-mutations" id="toc-private-mutations" class="nav-link" data-scroll-target="#private-mutations"><span class="header-section-number">11.6.6</span> Private mutations</a></li>
+  <li><a href="#the-log-file" id="toc-the-log-file" class="nav-link" data-scroll-target="#the-log-file"><span class="header-section-number">12.6.1</span> The Log file</a></li>
+  <li><a href="#yleaf-haplogroup-prediction-function" id="toc-yleaf-haplogroup-prediction-function" class="nav-link" data-scroll-target="#yleaf-haplogroup-prediction-function"><span class="header-section-number">12.6.2</span> Yleaf Haplogroup prediction function</a></li>
+  <li><a href="#quality-control-files" id="toc-quality-control-files" class="nav-link" data-scroll-target="#quality-control-files"><span class="header-section-number">12.6.3</span> Quality control files</a></li>
+  <li><a href="#manual-inspection-and-haplotype-calling-of-ancient-dna-data-using-the-.out-file" id="toc-manual-inspection-and-haplotype-calling-of-ancient-dna-data-using-the-.out-file" class="nav-link" data-scroll-target="#manual-inspection-and-haplotype-calling-of-ancient-dna-data-using-the-.out-file"><span class="header-section-number">12.6.4</span> Manual inspection and haplotype calling of ancient DNA data using the .out file</a></li>
+  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting"><span class="header-section-number">12.6.5</span> Troubleshooting</a></li>
+  <li><a href="#private-mutations" id="toc-private-mutations" class="nav-link" data-scroll-target="#private-mutations"><span class="header-section-number">12.6.6</span> Private mutations</a></li>
   </ul></li>
-  <li><a href="#follow-up-steps-for-further-verification" id="toc-follow-up-steps-for-further-verification" class="nav-link" data-scroll-target="#follow-up-steps-for-further-verification"><span class="header-section-number">11.7</span> Follow-up steps for further verification</a></li>
-  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements"><span class="header-section-number">11.8</span> Acknowledgements</a></li>
-  <li><a href="#data-availability" id="toc-data-availability" class="nav-link" data-scroll-target="#data-availability"><span class="header-section-number">11.9</span> Data availability</a></li>
+  <li><a href="#follow-up-steps-for-further-verification" id="toc-follow-up-steps-for-further-verification" class="nav-link" data-scroll-target="#follow-up-steps-for-further-verification"><span class="header-section-number">12.7</span> Follow-up steps for further verification</a></li>
+  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements"><span class="header-section-number">12.8</span> Acknowledgements</a></li>
+  <li><a href="#data-availability" id="toc-data-availability" class="nav-link" data-scroll-target="#data-availability"><span class="header-section-number">12.9</span> Data availability</a></li>
   </ul>
 </nav>
     </div>
@@ -299,7 +299,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Y-chromosomal haplogroup inference with Yleaf</span></h1>
+<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Y-chromosomal haplogroup inference with Yleaf</span></h1>
 </div>
 
 
@@ -326,26 +326,26 @@ div.csl-indent {
 
 </header>
 
-<section id="resources" class="level2" data-number="11.1">
-<h2 data-number="11.1" class="anchored" data-anchor-id="resources"><span class="header-section-number">11.1</span> Resources</h2>
-<section id="original-publication" class="level3" data-number="11.1.1">
-<h3 data-number="11.1.1" class="anchored" data-anchor-id="original-publication"><span class="header-section-number">11.1.1</span> Original publication</h3>
+<section id="resources" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="resources"><span class="header-section-number">12.1</span> Resources</h2>
+<section id="original-publication" class="level3" data-number="12.1.1">
+<h3 data-number="12.1.1" class="anchored" data-anchor-id="original-publication"><span class="header-section-number">12.1.1</span> Original publication</h3>
 <p>Ralf, Arwin, et al.&nbsp;“Yleaf: software for human Y-chromosomal haplogroup inference from next-generation sequencing data.” <em>Molecular biology and evolution</em> 35.5 (2018): 1291-1294. <span class="citation" data-cites="Ralf2018">(<a href="../references.html#ref-Ralf2018" role="doc-biblioref">Ralf et al. 2018</a>)</span></p>
 </section>
-<section id="software-and-manual" class="level3" data-number="11.1.2">
-<h3 data-number="11.1.2" class="anchored" data-anchor-id="software-and-manual"><span class="header-section-number">11.1.2</span> Software and manual</h3>
+<section id="software-and-manual" class="level3" data-number="12.1.2">
+<h3 data-number="12.1.2" class="anchored" data-anchor-id="software-and-manual"><span class="header-section-number">12.1.2</span> Software and manual</h3>
 <p>Please see the <a href="https://github.com/genid/Yleaf">Yleaf-github-page</a></p>
 </section>
 </section>
-<section id="background-to-y-chromosomal-haplogroup-assignment" class="level2" data-number="11.2">
-<h2 data-number="11.2" class="anchored" data-anchor-id="background-to-y-chromosomal-haplogroup-assignment"><span class="header-section-number">11.2</span> Background to Y-chromosomal haplogroup assignment</h2>
+<section id="background-to-y-chromosomal-haplogroup-assignment" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="background-to-y-chromosomal-haplogroup-assignment"><span class="header-section-number">12.2</span> Background to Y-chromosomal haplogroup assignment</h2>
 <p>The human Y-chromosome haplogroup is determined by single-nucleotide polymorphisms (SNP), markers that are located in the non-recombining portion of the chromosome (NRY) which is passed down from father to son. Knowing the haplogroup can therefore be informative about biological relatedness through the paternal lineage, as well as for exploring human mobility and migration, as one can trace haplotypes’ dispersal times and geographic distributions. The mutations that accumulate over time provide us with a Y-chromosome phylogenetic tree, and a system has been developed for naming the major clades and subclades. As more SNPs are discovered, the phylogenetic tree continues to expand with the nomenclature having to continually adapt. &nbsp;</p>
 </section>
-<section id="what-is-yleaf" class="level2" data-number="11.3">
-<h2 data-number="11.3" class="anchored" data-anchor-id="what-is-yleaf"><span class="header-section-number">11.3</span> What is Yleaf?</h2>
+<section id="what-is-yleaf" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="what-is-yleaf"><span class="header-section-number">12.3</span> What is Yleaf?</h2>
 <p>Yleaf is a python-based tool for Linux for high-resolution NRY SNP calling and haplogroup inference from NGS data, independent of library and sequencing methods</p>
-<section id="what-are-the-advantage-of-using-yleaf" class="level3" data-number="11.3.1">
-<h3 data-number="11.3.1" class="anchored" data-anchor-id="what-are-the-advantage-of-using-yleaf"><span class="header-section-number">11.3.1</span> What are the advantage of using Yleaf?</h3>
+<section id="what-are-the-advantage-of-using-yleaf" class="level3" data-number="12.3.1">
+<h3 data-number="12.3.1" class="anchored" data-anchor-id="what-are-the-advantage-of-using-yleaf"><span class="header-section-number">12.3.1</span> What are the advantage of using Yleaf?</h3>
 <ul>
 <li>publicly available</li>
 <li>automated</li>
@@ -357,12 +357,12 @@ div.csl-indent {
 <li>optimized for large NGS data sets such as whole genomes</li>
 </ul>
 </section>
-<section id="how-does-yleaf-compare-to-other-tools" class="level3" data-number="11.3.2">
-<h3 data-number="11.3.2" class="anchored" data-anchor-id="how-does-yleaf-compare-to-other-tools"><span class="header-section-number">11.3.2</span> How does Yleaf compare to other tools?</h3>
+<section id="how-does-yleaf-compare-to-other-tools" class="level3" data-number="12.3.2">
+<h3 data-number="12.3.2" class="anchored" data-anchor-id="how-does-yleaf-compare-to-other-tools"><span class="header-section-number">12.3.2</span> How does Yleaf compare to other tools?</h3>
 <p>Yleaf was tested on modern and ancient published datasets, and produced high concordance in NRY-SNP calling compared to well-established tools such as SAMtools/BCFtools <span class="citation" data-cites="Li2009">(<a href="../references.html#ref-Li2009" role="doc-biblioref">Li et al. 2009</a>)</span>, and GATK HaplotypeCaller <span class="citation" data-cites="McKenna2010">(<a href="../references.html#ref-McKenna2010" role="doc-biblioref">McKenna et al. 2010</a>)</span>. Yleaf called the lowest number of markers due to stringent options set, however it also appears to provide the highest overall accuracy</p>
 </section>
-<section id="how-does-yleaf-work" class="level3" data-number="11.3.3">
-<h3 data-number="11.3.3" class="anchored" data-anchor-id="how-does-yleaf-work"><span class="header-section-number">11.3.3</span> How does Yleaf work?</h3>
+<section id="how-does-yleaf-work" class="level3" data-number="12.3.3">
+<h3 data-number="12.3.3" class="anchored" data-anchor-id="how-does-yleaf-work"><span class="header-section-number">12.3.3</span> How does Yleaf work?</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -404,8 +404,8 @@ Note
 </ul>
 </section>
 </section>
-<section id="installation-and-first-use" class="level2" data-number="11.4">
-<h2 data-number="11.4" class="anchored" data-anchor-id="installation-and-first-use"><span class="header-section-number">11.4</span> Installation and first use</h2>
+<section id="installation-and-first-use" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="installation-and-first-use"><span class="header-section-number">12.4</span> Installation and first use</h2>
 <p>The recommended method for installing Yleaf is with conda. The github page provides easy-to-follow instructions as follows:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># On the command line, clone the repository:</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/genid/Yleaf.git</span>
@@ -425,15 +425,15 @@ Note
 <p>Alternatively, you may add custom paths to your own references that you want to use in the <em>config.txt</em> file (shown in Fig.1 above), which looks like this:</p>
 <p><img src="Fig3.png" class="img-fluid"></p>
 </section>
-<section id="usage" class="level2" data-number="11.5">
-<h2 data-number="11.5" class="anchored" data-anchor-id="usage"><span class="header-section-number">11.5</span> Usage</h2>
+<section id="usage" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="usage"><span class="header-section-number">12.5</span> Usage</h2>
 <p>To use, on your command line type:</p>
 <p>Conda activate yleaf</p>
 <p>Yleaf –h</p>
 <p>This can be called from any directory on your system. The -h (help) flag will show you the various usage options available to adjust parameters such as quality thresholds.</p>
 <p><img src="Fig4.png" class="img-fluid"></p>
-<section id="options-that-are-most-relevant-for-ancient-dna-analysis" class="level3" data-number="11.5.1">
-<h3 data-number="11.5.1" class="anchored" data-anchor-id="options-that-are-most-relevant-for-ancient-dna-analysis"><span class="header-section-number">11.5.1</span> Options that are most relevant for ancient DNA analysis</h3>
+<section id="options-that-are-most-relevant-for-ancient-dna-analysis" class="level3" data-number="12.5.1">
+<h3 data-number="12.5.1" class="anchored" data-anchor-id="options-that-are-most-relevant-for-ancient-dna-analysis"><span class="header-section-number">12.5.1</span> Options that are most relevant for ancient DNA analysis</h3>
 <ul>
 <li><code>-r , --reads_threshold</code>: The minimum number of reads for each base. (default=10)</li>
 <li><code>-q , --quality_thresh</code>: Minimum quality for each read, integer between 10 and 40. (default=20)</li>
@@ -457,44 +457,44 @@ Note
 </div>
 </div>
 </section>
-<section id="minimum-usage-examples" class="level3" data-number="11.5.2">
-<h3 data-number="11.5.2" class="anchored" data-anchor-id="minimum-usage-examples"><span class="header-section-number">11.5.2</span> Minimum usage examples</h3>
+<section id="minimum-usage-examples" class="level3" data-number="12.5.2">
+<h3 data-number="12.5.2" class="anchored" data-anchor-id="minimum-usage-examples"><span class="header-section-number">12.5.2</span> Minimum usage examples</h3>
 <p>The recommended input for ancient DNA samples is to supply bam files that you have processed with your usual quality filtering. (This could either be a BAM file that contains only reads you have extracted that align to the Y-chromosome, or you can provide your original BAM file and Yleaf will do that for you):</p>
-<section id="bam-input" class="level4" data-number="11.5.2.1">
-<h4 data-number="11.5.2.1" class="anchored" data-anchor-id="bam-input"><span class="header-section-number">11.5.2.1</span> BAM input</h4>
+<section id="bam-input" class="level4" data-number="12.5.2.1">
+<h4 data-number="12.5.2.1" class="anchored" data-anchor-id="bam-input"><span class="header-section-number">12.5.2.1</span> BAM input</h4>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Yleaf</span> <span class="at">-bam</span> file.bam <span class="at">-o</span> bam_output <span class="at">--rg</span> hg19</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="bam-input-with-drawing-predicted-haplogroups-in-a-tree-and-showing-all-private-mutations" class="level4" data-number="11.5.2.2">
-<h4 data-number="11.5.2.2" class="anchored" data-anchor-id="bam-input-with-drawing-predicted-haplogroups-in-a-tree-and-showing-all-private-mutations"><span class="header-section-number">11.5.2.2</span> BAM input with drawing predicted haplogroups in a tree and showing all private mutations</h4>
+<section id="bam-input-with-drawing-predicted-haplogroups-in-a-tree-and-showing-all-private-mutations" class="level4" data-number="12.5.2.2">
+<h4 data-number="12.5.2.2" class="anchored" data-anchor-id="bam-input-with-drawing-predicted-haplogroups-in-a-tree-and-showing-all-private-mutations"><span class="header-section-number">12.5.2.2</span> BAM input with drawing predicted haplogroups in a tree and showing all private mutations</h4>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Yleaf</span> <span class="at">-bam</span> file.bam <span class="at">-o</span> bam_output <span class="at">--rg</span> hg19 <span class="at">-dh</span> <span class="at">-p</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="optimising-settings-for-ancient-dna-data" class="level3" data-number="11.5.3">
-<h3 data-number="11.5.3" class="anchored" data-anchor-id="optimising-settings-for-ancient-dna-data"><span class="header-section-number">11.5.3</span> Optimising settings for ancient DNA data</h3>
+<section id="optimising-settings-for-ancient-dna-data" class="level3" data-number="12.5.3">
+<h3 data-number="12.5.3" class="anchored" data-anchor-id="optimising-settings-for-ancient-dna-data"><span class="header-section-number">12.5.3</span> Optimising settings for ancient DNA data</h3>
 <ul>
 <li>Read number threshold (-r): The default for this is set to 10 – <strong>Note that</strong> <strong>this should be changed to -r 1</strong>, as some SNPs, especially in low coverage genomes, are expected to only have a single read covering them. If you run Yleaf with the default setting, you will obtain a results file but no haplogroup assignment.</li>
 <li>Base quality threshold (-q): The default for this is set to 20, which would allow most bases to be accepted. You may however wish to raise this to -q 30.</li>
 </ul>
 <p>Examples:</p>
-<section id="bam-input-1" class="level4" data-number="11.5.3.1">
-<h4 data-number="11.5.3.1" class="anchored" data-anchor-id="bam-input-1"><span class="header-section-number">11.5.3.1</span> BAM input</h4>
+<section id="bam-input-1" class="level4" data-number="12.5.3.1">
+<h4 data-number="12.5.3.1" class="anchored" data-anchor-id="bam-input-1"><span class="header-section-number">12.5.3.1</span> BAM input</h4>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Yleaf</span> <span class="at">-bam</span> filename.bam <span class="at">-o</span> bam_output <span class="at">--rg</span> hg19 <span class="at">--r</span> 1 <span class="at">--q</span> 30</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="batch-option-by-providing-path-to-files" class="level4" data-number="11.5.3.2">
-<h4 data-number="11.5.3.2" class="anchored" data-anchor-id="batch-option-by-providing-path-to-files"><span class="header-section-number">11.5.3.2</span> Batch option by providing path to files</h4>
+<section id="batch-option-by-providing-path-to-files" class="level4" data-number="12.5.3.2">
+<h4 data-number="12.5.3.2" class="anchored" data-anchor-id="batch-option-by-providing-path-to-files"><span class="header-section-number">12.5.3.2</span> Batch option by providing path to files</h4>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Yleaf</span> <span class="at">-bam</span> /path/to/files <span class="at">-o</span> bam_output <span class="at">--rg</span> hg19 <span class="at">--r</span> 1 <span class="at">--q</span> 30</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 </section>
-<section id="output-and-post-processing" class="level2" data-number="11.6">
-<h2 data-number="11.6" class="anchored" data-anchor-id="output-and-post-processing"><span class="header-section-number">11.6</span> Output and post-processing</h2>
-<section id="the-log-file" class="level3" data-number="11.6.1">
-<h3 data-number="11.6.1" class="anchored" data-anchor-id="the-log-file"><span class="header-section-number">11.6.1</span> The Log file</h3>
+<section id="output-and-post-processing" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="output-and-post-processing"><span class="header-section-number">12.6</span> Output and post-processing</h2>
+<section id="the-log-file" class="level3" data-number="12.6.1">
+<h3 data-number="12.6.1" class="anchored" data-anchor-id="the-log-file"><span class="header-section-number">12.6.1</span> The Log file</h3>
 <p>After running Yleaf you will find a log file in your output directory detailing each process that was run and how long it took. As an example, here is the log file after running a single bam file:</p>
 <p><img src="Fig5.png" class="img-fluid"></p>
 </section>
-<section id="yleaf-haplogroup-prediction-function" class="level3" data-number="11.6.2">
-<h3 data-number="11.6.2" class="anchored" data-anchor-id="yleaf-haplogroup-prediction-function"><span class="header-section-number">11.6.2</span> Yleaf Haplogroup prediction function</h3>
+<section id="yleaf-haplogroup-prediction-function" class="level3" data-number="12.6.2">
+<h3 data-number="12.6.2" class="anchored" data-anchor-id="yleaf-haplogroup-prediction-function"><span class="header-section-number">12.6.2</span> Yleaf Haplogroup prediction function</h3>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -527,16 +527,16 @@ Note
 <p><img src="Fig7.png" class="img-fluid"></p>
 <p>Depending on the flags you used when running Yleaf, you may also find here additional files such as .pmu files for private mutations (see below) or .dh files for graphical output of a haplogroup tree.</p>
 </section>
-<section id="quality-control-files" class="level3" data-number="11.6.3">
-<h3 data-number="11.6.3" class="anchored" data-anchor-id="quality-control-files"><span class="header-section-number">11.6.3</span> Quality control files</h3>
+<section id="quality-control-files" class="level3" data-number="12.6.3">
+<h3 data-number="12.6.3" class="anchored" data-anchor-id="quality-control-files"><span class="header-section-number">12.6.3</span> Quality control files</h3>
 <p>The .chr file is useful for quality control and is informative about the number and percentage of mapped reads per chromosome (this comes from the output of the SAMtools command, idxstats).</p>
 <p><img src="Fig8.png" class="img-fluid"></p>
 <p>The .info file provides general information such as total number of mapped and unmapped reads, number of markers that met the threshold or failed:</p>
 <p><img src="Fig9.png" class="img-fluid"></p>
 <p>This file can be useful for finetuning your quality thresholds when running Yleaf. For example, this file would be helpful for identifying if you forgot to change the read number flag (-r) to 1.</p>
 </section>
-<section id="manual-inspection-and-haplotype-calling-of-ancient-dna-data-using-the-.out-file" class="level3" data-number="11.6.4">
-<h3 data-number="11.6.4" class="anchored" data-anchor-id="manual-inspection-and-haplotype-calling-of-ancient-dna-data-using-the-.out-file"><span class="header-section-number">11.6.4</span> Manual inspection and haplotype calling of ancient DNA data using the .out file</h3>
+<section id="manual-inspection-and-haplotype-calling-of-ancient-dna-data-using-the-.out-file" class="level3" data-number="12.6.4">
+<h3 data-number="12.6.4" class="anchored" data-anchor-id="manual-inspection-and-haplotype-calling-of-ancient-dna-data-using-the-.out-file"><span class="header-section-number">12.6.4</span> Manual inspection and haplotype calling of ancient DNA data using the .out file</h3>
 <p>The most relevant file for performing our own manual inspection and haplotype calling of our ancient DNA data is the .out file. The default output uses the Yfull haplogroup nomenclature (terminal SNP names). Here are the first few rows:</p>
 <p><img src="Fig10.png" class="img-fluid"></p>
 <p>The column ‘reads’ refers to the number of reads after quality filtering, while the column ‘called_per’ refers to the percentage of reads that agree with the final base call, noted in column ‘called_base’. Under ‘state’, A refers to ancestral state (as in column ‘anc’), and D to derived state (column ‘der’), while ‘depth’ indicates the depth of the hit in the YFull(v10.01) tree.</p>
@@ -571,31 +571,31 @@ Note
 </div>
 </div>
 </section>
-<section id="troubleshooting" class="level3" data-number="11.6.5">
-<h3 data-number="11.6.5" class="anchored" data-anchor-id="troubleshooting"><span class="header-section-number">11.6.5</span> Troubleshooting</h3>
+<section id="troubleshooting" class="level3" data-number="12.6.5">
+<h3 data-number="12.6.5" class="anchored" data-anchor-id="troubleshooting"><span class="header-section-number">12.6.5</span> Troubleshooting</h3>
 <p>An additional file, the .fmf file, is an extended .out file which includes an additional column “description”. This provides information about why a marker did not pass the criteria for haplogroup assignment, for example due to low coverage or being below the base calling threshold. This file can therefore be used to troubleshoot and optimize the settings, for example if you see that many markers were filtered out. If many markers fall below the base majority threshold, it can indicate a contaminated sample, and it could even be possible to identify the haplogroups of both contributors using the .fmf file.</p>
 <p><img src="Fig15.png" class="img-fluid"></p>
 </section>
-<section id="private-mutations" class="level3" data-number="11.6.6">
-<h3 data-number="11.6.6" class="anchored" data-anchor-id="private-mutations"><span class="header-section-number">11.6.6</span> Private mutations</h3>
+<section id="private-mutations" class="level3" data-number="12.6.6">
+<h3 data-number="12.6.6" class="anchored" data-anchor-id="private-mutations"><span class="header-section-number">12.6.6</span> Private mutations</h3>
 <p>One useful flag is the -p flag, which produces a .pmu file. This lists all identified private mutations with a minor allele frequency below 1% (this threshold can be changed with the -mr flag). It works by ignoring all SNPs that are included in Yfull and therefore associated with a haplogroup, and outputs all other SNPs found in the data. If the position is included in dbSNP (https://www.ncbi.nlm.nih.gov/snp/) it will also output its reference number (rn_no) and population frequency. This can be useful for identifying new variants in understudied populations or identifying subgroups among individuals who share the same haplogroup.</p>
 <p><img src="Fig16.png" class="img-fluid"></p>
 </section>
 </section>
-<section id="follow-up-steps-for-further-verification" class="level2" data-number="11.7">
-<h2 data-number="11.7" class="anchored" data-anchor-id="follow-up-steps-for-further-verification"><span class="header-section-number">11.7</span> Follow-up steps for further verification</h2>
+<section id="follow-up-steps-for-further-verification" class="level2" data-number="12.7">
+<h2 data-number="12.7" class="anchored" data-anchor-id="follow-up-steps-for-further-verification"><span class="header-section-number">12.7</span> Follow-up steps for further verification</h2>
 <p>For questionable calls, it can be helpful to use a graphical interface such as <a href="https://igv.org/">IGV: Integrative Genomics Viewer</a>. Here you can load the bam and bai files (upload them via the “Tracks” option in the menu bar), ensuring you have selected the appropriate reference genome that you used for alignment (you can change it under the “Genome” option in the menu bar), and navigate to the position of the SNP along the read. Let’s say I want to take a closer look at this position from our output table:</p>
 <p><img src="Fig17.png" class="img-fluid"></p>
 <p>I can use the search field to navigate to position chrY: 7682648 and zoom in.</p>
 <p><img src="Fig18.png" class="img-fluid"></p>
 <p>This shows us there is one read covering this position, which has a G-&gt;C mutation, corresponding with what the output table states. We see that this SNP falls well inside the middle of the read. SNPs in the middle of a read can be interpreted as more reliable than ones at the ends of reads, which could be a result of ancient DNA damage. In such cases, especially where your data might be limited to transitions, you can check where in the read they are and if you choose, take a more conservative approach by discarding a questionable result, and instead report the haplogroup associated with the next upstream marker. Visualising the results this way can also be helpful in cases where you have two related males with slightly differing haplogroups along the same branch - in this way you can easily visualise if one of them simply lacks reads covering the more derived position that the other individual has.</p>
 </section>
-<section id="acknowledgements" class="level2" data-number="11.8">
-<h2 data-number="11.8" class="anchored" data-anchor-id="acknowledgements"><span class="header-section-number">11.8</span> Acknowledgements</h2>
+<section id="acknowledgements" class="level2" data-number="12.8">
+<h2 data-number="12.8" class="anchored" data-anchor-id="acknowledgements"><span class="header-section-number">12.8</span> Acknowledgements</h2>
 <p>The author thanks Ralf Arwin and Dion Zandstra for helpful comments and clarifications.</p>
 </section>
-<section id="data-availability" class="level2" data-number="11.9">
-<h2 data-number="11.9" class="anchored" data-anchor-id="data-availability"><span class="header-section-number">11.9</span> Data availability</h2>
+<section id="data-availability" class="level2" data-number="12.9">
+<h2 data-number="12.9" class="anchored" data-anchor-id="data-availability"><span class="header-section-number">12.9</span> Data availability</h2>
 <p>The bam file used in this chapter was analysed as part of Freilich, Suzanne, et al.&nbsp;“Reconstructing genetic histories and social organisation in Neolithic and Bronze Age Croatia.” <em>Scientific Reports</em> 11.1 (2021): 16729 <span class="citation" data-cites="Freilich2021">(<a href="../references.html#ref-Freilich2021" role="doc-biblioref">Freilich et al. 2021</a>)</span>, and is available from the European Nucleotide Archive <a href="http://www.ebi.ac.uk/ena">ENA</a>, under run accession <a href="https://www.ebi.ac.uk/ena/browser/view/ERR6324186">ERR6324186</a>, study&nbsp;accession number PRJEB46357.</p>
 
 
@@ -851,13 +851,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../18_pmrread/pmrread.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Pairwise mismatch rate (PMR) and READ relatedness inference</span></span>
+      <a href="../21_repare/repare.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Pedigree Reconstruction with repare</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../28_admixfrog/admixfrog.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Detection of archaic ancestry segments using admixfrog</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Detection of archaic ancestry segments using admixfrog</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
