@@ -1,0 +1,30 @@
+project:
+  output-dir: pdf-build
+
+format:
+  pdf:
+    keep-tex: true
+    include-in-header:
+      text: |
+        % Plain (language-less) code fences are used throughout the book for
+        % pasted CLI-tool/console output -- literal, wide, monospace transcripts
+        % that don't reflow. They don't go through the syntax-highlighted
+        % "Highlighting" environment, so give them a smaller font directly.
+        \AtBeginEnvironment{verbatim}{\tiny}
+        % Syntax-highlighted code (R/bash/yaml chunks) renders at full body
+        % size by default, which some wide examples (long shell commands,
+        % wrapped-but-still-wide YAML population lists) overflow on. Shrink
+        % it too, one step less than the plain-verbatim blocks above since
+        % this is code readers may want to type/copy, not just skim.
+        \AtBeginEnvironment{Highlighting}{\scriptsize}
+        % Override the margins Quarto's default book template reserves for
+        % margin notes (a wide unused right-hand marginparwidth). NOT using
+        % the top-level `geometry:` format key: confirmed (even on the bare
+        % preface chapter, no layout panels/margin-notes involved at all)
+        % that it crashes quarto's own pandoc Lua filter with a
+        % "oneSidedColumnLayout" error on this Quarto version (1.3.450) --
+        % a template-level bug, unrelated to any chapter's content. Possibly
+        % fixed in newer Quarto releases; not re-tested here. Re-issuing
+        % \geometry{} here instead, in the actual LaTeX preamble, runs after
+        % that filter has already finished, so it can't trip over it.
+        \geometry{margin=1in}
