@@ -444,10 +444,6 @@ dim(dist_mat)
 ```
 
 ```{r}
-?heatmap
-```
-
-```{r}
 # first try and filter for a few populations:
 unique(inds$Population)
 
