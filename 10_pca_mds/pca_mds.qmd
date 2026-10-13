@@ -128,14 +128,15 @@ chmod +x trident
 trident for Windows:\
 
 ```{bash}
-# in command prompt or PowerShell
+# in Windows PowerShell
 # download Trident
 curl.exe -o "trident.exe" -L "https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Windows.exe"
 
-.\trident.exe -h
+# run it
+./trident -h
 
 ```
-**IMPORTANT:** if you use trident in Windows, each command further on using "./trident" should be changed to ".\trident.exe"
+
 
 
 ### Prepare practise dataset
