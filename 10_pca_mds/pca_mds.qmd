@@ -136,7 +136,7 @@ Download [trident-Windows.exe](https://github.com/poseidon-framework/poseidon-hs
 
 #### Prepare practise dataset:
 
-Here, we are downloading packages (listed in pca_mds_working/exampleData.fetchFile.txt) file from the Poseidon server into the scratch/poseidon-repository directory. The datasets come from the following publications: [Patterson et al. 2012](@Patterson2012), [Lazaridis et al. 2014](@Lazaridis2014), [Raghavan et al. 2014](@Raghavan2014), and [Jeong et al. 2019](@JeongNatureEcologyEvolution2019)
+Here, we are downloading packages (listed in pca_mds_working/exampleData.fetchFile.txt) file from the Poseidon server into the scratch/poseidon-repository directory. The datasets come from the following publications: @Patterson2012, @Lazaridis2014, @Raghavan2014, and @Jeong2019.
 
 ```{bash}
 mkdir -p scratch/poseidon-repository
