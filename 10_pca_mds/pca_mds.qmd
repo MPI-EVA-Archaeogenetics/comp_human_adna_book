@@ -109,13 +109,7 @@ For the practical part of this chapter you will need to install the tools `tride
 ## Trident installation commands
 Install `trident`
 
-- with conda:
-
-  ```{bash}
-  conda install bioconda::poseidon-trident=1.4.0.3
-  ```
-
-- Or, download an executable binary of `trident` for Linux:
+- Download an executable binary of `trident` for Linux:
 
   ```{bash}
   # download Trident v1.4.0.3 binary
