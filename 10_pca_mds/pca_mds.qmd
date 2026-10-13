@@ -18,7 +18,7 @@ execute:
 ### Comparison of PCA and MDS
 
 |   | PCA | MDS |
-|----|----|----|
+|-------------------|-------------------|----------------------------------|
 | Input | original data matrix / similarity matrix | pairwise distance matrix |
 | Focus | captures maximum variance in data | preserves pairwise distances |
 | Missing data? | Fill-in OR projection | Not an issue if using summary statistics, but this hides the uncertainty of the statistic |
@@ -56,9 +56,9 @@ Missingness does not affect MDS as adversely as it does PCA, on account of the u
 
 Unlike MDS, PCA is severely affected by missing data. During the rescaling of the data around its own mean values, missing data is "filled-in" to the mean value (mean imputation). This can cause points to shift towards the origin by a distance relative to the degree of missingness.
 
-Below is a plot of the results of PCA on a dataset of different worldwide populations [@Reich2012]. In an attempt to limit the effects of colonial admixture on the studied Native American populations, the authors masked parts of the genomes of Native Americans that matched the European or African populations in their dataset, replacing those genotypes with missing data.
+Below is a plot of the results of PCA on a dataset of different worldwide populations [@Reich2012]. In an attempt to limit the effects of colonial admixture on the studied Native American populations, the authors masked parts of the genomes of Native Americans that matched the European or African populations in their dataset, replacing those genotypes with missing data (@fig-unmasked-masked).
 
-![PCA results on the same dataset based on the raw data (left), and after masking parts of the genome in Native American populations that match European populations. Due to mean imputation, masked individuals are attracted to the Origin.](missingness_in_PCA.png){width="100%"}
+![PCA results on the same dataset based on the raw data (left), and after masking parts of the genome in Native American populations that match European populations. Due to mean imputation, masked individuals are attracted to the Origin.](missingness_in_PCA.png){#fig-unmasked-masked width="100%"}
 
 As you can see, individuals whose genotypes were masked are shifted towards the plot's origin. So how can we use PCA with ancient samples that have high degrees of missingness? The answer is by using a **L**east **Sq**uares **Project**ion, a.k.a. `lsqproject`!
 
@@ -66,9 +66,9 @@ As you can see, individuals whose genotypes were masked are shifted towards the 
 
 The idea of projection is simple, and applies similarly to both PCA and MDS. In PCA, you use a subset of the dataset to calculate your axes of variation, and then apply the resulting transformation to additional data, thus projecting them onto those axes. The important detail is that the variation between projected individuals is not taken into account when deciding which the axes of maximal variation are. Similarly, in MDS you project points to the MDS space based on their distances to the points that constructed the space, disregarding the distances of the projected points to one another.
 
-Below is a PCA plot calculated on present-day West Eurasian populations together with some Mesolithic hunter-gatherer individuals (in light brown). In the right side plot, the ancient individuals have been included in the calculation of the principal components, while in the left side they are projected on the principal components of the present-day West Eurasians.
+Below is a PCA plot calculated on present-day West Eurasian populations together with some Mesolithic hunter-gatherer individuals (in light brown). In the right side plot, the ancient individuals have been included in the calculation of the principal components, while in the left side they are projected on the principal components of the present-day West Eurasians (@fig-lsqproject).
 
-![PCA plot of ancient Mesolithic hunter-gatherers and present-day West Eurasian populations. On the right, the hunter gatherers are included in the principal component calculation, while on the left, they are projected on principal components calculated on the present-day populations only. The hunter-gatherers are part of three different groups: Eastern European hunter-gatherers (brown right-facing triangles), Scandinavian hunter-gatherers (brown diamonds), and Western European hunter-gatherers (brown half-filled circles).](projection_comparison.png){width="100%"}
+![PCA plot of ancient Mesolithic hunter-gatherers and present-day West Eurasian populations. On the right, the hunter gatherers are included in the principal component calculation, while on the left, they are projected on principal components calculated on the present-day populations only. The hunter-gatherers are part of three different groups: Eastern European hunter-gatherers (brown right-facing triangles), Scandinavian hunter-gatherers (brown diamonds), and Western European hunter-gatherers (brown half-filled circles).](projection_comparison.png){#fig-lsqproject width="100%"}
 
 There are two things to note here:
 
@@ -85,19 +85,17 @@ Shrinkage comes in two flavours:
 
 - The second kind of shrinkage (a.k.a. projection bias) arises because "samples used to calculate the PC axes "stretch" the axes" (from the [smartpca documentation](https://github.com/DReichLab/EIG/tree/master/POPGEN)). This problem is exacerbated in datasets where the number of markers far exceeds the number of samples used for PC calculation. This is often the case in human population genomics.
 
-While the first shrinkage flavour can be argued to be a feature of PCA, projection bias can be a problem when trying to compare present-day populations to projected ancient populations. A demonstration of the effects of shrinkage can be seen below:
+While the first shrinkage flavour can be argued to be a feature of PCA, projection bias can be a problem when trying to compare present-day populations to projected ancient populations. A demonstration of the effects of shrinkage can be seen below (@fig-shrinkage).
 
-![Using 10 individuals of each of the three tested populations (Yoruba, French, Han) to calculate PCs, and then projected another 10 individuals of each population reveals the effects of shrinkage on the positions of the projected individuals. In the absence of shrinkage, all points originating from the same population would be overlapping.](shrinkage.png){width="100%"}
+![Using 10 individuals of each of the three tested populations (Yoruba, French, Han) to calculate PCs, and then projected another 10 individuals of each population reveals the effects of shrinkage on the positions of the projected individuals. In the absence of shrinkage, all points originating from the same population would be overlapping.](shrinkage.png){#fig-shrinkage width="100%"}
 
-Shrinkage can be corrected by scaling the eigenvectors of the projected and/or non-projected individuals to bring them more in line with one another. Below is the same dataset as above, but ran through smartpca with the parameter `shrinkmode: YES`:
+Shrinkage can be corrected by scaling the eigenvectors of the projected and/or non-projected individuals to bring them more in line with one another. Below is the same dataset as above, but ran through smartpca with the parameter `shrinkmode: YES` (@fig-shrinkmode).
 
-![Using 10 individuals of each of the three tested populations (Yoruba, French, Han) to calculate PCs, and then projected another 10 individuals of each population. Shrinkage correction was done using 'shrinkmode: YES'](shrinkmode.png){width="100%"}
+![Using 10 individuals of each of the three tested populations (Yoruba, French, Han) to calculate PCs, and then projected another 10 individuals of each population. Shrinkage correction was done using 'shrinkmode: YES'](shrinkmode.png){#fig-shrinkmode width="100%"}
 
-As a note of caution, `shrinkmode: Yes` increases the runtime greatly. An alternative would be to identify specific present-day populations that are of interest for the ancient-to-modern comparison, and project those as well. So, for example, if we were to compare Iron Age individuals from Germany with present-day individuals from Germany, then we could decide to take out some or all present-day Germans and project those as well. That would make them fully comparable.
+As a note of caution, `shrinkmode: YES` increases the runtime greatly. An alternative would be to identify specific present-day populations that are of interest for the ancient-to-modern comparison, and project those as well. So, for example, if we were to compare Iron Age individuals from Germany with present-day individuals from Germany, then we could decide to take out some or all present-day Germans and project those as well. That would make them fully comparable.
 
 ## Practice
-
-### Preparation
 
 ### Get trident
 
@@ -133,9 +131,13 @@ chmod +x trident
 
 trident for Windows:\
 
-Download [trident-Windows.exe](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Windows.exe) file
+Download [trident-Windows.exe](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Windows.exe) file.
+Run in PowerShell (or Command prompt):
+```{bash}
+> .\trident-Windows.exe -h
+```
 
-### Prepare practise dataset:
+### Prepare practise dataset
 
 Here, we are downloading packages (listed in pca_mds_working/exampleData.fetchFile.txt) file from the Poseidon server into the scratch/poseidon-repository directory. The datasets come from the following publications: [Patterson et al. 2012](@Patterson2012), [Lazaridis et al. 2014](@Lazaridis2014), [Raghavan et al. 2014](@Raghavan2014), and [Jeong et al. 2019](@JeongNatureEcologyEvolution2019)
 
@@ -262,7 +264,7 @@ ls scratch/smartpca_runs/all_pops/
 **As a result we have three PCAs:**
 
 |              | data used in PC estimation          | data projected           |
-|--------------|-------------------------------------|--------------------------|
+|------------------|--------------------------------|----------------------|
 | PCA_poplist1 | Eurasians                           | Native Americans, Mal'ta |
 | PCA_poplist2 | Eurasians, Native Americans         | Mal'ta                   |
 | PCA_all_pops | Eurasians, Native Americans, Mal'ta |                          |
@@ -294,6 +296,8 @@ PCA_poplist1_ev <- left_join(PCA_poplist1_ev, metadata, by=c("Ind"="Poseidon_ID"
 PCA_poplist2_ev <- left_join(PCA_poplist2_ev, metadata, by=c("Ind"="Poseidon_ID")) %>% mutate(Country=as.factor(Country))
 PCA_all_pops_ev <- left_join(PCA_all_pops_ev, metadata, by=c("Ind"="Poseidon_ID")) %>% mutate(Country=as.factor(Country))
 ```
+
+Now, with the dataset set up, you are ready to plot the PCA (@fig-PCA_poplist1)
 
 ```{r}
 ## First we subset the dataset to only the populations in the poplist
@@ -338,7 +342,7 @@ PCA_plot_1 <- p +
 PCA_plot_1
 ```
 
-![Practice plot A) PCA estimated using modern Eurasian genomic data with Mal'ta projected ("PCA_poplist1")](PCA_plot_1.png)
+![Practice plot A) PCA estimated using modern Eurasian genomic data with Mal'ta projected ("PCA_poplist1")](PCA_plot_1.png){#fig-PCA_poplist1}
 
 ```{r}
 ## Now, let's see where Mal'ta individual got projected
@@ -351,7 +355,7 @@ PCA_plot_1 +
 ggsave("scratch/PCA_plot_1.png")
 ```
 
-PCA with Native American populations added to the analysis
+PCA with Native American populations added to the analysis (@fig-PCA_poplist2)
 
 ```{r}
 ## First we reorient the PCA
@@ -381,9 +385,9 @@ PCA_plot_2
 ggsave("scratch/PCA_plot_2.png")
 ```
 
-![Practice plot B) PCA estimated using modern Eurasian and Native American genomic data with Mal'ta projected ("PCA_poplist2")](PCA_plot_2.png)
+![Practice plot B) PCA estimated using modern Eurasian and Native American genomic data with Mal'ta projected ("PCA_poplist2")](PCA_plot_2.png){#fig-PCA_poplist2}
 
-And a PCA with all populations, including Mal'ta, used or estimation (no projection)
+And a PCA with all populations, including Mal'ta, used or estimation (no projection; @fig-PCA_all_pops)
 
 ```{r}
 ## First we reorient the PCA
@@ -413,7 +417,7 @@ PCA_plot_ap
 ggsave("scratch/PCA_plot_ap.png")
 ```
 
-![Practice plot C) PCA estimated using modern Eurasian and Native American, and Mal'ta genomic data with no projection ("PCA_all_pops")](PCA_plot_ap.png)
+![Practice plot C) PCA estimated using modern Eurasian and Native American, and Mal'ta genomic data with no projection ("PCA_all_pops")](PCA_plot_ap.png){#fig-PCA_all_pops}
 
 ### PLINK MDS
 
@@ -456,6 +460,8 @@ head(indices, 40)
 heatmap(dist_mat[indices,indices], labRow = inds$Population[indices], labCol = inds$Population[indices])
 ```
 
+Now you can calculate and plot MDS (@fig-MDS_plot_ap)
+
 ```{r}
 library(ggplot2)
 library(magrittr) # This is for the pipe operator %>%
@@ -491,10 +497,10 @@ ggsave("scratch/MDS_plot_ap.png")
 
 ```
 
-![Practice plot D) MDS estimated using modern Eurasian and Mal'ta genomic data ("MDS_plot_ap")](MDS_plot_ap.png)
+![Practice plot D) MDS estimated using modern Eurasian and Mal'ta genomic data ("MDS_plot_ap")](MDS_plot_ap.png){#fig-MDS_plot_ap}
 
+How does MDS compare to PCA if we restrict to the populations in poplist1 (@fig-MDS_poplist1)?
 ```{r}
-## How does MDS compare to PCA if we restrict to the populations in poplist1?
 ## Read in the poplist
 poplist1 <- readr::read_tsv("pca_mds_working/PCA_poplists/PCA_poplist1.txt", col_names = "Pops", col_types = 'c')
 
@@ -540,19 +546,18 @@ ggsave("scratch/MDS_poplist1.png")
 
 ```
 
-![Practice plot E) MDS estimated using modern Eurasian and Native American, and Mal'ta genomic data ("MDS_poplist1")](MDS_poplist1.png)
+![Practice plot E) MDS estimated using modern Eurasian and Native American, and Mal'ta genomic data ("MDS_poplist1")](MDS_poplist1.png){#fig-MDS_poplist1}
 
 ### Compare plots
 
-Let's now sum up, by directly comparing all the plots we have generated:
+Let's now sum up, by directly comparing all the plots we have generated (@fig-pcamds-comparePlots):
 
-![](pcamds.comparePlots.jpg){fig-align="center"}
+![<br>A)  PCA estimated using modern Eurasian genomic data with Mal'ta projected ("PCA_poplist1")
+<br>B)  PCA estimated using modern Eurasian and Native American genomic data with Mal'ta projected ("PCA_poplist2")
+<br>C)  PCA estimated using modern Eurasian and Native American, and Mal'ta genomic data with no projection ("PCA_all_pops")
+<br>D)  MDS estimated using modern Eurasian, and Mal'ta genomic data ("MDS_plot_ap")
+<br>E)  MDS estimated using modern Eurasian and Native American, and Mal'ta genomic data ("MDS_poplist1")](pcamds.comparePlots.jpg){#fig-pcamds-comparePlots fig-align="center"}
 
-A)  PCA estimated using modern Eurasian genomic data with Mal'ta projected ("PCA_poplist1")
-B)  PCA estimated using modern Eurasian and Native American genomic data with Mal'ta projected ("PCA_poplist2")
-C)  PCA estimated using modern Eurasian and Native American, and Mal'ta genomic data with no projection ("PCA_all_pops")
-D)  MDS estimated using modern Eurasian, and Mal'ta genomic data ("MDS_plot_ap")
-E)  MDS estimated using modern Eurasian and Native American, and Mal'ta genomic data ("MDS_poplist1")
 
 The dataset excluding Native American data comprises much less variation that makes up PC2 and hence the PC2 variation of Eurasians in plot A is stretched up compared to these in plots B and C (including Native Americans). In plot B and C it is therefore more difficult to observe differences within Eurasians along PC2 than in plot A. The variation making PC1 is comparable between the three plots. Individual Mal'ta is more closely related to Native Americans than an average Eurasian, so without Native Americans in the dataset (A) it ends up within the Eurasian variation as there is no Native American genetic signal present that would "pull" him away from the Eurasian variation towards the American variation. When Mal'ta is included in the estimation in plot C (not only projected, like in A and B), we can observe the effects of missing data, inherent for ancient genomes, causing this individual to be pulled towards the plot's origin.
 
