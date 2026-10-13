@@ -18,7 +18,7 @@ execute:
 ### Comparison of PCA and MDS
 
 |   | PCA | MDS |
-|-----------------|-----------------|--------------------------------------|
+|----|----|----|
 | Input | original data matrix / similarity matrix | pairwise distance matrix |
 | Focus | captures maximum variance in data | preserves pairwise distances |
 | Missing data? | Fill-in OR projection | Not an issue if using summary statistics, but this hides the uncertainty of the statistic |
@@ -48,11 +48,11 @@ The results of both of these methods are (usually) a 2 dimensional plot in which
 
 A recurring issue when analysing ancient DNA is the high degree of missing data (i.e. missingness). We often apply a minimum coverage filter to our datasets: A generally accepted rule-of-thumb for the 1240K dataset is a minimum of 15 000 covered (i.e. non-missing) SNPs. Another way to express this cutoff is to say that we will "happily" analyse data that is missing a genotype call in **98.8%** of all SNPs in the dataset! So how does this high rate of missingness affect MDS and PCA?
 
-#### MDS
+### MDS
 
 Missingness does not affect MDS as adversely as it does PCA, on account of the use of a pairwise distance matrix of 1-F3. This matrix will only have missing values in cases where there is no overlapping coverage between two individuals/populations used in an F3 statistic. Instead, the issue with MDS is that all F3 statistics are treated as equally reliable, regardless of their associated error bar.
 
-#### PCA
+### PCA
 
 Unlike MDS, PCA is severely affected by missing data. During the rescaling of the data around its own mean values, missing data is "filled-in" to the mean value (mean imputation). This can cause points to shift towards the origin by a distance relative to the degree of missingness.
 
@@ -99,7 +99,7 @@ As a note of caution, `shrinkmode: Yes` increases the runtime greatly. An altern
 
 ### Preparation
 
-#### Get trident
+### Get trident
 
 [Trident](https://www.poseidon-adna.org/#/trident) is a [Poseidon framework](https://www.poseidon-adna.org/#/) data management tool. It enables downloading Poseidon packages (genomic datasets, usually including ancient individuals, comprising genome-wide SNP data) from the Poseidon server, as well as creating and manipulating such packages.
 
@@ -135,7 +135,7 @@ trident for Windows:\
 
 Download [trident-Windows.exe](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Windows.exe) file
 
-#### Prepare practise dataset:
+### Prepare practise dataset:
 
 Here, we are downloading packages (listed in pca_mds_working/exampleData.fetchFile.txt) file from the Poseidon server into the scratch/poseidon-repository directory. The datasets come from the following publications: [Patterson et al. 2012](@Patterson2012), [Lazaridis et al. 2014](@Lazaridis2014), [Raghavan et al. 2014](@Raghavan2014), and [Jeong et al. 2019](@JeongNatureEcologyEvolution2019)
 
@@ -262,7 +262,7 @@ ls scratch/smartpca_runs/all_pops/
 **As a result we have three PCAs:**
 
 |              | data used in PC estimation          | data projected           |
-|-----------------|---------------------------------|-----------------------|
+|--------------|-------------------------------------|--------------------------|
 | PCA_poplist1 | Eurasians                           | Native Americans, Mal'ta |
 | PCA_poplist2 | Eurasians, Native Americans         | Mal'ta                   |
 | PCA_all_pops | Eurasians, Native Americans, Mal'ta |                          |
