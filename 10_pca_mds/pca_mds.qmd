@@ -30,9 +30,9 @@ The datasets used in human ancient DNA analysis are often extremely multidimensi
 
 ### Introduction to dimension reduction
 
-When using either of these methods, we are essentially representing the data on a new set of **orthogonal** axes, with its origin in the center of the data. In PCA we typically use the original data for this transformation (i.e. the genotype matrix), and attempt to find the axes that capture the most variation among the samples. A covariance matrix (i.e. a similarity matrix) is often calculated and used as a useful intermediate step in PCA. Instead, in MDS we start with a pairwise distance matrix (typically a matrix of 1-F3), and attempt to find a spatial representation that best captures the distances between points.
+When using either of these methods, we are essentially representing the data on a new set of **orthogonal** axes, with its origin in the center of the data (see @fig-pca-transformations for a visual representation of this tranformation). In PCA we typically use the original data for this transformation (i.e. the genotype matrix), and attempt to find the axes that capture the most variation among the samples. A covariance matrix (i.e. a similarity matrix) is often calculated and used as a useful intermediate step in PCA. Instead, in MDS we start with a pairwise distance matrix (typically a matrix of 1-F3), and attempt to find a spatial representation that best captures the distances between points.
 
-::: {#fig-pca-transformations .content-visible unless-format="html" layout-nrow=1}
+::: {#fig-pca-transformations layout-nrow=1}
 ![](pca_frame_1.png){#fig-frame1}
 
 ![](pca_frame_2.png){#fig-frame2}
