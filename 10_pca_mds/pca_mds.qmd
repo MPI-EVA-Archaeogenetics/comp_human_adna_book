@@ -1,5 +1,5 @@
 ---
-title: "Dimensionality reduction using PCA and MDS"
+title: "Dimensionality reduction using PCA andMDS"
 author: "Martyna Molak & Thiseas C. Lamnidis"
 date: "12/07/2023"
 bibliography: ../references.bib
