@@ -504,7 +504,7 @@ metadata <- janno::read_janno("scratch/forged_package/PCA_package_1.janno", to_j
 inds <- left_join(inds, metadata, by="Poseidon_ID")
 
 ## Read in the distance matrix.
-dist_mat <- matrix(scan("scratch/pairwise_distances.mdist"), ncol=nrow(inds))
+dist_mat <- matrix(scan("scratch/pairwise_distances.mdist"), ncol=nrow(inds), dimnames=list(inds$Poseidon_ID, inds$Poseidon_ID))
 dim(dist_mat) ## Check the dimensions of the matrix
 ```
 
