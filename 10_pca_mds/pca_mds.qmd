@@ -534,8 +534,9 @@ pheatmap(
   )
 ```
 
-![Heatmap showing the pairwise genetic distances between French, Han and Nganasan individuals. The colour of each tile represents the genetic distance between the two compared individuals. Darker colours represent larger distances, while lighter colours represent lower distances.](heatmap_plink.png){#fig-pairwise-heatmap}
-In @fig-pairwise-heatmap we can see the structure of the French, Han and Nganasan populations. Each population forms its own cluster, with the French population being most distantly related to the others.
+![Heatmap showing the pairwise genetic distances between French, Han, and Nganasan individuals. The colour of each tile represents the genetic distance between the two compared individuals. Darker colours represent larger distances, while lighter colours represent lower distances.](heatmap_plink.png){#fig-heatmap}
+
+In @fig-heatmap we can see the structure of the French, Han and Nganasan populations. Each population forms its own cluster, with the French population being most distantly related to the others.
 Next, we will use the `cmdscale` function of R to perform classic MDS on the matrix of genetic distances. Much like with PCA above, the direction of the resulting components is random, so we once again use the cornerstone individuals to orient the MDS components with geography.
 ```{r}
 library(ggplot2)
