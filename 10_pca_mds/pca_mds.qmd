@@ -30,15 +30,18 @@ The datasets used in human ancient DNA analysis are often extremely multidimensi
 
 ### Introduction to dimension reduction
 
-When using either of these methods, we are essentially representing the data on a new set of **orthogonal** axes, with its origin in the center of the data. In PCA we typically use the original data for this transformation (i.e. the genotype matrix), and attempt to find the axes that capture the most variation among the samples. A covariance matrix (i.e. a similarity matrix) is often calculated and used as a useful intermediate step in PCA. Instead, in MDS we start with a pairwise distance matrix (typically a matrix of 1-F3), and attempt to find a spatial representation that best captures the distances between points.
+When using either of these methods, we are essentially representing the data on a new set of **orthogonal** axes, with its origin in the center of the data (see @fig-pca-transformations for a visual representation of this tranformation). In PCA we typically use the original data for this transformation (i.e. the genotype matrix), and attempt to find the axes that capture the most variation among the samples. A covariance matrix (i.e. a similarity matrix) is often calculated and used as a useful intermediate step in PCA. Instead, in MDS we start with a pairwise distance matrix (typically a matrix of 1-F3), and attempt to find a spatial representation that best captures the distances between points.
 
-::: {.content-visible when-format="html"}
-![A visual representation of the transformation PCA applies to a cloud of points, the range of which is represented by the blue oval. First, the data is rescaled around its own mean value, effectively moving the origin to the center of the data cloud (here shown s a red point). Then, the axes of maximal variation are discovered using linear algebra. Finally, the data is transformed to represent it along the identified axes of variation.](pca.gif){fig-align="center" width="40%"}
-:::
+::: {#fig-pca-transformations layout-nrow=1}
+![](pca_frame_1.png){#fig-frame1}
 
-::: {.content-visible unless-format="html"}
-<!-- animated GIF has no LaTeX/PDF equivalent (no BoundingBox for a GIF) -- first frame only, for print -->
-![A visual representation of the transformation PCA applies to a cloud of points, the range of which is represented by the blue oval. First, the data is rescaled around its own mean value, effectively moving the origin to the center of the data cloud (here shown s a red point). Then, the axes of maximal variation are discovered using linear algebra. Finally, the data is transformed to represent it along the identified axes of variation.](pca_frame1.png){fig-align="center" width="40%"}
+![](pca_frame_2.png){#fig-frame2}
+
+![](pca_frame_3.png){#fig-frame3}
+
+![](pca_frame_4.png){#fig-frame4}
+
+A visual representation of the transformation PCA applies to a cloud of points, the range of which is represented by the blue oval. The original data is shown in @fig-frame1. @fig-frame2 First, the data is rescaled around its own mean value, effectively moving the origin to the center of the data cloud (here shown s a red point). @fig-frame3 Then, the axes of maximal variation are discovered using linear algebra. @fig-frame4 Finally, the data is transformed to represent it along the identified axes of variation.
 :::
 
 The results of both of these methods are (usually) a 2 dimensional plot in which the distances between individual points roughly correlates to the genetic distance between these individuals. Therefore, genetically similar individuals will be plotted close to one another, and further away from individuals that are more genetically dissimilar.
@@ -96,47 +99,75 @@ As a note of caution, `shrinkmode: Yes` increases the runtime greatly. An altern
 
 ## Practice
 
-### Preparation
+### Install necessary tools
 
-#### Get trident
+For the practical part of this chapter you will need to install the tools `trident`, `plink`, and `smartpca` (which is part of the `eigensoft` software package). 
 
 [Trident](https://www.poseidon-adna.org/#/trident) is a [Poseidon framework](https://www.poseidon-adna.org/#/) data management tool. It enables downloading Poseidon packages (genomic datasets, usually including ancient individuals, comprising genome-wide SNP data) from the Poseidon server, as well as creating and manipulating such packages.
 
-trident for Linux:
+::: {.callout-note collapse="true"}
+## Trident installation commands
+Install `trident`
 
-```{bash}
-# download Trident v1.4.0.3 binary
-wget https://github.com/poseidon-framework/poseidon-hs/releases/download/v1.4.0.3/trident-Linux
-# rename to trident
-mv trident-Linux trident
+- Download an executable binary of `trident` for Linux:
 
-# make it executable
-chmod +x trident
-# run it
-./trident -h
-```
+  ```{bash}
+  # download Trident v1.4.0.3 binary
+  wget https://github.com/poseidon-framework/poseidon-hs/releases/download/v1.4.0.3/trident-Linux
+  # rename to trident
+  mv trident-Linux trident
+  
+  # make it executable
+  chmod +x trident
+  # run it
+  ./trident -h
+  ```
 
-trident for MacOS:
+- for MacOS:
 
-```{bash}
-# download Trident v1.4.0.3 binary
-curl -LO https://github.com/poseidon-framework/poseidon-hs/releases/download/v1.4.0.3/trident-macOS
-# rename to trident
-mv trident-macOS trident
+  ```{bash}
+  # download Trident v1.4.0.3 binary
+  curl -LO https://github.com/poseidon-framework/poseidon-hs/releases/download/v1.4.0.3/trident-macOS
+  # rename to trident
+  mv trident-macOS trident
+  
+  # make it executable
+  chmod +x trident
+  # run it
+  ./trident -h
+  ```
 
-# make it executable
-chmod +x trident
-# run it
-./trident -h
-```
+- for Windows:
 
-trident for Windows:\
+Download [trident-Windows.exe](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Windows.exe) file.
 
-Download [trident-Windows.exe](https://github.com/poseidon-framework/poseidon-hs/releases/latest/download/trident-Windows.exe) file
+::: 
 
-#### Prepare practise dataset:
+[Plink](https://www.cog-genomics.org/plink/) is a whole genome association analysis toolset, designed to perform a range of basic, large-scale analyses in a computationally efficient manner. We will use it to estimate genetic distances between individuals when exploring MDS.
 
-Here, we are downloading packages (listed in pca_mds_working/exampleData.fetchFile.txt) file from the Poseidon server into the scratch/poseidon-repository directory. The datasets come from the following publications: [Patterson et al. 2012](@Patterson2012), [Lazaridis et al. 2014](@Lazaridis2014), [Raghavan et al. 2014](@Raghavan2014), and [Jeong et al. 2019](@JeongNatureEcologyEvolution2019)
+::: {.callout-note collapse="true"}
+## Installing plink
+- with conda:
+  ```{bash}
+  conda install bioconda::plink
+  ```
+
+:::
+
+[smartpca](https://github.com/DReichLab/EIG/tree/master) is a tool for computing the covariance matrix of a set of individuals and running PCA on that matrix to generate a set of eigenvectors for the dataset. It is often preferred over other tools in ancient DNA because of its ability to project samples, and its shrinkage correction options.
+
+::: {.callout-note collapse="true"}
+## Installing eigensoft
+- with conda:
+  ```{bash}
+  conda install bioconda::eigensoft
+  ```
+
+::: 
+
+### Prepare practise dataset:
+
+Here, we are downloading packages (listed in pca_mds_working/exampleData.fetchFile.txt) file from the Poseidon server into the scratch/poseidon-repository directory. The datasets come from the following publications: @Patterson2012, @Lazaridis2014, @Raghavan2014, and @Jeong2019.
 
 ```{bash}
 mkdir -p scratch/poseidon-repository
@@ -206,6 +237,7 @@ So prepared parameter file will cause smartpca to estimate PCs using only the in
 
 ```{bash}
 # Run smartpca
+# Runtime: about 10 minutes
 smartpca -p scratch/smartpca_runs/poplist1/parameters.par
 ```
 
@@ -222,6 +254,7 @@ Adding populations (Native Americans)
 # Look into other provided poplists
 wc -l pca_mds_working/PCA_poplists/*
 
+## Check the differences between the two poplists
 diff -y --suppress-common-lines pca_mds_working/PCA_poplists/PCA_poplist1.txt pca_mds_working/PCA_poplists/PCA_poplist2.txt
 ```
 
@@ -233,6 +266,7 @@ cat scratch/smartpca_runs/poplist2/parameters.par
 
 ```{bash}
 # Rerun smartpca using poplist2 (additional populations)
+# Runtime: about 10 minutes
 smartpca -p scratch/smartpca_runs/poplist2/parameters.par
 
 # Inspect smartpca output
@@ -251,10 +285,11 @@ cat scratch/smartpca_runs/all_pops/parameters.par
 ```
 
 ```{bash}
-## Runtime of about 2 minutes
+# Run smartpca without a poplist
+# Runtime: about 2 minutes
 smartpca -p scratch/smartpca_runs/all_pops/parameters.par
-ls scratch/smartpca_runs/all_pops/
 
+ls scratch/smartpca_runs/all_pops/
 ```
 
 **As a result we have three PCAs:**
@@ -294,7 +329,7 @@ PCA_all_pops_ev <- left_join(PCA_all_pops_ev, metadata, by=c("Ind"="Poseidon_ID"
 ```
 
 ```{r}
-## First we subset the dataset to only the populations in the poplist
+## First we subset the dataset to only the populations in poplist1
 moderns_pl1 <- PCA_poplist1_ev %>% filter(Pop %in% poplist1$Pops)
 
 
@@ -308,20 +343,31 @@ p + geom_point(
         )
 ```
 
+![PCA plot of all individuals belonging to populations in poplist1.](PCA_raw.png){#fig-pca-raw}
+
+The resulting PCA can be see in @fig-pca-raw. However, if you are following along with this exercise on your own computer, there is a 75% chance that the plot you just generated is not oriented the same way as @fig-pca-raw. That is because the direction of eigenvectors produced by PCA is random. What matters is the distance between points, not if the coordinates of the points are positive or negative.
+
+However, genetic similarity of human populations is highly correlated with geography. We can see this by colouring the points in our PCA by Longitude/Latitude @fig-pca-lonlat.
+
 ```{r}
 ## We can see how genetic similarity depends on geographical location by colouring the poins by longitude or latitude
-Lon_plot <- p +
-    geom_point(data=moderns_pl1, aes(x=PC1, y=PC2, col=Longitude)) ## Here we also define the colour of the points based on a variable
 
 Lat_plot <- p +
-    geom_point(data=moderns_pl1, aes(x=PC1, y=PC2, col=Latitude))
+    geom_point(data=moderns_pl1, aes(x=PC1, y=PC2, col=Latitude)) ## Here we also define the colour of the points based on a variable
 
-gridExtra::grid.arrange(Lon_plot, Lat_plot, ncol=2)
+Lon_plot <- p +
+    geom_point(data=moderns_pl1, aes(x=PC1, y=PC2, col=Longitude))
+
+gridExtra::grid.arrange(Lat_plot, Lon_plot, ncol=2)
 ```
+
+![PCA plot of all individuals belonging to populations in poplist1, coloured by Latitude (left) or Longitude (right) of the individual.](PCA_lonlat.png){#fig-pca-lonlat}
+
+In publications, PCAs are often oriented the same way maps often are, with PC1 and PC2 being oriented with Latitude and Longitude respectively. To orient the PCA, we will use two "cornerstone individuals" (`HGDP00607` and `Sir50`), and align our PCs based on the Lon/Lat of these individuals.
 
 ```{r}
 ## As the orientation (+/-) of PC coordinates sometimes can change between runs of PCA, we use this code to ensure the same "orientation" for all users and thus enable making comparisons.
-corner_inds_pl1 <- moderns_pl1 %>% select(Ind, PC1, PC2) %>% filter(Ind %in% c("HGDP00607", "Sir50"))
+corner_inds_pl1 <- moderns_pl1 %>% select(Ind, PC1, PC2) %>% filter(Ind %in%  c("HGDP00607", "Sir50"))
 if (corner_inds_pl1$PC1[1] > corner_inds_pl1$PC1[2]) { PCA_poplist1_ev <- PCA_poplist1_ev %>% mutate(PC1=-PC1)}
 if (corner_inds_pl1$PC2[1] > corner_inds_pl1$PC2[2]) { PCA_poplist1_ev <- PCA_poplist1_ev %>% mutate(PC2=-PC2)}
 moderns_pl1 <- PCA_poplist1_ev %>% filter(Pop %in% poplist1$Pops)
@@ -333,23 +379,26 @@ PCA_plot_1 <- p +
                aes(x=PC1, y=PC2, col=Country), 
                alpha=0.5    ## Makes points semi transparent (so that aggregations of points are visible).
               )
-PCA_plot_1
-```
-
-![Practice plot A)  PCA estimated using modern Eurasian genomic data with Mal'ta projected ("PCA_poplist1")](PCA_plot_1.png)
-
-```{r}
 ## Now, let's see where Mal'ta individual got projected
-PCA_plot_1 +
+PCA_plot_1 <- PCA_plot_1 +
     geom_point(
         data=PCA_poplist1_ev %>% filter(Ind=="MA1.SG"), ## Extract MA1 from the entire dataset
         aes(x=PC1, y=PC2),       ## Set the x and y axes for this set of points
         pch=17                   ## Change shape of point to solid triangle
+    ) +
+    geom_text(
+      ## Add a label for MA1
+      data=PCA_poplist1_ev %>% filter(Ind=="MA1.SG"),
+      aes(x=PC1, y=PC2, label=Ind), position = position_nudge(y=0.01)
     )
-ggsave("scratch/PCA_plot_1.png")
+ggsave(plot=PCA_plot_1, "scratch/PCA_plot_1.png")
 ```
 
-PCA with Native American populations added to the analysis
+![PCA estimated using modern Eurasian genomic data, with the projected position of MA1.SG shown as a black triangle. ("PCA_poplist1")](PCA_plot_1.png){#fig-pca-poplist1}
+
+To create @fig-pca-poplist1, we reorient the PCs with geography, and colour the different populations found in poplist1 by the country of their location. With our background plot set up, we can then add the projected position of Mal'ta (`MA1.SG`, in black).
+
+Next up, we will follow the same procedure to plot the PCA results from the "PCA_poplist2" run, in which Native American populations are included in the PC calculation. @fig-pca-ap
 
 ```{r}
 ## First we reorient the PCA
@@ -374,15 +423,22 @@ PCA_plot_2 <-  ggplot() +
         data=PCA_poplist2_ev %>% filter(Ind=="MA1.SG"), ## Extract MA1 from the entire dataset
         aes(x=PC1, y=PC2),       ## Set the x and y axes for this set of points
         pch=17                   ## Change shape of point to solid triangle
-     )
-PCA_plot_2
-ggsave("scratch/PCA_plot_2.png")
+     ) +
+      geom_text(
+        ## Add a label for MA1
+        data=PCA_poplist2_ev %>% filter(Ind=="MA1.SG"),
+        aes(x=PC1, y=PC2, label=Ind), position = position_nudge(y=0.01)
+    )
+
+ggsave(plot=PCA_plot_2, "scratch/PCA_plot_2.png")
 ```
 
-![Practice plot B)  PCA estimated using modern Eurasian and Native American genomic data with Mal'ta projected ("PCA_poplist2")](PCA_plot_2.png)
+![PCA estimated using modern Eurasian and Native American genomic data, with the projetced position of Mal'ta shown as a black triangle. ("PCA_poplist2")](PCA_plot_2.png){#fig-pca-poplist2}
 
-And a PCA with all populations, including Mal'ta, used or estimation (no projection)
+With the addition of Native american populations in the PCA, the position of Mal'ta has shifted significantly, as this set of PCs captures more of the genetic variation present in the individual.
 
+
+And finally, the PCA results if we use no projection at all, but instead include Mal'ta in the PC calculation, can be seen in @fig-pca-ap.
 ```{r}
 ## First we reorient the PCA
 corner_inds_ap <- PCA_all_pops_ev %>% select(Ind, PC1, PC2) %>% filter(Ind %in% c("HGDP00607", "Sir50"))
@@ -406,27 +462,34 @@ PCA_plot_ap <-  ggplot() +
         data=PCA_all_pops_ev %>% filter(Ind=="MA1.SG"), ## Extract MA1 from the entire dataset
         aes(x=PC1, y=PC2),       ## Set the x and y axes for this set of points
         pch=17                   ## Change shape of point to solid triangle
-     )
+     ) +
+      geom_text(
+        ## Add a label for MA1
+        data=PCA_all_pops_ev %>% filter(Ind=="MA1.SG"),
+        aes(x=PC1, y=PC2, label=Ind), position = position_nudge(y=0.01)
+    )
 PCA_plot_ap
-ggsave("scratch/PCA_plot_ap.png")
+ggsave(plot=PCA_plot_ap, "scratch/PCA_plot_ap.png")
 ```
 
-![Practice plot C)  PCA estimated using modern Eurasian and Native American, and Mal'ta genomic data with no projection ("PCA_all_pops"](PCA_plot_ap.png)
+![PCA estimated using modern Eurasian and Native American, and Mal'ta genomic data with no projection ("PCA_all_pops")](PCA_plot_ap.png){#fig-pca-ap}
 
 ### PLINK MDS
 
-Now let's get an MDS plot for pairwise distances for the same dataset
+Now let's get an MDS plot for pairwise distances for the same dataset. We start out by converting our dataset to PLINK format  using `trident`, then using `plink` to calculate a matrix of the pairwise distance between all individuals.
 
 ```{bash}
 ##Convert package to PLINK format
 ./trident genoconvert -d scratch/forged_package --outFormat PLINK
 
+## Check the package directory to see the newly created bed, bim and fam files.
 ls scratch/forged_package/
 
 # Compute pairwise distances of all individuals
 plink --bfile scratch/forged_package/PCA_package_1 --distance-matrix --out scratch/pairwise_distances
 ```
 
+We can then read this matrix into R to use it for plotting. `plink` creates two output files when calculating pairwise distances. The `.mdist` fiel contains the matrix content, while the `.mdist.id` file contains the column.row labels. We will need to read these in separately. 
 ```{r}
 ## Read in individual IDs from MDS results
 inds <- readr::read_tsv("scratch/pairwise_distances.mdist.id", col_types="cc", col_names=c("Population", "Poseidon_ID"))
@@ -434,30 +497,47 @@ inds
 ```
 
 ```{r}
+## Read metadata from the package janno, and keep relevant columns
 metadata <- janno::read_janno("scratch/forged_package/PCA_package_1.janno", to_janno=F)%>% select(Poseidon_ID, Latitude, Longitude, Country) %>% mutate(Longitude=as.double(Longitude), Latitude=as.double(Latitude))
 
 ## Finally, we add the Lat/Lon information to our datasets
 inds <- left_join(inds, metadata, by="Poseidon_ID")
 
-dist_mat <- matrix(scan("scratch/pairwise_distances.mdist"), ncol=nrow(inds))
-dim(dist_mat)
+## Read in the distance matrix.
+dist_mat <- matrix(scan("scratch/pairwise_distances.mdist"), ncol=nrow(inds), dimnames=list(inds$Poseidon_ID, inds$Poseidon_ID))
+dim(dist_mat) ## Check the dimensions of the matrix
 ```
 
-```{r}
-?heatmap
-```
-
+As a sanity check, let's create a heatmap of a subset of the matrix to see that everything looks as we'd expect. Below, we create a heatmap showing the pairwise distances between French, Han, and Nganasan individuals.
 ```{r}
 # first try and filter for a few populations:
 unique(inds$Population)
 
-indices <- inds$Population %in% c('French', 'Greek', 'Nganasan')
+indices <- inds$Population %in% c('French', 'Han', 'Nganasan')
 head(indices, 40)
 
-## Generate a heatmap of pairwise distances
-heatmap(dist_mat[indices,indices], labRow = inds$Population[indices], labCol = inds$Population[indices])
+## Subset the matrix, then set diagonal (self-distances) to NA.
+hm_subset <- dist_mat[indices,indices]
+diag(hm_subset) <- NA
+
+## Generate a heatmap of pairwise distances for the subset
+library(pheatmap)
+pheatmap(
+  hm_subset,         ## Input data
+  labels_row = inds$Population[indices], ## Row labels
+  labels_col = inds$Population[indices], ## Column labels
+  symm = TRUE, ## Matrix is symmetrical
+  fontsize=3.5,  ## Make row/col labels smaller to avoid overplotting and/or hidden labels
+  show_rownames = T, show_colnames = T,
+  cellwidth=2.8, cellheight=2.8, border_color=NA,
+  color = colorRampPalette(RColorBrewer::brewer.pal(n = 7, name = "YlOrRd"))(100),
+  )
 ```
 
+![Heatmap showing the pairwise genetic distances between French, Han, and Nganasan individuals. The colour of each tile represents the genetic distance between the two compared individuals. Darker colours represent larger distances, while lighter colours represent lower distances.](heatmap_plink.png){#fig-heatmap}
+
+In @fig-heatmap we can see the structure of the French, Han and Nganasan populations. Each population forms its own cluster, with the French population being most distantly related to the others.
+Next, we will use the `cmdscale` function of R to perform classic MDS on the matrix of genetic distances. Much like with PCA above, the direction of the resulting components is random, so we once again use the cornerstone individuals to orient the MDS components with geography.
 ```{r}
 library(ggplot2)
 library(magrittr) # This is for the pipe operator %>%
@@ -466,7 +546,6 @@ colnames(mds_coords) <- c("C1", "C2")
 mds_coords <- tibble::as_tibble(mds_coords) %>%
     dplyr::bind_cols(inds)
 mds_coords
-
 ```
 
 ```{r}
@@ -488,22 +567,25 @@ ggplot(mds_coords) +
         data=mds_coords%>% filter(Poseidon_ID=="MA1.SG"), ## Extract MA1 from the entire dataset
         aes(x=C1, y=C2),       ## Set the x and y axes for this set of points
         pch=17                   ## Change shape of point to solid triangle
-     )
+     ) +
+  geom_text(
+        data=mds_coords%>% filter(Poseidon_ID=="MA1.SG"), ## Extract MA1 from the entire dataset
+        aes(x=C1, y=C2, label=Poseidon_ID), position = position_nudge(y=0.01))
 ggsave("scratch/MDS_plot_ap.png")
-
 ```
 
-![Practice plot D)  MDS estimated using modern Eurasian and Mal'ta genomic data ("MDS_plot_ap")](MDS_plot_ap.png)
+![MDS calculated using modern Eurasian, Native American, and Mal'ta genomic data. Native American populations are shown in black circles, while the Mal'ta individual (MA1), is shown as a black triangle.  ("MDS_plot_ap")](MDS_plot_ap.png){#fig-mds-ap}
 
 ```{r}
-## How does MDS compare to PCA if we restrict to the populations in poplist1?
-## Read in the poplist
-poplist1 <- readr::read_tsv("pca_mds_working/PCA_poplists/PCA_poplist1.txt", col_names = "Pops", col_types = 'c')
+## How does MDS compare to PCA if we restrict to the populations in poplist1 + MA1?
+## Read in the poplist and add MA1 population to the list
+poplist1_and_MA1 <- readr::read_tsv("pca_mds_working/PCA_poplists/PCA_poplist1.txt", col_names = "Pops", col_types = 'c') %>% 
+  add_row(Pops="Russia_MA1_HG.SG")
 
 ## Filter distance matrix
-indices_pl1 <- inds$Population %in% poplist1$Pops
+indices_pl1 <- inds$Population %in% poplist1_and_MA1$Pops
 
-dist_mat[indices_pl1, indices_pl1]
+dim(dist_mat[indices_pl1, indices_pl1])
 ```
 
 ```{r}
@@ -511,7 +593,7 @@ dist_mat[indices_pl1, indices_pl1]
 mds_coords_pl1 <- cmdscale(dist_mat[indices_pl1,indices_pl1])
 colnames(mds_coords_pl1) <- c("C1", "C2")
 mds_coords_pl1 <- tibble::as_tibble(mds_coords_pl1) %>%
-    dplyr::bind_cols(inds %>% dplyr::filter(inds$Population %in% poplist1$Pops))
+    dplyr::bind_cols(inds %>% dplyr::filter(inds$Population %in% poplist1_and_MA1$Pops))
 mds_coords_pl1
 
 
@@ -533,28 +615,32 @@ ggplot(mds_coords_pl1) +
     theme_minimal() +
     coord_equal()+
      geom_point(
-        data=mds_coords%>% filter(Poseidon_ID=="MA1.SG"), ## Extract MA1 from the entire dataset
+        data=mds_coords_pl1%>% filter(Poseidon_ID=="MA1.SG"), ## Extract MA1 from the entire dataset
         aes(x=C1, y=C2),       ## Set the x and y axes for this set of points
         pch=17                   ## Change shape of point to solid triangle
-     )
+     ) +
+    geom_text(
+        data=mds_coords_pl1%>% filter(Poseidon_ID=="MA1.SG"), ## Extract MA1 from the entire dataset
+        aes(x=C1, y=C2, label=Poseidon_ID), position = position_nudge(y=0.01))
 
-ggsave("scratch/MDS_poplist1.png")
+
+ggsave("scratch/MDS_poplist1_and_MA1.png")
 
 ```
 
-![Practice plot E)  MDS estimated using modern Eurasian and Native American, and Mal'ta genomic data ("MDS_poplist1")](MDS_poplist1.png)
+![MDS calculated using modern Eurasian, and Mal'ta genomic data. The Mal'ta individual (MA1), is shown as a black triangle. ("MDS_poplist1_and_MA1")](MDS_poplist1_and_MA1.png){#fig-mds-poplist1}
 
 ### Compare plots
 
-Let's now sum up, by directly comparing all the plots we have generated:
+Let's now sum up, by directly comparing all the plots we have generated (@fig-comparison):
 
-![](pcamds.comparePlots.jpg){fig-align="center"}
+![](pcamds.comparePlots.jpg){#fig-comparison fig-align="center"}
 
-A)  PCA estimated using modern Eurasian genomic data with Mal'ta projected ("PCA_poplist1")
-B)  PCA estimated using modern Eurasian and Native American genomic data with Mal'ta projected ("PCA_poplist2")
-C)  PCA estimated using modern Eurasian and Native American, and Mal'ta genomic data with no projection ("PCA_all_pops")
-D)  MDS estimated using modern Eurasian, and Mal'ta genomic data ("MDS_plot_ap")
-E)  MDS estimated using modern Eurasian and Native American, and Mal'ta genomic data ("MDS_poplist1")
+A)  @fig-pca-poplist1 PCA estimated using modern Eurasian genomic data with Mal'ta projected ("PCA_poplist1")
+B)  @fig-pca-poplist2 PCA estimated using modern Eurasian and Native American genomic data with Mal'ta projected ("PCA_poplist2")
+C)  @fig-pca-ap PCA estimated using modern Eurasian and Native American, and Mal'ta genomic data with no projection ("PCA_all_pops")
+D)  @fig-mds-ap MDS estimated using modern Eurasian, and Mal'ta genomic data ("MDS_plot_ap")
+E)  @fig-mds-poplist1 MDS estimated using modern Eurasian and Native American, and Mal'ta genomic data ("MDS_poplist1_and_MA1")
 
 The dataset excluding Native American data comprises much less variation that makes up PC2 and hence the  PC2 variation of Eurasians in plot A is stretched up compared to these in plots B and C (including Native Americans). In plot B and C it is therefore more difficult to observe differences within Eurasians along PC2 than in plot A. The variation making PC1 is comparable between the three plots. 
 Individual Mal'ta is more closely related to Native Americans than an average Eurasian, so without Native Americans in the dataset (A) it ends up within the Eurasian variation as there is no Native American genetic signal present that would "pull" him away from the Eurasian variation towards the American variation.
